@@ -52,8 +52,8 @@ recipe_nick references admin(admin_nick) on delete set null,
 recipe_title varchar2(60) not null,
 recipe_info varchar2(300) not null,
 recipe_time number not null check(recipe_time >= 0),
-recipe_click number not null default 0 check(recipe_click >= 0),
-recipe_like number not null default 0 check(recipe_like >= 0),
+recipe_click number default 0 not null check(recipe_click >= 0),
+recipe_like number default 0 not null check(recipe_like >= 0),
 recipe_hashtag references hashtag(hashtag_name) on delete set null,
 recipe_writetime date default sysdate not null,
 recipe_edittime date
@@ -75,7 +75,7 @@ create sequence recipe_content_seq;
 --레시피 재료
 create table recipe_ingredient(
 recipe_ingredient_name references ingredient(ingredient_name) on delete set null,
-recipe_no references recipe(reipe_no) on delete cascade
+recipe_no references recipe(recipe_no) on delete cascade
 );
 
 --첨부파일
@@ -110,13 +110,13 @@ member_id varchar2(60) primary key
 )*/,
 member_pw varchar2(48) not null 
 check(
-    regexp_like(admin_pw, '^[a-zA-Z0-9!@#$]{8,16}$')
+    regexp_like(member_pw, '^[a-zA-Z0-9!@#$]{8,16}$')
     and
-    regexp_like(admin_pw, '[a-z]')
+    regexp_like(member_pw, '[a-z]')
     and
-    regexp_like(admin_pw, '[0-9]')
+    regexp_like(member_pw, '[0-9]')
     and
-    regexp_like(admin_pw, '[!@#$]')
+    regexp_like(member_pw, '[!@#$]')
 ),
 member_phone varchar2(11) not null unique 
 check(
@@ -127,9 +127,11 @@ check(
     regexp_like(member_nick,'^[a-zA-Z0-9가-힣]{1,10}$')
 ),
 member_gender char(1) not null check(member_gender in('M', 'F')),
-member_point number not null default 0 check(member_point >= 0),
-member_disabled char(1) not null default 'N' check(member_disabled in('Y', 'N')),
-member_badge varchar2(20) /*not null default */
+member_point number default 0 not null check(member_point >= 0),
+member_disabled char(1) default 'N' not null check(member_disabled in('Y', 'N')),
+member_badge varchar2(20)/* not null default */,
+member_join date default sysdate not null,
+member_login date
 );
 
 --회원 프로필
@@ -166,15 +168,16 @@ center_time date default sysdate not null
 create table board(
 board_no number primary key,
 board_nick references member(member_nick) on delete set null on update cascade,
-board_badge references member(member_badge) on delete set null on update cascade,
 board_title varchar2(60) not null,
 board_content varchar2(4000) not null,
-board_click number not null default 0 check(board_click >= 0),
-board_like number not null default 0 check(board_like >= 0),
+board_click number default 0 not null check(board_click >= 0),
+board_like number default 0 not null check(board_like >= 0),
 board_writetime date default sysdate not null,
 board_edittime date,
-board_blind char(1) default 'N' check(board_blind in('Y', 'N'))
+board_blind char(1) default 'N' not null check(board_blind in('Y', 'N'))
 );
+
+drop table board;
 
 --게시판 시퀀스
 create sequence board_seq;
@@ -198,7 +201,6 @@ create table reply(
 reply_no number primary key,
 reply_board_no references board(board_no) on delete cascade,
 reply_nick references member(member_nick) on delete set null on update cascade,
-reply_badge references member(member_badge) on delete set null on update cascade,
 reply_content varchar2(300) not null,
 reply_writetime date default sysdate not null,
 reply_edittime date,
@@ -214,10 +216,12 @@ notice_no number primary key,
 notice_nick references admin(admin_nick) on delete set null,
 notice_title varchar2(60) not null,
 notice_content varchar2(4000) not null,
-notice_click number not null default 0 check(notice_click >= 0),
+notice_click number default 0 not null check(notice_click >= 0),
 notice_writetime date default sysdate not null,
 notice_edittime date
 );
 
 --공지사항 시퀀스
 create sequence notice_seq;
+
+--지금 안 만들어진 테이블 게시판, 게시판 이미지, 게시판 좋아요, 댓글 
