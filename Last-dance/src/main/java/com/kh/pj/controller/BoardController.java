@@ -1,5 +1,5 @@
 package com.kh.pj.controller;
 
-public class testcontroller {
+public class BoardController {
 
 }

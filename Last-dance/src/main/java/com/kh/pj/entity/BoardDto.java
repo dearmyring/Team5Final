@@ -1,5 +1,5 @@
 package com.kh.pj.entity;
 
-public class TestDto {
+public class BoardDto {
 
 }
