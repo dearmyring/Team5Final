@@ -8,20 +8,20 @@
 	<insert id="insert" parameterType="BoardDto">
 		insert into board(
 		board_no,
-		board_nick,
+		board_id,
 		board_title,
-		board_content
+		board_content)
 		values(
 		board_seq.nextval,
-		#{boardNick},
+		#{boardId},
 		#{boardTitle},
 		#{boardContent}
 		)
 		
 	</insert>
 	
-	<select id="list" resultType="BoardDto">
-		select * from board
+	<select id="list" resultType="BoardVO">
+		
 	</select>
 	
 	<delete id="delete" parameterType="int">
@@ -29,8 +29,8 @@
 	</delete>
 	
 	
-	<select id="get" parameterType ="int" resultType="BoardDto">
-		select * from board where board_no=#{boardNo}
+	<select id="detail" parameterType ="int" resultType="BoardVO">
+		
 	</select>
 	
 	<update id="edit" parameterType = "BoardDto">
@@ -41,6 +41,9 @@
 				board_edittime=sysdate
 	</update>
 	
-	
+	<select id="search" parameterType="map" resultType = "BoardDto">
+		select * from board instr(${type),#{keyword})>0
+		order by ${type} asc
+	</select>
 
 </mapper>
