@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CertDto {
-	private String who;
-	private String serial;
-	private Date when;
+	private String certWho;
+	private String certSerial;
+	private Date sertWhen;
 }

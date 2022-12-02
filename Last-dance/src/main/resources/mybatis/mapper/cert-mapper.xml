@@ -7,27 +7,27 @@
 <mapper namespace="cert">
 
 	<insert id="insert" parameterType="CertDto">
-		insert into cert(who, serial) values(#{who}, #{serial})
+		insert into cert(cert_who, cert_serial, cert_when) values(#{certWho}, #{certSerial}, sysdate)
 	</insert>
 	
 	<delete id="delete" parameterType="String">
-		delete cert where who = #{who}
+		delete cert where cert_who = #{certWho}
 	</delete>
 	
 	<select id="check" parameterType="CertDto" resultType="CertDto">
 		select * from cert 
 		where 
-			who = #{who} 
+			cert_who = #{certWho} 
 		and 
-			serial = #{serial}
+			cert_serial = #{certSerial}
 		and
 
-		when >= sysdate- 5/24/60
+		certWhen >= sysdate- 5/24/60
 	</select>
 	
 	<delete id="clear">
 		<![CDATA[
-			delete cert where when < sysdate - 5/24/60
+			delete cert where cert_when < sysdate - 5/24/60
 		]]>
 	</delete>
 </mapper>
