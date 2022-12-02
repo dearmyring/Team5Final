@@ -11,7 +11,7 @@ public class IngredientImpl implements IngredientDao {
 		// TODO Auto-generated method stub
 		
 	}
-
+  
 	//재료 수정
 	@Override
 	public boolean update(IngredientDto ingredientDto) {
