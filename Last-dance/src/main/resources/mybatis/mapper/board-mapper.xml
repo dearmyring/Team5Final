@@ -17,10 +17,9 @@
 		#{boardTitle},
 		#{boardContent}
 		)
-		
 	</insert>
 	
-	<select id="list" resultType="BoardVO">
+	<select id="list" resultType="BoardVO" resultMap ="BoardVO">
 		
 	</select>
 	

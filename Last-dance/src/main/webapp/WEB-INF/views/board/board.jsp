@@ -54,7 +54,7 @@ function editData(boardId,boardTitle,boardContent) {
 	};
 	
 	$.ajax({
-		url:"http://localhost:8888/rest/pocketmon",
+		url:"http://localhost:8888/rest/board",
 		method:"put",
 		contentType:"application/json",
 		data:JSON.stringify(data),
@@ -82,4 +82,61 @@ function saveData(no, name, type){
 		}
 	});
 }
+
+//목록을 불러오는 함수
+function loadList(){
+	$.ajax({
+		url:"http://localhost:8888/rest/board",
+		method:"get",
+		success:function(resp){
+			//console.log(resp);
+			$(".list-view").empty();
+			for(var i=0; i < resp.length; i++){
+				var h3 = $("<h3>").text(
+					resp[i].no+"/"+resp[i].name+"/"+resp[i].type
+				)
+				.attr("data-no", resp[i].no)
+				.attr("data-name",resp[i].name)
+				.attr("data-type", resp[i].type);
+				
+				h3.click(function(){
+					$("[name=no]").val($(this).data("no"));
+					$("[name=name]").val($(this).data("name"));
+					$("[name=type]").val($(this).data("type"));
+				});
+				
+				//삭제 버튼
+				var span = $("<span>").text("x").attr("data-no", resp[i].no);
+				span.click(function(e){
+					e.stopPropagation();//전파 중지
+					
+					if(confirm("정말 삭제할래요?")) {
+						var no = $(this).data("no");
+						deleteData(no);
+					}
+				});
+				
+				h3.append(span);
+				$(".list-view").append(h3);
+			}
+		}
+	});
+}
 </script>
+
+<h1>유저게시판 리스트</h1>
+
+<form class="detail-view">
+	<input type="text" name="board_title" placeholder="번호">
+	<input type="text" name="board_content" placeholder="이름">
+	<input type="text" name="board_id" placeholder="아이디">
+	<input type="text" name="board_nick" placeholder="닉네임">
+	<button type="submit">등록</button>
+	<button type="button" class="edit-btn">수정</button>
+</form>
+
+<hr>
+
+<div class="list-view">
+	
+</div>
