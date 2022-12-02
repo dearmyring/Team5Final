@@ -43,7 +43,7 @@ public class CategoryDaoImpl implements CategoryDao{
 	//카테고리 조회
 	@Override
 	public List<CategoryDto> CategoryList(String categoryMain) {
-		String sql = "select * from catetory";
+		String sql = "select * from catetory where category_main=?";
 		Object[] param = {categoryMain};
 		return jdbcTemplate.query(sql, mapper, param);
 	}
