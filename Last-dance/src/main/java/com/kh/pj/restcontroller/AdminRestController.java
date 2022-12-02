@@ -1,0 +1,38 @@
+package com.kh.pj.restcontroller;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.kh.pj.constant.SessionConstant;
+import com.kh.pj.entity.AdminDto;
+import com.kh.pj.repository.AdminDao;
+
+@CrossOrigin(origins = "http://127.0.0.1:5500")
+@RestController
+@RequestMapping("/rest/admin")
+public class AdminRestController {
+
+	@Autowired
+	private AdminDao adminDao;
+	
+	@PostMapping("/login")
+	public String login(
+			@RequestBody AdminDto adminDto) {
+		AdminDto findDto = adminDao.login(adminDto.getAdminId());
+		
+		if(findDto == null) {
+			return "YYYYN";
+		}
+		
+		if(findDto.getAdminPw().equals(adminDto.getAdminPw())) {
+			return "YYYYY";
+		}
+		return "YYYYN";
+	}
+}
