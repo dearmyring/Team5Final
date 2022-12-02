@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+#footer {
+    width: 1920px;
+    height: 126px;
+    bottom: 0;
+    display: flex;
+    border-top: 1px solid #eee;
+    justify-content: center;
+    background-color: white;
+}
+
+.footer-info {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.info-list {
+    display: flex;
+    height: 100%;
+}
+
+.info-list  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.info-list  li a:hover {
+    color: black;
+}

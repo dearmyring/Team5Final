@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+#header{
+    position: fixed;
+    width: 1920px;
+    height: 100px;
+    z-index: 1993;
+    display: flex;
+    border-bottom: 1px solid #eee;
+    justify-content: center;
+    background-color: white;
+    
+}
+
+#header > div,
+#footer > div {
+    display: flex;
+    width: 1330px;
+
+}
+.header-area {
+    /* background-color: red; */
+    width: 100%;
+    height: 100px;
+}
+
+.logo-box {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 57px;
+    height: 38px;
+}
+
+.logo-box  div {
+    display: flex;
+    height: 100%;
+    width: 200px;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.menu-list-box {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.menu-list {
+    display: flex;
+    height: 100%;
+}
+
+.menu-list  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.menu-list  li a:hover {
+    color: black;
+}
+
+.sign-tab {
+    display: flex;
+    
+}
+
+.sign-tab ul {
+    display: flex;
+    width: 200px;
+    height: 100%;
+}
+
+.sign-tab ul li {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.sign-tab ul li a {
+    width: 90px;
+    height: 30px;
+    text-align: center;
+    line-height: 28px;
+    border-radius: 20px;
+
+}
+
+.sign-tab ul li a:hover {
+    background-color: #373A3C;
+    color: white;
+}
