@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardLike">
+
+<!-- 좋아요 눌렀는지 안눌렀는지 -->
+<select id="findLike" resultType="int">
+	select count(*) from board_like where board_like_no=#{board_like_no} 
+			and board_like_id=#{board_like_id}
+</select>
+
+</mapper>
