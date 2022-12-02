@@ -46,5 +46,6 @@ public class MemberRestController {
 			return "NNNNN";
 		}
 	}
-	// http://localhost:8888/rest/member/phone?memberPhone=01011111111 <-- 출력가능
 }
+	// http://localhost:8888/rest/member/phone?memberPhone=01011111111 <-- 출력가능
+

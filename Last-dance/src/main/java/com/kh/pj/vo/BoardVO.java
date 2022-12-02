@@ -1,4 +1,4 @@
-package com.kh.pj.entity;
+package com.kh.pj.vo;
 
 import java.sql.Date;
 
@@ -8,9 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class BoardDto {
+public class BoardVO {
 
 	private int boardNo;
+	private String memberNick;
 	private String boardId;
 	private String boardTitle;
 	private String boardContent;
@@ -19,6 +20,5 @@ public class BoardDto {
 	private Date boardWriteTime;
 	private Date boardEditTime;
 	private String boardBlind;
-	
 	
 }

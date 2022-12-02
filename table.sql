@@ -109,16 +109,7 @@ member_id varchar2(60) primary key
 /* check(
     regexp_like(member_id,'^[@]$')
 )*/,
-member_pw varchar2(48) not null 
-check(
-    regexp_like(member_pw, '^[a-zA-Z0-9!@#$]{8,16}$')
-    and
-    regexp_like(member_pw, '[a-z]')
-    and
-    regexp_like(member_pw, '[0-9]')
-    and
-    regexp_like(member_pw, '[!@#$]')
-),
+member_pw varchar2(48) not null,
 member_phone varchar2(11) not null unique 
 check(
     regexp_like(member_phone,'^010\d{7,8}$')
