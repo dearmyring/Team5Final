@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class RecipeContentDto {
-	int recipeContent;
+	int recipeContentNo;
 	int recipeNo;
 	String recipeContentText;
 	

@@ -15,7 +15,7 @@ public interface CategoryDao {
 	//카테고리 조회
 	List<CategoryDto> CategoryList(String CategoryMain);
 	
-	//카테고리 단일조회 -> 카테고리당 언급수 계산할 때 (나중에할게용)
+	//카테고리 단일조회(통계용) -> 카테고리당 언급수 계산할 때 (나중에할게용)
 	//CategoryCountVO selectOne(String CategoryMain);
 	
 	//카테고리 삭제
