@@ -24,7 +24,7 @@ public class IngredientImpl implements IngredientDao {
 	@Override
 	public void insert(IngredientDto ingredientDto) {
 		String sql = "insert into Ingredient"
-					+ "(ingredient_category, ingredient_name)"
+					+ "(ingredient_category, ingredient_name) "
 						+ "values(?, ?)";
 		Object[] param = {ingredientDto.getIngredientCategory(),
 										ingredientDto.getIngredientName()};
@@ -34,7 +34,7 @@ public class IngredientImpl implements IngredientDao {
 	//재료 수정
 	@Override
 	public boolean update(IngredientDto ingredientDto) {
-		String sql = "unpdate Ingredient set ingredient_name=?";
+		String sql = "update Ingredient set ingredient_name=?";
 		Object[] param = {ingredientDto.getIngredientName()};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
