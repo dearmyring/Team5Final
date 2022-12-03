@@ -9,4 +9,11 @@
 	<select id="userInfo" parameterType="String" resultType="MemberDto">
 		select * from member where member_id = #{memberId}
 	</select>
+	
+	<!-- 최근 본 게시물 -->
+	<select id="viewList" parameterType="String" resultType="RecipeDto">
+		select R.* from recipe R 
+		inner join recipe_view RV on R.recipe_no = RV.recipe_view_no where RV.recipe_view_id = #{memberId} 
+		order by RV.recipe_view_time
+	</select>
 </mapper>

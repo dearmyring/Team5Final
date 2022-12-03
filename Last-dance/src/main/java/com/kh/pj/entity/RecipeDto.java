@@ -8,16 +8,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class RecipeDto {
-	int recipeNo;
-	String recipeNick;
-	String recipeTitle;
-	String recipeInfo;
-	int recipeTime;
-	int recipeClick;
-	int recipeLike;
-	String recipeHashtag;
-	Date recipeWritetime;
-	Date recipeEdittime;
-	String recipeDifficulty;	
+	private int recipeNo;
+	private String recipeNick;
+	private String recipeTitle;
+	private String recipeInfo;
+	private int recipeTime;
+	private int recipeClick;
+	private int recipeLike;
+	private String recipeHashtag;
+	private Date recipeWritetime;
+	private Date recipeEdittime;
+	private String recipeDifficulty;	
 
 }
