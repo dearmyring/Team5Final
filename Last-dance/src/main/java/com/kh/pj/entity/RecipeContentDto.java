@@ -10,5 +10,6 @@ public class RecipeContentDto {
 	private int recipeContentNo;
 	private int recipeNo;
 	private String recipeContentText;
+ 
 	
 }

@@ -25,7 +25,7 @@ public class RecipeContentDaoImpl implements RecipeContentDao {
 	//레시피 내용 추가
 	@Override
 	public void insert(RecipeContentDto recipeContentDto) {
-		String sql = "insert into recipe_content"
+		String sql = "insert into recipe_content "
 					+ "(recipe_content_no, recipe_no, recipe_content_text) "
 						+ "values(?, ?, ?)";
 		Object[] param = {recipeContentDto.getRecipeContentNo(),
@@ -39,8 +39,8 @@ public class RecipeContentDaoImpl implements RecipeContentDao {
 	@Override
 	public boolean update(int recipeContentNo) {
 		String sql = "update recipe_content set "
-						+ ""
-							+ "where recipe_content_no?";
+						+ "recipe_content_text"
+							+ "where recipe_content_no=?";
 		Object[] param = {recipeContentNo};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
@@ -58,7 +58,7 @@ public class RecipeContentDaoImpl implements RecipeContentDao {
 	public boolean delete(int recipeContentNo) {
 		String sql = "delete recipe_content where recipe_content)no=?";
 		Object[] param = {recipeContentNo};
-		return false;
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 
 }
