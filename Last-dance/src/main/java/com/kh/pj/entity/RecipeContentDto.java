@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 public class RecipeContentDto {
 	int recipeContentNo;
 	int recipeNo;
-	String recipeContentText;
+	String recipeContentText;  
 	
 }
