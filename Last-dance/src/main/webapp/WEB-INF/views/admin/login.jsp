@@ -1,8 +1,119 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>냉장고를 부탁해</title>
 
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<h1>login</h1>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+    <!-- Bootswatch CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.0.2/litera/bootstrap.min.css" integrity="sha512-WC/IImFzoPRFTlJQpUSqaM1QOKsIWIfrmhkkXRXoDeB9hlArdsUAWOURes+oFcDRPUUZhuc2QdyfaZEGXjd6kg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- font awesome CDN-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+  </head>
+  <body>
+
+    <div class="container-fluid mt-5">
+
+        <div class="row mt-5">
+            <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+				<img class="w-100" src="/img/test-img.jpg" class="logo"/>
+            </div>
+		</div>
+		
+        <form action="login" method="post" class="admin-login-form">
+        <div class="row mt-4">
+            <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+                <div class="form-floating">
+                    <input type="text" name="adminId" autocomplete="off" id="floatingInput" placeholder="name@example.com" class="form-control rounded">
+                    <div class="invalid-feedback"></div>
+                    <label for="floatingInput">ID</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+                <div class="form-floating">
+                    <input type="password" name="adminPw" autocomplete="off" id="floatingPassword" placeholder="Password" class="form-control rounded">
+                    <div class="invalid-feedback">아이디 또는 비밀번호 입력정보를 확인해주세요.</div>
+                    <label for="floatingPassword">Password</label>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+                <div class="form-floating">
+                    <button class="login-btn btn btn-lg w-100 rounded btn-warning" type="submit">로그인</button>
+                </div>
+            </div>
+        </div>
+        </form>
+        
+        <div class="row mt-4">
+            <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+				<div class="text-center">
+					&copy; Last-dance Corp. All rights reserved.
+				</div>
+			</div>        	
+        </div>
+
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+
+    <script src="http://code.jquery.com/jquery-3.6.1.js"></script>
+    <!-- 배포용 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    <script type="text/javascript">
+        $(function(){
+            $(".admin-login-form").submit(function(e){
+                e.preventDefault();
+                var adminId = $("[name=adminId]").val();
+                var adminPw = $("[name=adminPw]").val();
+
+                if(adminId == '' || adminPw == ''){
+					$("[name=adminId]").addClass("is-invalid");
+					$("[name=adminPw]").addClass("is-invalid");
+                }
+
+                else{
+                    $.ajax({
+                        url: "http://localhost:8888/rest/admin/login",
+                        method: "post",
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            adminId : adminId,
+                            adminPw : adminPw
+                        }),
+                        success: function(resp){
+                            if(resp == 'fail'){
+                                $("[name=adminId]").addClass("is-invalid");
+                                $("[name=adminPw]").addClass("is-invalid");
+                            }
+                            else if(resp == 'success'){
+                            }
+                        }
+                    });
+                }
+            });
+            /* 값을 넘겨줄 수 있는 함수 하나 만들어보기 */
+        });
+    </script>
+</body>
+</html>

@@ -19,18 +19,9 @@
 		)
 	</insert>
 	
-	<select id="list" resultType="BoardVO" resultMap ="BoardVO">
-		
-	</select>
-	
 	<delete id="delete" parameterType="int">
 		delete board where board_no=#{boardNo}
 	</delete>
-	
-	
-	<select id="detail" parameterType ="int" resultType="BoardVO">
-		
-	</select>
 	
 	<update id="edit" parameterType = "BoardDto">
 		update board
