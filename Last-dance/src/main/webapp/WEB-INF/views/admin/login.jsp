@@ -51,7 +51,7 @@
         <div class="row mt-4">
             <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
                 <div class="form-floating">
-                    <button class="login-btn btn btn-lg w-100 rounded btn-warning" type="submit">로그인</button>
+                    <button class="login-btn btn btn-lg w-100 rounded btn-warning admin-login-btn" type="submit">로그인</button>
                 </div>
             </div>
         </div>
@@ -82,8 +82,8 @@
     <!-- 배포용 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script> -->
     <script type="text/javascript">
         $(function(){
-            $(".admin-login-form").submit(function(e){
-                e.preventDefault();
+        	$(".admin-login-btn").on("click", function(e){
+        		e.preventDefault();
                 var adminId = $("[name=adminId]").val();
                 var adminPw = $("[name=adminPw]").val();
 
@@ -107,12 +107,12 @@
                                 $("[name=adminPw]").addClass("is-invalid");
                             }
                             else if(resp == 'success'){
+								$(".admin-login-form").submit();
                             }
                         }
                     });
                 }
-            });
-            /* 값을 넘겨줄 수 있는 함수 하나 만들어보기 */
+        	});
         });
     </script>
 </body>
