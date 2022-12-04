@@ -10,10 +10,27 @@
 		select * from member where member_id = #{memberId}
 	</select>
 	
-	<!-- 최근 본 게시물 -->
+	<!-- 최근 본 게시물 리스트 -->
 	<select id="viewList" parameterType="String" resultType="RecipeDto">
 		select R.* from recipe R 
 		inner join recipe_view RV on R.recipe_no = RV.recipe_view_no where RV.recipe_view_id = #{memberId} 
 		order by RV.recipe_view_time
 	</select>
+	
+	<!-- 좋아요 한 레시피 리스트 -->
+	<select id="likeList" parameterType="String" resultType="RecipeDto">
+		select * from recipe where recipe_no in (select recipe_like_no from recipe_like where recipe_like_id = #{memberId})
+	</select>
+	
+	<!-- 내가 쓴 글 리스트 -->
+	<select id="myRrite" parameterType="String" resultType="BoardDto">
+		select * from board where board_id = #{memberId}
+	</select>
+	
+	<!-- 내가 좋아요 한 글 카운트 -->
+	<select id="myLikeListCount" parameterType="String" resultType="MyLikeListCountVO">
+		select count(*) LIKECOUNT from recipe where recipe_no in (select recipe_like_no from recipe_like where recipe_like_id = #{memberId})
+	</select>
+	
+	
 </mapper>
