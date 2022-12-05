@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,17 +25,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.kh.pj.entity.AttachmentDto;
 import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.repository.AttachmentDao;
-import com.kh.pj.repository.RecipeContentDao;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
+@RequestMapping("/rest")
 public class AttachmentRestController {
 		
 	@Autowired
 	private AttachmentDao attachmentDao;
-	
-	@Autowired
-	private RecipeContentDao recipeContentDao;
 	
 	//기준 경로
 	private File dir = new File(System.getProperty("user.home"), "/upload/kh10j");
@@ -53,14 +51,6 @@ public class AttachmentRestController {
 					.attachmentName(attach.getOriginalFilename())
 					.attachmentType(attach.getContentType())
 					.attachmentSize(attach.getSize())
-				.build());
-		
-		//레시피 내용 저장
-		int recipeContentNo = recipeContentDao.sequence();
-		recipeContentDao.insert(RecipeContentDto.builder()
-					.recipeContentNo(recipeContentNo)
-					.recipeNo(content.getRecipeNo())
-					.recipeContentText(content.getRecipeContentText())
 				.build());
 		
 		//파일저장
