@@ -2,16 +2,22 @@ package com.kh.pj.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.HashtagDto;
 
+@Repository
 public class HashtagDaoImpl implements HashtagDao{
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;	
+	
+	@Autowired
+	private SqlSession sqlSession;
 	
 	private RowMapper<HashtagDto> mapper = (rs,idx)-> {
 		return HashtagDto.builder()
@@ -50,6 +56,11 @@ public class HashtagDaoImpl implements HashtagDao{
 		Object[] param = {HashtagName};		
 		return jdbcTemplate.update(sql, param) > 0;
 
+	}
+
+	@Override
+	public List<HashtagDto> list() {
+		return sqlSession.selectList("hashtag.list");
 	}
 
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class RecipeDto {
+
 	private int recipeNo;
 	private String recipeNick;
 	private String recipeTitle;
@@ -19,5 +20,6 @@ public class RecipeDto {
 	private Date recipeWritetime;
 	private Date recipeEdittime;
 	private String recipeDifficulty;	
+
 
 }
