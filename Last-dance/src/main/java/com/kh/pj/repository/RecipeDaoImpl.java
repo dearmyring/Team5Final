@@ -62,9 +62,9 @@ public class RecipeDaoImpl implements RecipeDao {
 	
 	//레시피 조회수 
 	@Override
-	public RecipeDto click(int noticeNo) {
-		this.updateClickCount(noticeNo);
-		return this.selectOne(noticeNo);
+	public RecipeDto click(int recipeNo) {
+		this.updateClickCount(recipeNo);
+		return this.selectOne(recipeNo);
 	}
 	
 	//레시피 조회수 증가

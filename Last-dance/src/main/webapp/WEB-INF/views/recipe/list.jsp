@@ -41,20 +41,22 @@
 					<th>작성자</th>
 					<th>작성일</th>
 					<th>조회수</th>
+					<th>좋아요</th>
 					<th>메뉴</th>
 				</tr>
 			</thead>
 			<tbody align="center">
-				<c:forEach var = "list" items = "${list}">
+			<c:forEach var = "recipeList" items = "${recipeList}">
 				<tr>
-					<td>${list.recipeNo}</td>
-					<td><a href = "detail?recipeNo=${list.recipeNo}">${list.recipeTitle}</a></td>
-					<td>${list.recipeId}</td>
-					<td>${list.recipeWritedate}</td>
-					<td>${list.recipeClick}</td>
+					<td>${recipeList.recipeNo}</td>
+					<td><a href = "detail?recipeNo=${recipeList.recipeNo}">${recipeList.recipeTitle}</a></td>
+					<td>${recipeList.recipeId}</td>
+					<td>${recipeList.recipeWritetime}</td>
+					<td>${recipeList.recipeClick}</td>
+					<td>${recipeList.recipeLike}</td>
 					<td>
-						<a class="btn btn-neutral" style="padding:4px;" href = "editAdmin?noticeNo=${list.recipeNo}">수정</a>
-						<a class="btn btn-neutral" style="padding:4px;" href = "deleteAdmin?noticeNo=${list.recipeNo}">삭제</a>
+						<a class="btn btn-neutral" style="padding:4px;" href = "edit?recipeNo=${recipeList.recipeNo}">수정</a>
+						<a class="btn btn-neutral" style="padding:4px;" href = "delete?recipeNo=${recipeList.recipeNo}">삭제</a>
 				</tr>
 				</c:forEach>
 			</tbody>

@@ -91,17 +91,39 @@ public class RecipeController {
 			return "recipe/edit";
 		}
 		else {
-			//해당 레시피 글의 상세 Mapping으로 강제 이동
+			//해당 레시피 글의 상세 Mapping으로 강제 이동(redirect)
 			return "redirect:detail";
 		}
 	}
 	
 	@PostMapping("edit")
-
-	
-	
-
+	public String edit(@ModelAttribute RecipeDto recipeDto, RedirectAttributes attr) {
 		
+		//View에서 입력받은 recipeDto를 매개변수로 레시피 수정(UPDATE) 실행
+		recipeDao.update(recipeDto);
+		
+		//recipeDto에서 레시피 번호(recipeNo)반환
+		int recipeNo = recipeDto.getRecipeNo();
+		
+		//반환한 레시피 번호(recipeNo)를 redirect시 파라미터 값(value)으로 설정
+		attr.addAttribute("recipeNo", recipeNo);
+		
+		//수정한 해당 레시피 상세 Mapping으로 강제 이동(redirect)
+		return "redirect:detail";
+	}
+	
+	//레시피 삭제
+	@GetMapping("/delete")
+		public String delete(@RequestParam int recipeNo, HttpSession session) {
+			
+		//하이퍼링크로 입력받은 레시피 번호(recipeNo)로 레시피 삭제(DELETE) 실행
+		recipeDao.delete(recipeNo);
+		
+		//레시피 삭제 후 레시피 목록 Mapping으로 강제 이동(redirect)
+		return "redirect:list";		
+		
+	}
+	
 	//레시피 목록
 	@GetMapping("/list")
 	public String recipeList(Model model, HttpSession session) {
@@ -111,8 +133,6 @@ public class RecipeController {
 		return "recipe/list";
 	}
 	
-	
-  
 }
 
 
