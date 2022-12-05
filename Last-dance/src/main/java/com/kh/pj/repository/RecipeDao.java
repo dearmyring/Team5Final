@@ -12,7 +12,7 @@ public interface RecipeDao {
 	int recipeSequence();
 	
 	//레시피 수정
-	boolean update(int recipeNo);
+	boolean update(RecipeDto recipeDto);
 	
 	//레시피 조회
 	List<RecipeDto> recipeList(String recipeTitle);
@@ -21,6 +21,10 @@ public interface RecipeDao {
 	boolean delete(int recipeNo);
 	
 	//레시피 상세
-	RecipeDto selectone(int recipeNo);
+	RecipeDto selectOne(int recipeNo);
+	
+	//레시피 조회수 증가
+	RecipeDto click(int noticeNo);
+	boolean updateClickCount(int noticeNo);
 
 }
