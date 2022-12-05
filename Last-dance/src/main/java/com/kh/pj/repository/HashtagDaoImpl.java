@@ -44,16 +44,15 @@ public class HashtagDaoImpl implements HashtagDao{
 	}
 
 	@Override
-	public List<HashtagDto> HashtagList(String HashtagName) {
-		String sql = "select * from hashtag";
-		Object[] param = {HashtagName};
-		return jdbcTemplate.query(sql, mapper, param);
+	public List<HashtagDto> selectHashtagList() {
+		String sql = "select * from hashtag order by hashtag_name asc";
+		return jdbcTemplate.query(sql, mapper);
 	}
 
 	@Override
-	public boolean delete(String HashtagName) {
+	public boolean delete(String hashtagName) {
 		String sql = "delete hashtag where hashtag_name=?";
-		Object[] param = {HashtagName};		
+		Object[] param = {hashtagName};		
 		return jdbcTemplate.update(sql, param) > 0;
 
 	}
@@ -64,3 +63,7 @@ public class HashtagDaoImpl implements HashtagDao{
 	}
 
 }
+		
+
+
+
