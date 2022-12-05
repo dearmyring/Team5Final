@@ -23,10 +23,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kh.pj.entity.AttachmentDto;
 import com.kh.pj.entity.RecipeContentDto;
-import com.kh.pj.entity.RecipeContentImgDto;
 import com.kh.pj.repository.AttachmentDao;
 import com.kh.pj.repository.RecipeContentDao;
-import com.kh.pj.repository.RecipeContentImgDao;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
@@ -37,9 +35,6 @@ public class AttachmentRestController {
 	
 	@Autowired
 	private RecipeContentDao recipeContentDao;
-	
-	@Autowired
-	private RecipeContentImgDao recipeContentImgDao;
 	
 	//기준 경로
 	private File dir = new File(System.getProperty("user.home"), "/upload/kh10j");
@@ -66,12 +61,6 @@ public class AttachmentRestController {
 					.recipeContentNo(recipeContentNo)
 					.recipeNo(content.getRecipeNo())
 					.recipeContentText(content.getRecipeContentText())
-				.build());
-		
-		//레시피 내용 번호, attachment 번호 저장
-		recipeContentImgDao.insert(RecipeContentImgDto.builder()
-					.recipeContentAttachmentNo(attachmentNo)
-					.recipeContentNo(recipeContentNo)
 				.build());
 		
 		//파일저장
