@@ -5,6 +5,9 @@ import java.util.List;
 import com.kh.pj.entity.RecipeContentDto;
 
 public interface RecipeContentDao {
+	//레시피 내용 시퀀스
+	int sequence();
+	
 	//레시피 내용 추가
 	void insert(RecipeContentDto recipeContentDto);
 	

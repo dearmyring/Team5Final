@@ -11,5 +11,4 @@ import lombok.NoArgsConstructor;
 public class HashtagDto {
 	String hashtagName;
 	Date hashtagTime;
-
 }
