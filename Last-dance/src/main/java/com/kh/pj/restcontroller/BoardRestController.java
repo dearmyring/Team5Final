@@ -25,19 +25,19 @@ public class BoardRestController {
 	private BoardDao dao;
 	
 	
-	@PostMapping("/board")
-	public void write(@RequestBody BoardDto dto) {
-		dao.insert(dto);
-	}
-	
-	//PUT 방식은 POST 처럼 데이터를 Body에 전송할 수 있는 방식
-	@PutMapping("/board")
-	public boolean edit(@RequestBody BoardDto dto) {
-		return dao.edit(dto);
-	}
-	
-	@DeleteMapping("/board/{boardNo}")
-	public boolean delete(@PathVariable int no) {
-		return dao.delete(no);
-	}
+//	@PostMapping("/board")
+//	public void write(@RequestBody BoardDto dto) {
+//		dao.insert(dto);
+//	}
+//	
+//	//PUT 방식은 POST 처럼 데이터를 Body에 전송할 수 있는 방식
+//	@PutMapping("/board")
+//	public boolean edit(@RequestBody BoardDto dto) {
+//		return dao.edit(dto);
+//	}
+//	
+//	@DeleteMapping("/board/{boardNo}")
+//	public boolean delete(@PathVariable int no) {
+//		return dao.delete(no);
+//	}
 }
