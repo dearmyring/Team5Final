@@ -2,6 +2,7 @@ package com.kh.pj.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,6 +15,9 @@ public class HashtagDaoImpl implements HashtagDao{
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;	
+	
+	@Autowired
+	private SqlSession sqlSession;
 	
 	private RowMapper<HashtagDto> mapper = (rs,idx)-> {
 		return HashtagDto.builder()
@@ -52,6 +56,7 @@ public class HashtagDaoImpl implements HashtagDao{
 		return jdbcTemplate.update(sql, param) > 0;
 
 	}
+
 }
 		
 

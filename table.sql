@@ -66,7 +66,8 @@ create sequence recipe_seq;
 --레시피 내용
 create table recipe_content(
 recipe_content_no number primary key,
-recipe_no number references recipe(recipe_no) on delete cascade,
+recipe_no references recipe(recipe_no) on delete cascade,
+recipe_content_attachment_no references attachment(attachment_no) on delete set null,
 recipe_content_text varchar2(4000) not null
 );
 
@@ -95,12 +96,6 @@ create sequence attachment_seq;
 create table recipe_img(
 recipe_attachment_no references attachment(attachment_no) on delete cascade,
 recipe_no references recipe(recipe_no) on delete cascade
-);
-
---레시피 내용 이미지
-create table recipe_content_img(
-recipe_content_attachment_no references attachment(attachment_no) on delete cascade,
-recipe_content_no references recipe_content(recipe_content_no) on delete cascade
 );
 
 --회원

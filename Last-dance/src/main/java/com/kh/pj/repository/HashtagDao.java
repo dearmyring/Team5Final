@@ -24,4 +24,6 @@ public interface HashtagDao {
 	//해시태그 삭제
 	boolean delete(String hashtagName);
 
+	//관리자 레시피 등록시 해시태그 리스트 조회
+	List<HashtagDto> list();
 }
