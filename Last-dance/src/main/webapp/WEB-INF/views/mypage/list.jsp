@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param name="title" value="¸ÞÀÎÆäÀÌÁö"/>
+	<jsp:param name="title" value="ë©”ì¸íŽ˜ì´ì§€"/>
 </jsp:include>
 
 <h2>Test</h2>
@@ -17,11 +17,11 @@
 				${myInfo.memberNick}
 			</li>
 			<li>
-				<p>ÁÁ¾Æ¿ä</p><p>${myLike.myLikeListCount}</p>
+				<p>ì¢‹ì•„ìš”</p><p>${myLike.myLikeListCount}</p>
 			</li>
 		</ul>
 		<div>
-			<a href="pwConfirm">Á¤º¸º¯°æ</a>
+			<a href="pwConfirm">ì •ë³´ë³€ê²½</a>
 		</div>
 	</div>
 </div>
@@ -30,20 +30,20 @@
 	
 	
 	<ul>
-		<li>ÃÖ±Ù º» Á¦¸ñ: ${viewList.recipeTitle}</li>
+		<li>ìµœê·¼ ë³¸ ì œëª©: ${viewList.recipeTitle}</li>
 	</ul>
 	
 </c:forEach>
 
 <c:forEach var="likeList" items="${likeList}">
 	<ul>
-		<li>ÁÁ¾Æ¿ä Á¦¸ñ: ${likeList.recipeTitle}</li>
+		<li>ì¢‹ì•„ìš” ì œëª©: ${likeList.recipeTitle}</li>
 	</ul>
 </c:forEach>
 
 <c:forEach var="writeList" items="${writeList}">
 	<ul>
-		<li>³»°¡ ¾´ ±Û Á¦¸ñ: ${writeList.boardTitle}</li>
+		<li>ë‚´ê°€ ì“´ ê¸€ ì œëª©: ${writeList.boardTitle}</li>
 	</ul>
 </c:forEach>
 

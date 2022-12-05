@@ -33,4 +33,22 @@
 	</select>
 	
 	
+	<!-- 비밀번호 확인 -->
+	<select id="pwConfirm" parameterType="String" resultType="String">
+		select member_pw from member where member_id = #{memberId}
+	</select>
+	
+	<!-- 회원정보 수정 -->
+	<update id="editInfo" parameterType="MemberDto">
+		update member set member_pw = #{memberPw}, member_nick = #{memberNick}, 
+		member_gender = #{memberGender}, member_phone = #{memberPhone} 
+		where member_id = #{memberId}
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="memberWithdrawal" parameterType="String">
+		delete member where member_id = #{memberId}
+	</delete>
+	
+	
 </mapper>

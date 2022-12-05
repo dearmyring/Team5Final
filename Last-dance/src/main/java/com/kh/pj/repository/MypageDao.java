@@ -12,6 +12,11 @@ public interface MypageDao {
 	//유저 정보 출력
 	public MemberDto myInfo(String memberId);
 	
+	//유저 정보 변경
+	public boolean myInfoEdit(MemberDto memberDto);
+	
+	//회원 탈퇴
+	public boolean memberWithdrawal(String memberId);
 	
 	//최근 본 레시피 리스트
 	public List<RecipeDto> viewRecipeList(String memberId);
@@ -22,5 +27,8 @@ public interface MypageDao {
 	
 	//내가 좋아요 한 글
 	public MyLikeListCountVO myLikeListCount(String memberId);
+	
+	//비밀번호 확인
+	public String pwConfirm(String memberId);
 
 }

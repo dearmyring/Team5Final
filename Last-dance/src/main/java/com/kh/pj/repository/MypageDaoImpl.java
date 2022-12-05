@@ -23,6 +23,23 @@ public class MypageDaoImpl implements MypageDao {
 		
 		return sqlSession.selectOne("mypage.userInfo", memberId);
 	}
+	
+	//유저 정보 변경
+	@Override
+	public boolean myInfoEdit(MemberDto memberDto) {
+		int result = sqlSession.update("mypage.editInfo", memberDto);
+		
+		return result > 0;
+	}
+	
+	//회원 탈퇴
+	@Override
+	public boolean memberWithdrawal(String memberId) {
+		int result = sqlSession.delete("mypage.memberWithdrawal", memberId);
+		
+		return result > 0;
+	}
+	
 
 	//내가 최근에 본 레시피
 	@Override
@@ -51,6 +68,14 @@ public class MypageDaoImpl implements MypageDao {
 	public MyLikeListCountVO myLikeListCount(String memberId) {
 		
 		return sqlSession.selectOne("mypage.myLikeListCount", memberId);
+	}
+	
+	
+	//비밀번호 확인
+	@Override
+	public String pwConfirm(String memberId) {
+		
+		return sqlSession.selectOne("mypage.pwConfirm", memberId);
 	}
 	
 	
