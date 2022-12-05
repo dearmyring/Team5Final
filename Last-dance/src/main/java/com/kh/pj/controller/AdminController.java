@@ -53,7 +53,7 @@ public class AdminController {
 	@GetMapping("/write")
 	public String write(Model model) {
 		model.addAttribute("hashtagList", hashtagDao.list());
-		model.addAttribute("ingredientList", ingredientDao.list());
+		model.addAttribute("cateList", ingredientDao.cate());
 		return "admin/recipe-insert";
 	}
 }

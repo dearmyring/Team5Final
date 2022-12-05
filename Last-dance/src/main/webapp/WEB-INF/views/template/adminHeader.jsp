@@ -25,7 +25,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 
     <!-- js 파일 -->
-    <script src="${pageContext.request.contextPath}/js/header.js"></script>
+<%--     <script src="${pageContext.request.contextPath}/js/header.js"></script> --%>
 
     <!-- Required meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">

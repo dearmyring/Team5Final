@@ -18,5 +18,6 @@ public interface IngredientDao {
 	boolean delete(String IngredientName);
 
 	//재료 전체 조회 - 관리자 레시피 등록 시 출력용
-	List<IngredientDto> list();
+	List<String> list(String ingredientCate);
+	List<String> cate();
 }
