@@ -18,7 +18,8 @@
 	});
 </script>
 
-<form action="write" method="post" enctype="multipart/form-data">
+<form action="edit" method="post" enctype="multipart/form-data">
+<input type="hidden" name="boardNo" value="${boardDto.boardNo}">
 <%-- 답글이라면 부모글번호를 추가로 전송하도록 처리 --%>
 <c:if test="${isReply}">
 	<input type="hidden" name="boardParent" 
@@ -40,7 +41,7 @@
 	
 	<div class="row left">
 		<label>제목</label>
-		<input class="input w-100" type="text" name="boardTitle" required>
+		<input class="input w-100" type="text" required value="${boardDto.boardTitle}" name="boardTitle" required>
 	</div>
 	
 	<div class="row left">
