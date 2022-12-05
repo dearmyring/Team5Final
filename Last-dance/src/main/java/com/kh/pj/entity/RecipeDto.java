@@ -12,6 +12,7 @@ public class RecipeDto {
 	String recipeNick;
 	String recipeTitle;
 	String recipeInfo;
+	String recipeId;
 	int recipeTime;
 	int recipeClick;
 	int recipeLike;
