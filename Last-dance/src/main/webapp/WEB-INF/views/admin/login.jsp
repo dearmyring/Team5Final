@@ -94,7 +94,7 @@
 
                 else{
                     $.ajax({
-                        url: "http://localhost:8888/rest/admin/login",
+                        url: "http://localhost:8888/rest/admin",
                         method: "post",
                         contentType: 'application/json',
                         data: JSON.stringify({

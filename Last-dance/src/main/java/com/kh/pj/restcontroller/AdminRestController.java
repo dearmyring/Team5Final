@@ -12,13 +12,13 @@ import com.kh.pj.repository.AdminDao;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
-@RequestMapping("/rest/admin")
+@RequestMapping("/rest")
 public class AdminRestController {
 
 	@Autowired
 	private AdminDao adminDao;
 	
-	@PostMapping("/login")
+	@PostMapping("/admin")
 	public String login(
 			@RequestBody AdminDto adminDto) {
 		AdminDto findDto = adminDao.login(adminDto.getAdminId());
