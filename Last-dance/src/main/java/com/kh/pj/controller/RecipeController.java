@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,25 +26,46 @@ public class RecipeController {
 	@Autowired
 	private RecipeDao recipeDao;
 	
+	//레시피 등록 페이지(write.jsp)로 연결
+	@GetMapping("/write")
+	public String write(HttpSession session) {
+		return "/recipe/write";
+	}
+	
 	//레시피 등록(INSERT)처리 (관리자 권한설정 이후 필요)
+	@PostMapping("/write")
 	public String write(@ModelAttribute RecipeDto recipeDto,
-									RedirectAttributes attr,
-									HttpSession session
-									) throws IllegalStateException, IOException{
-		//HttpSession에서 로그인 중인 회원 아이디를 반환
-		String recipeId = (String)session.getAttribute(SessionConstant.ID);
+			RedirectAttributes attr,
+			HttpSession session
+			) throws IllegalStateException, IOException{
+	//HttpSession에서 로그인 중인 회원 아이디를 반환
+	String recipeId = (String)session.getAttribute(SessionConstant.ID);
+	
+	//반환한 회원 아이디를 문의글 작성자로 설정
+	recipeDto.setRecipeId(recipeId);
+	
+	//레시피 번호(recipeNo)를 위해 다음 시퀀스 번호 반환
+	int recipeNo = recipeDao.recipeSequence();		
+	
+	//반환한 시퀀스 번호를 View에서 입력받은 RecipeDto의 recipeNo로 설정
+	recipeDto.setRecipeNo(recipeNo);
+	
+	//작성한 레시피 상세 Mapping으로 강제 이동(redirect)
+	return "redirect:detail";
+	}	
+	
+	//레시피 상세
+	@GetMapping("/detail")
+	public String detail(@RequestParam int recipeNo, Model model) {
 		
-		//반환한 회원 아이디를 문의글 작성자로 설정
-		recipeDto.setRecipeId(recipeId);
+		recipeDao.updateClickCount(recipeNo);
 		
-		//레시피 번호(recipeNo)를 위해 다음 시퀀스 번호 반환
-		int recipeNo = recipeDao.recipeSequence();		
+		RecipeDto recipeDto = recipeDao.selectOne(recipeNo);
 		
-		//반환한 시퀀스 번호를 View에서 입력받은 RecipeDto의 recipeNo로 설정
-		recipeDto.setRecipeNo(recipeNo);
+		//하이퍼링크로 입력받은 recipeNo로 상세 조회 실행 후 그 결과를 Model에 첨부
+		model.addAttribute("recipeDto", recipeDto);
 		
-		//작성한 레시피 상세 Mapping으로 강제 이동(redirect)
-		return "redirect:detail";
+		return "recipe/detail";
 	}
 		
 	//레시피 수정
@@ -55,7 +77,7 @@ public class RecipeController {
 		String loginId = (String)session.getAttribute(SessionConstant.ID);
 		
 		//반환한 recipe를 매개변수로 상세조회 실행 후 그 결과를 변수 recipeDto에 저장
-		RecipeDto recipeDto = recipeDao.selectone(recipeNo);
+		RecipeDto recipeDto = recipeDao.selectOne(recipeNo);
 		
 		//recipeDto에서 레시피 작성자(recipeId) 반환
 		String recipeId = recipeDto.getRecipeId();
@@ -72,12 +94,14 @@ public class RecipeController {
 			//해당 레시피 글의 상세 Mapping으로 강제 이동
 			return "redirect:detail";
 		}
-		
-		
 	}
-		
+	
+	@PostMapping("edit")
 
 	
+	
+
+		
 	//레시피 목록
 	@GetMapping("/list")
 	public String recipeList(Model model, HttpSession session) {
