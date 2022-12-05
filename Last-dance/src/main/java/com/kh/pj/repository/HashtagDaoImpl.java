@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.HashtagDto;
 
+@Repository
 public class HashtagDaoImpl implements HashtagDao{
 	
 	@Autowired
@@ -38,18 +40,20 @@ public class HashtagDaoImpl implements HashtagDao{
 	}
 
 	@Override
-	public List<HashtagDto> HashtagList(String HashtagName) {
-		String sql = "select * from hashtag";
-		Object[] param = {HashtagName};
-		return jdbcTemplate.query(sql, mapper, param);
+	public List<HashtagDto> selectHashtagList() {
+		String sql = "select * from hashtag order by hashtag_name asc";
+		return jdbcTemplate.query(sql, mapper);
 	}
 
 	@Override
-	public boolean delete(String HashtagName) {
+	public boolean delete(String hashtagName) {
 		String sql = "delete hashtag where hashtag_name=?";
-		Object[] param = {HashtagName};		
+		Object[] param = {hashtagName};		
 		return jdbcTemplate.update(sql, param) > 0;
 
 	}
-
 }
+		
+
+
+

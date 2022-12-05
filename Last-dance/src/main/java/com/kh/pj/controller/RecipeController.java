@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.constant.SessionConstant;
+import com.kh.pj.entity.HashtagDto;
 import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.repository.HashtagDao;
 import com.kh.pj.repository.RecipeDao;
+
 
 @Controller
 @RequestMapping("/recipe")
@@ -26,29 +29,38 @@ public class RecipeController {
 	@Autowired
 	private RecipeDao recipeDao;
 	
+	//해시태그 의존성
+	@Autowired
+	private HashtagDao hashtagDao;
+	
 	//레시피 등록 페이지(write.jsp)로 연결
 	@GetMapping("/write")
-	public String write(HttpSession session) {
+	public String write(Model model) {
+		
+		//해시태그 리스트를 조회하여 Model에 첨부		
+		model.addAttribute("selectHashtag", hashtagDao.selectHashtagList());
+		
+		//레시피 등록 페이지로 연결(write.jsp)
 		return "/recipe/write";
 	}
 	
 	//레시피 등록(INSERT)처리 (관리자 권한설정 이후 필요)
 	@PostMapping("/write")
-	public String write(@ModelAttribute RecipeDto recipeDto,
+	public String write(@ModelAttribute RecipeDto recipeDto, HashtagDto hashtagDto,Model model,
 			RedirectAttributes attr,
 			HttpSession session
 			) throws IllegalStateException, IOException{
-	//HttpSession에서 로그인 중인 회원 아이디를 반환
-	String recipeId = (String)session.getAttribute(SessionConstant.ID);
-	
-	//반환한 회원 아이디를 문의글 작성자로 설정
-	recipeDto.setRecipeId(recipeId);
 	
 	//레시피 번호(recipeNo)를 위해 다음 시퀀스 번호 반환
 	int recipeNo = recipeDao.recipeSequence();		
 	
 	//반환한 시퀀스 번호를 View에서 입력받은 RecipeDto의 recipeNo로 설정
 	recipeDto.setRecipeNo(recipeNo);
+	
+//	String hashtagName =(String)session.getAttribute("hashtagName");
+//	
+//	//model에 조회에 따른 해시태그리스트 결과를 첨부
+//	model.addAttribute("selectHashtag", hashtagDao.selectHashtag(hashtagName));		
 	
 	//작성한 레시피 상세 Mapping으로 강제 이동(redirect)
 	return "redirect:detail";
