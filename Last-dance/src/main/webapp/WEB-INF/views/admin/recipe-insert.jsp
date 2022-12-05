@@ -73,7 +73,7 @@
             recipeTitleStatus : false,
             recipeInfoStatus : false, 
             recipeTimeStatus : false, 
-            recipe
+            recipeHashtagStatus : false
         };
 
     	/* 소요시간 양수 아닌 값 적으면 리턴 */
