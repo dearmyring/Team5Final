@@ -106,7 +106,9 @@
                                 $("[name=adminId]").addClass("is-invalid");
                                 $("[name=adminPw]").addClass("is-invalid");
                             }
-                            else if(resp == 'success'){
+                            else{
+                            	var adminNick = $("<input>").attr("name", "adminNick").val(resp);
+                            	$(".admin-login-form").append(adminNick);
 								$(".admin-login-form").submit();
                             }
                         }

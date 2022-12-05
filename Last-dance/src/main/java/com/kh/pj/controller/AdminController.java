@@ -32,6 +32,6 @@ public class AdminController {
 		session.setAttribute(SessionConstant.ID, adminDto.getAdminId());
 		session.setAttribute(SessionConstant.NICK, adminDto.getAdminNick());
 		
-		return "redirect:/";
+		return "redirect:/admin/";
 	}
 }

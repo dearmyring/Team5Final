@@ -28,7 +28,7 @@ public class AdminRestController {
 		}
 		
 		if(findDto.getAdminPw().equals(adminDto.getAdminPw())) {
-			return "success";
+			return findDto.getAdminNick();
 		}
 		return "fail";
 	}
