@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="recipe">
+
+	<!--  레시피 등록 시퀀스 추가  -->
+	<select id = "recipeNo" resultType="int">
+			select recipe.seq.nextval from dual
+	</select>
+
+	<!--  추가  -->
+	<insert id = "insert" parameterType = "RecipeDto">
+		insert into recipe(recipe_no, recipe_title, recipe_info, recipe_time, recipe_click, recipe_like, recipe_hashtag, recipe_writetime, recipe_edittime, recipe_difficulty)
+		values(recipe_seq.nextval, #{recipeTitle}, #{recipeInfo}, #{recipeTime}, 0, 0,  #{recipeHashtag} #{recipeWritetime}, #{recipeEdittime}, #{recipeDifficulty})
+	</insert>
+	
+	<!--  목록 조회  -->
+	<select id = "list" resultType = "RecipeDto">
+		select * from recipe
+	</select>
+	
+	<!--  단일 조회 -->
+	<select id = "one" parameterType="int" resultType="RecipeDto">
+		select * from recipe  where recipe_no = #{recipeNo}
+	</select>
+	
+	<!-- 수정 -->
+	<update id = "edit" parameterType = "RecipeDto">
+		update recipe
+		set
+			recipe_title = #{recipeTitle},
+			recipe_info = #{recipeInfo},
+			recipe_time = #{recipeTime},
+			recipe_hashtag = #{recipeHashtag},
+			recipe_difficulty = #{recipeDifficulty},
+		where
+			recipe_no = #{recipeNo}	
+	</update>
+	
+	<delete id = "delete" parameterType = "int">
+		delete recipe where recipe_no = #{recipeNo}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
