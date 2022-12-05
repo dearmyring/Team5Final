@@ -34,4 +34,9 @@ public class AdminController {
 		
 		return "redirect:/admin/";
 	}
+	
+	@GetMapping("/list")
+	public String list() {
+		return "admin/recipe-list";
+	}
 }

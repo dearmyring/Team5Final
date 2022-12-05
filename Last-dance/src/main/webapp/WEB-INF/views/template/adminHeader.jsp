@@ -75,7 +75,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="recip/insert">레시피 등록</a>
+                            <a class="nav-link" href="list">레시피 등록</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Pricing</a>
@@ -106,5 +106,7 @@
                 </div>
             </div>
         </nav>
+        
+        <div class="mt-4">&nbsp;</div>
     </div>
 </div>
