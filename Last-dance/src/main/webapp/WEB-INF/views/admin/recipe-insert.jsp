@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
 <div>
@@ -61,12 +62,16 @@
 	</textarea> 
 </div>
 
-<div>
-	Step01 <textarea name="recipeContentText"></textarea>
-	<input type="file" class="file-input" accept=".jpg, .png, .gif">
-	<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200"><br>
-	<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
-</div>
+<c:forEach var="num" begin="1" end="10">
+	<div class="content-page">
+		Step<fmt:formatNumber value="${num}" minIntegerDigits="2"/> 
+		<textarea name="recipeContentText"></textarea>
+		<input type="file" class="file-input" accept=".jpg, .png, .gif">
+		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200"><br>
+		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
+		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
+	</div>
+</c:forEach>
 
 <div>
 	요리 완성사진 
@@ -157,8 +162,19 @@
     	});
     	
     	/* 순서 추가 버튼 클릭 시 다음 단계 등록 영역 생성 */
+    	$(".step-plus-btn").last().remove();
+    	$(".step-minus-btn").first().remove();
+    	$(".content-page").hide();
+    	$(".content-page").first().show();
     	$(".step-plus-btn").click(function(){
-    		$(this).remove();
+    		$(this).hide();
+    		$(this).next().hide();
+    		$(this).parent().next().show();
+    	});
+    	$(".step-minus-btn").click(function(){
+    		$(this).parent().prev().find(".step-plus-btn").show();
+    		$(this).parent().prev().find(".step-minus-btn").show();
+    		$(this).parent().hide();
     	});
     	
     	/* 상태객체 true이면 form 활성화 시킬 예정 */

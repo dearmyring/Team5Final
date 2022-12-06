@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.AdminDto;
+import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.repository.HashtagDao;
 import com.kh.pj.repository.IngredientDao;
 
@@ -22,9 +23,6 @@ public class AdminController {
 	@Autowired
 	private HashtagDao hashtagDao;
 	
-	@Autowired
-	private IngredientDao ingredientDao;
-
 	@GetMapping("/")
 	public String main() {
 		return "admin/main";
@@ -53,12 +51,11 @@ public class AdminController {
 	@GetMapping("/write")
 	public String write(Model model) {
 		model.addAttribute("hashtagList", hashtagDao.list());
-		model.addAttribute("cateList", ingredientDao.cate());
 		return "admin/recipe-insert";
 	}
 	
 	@PostMapping("/write")
-	public String write() {
+	public String write(@ModelAttribute RecipeDto recipeDto) {
 		return "redirect:/admin/write-success";
 	}
 	
