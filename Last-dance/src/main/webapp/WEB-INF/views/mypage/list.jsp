@@ -8,24 +8,26 @@
 <h2>마이페이지</h2>
 
 <!-- 유저 정보 카드 -->
-<div>
-	<div>
-		<img src="">
-	</div>
-	<div>
-		<ul>
-			<li>
-				${myInfo.memberNick}
-			</li>
-			<li>
-				<p>좋아요</p><p>${myLike.myLikeListCount}</p>
-			</li>
-		</ul>
-		<div>
-			<a href="pwConfirm">정보변경</a>
-		</div>
-	</div>
-</div>
+        <div>
+            <div>
+                <img class="profileImage" src="http://localhost:8888/rest/download/${profileImg}" style="width: 200px; height: 200px;">
+                <input type="file" class="file-input" accept=".jpg .png .gif"/>
+            </div>
+            <div>
+                <ul>
+                    <li>
+                        ${myInfo.memberNick}
+                    </li>
+                    <li>
+                        <p>좋아요</p><p>${myLike.myLikeListCount}</p>
+                    </li>
+                </ul>
+                <div>
+                    <a href="pwConfirm">정보변경</a>
+                </div>
+            </div>
+        </div>
+        <!-- 유저 정보 카드 끝 -->
 	
 <c:forEach var="viewList" items="${viewList}">
 	
@@ -47,6 +49,36 @@
 		<li>내가 쓴 글 제목: ${writeList.boardTitle}</li>
 	</ul>
 </c:forEach>
+
+<script>
+        $(function(){
+            $(".file-input").change(function(){
+                if(this.files.length > 0){
+                    console.log()
+                    var imgData = new FormData();
+
+                    imgData.append("attach", this.files[0]);
+
+                    $.ajax({
+                        url: "http://localhost:8888/rest/upload",
+                        method: "post",
+                        data: imgData,
+                        processData:false, // 일반 폼에서 전송되는 형식(key = value)
+                        contentType:false, //형태가 없음을 의미 => multipart
+                        success: function(resp) {
+                            $(".profileImage").attr("src", resp);
+                        }
+                    });//ajax end
+
+                }//if end
+                else {
+                    $(".profileImage").attr("src","");
+                }//else end
+
+            });//.file-input change end
+
+        });
+    </script>
 
 
 

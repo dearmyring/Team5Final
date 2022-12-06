@@ -2,6 +2,7 @@ package com.kh.pj.repository;
 
 import java.util.List;
 
+import com.kh.pj.entity.AttachmentDto;
 import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.RecipeDto;
@@ -11,6 +12,9 @@ public interface MypageDao {
 	
 	//유저 정보 출력
 	public MemberDto myInfo(String memberId);
+	
+	//프로필 사진 출력
+	public int profileImg(String memberId);
 	
 	//유저 정보 변경
 	public boolean myInfoEdit(MemberDto memberDto);

@@ -50,5 +50,10 @@
 		delete member where member_id = #{memberId}
 	</delete>
 	
+	<!-- 프로필 사진 출력 -->
+	<select id="profileImg" parameterType="String" resultType="int">
+		select profile_attachment_no from profile_img where profile_id = #{memberId}
+	</select>
+	
 	
 </mapper>

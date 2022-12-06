@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.pj.entity.AttachmentDto;
 import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.RecipeDto;
@@ -22,6 +23,13 @@ public class MypageDaoImpl implements MypageDao {
 	public MemberDto myInfo(String memberId) {
 		
 		return sqlSession.selectOne("mypage.userInfo", memberId);
+	}
+	
+	//프로필 이미지
+	@Override
+	public int profileImg(String memberId) {
+		
+		return sqlSession.selectOne("mypage.profileImg", memberId);
 	}
 	
 	//유저 정보 변경
