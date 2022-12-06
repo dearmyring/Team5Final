@@ -5,4 +5,5 @@ public interface SessionConstant {
 	String NICK = "loginNick";
 	String GRADE = "loginGrade";
 	String BADGE = "loginBadge";
+	String NICK = "loginNick";
 }

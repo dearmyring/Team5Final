@@ -2,16 +2,22 @@ package com.kh.pj.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.IngredientDto;
 
-public class IngredientImpl implements IngredientDao {
+@Repository
+public class IngredientDaoImpl implements IngredientDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private SqlSession sqlSession;
 	
 	private RowMapper<IngredientDto>mapper = (rs,idx)-> {
 		return IngredientDto.builder()
@@ -24,7 +30,7 @@ public class IngredientImpl implements IngredientDao {
 	@Override
 	public void insert(IngredientDto ingredientDto) {
 		String sql = "insert into Ingredient"
-					+ "(ingredient_category, ingredient_name)"
+					+ "(ingredient_category, ingredient_name) "
 						+ "values(?, ?)";
 		Object[] param = {ingredientDto.getIngredientCategory(),
 										ingredientDto.getIngredientName()};
@@ -34,7 +40,7 @@ public class IngredientImpl implements IngredientDao {
 	//재료 수정
 	@Override
 	public boolean update(IngredientDto ingredientDto) {
-		String sql = "unpdate Ingredient set ingredient_name=?";
+		String sql = "update Ingredient set ingredient_name=?";
 		Object[] param = {ingredientDto.getIngredientName()};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
@@ -53,6 +59,16 @@ public class IngredientImpl implements IngredientDao {
 		String sql = "delete Ingredient where ingredient_name=?";
 		Object[] param = {IngredientName};
 		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+	@Override
+	public List<String> list(String ingredientCate) {
+		return sqlSession.selectList("ingredient.list", ingredientCate);
+	}
+
+	@Override
+	public List<String> cate() {
+		return sqlSession.selectList("ingredient.cate");
 	}
 
 }

@@ -2,16 +2,22 @@ package com.kh.pj.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.RecipeContentDto;
 
+@Repository
 public class RecipeContentDaoImpl implements RecipeContentDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private SqlSession sqlSession;
 	
 	//레시피 내용 mapper 생성
 	private RowMapper<RecipeContentDto> mapper = (rs, idx)->{
@@ -25,7 +31,7 @@ public class RecipeContentDaoImpl implements RecipeContentDao {
 	//레시피 내용 추가
 	@Override
 	public void insert(RecipeContentDto recipeContentDto) {
-		String sql = "insert into recipe_content"
+		String sql = "insert into recipe_content "
 					+ "(recipe_content_no, recipe_no, recipe_content_text) "
 						+ "values(?, ?, ?)";
 		Object[] param = {recipeContentDto.getRecipeContentNo(),
@@ -39,8 +45,8 @@ public class RecipeContentDaoImpl implements RecipeContentDao {
 	@Override
 	public boolean update(int recipeContentNo) {
 		String sql = "update recipe_content set "
-						+ ""
-							+ "where recipe_content_no?";
+						+ "recipe_content_text"
+							+ "where recipe_content_no=?";
 		Object[] param = {recipeContentNo};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
@@ -58,7 +64,12 @@ public class RecipeContentDaoImpl implements RecipeContentDao {
 	public boolean delete(int recipeContentNo) {
 		String sql = "delete recipe_content where recipe_content)no=?";
 		Object[] param = {recipeContentNo};
-		return false;
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+	@Override
+	public int sequence() {
+		return sqlSession.selectOne("recipeContent.sequence");
 	}
 
 }

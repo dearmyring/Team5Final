@@ -66,7 +66,8 @@ create sequence recipe_seq;
 --레시피 내용
 create table recipe_content(
 recipe_content_no number primary key,
-recipe_no number references recipe(recipe_no) on delete cascade,
+recipe_no references recipe(recipe_no) on delete cascade,
+recipe_content_attachment_no references attachment(attachment_no) on delete set null,
 recipe_content_text varchar2(4000) not null
 );
 
@@ -97,19 +98,13 @@ recipe_attachment_no references attachment(attachment_no) on delete cascade,
 recipe_no references recipe(recipe_no) on delete cascade
 );
 
---레시피 내용 이미지
-create table recipe_content_img(
-recipe_content_attachment_no references attachment(attachment_no) on delete cascade,
-recipe_content_no references recipe_content(recipe_content_no) on delete cascade
-);
-
 --회원
 create table member(
 member_id varchar2(60) primary key
 /* check(
     regexp_like(member_id,'^[@]$')
 )*/,
-member_pw varchar2(48) not null,
+member_pw varchar2(100) not null,
 member_phone varchar2(11) not null unique 
 check(
     regexp_like(member_phone,'^010\d{7,8}$')
