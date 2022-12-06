@@ -7,66 +7,64 @@
 
 <form action="write" method="post">
 
-<input type="hidden" name="recipeNick" value="${loginNick}"><br>
-레시피 이름 : <input type="text" name="recipeTitle"><br>
-레시피 제목 : <input type="text" name="recipeInfo"><br>
-소요시간 : <input type="text" name="recipeTime"><br>
-해시태그 : 
-<select name="recipeHashtag">
-	<option value="">선택</option>
-	<option disabled>--------</option>
-	<c:forEach var="hashtagDto" items="${hashtagList}">
-		<option>${hashtagDto.hashtagName}</option>
+<input type="hidden" name="recipeNick" value="${loginNick}">
+레시피 제목 <input type="text" name="recipeTitle">
+<br>
+레시피 소개 <input type="text" name="recipeInfo">
+<br>
+소요시간 <select name="recipeTime">
+	<option value="">시간</option>
+	<c:forEach var="i" begin="5" step="5" end="115">
+		<option value="i">${i}분</option>
 	</c:forEach>
-</select><br>
-재료 :  
-대분류 - <select class="select-cate">
-	<option value="">선택</option>
-	<option disabled>--------</option>
-	<c:forEach var="cate" items="${cateList}">
-		<option>${cate}</option>
-	</c:forEach>
+	<option value="120">120분 이상</option>
 </select>
-중분류 - <select name="recipeIngredientName" class="result-ingredient">
-	<option value="">선택</option>
-	<option disabled>--------</option>
-</select><br>
-난이도 : <select name="recipeDifficulty">
-    <option value="">선택</option>
-    <option disabled>--------</option>
+<br>
+난이도 <select name="recipeDifficulty">
+    <option value="">난이도</option>
     <option value="쉬워요">쉬워요</option>
     <option value="보통이에요">보통이에요</option>
     <option value="어려워요">어려워요</option>
-</select><br>
-레시피 썸네일 : <input type="file" class="file-thumb-input" accept=".jpg, .png, .gif"><br>
-<img class="preview" src="https:/via.placeholder.com/240x180" width="240" height="180"><br>
-레시피 소개 : <input type="text" name="recipeContentText"><br>
+</select>
+<button type="button" class="difficulty-clear">모두 지우기</button>
+<br>
+<i class="fa-regular fa-lightbulb"></i>음식의 재료를 입력해주세요.
+<br>
+<input type="text" name="recipeIngredientName" placeholder="재료">
+<br>
+<div class="add-ingredient">
+
+</div>
+
+레시피 썸네일 <input type="file" class="file-thumb-input" accept=".jpg, .png, .gif">
+<br>
+<img class="preview" src="https:/via.placeholder.com/240x180" width="240" height="180">
+<br>
+레시피 소개 <input type="text" name="recipeContentText">
+<br>
 <input type="file" class="file-input" accept=".jpg, .png, .gif">
 <br>
 <img class="preview" src="https:/via.placeholder.com/240x180" width="240" height="180">
+<br>
+요리 해시태그 
+<select name="recipeHashtag">
+	<option value="">해시태그</option>
+	<c:forEach var="hashtagDto" items="${hashtagList}">
+		<option>${hashtagDto.hashtagName}</option>
+	</c:forEach>
+</select>
 
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
     $(function(){
-    	/* 레시피 대분류 선택 시 중분류 출력 */
-		$(".select-cate").on("input", function(){
-			$(".result-ingredient").find("[data-cate=cate]").remove();
-			var ingredientCategory = $(this).val();
-			
-			$.ajax({
-				url: "http://localhost:8888/rest/ingredient/"+ingredientCategory,
-				method: "get",
-				success: function(resp){
-					for(var i=0; i<resp.length; i++){
-						var option = $("<option>").text(resp[i]).attr("data-cate", "cate");
-						$("[name=recipeIngredientName]").append(option);
-					}
-				}				
-			});
-			
-		});
+//     	$("[name=recipeIngredientName]").on("input", $.throttle(250, function(e) {
+//     		console.log($("[name=recipeIngredientName]").val());
+//     	}))
+    	$("[name=recipeIngredientName]").on("input", setTimeout(function() {
+    		console.log($(this).val());
+    	}, 250));
     	
     	/* 상태객체 true이면 form 활성화 시킬 예정 */
         var recipeStatus = {
@@ -76,19 +74,6 @@
             recipeHashtagStatus : false
         };
 
-    	/* 소요시간 양수 아닌 값 적으면 리턴 */
-        $("[name=recipeTime]").blur(function(){
-            // console.log($(this).val());
-            var recipeTime = $(this).val();
-            if(recipeTime == "") return;
-            var regex = /^[0-9]+$/;
-            var judge = regex.test(recipeTime);
-            if(!judge || recipeTime < 0){
-                alert("정확한 시간을 기입해주세요.");
-                $(this).val("");
-            }
-        });
-    	
     	/* 파일 업로드 비동기 처리 구현 중.. */
         $(".file-input").change(function(){
             if(this.files.length > 0){
