@@ -19,7 +19,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 
 	@Override
 	public void insert(AttachmentDto attachmentDto) {
-		sqlSession.insert("attachment.save", attachmentDto);
+		sqlSession.insert("attachment.insert", attachmentDto);
 	}
 
 	@Override
