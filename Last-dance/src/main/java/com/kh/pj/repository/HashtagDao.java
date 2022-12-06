@@ -12,13 +12,17 @@ public interface HashtagDao {
 	boolean update(HashtagDto hashtagDto);
 	
 	//해시태그 조회
-	List<HashtagDto> HashtagList(String HashtagName);
+	List<HashtagDto> selectHashtagList();
+	
+//	//해시태그 선택 관련 리스트 조회?출력?
+//	List<HashtagListVO> selectHashtagList(String hashtagName);
+	
 	
 	//해시태그 단일조회 -> 해시태그 언급수 계산할 때 (나중에 할게용)
 	//HashtagCountVO selectOne(String HashtagName);
 	
 	//해시태그 삭제
-	boolean delete(String HaghtagName);
+	boolean delete(String hashtagName);
 
 	//관리자 레시피 등록시 해시태그 리스트 조회
 	List<HashtagDto> list();

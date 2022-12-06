@@ -104,7 +104,7 @@ member_id varchar2(60) primary key
 /* check(
     regexp_like(member_id,'^[@]$')
 )*/,
-member_pw varchar2(48) not null,
+member_pw varchar2(100) not null,
 member_phone varchar2(11) not null unique 
 check(
     regexp_like(member_phone,'^010\d{7,8}$')
