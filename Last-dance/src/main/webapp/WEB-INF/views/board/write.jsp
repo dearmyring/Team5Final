@@ -7,6 +7,12 @@
 	<jsp:param value="자유 게시판" name="title"/>
 </jsp:include>
 
+<style>
+	.solid-lines {
+	  border: 1px solid gray;
+	}
+</style>
+
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -20,30 +26,11 @@
 </script>
 
 <form action="write" method="post" enctype="multipart/form-data">
-<%-- 답글이라면 부모글번호를 추가로 전송하도록 처리 --%>
-<c:if test="${isReply}">
-	<input type="hidden" name="boardParent" 
-									value="${param.boardParent}">
-</c:if>
-
 <div class="container-800 mt-40">
-	<div class="row center">
-		<c:set var="isReply" value="${param.boardParent != null}"></c:set>
-		<c:choose>
-			<c:when test="${isReply}">
-				<h1>답글 작성</h1>
-			</c:when>
-			<c:otherwise>
-				<h1>게시글 작성</h1>
-			</c:otherwise>
-		</c:choose>
-	</div>
-	
 	<div class="row left">
 		<label>제목</label>
-		<input class="input w-100" type="text" name="boardTitle" required>
+		<input class="input w-100 solid-lines" type="text" name="boardTitle" required>
 	</div>
-	
 	<div class="row left">
 		<label>내용</label>
 		<textarea name="boardContent"></textarea>

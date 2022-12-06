@@ -7,6 +7,9 @@ import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.vo.BoardListVO;
 
 public interface BoardDao {
+	
+	int sequence();//시퀀스 발행 메소드
+	
 	List<BoardListVO> boardList(String memberNick);
 	public void write(BoardDto boardDto);
 	boolean edit(BoardDto boardDto);
@@ -18,5 +21,7 @@ public interface BoardDao {
 	BoardListVO click(int boardNo);
 	boolean updateClickCount(int boardNo);
 
-
+	//첨부파일 관련 기능
+		void connectAttachment(int boardOriginNo, int boardAttachmentNo);
+		int insert2(BoardDto boardDto);
 }

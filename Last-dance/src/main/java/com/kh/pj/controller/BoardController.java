@@ -1,6 +1,8 @@
 package com.kh.pj.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,11 +14,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.BoardDto;
-import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.repository.BoardDao;
+import com.kh.pj.repository.BoardLikeDao;
+import com.kh.pj.service.BoardService;
 import com.kh.pj.vo.BoardListVO;
 
 @Controller
@@ -25,6 +31,10 @@ public class BoardController {
 
 	@Autowired
 	private BoardDao boardDao;
+	@Autowired
+	private BoardService boardService;
+	@Autowired
+	private BoardLikeDao boardLikeDao;
 	
 	private final File directory = new File("D:/upload/kh10J");
 	
@@ -33,11 +43,15 @@ public class BoardController {
 		return "board/write";
 	}
 	@PostMapping("/write") 
-	public String write(@ModelAttribute BoardDto boardDto,Model model,
-			RedirectAttributes attr,
-			HttpSession session ) {
-		boardDao.write(boardDto);
-		return "redirect:write_success";
+	public String write(@ModelAttribute BoardDto boardDto,
+						@RequestParam List<MultipartFile> attachment,
+						HttpSession session, RedirectAttributes attr) throws IllegalStateException, IOException {
+//		session에 있는 회원 아이디를 작성자로 추가한 뒤 등록해야함
+		String boardId = (String)session.getAttribute(SessionConstant.ID);
+		boardDto.setBoardId(boardId);
+		int boardNo = boardService.write(boardDto, attachment);
+		attr.addAttribute("boardNo", boardNo);
+		return "redirect:detail";
 	}
 	
 	@GetMapping("write_success")
@@ -64,7 +78,7 @@ public class BoardController {
 		boolean result = boardDao.edit(boardDto);
 		if(result) {
 			attr.addAttribute("boardNo",boardDto.getBoardNo());
-			return "redirect:writesuccess";
+			return "redirect:detail";
 		}
 		else {
 			return "redirect:list";
@@ -89,4 +103,29 @@ public class BoardController {
 		return "board/detail";
 	}
 	
+//	좋아요
+	@GetMapping("/like")
+	public String boardLike(
+				@RequestParam int boardLikeNo,
+				HttpSession session, RedirectAttributes attr
+			) {
+		String boardLikeId = (String)session.getAttribute(SessionConstant.ID);
+		BoardLikeDto dto = new BoardLikeDto();
+		dto.setBoardLikeId(boardLikeId);
+		dto.setBoardLikeNo(boardLikeNo);
+		
+		if(boardLikeDao.check(dto)) {//좋아요를 한 상태면
+			boardLikeDao.delete(dto);//지우세요
+		}
+		else {//좋아요를 한 적이 없는 상태면
+			boardLikeDao.insert(dto);//추가하세요
+		}
+		
+		boardLikeDao.refresh(boardLikeNo);//조회수 갱신
+		
+		attr.addAttribute("boardLikeNo", boardLikeNo);
+		return "redirect:/board/detail";
+	}
+	
 }
+

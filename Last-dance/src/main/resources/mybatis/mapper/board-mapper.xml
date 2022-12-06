@@ -37,6 +37,8 @@
 				board_title=#{boardTitle},
 				board_content=#{boardContent},
 				board_edittime=sysdate
+				where
+			board_no = #{boardNo}
 	</update>
 	
 	<select id="get" parameterType="int" resultType="BoardListVO">
