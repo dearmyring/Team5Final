@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class BoardController {
 	private BoardLikeDao boardLikeDao;
 	
 	private final File directory = new File("D:/upload/kh10J");
+	@PostConstruct
+	public void prepare() {
+		directory.mkdirs();
+	}
+	
 	
 	@GetMapping("/write")
 	public String write() {

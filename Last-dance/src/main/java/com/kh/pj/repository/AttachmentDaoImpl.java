@@ -87,7 +87,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 
 	@Override
 	public List<AttachmentDto> selectBoardFileList(int boardAttachmentNo) {
-		String sql = "select * from board_img_view "
+		String sql = "select * from board_attachment_view "
 				+ "where board_attachment_no = ?";
 		Object[] param = {boardAttachmentNo};
 		return jdbcTemplate.query(sql, mapper, param);
