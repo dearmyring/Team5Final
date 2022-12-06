@@ -19,8 +19,8 @@ public class RecipeRestController {
 	@Autowired
 	private IngredientDao ingredientDao;
 	
-	@GetMapping("/ingredient/{ingredientCategory}")
-	public List<String> ingredient(@PathVariable String ingredientCategory){
-		return ingredientDao.list(ingredientCategory);
+	@GetMapping("/ingredient/{search}")
+	public List<String> ingredient(@PathVariable String search){
+		return ingredientDao.list(search);
 	}
 }

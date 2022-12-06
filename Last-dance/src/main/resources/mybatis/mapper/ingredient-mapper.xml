@@ -7,7 +7,7 @@
 <mapper namespace="ingredient">
 	<select id="list" parameterType="String" resultType="String">
 		select ingredient_name from ingredient 
-		where ingredient_category=#{ingredientCategory} 
+		where instr(ingredient_name, #{ingredientName}) > 0 
 		order by ingredient_name asc
 	</select>
 	<select id="cate" resultType="String">

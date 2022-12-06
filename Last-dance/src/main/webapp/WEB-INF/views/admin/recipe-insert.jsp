@@ -10,42 +10,45 @@
 <input type="hidden" name="recipeNick" value="${loginNick}">
 레시피 제목 <input type="text" name="recipeTitle">
 <br>
+
 레시피 소개 <input type="text" name="recipeInfo">
 <br>
-소요시간 <select name="recipeTime">
+
+레시피 정보 시간 <select name="recipeTime">
 	<option value="">시간</option>
 	<c:forEach var="i" begin="5" step="5" end="115">
 		<option value="i">${i}분</option>
 	</c:forEach>
 	<option value="120">120분 이상</option>
 </select>
-<br>
 난이도 <select name="recipeDifficulty">
     <option value="">난이도</option>
     <option value="쉬워요">쉬워요</option>
     <option value="보통이에요">보통이에요</option>
     <option value="어려워요">어려워요</option>
 </select>
-<button type="button" class="difficulty-clear">모두 지우기</button>
 <br>
+
 <i class="fa-regular fa-lightbulb"></i>음식의 재료를 입력해주세요.
 <br>
-<input type="text" name="recipeIngredientName" placeholder="재료">
+<input type="text" class="input-ingredient" placeholder="재료">
+<button type="button" class="difficulty-clear">모두 지우기</button>
 <br>
-<div class="add-ingredient">
+<div class="search-ingredient"></div>
+<div class="add-ingredient"></div>
 
-</div>
-
-레시피 썸네일 <input type="file" class="file-thumb-input" accept=".jpg, .png, .gif">
-<br>
-<img class="preview" src="https:/via.placeholder.com/240x180" width="240" height="180">
-<br>
-레시피 소개 <input type="text" name="recipeContentText">
-<br>
+요리 순서 <textarea name="recipeContentText"></textarea>
 <input type="file" class="file-input" accept=".jpg, .png, .gif">
+<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
 <br>
-<img class="preview" src="https:/via.placeholder.com/240x180" width="240" height="180">
+<button class="button"><i class="fa-solid fa-plus"></i></button>
 <br>
+
+요리 완성사진 
+<input type="file" class="file-thumb-input" accept=".jpg, .png, .gif">
+<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
+<br>
+
 요리 해시태그 
 <select name="recipeHashtag">
 	<option value="">해시태그</option>
@@ -59,12 +62,64 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
     $(function(){
-//     	$("[name=recipeIngredientName]").on("input", $.throttle(250, function(e) {
-//     		console.log($("[name=recipeIngredientName]").val());
-//     	}))
-    	$("[name=recipeIngredientName]").on("input", setTimeout(function() {
-    		console.log($(this).val());
-    	}, 250));
+    	/* 재료 입력 비동기 불러오기 */
+    	$(".input-ingredient").on("input", function(e){
+    		var search = $(this).val();
+            setTimeout(() => {
+	            $.ajax({
+	                url: "http://localhost:8888/rest/ingredient/"+search,
+	                method: "get",
+	                success: function(resp){
+                    	$(".ingredientSearch").remove();
+	                	for(var i=0; i<resp.length; i++){
+		                    var pTag = $("<p>")
+		                        .addClass("ingredientSearch")
+		                        .text(resp[i]);
+		                    
+	                    	pTag.click(function(){
+		                    	var xMark = $("<i>").addClass("fa-solid fa-xmark");
+		        				xMark.click(function(){
+	        						$(this).parent().remove();
+        						});
+		        				
+	                   	 		var p = $("<p>")
+			     					.attr("name", "recipeIngredientName")
+			     					.addClass("ingredientBtn")
+			     					.text($(this).text());
+			     				p.append(xMark);
+			     				$(".add-ingredient").append(p);
+			     				$(".ingredientSearch").remove();
+			     				$(".input-ingredient").val("");
+	                    	});
+		                	$(".search-ingredient").append(pTag);
+	                	}
+	                }
+	             });
+        	}, 1000);
+       	});
+
+    	/* 재료 엔터 등록 */
+    	$(".input-ingredient").keydown(function(e){
+    		$(".ingredientSearch").remove();
+    		var search = $(this).val();
+    		if(e.keyCode == 13) {
+				var xMark = $("<i>").addClass("fa-solid fa-xmark");
+				xMark.click(function(){
+					$(this).parent().remove();
+				});
+				var p = $("<p>")
+					.attr("name", "recipeIngredientName")
+					.text(search);
+				p.append(xMark);
+				$(".add-ingredient").append(p);
+				$(this).val("");
+    		}
+    	});
+    	
+    	/* 전체 삭제 클릭 시 등록된 재료 전부 삭제 */
+    	$(".difficulty-clear").click(function(){
+    		$("[name=recipeIngredientName]").remove();
+    	});
     	
     	/* 상태객체 true이면 form 활성화 시킬 예정 */
         var recipeStatus = {
