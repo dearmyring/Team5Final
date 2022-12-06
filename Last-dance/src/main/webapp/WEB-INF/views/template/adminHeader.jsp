@@ -81,7 +81,7 @@
                             <a class="nav-link" href="#">Pricing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
+                            <a class="nav-link" href="">About</a>
                         </li>
 
                         <!-- 드롭다운 메뉴 -->
@@ -91,9 +91,8 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="list">목록</a>
                                 <a class="dropdown-item" href="write">등록</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
+<!--                                 <div class="dropdown-divider"></div> -->
+<!--                                 <a class="dropdown-item" href="#">Separated link</a> -->
                             </div>
                         </li>
                     </ul>
