@@ -23,4 +23,6 @@ public class RecipeListSearchVO {
 	private String recipeDifficulty;
 	
 	private String sort;
+	private String type;
+	private String keyword;
 }

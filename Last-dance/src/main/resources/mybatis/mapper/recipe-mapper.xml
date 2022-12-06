@@ -49,11 +49,8 @@
 		<!-- 검색 -->
 		<where>
 			<!-- 이름, 관리자 유사 대상 검색 -->
-			<if test="recipeTitle != null">
-				and instr(recipe_title, #{recipeTitle}) > 0
-			</if>
-			<if test="recipeNick != null">
-				and instr(recipe_nick, #{recipeNick}) > 0
+			<if test="type != null and keyword != null">
+				and instr(${type}, #{keyword}) > 0
 			</if>
 		</where>
 	 	<!-- 정렬 -->
