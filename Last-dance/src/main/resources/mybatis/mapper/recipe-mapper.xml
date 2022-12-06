@@ -44,7 +44,7 @@
 		delete recipe where recipe_no = #{recipeNo}
 	</delete>
 	
-	<select id="adminList" parameterType="RecipeListSearchVO" resultType="RecipeListSearchVO">
+	<select id="adminList" parameterType="RecipeListSearchVO" resultType="RecipeDto">
 		select * from recipe
 		<!-- 검색 -->
 		<where>
@@ -58,10 +58,7 @@
 		</where>
 	 	<!-- 정렬 -->
 	 	<if test="sort != null">
-	 		order by
-	 		<foreach collection="sort" item="s" separator=",">
-	 			${s}
-	 		</foreach>
+	 		order by ${sort}
 	 	</if>
 	</select>
 	

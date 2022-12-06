@@ -9,8 +9,11 @@
 			<tr>
 				<th colspan="3">
 					<select name="sort">
-						<option value="writetime desc">최근작성일순</option>
-						<option value="writetime asc">오래된작성일순</option>
+						<option value="recipe_no desc">최근 작성일 순</option>
+						<option value="recipe_click desc">조회수 높은 순</option>
+						<option value="recipe_like desc">좋아요 많은 순</option>
+						<option value="recipe_time asc">조리시간 짧은 순</option>
+						<option value="recipe_time desc">조리시간 긴 순</option>
 					</select>
 				</th>
 	        <tr>
@@ -19,15 +22,15 @@
 	            <th>작성자</th>
 	        </tr>
 	    </thead>
-	    <tbody>
+	    <tbody class="recipe-list">
 	    	<c:forEach var="recipeDto" items="${recipeList}">
 	         <tr>
+				<td>${recipeDto.recipeNo}</td>
 				<td>
 					<a href="detail/${recipeDto.recipeNo}">
-						${recipeDto.recipeNo}
+						${recipeDto.recipeTitle}
 					</a>
 				</td>
-				<td>${recipeDto.recipeTitle}</td>
 				<td>${recipeDto.recipeNick}</td>
 	         </tr>
 	    	</c:forEach>
@@ -46,9 +49,19 @@
 			$.ajax({
 				url: "http://localhost:8888/rest/recipe",
 				method: "post",
-				data: sort,
+				contentType: "application/json",
+				data: JSON.stringify({sort: sort}),
 				success: function(resp){
-// 					목록 출력
+					console.log(resp);
+					$(".recipe-list").find("tr").remove();
+					for(var i=0; i<resp.length; i++){
+						var tr = $("<tr>");
+						var tdNo = $("<td>").text(resp[i].recipeNo);
+						var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle));
+						var tdNick = $("<td>").text(resp[i].recipeNick);
+						tr.append(tdNo).append(tdTitle).append(tdNick);
+						$(".recipe-list").append(tr);
+					}
 				}
 			});
 		});    	

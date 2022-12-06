@@ -33,9 +33,9 @@ public class AttachmentRestController {
 	private AttachmentDao attachmentDao;
 	
 	//기준 경로
-	private File dir = new File(System.getProperty("user.home"), "/upload/kh10j");
+//	private File dir = new File(System.getProperty("user.home"), "/upload/kh10j");
 //	맥북용
-//	private final File dir = new File(System.getProperty("user.home")+"/upload/kh10j");
+	private final File dir = new File(System.getProperty("user.home")+"/upload/kh10j");
 	
 	//업로드
 	@PostMapping("/upload")

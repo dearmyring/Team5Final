@@ -22,5 +22,5 @@ public class RecipeListSearchVO {
 	private Date recipeEdittime;
 	private String recipeDifficulty;
 	
-	private List<String> sort;
+	private String sort;
 }
