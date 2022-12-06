@@ -37,7 +37,7 @@
             <div class="container-fluid">
                 <!-- brand : 로고 이미지와 대표 상호를 적는 공간 -->
                 <a class="navbar-brand" href="/admin/">
-                    <img src=""/>
+                    <img src="${pageContext.request.contextPath}/images/logo.png"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarColor03" 
