@@ -10,7 +10,7 @@
     <section class="mb-4">
 
       <a class="btn btn-floating btn-md text-dark" href="/admin/">
-      	<img src="" class="logo"/>다 같이 one!!
+      	<img src=""/>다 같이 one!!
       </a>
 
       <a class="btn btn-floating btn-md text-dark" href="#">이용약관</a>

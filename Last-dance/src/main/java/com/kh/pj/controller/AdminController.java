@@ -56,4 +56,14 @@ public class AdminController {
 		model.addAttribute("cateList", ingredientDao.cate());
 		return "admin/recipe-insert";
 	}
+	
+	@PostMapping("/write")
+	public String write() {
+		return "redirect:/admin/write-success";
+	}
+	
+	@GetMapping("/write-success")
+	public String writeSuccess() {
+		return "admin/recipe-success";
+	}
 }
