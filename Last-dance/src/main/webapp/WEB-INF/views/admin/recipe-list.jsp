@@ -22,13 +22,13 @@
 	    <tbody>
 	    	<c:forEach var="recipeDto" items="${recipeList}">
 	         <tr>
-	             <td>
-	             	<a href="detail/${recipeDto.recipeNo}">
-	              	${recipeDto.recipeNo}
-	          	</a>
-	             </td>
-	             <td>${recipeDto.recipeTitle}</td>
-	             <td>${recipeDto.recipeNick}</td>
+				<td>
+					<a href="detail/${recipeDto.recipeNo}">
+						${recipeDto.recipeNo}
+					</a>
+				</td>
+				<td>${recipeDto.recipeTitle}</td>
+				<td>${recipeDto.recipeNick}</td>
 	         </tr>
 	    	</c:forEach>
 	    </tbody>

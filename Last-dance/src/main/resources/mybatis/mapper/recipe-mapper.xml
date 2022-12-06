@@ -8,7 +8,7 @@
 
 	<!--  레시피 등록 시퀀스 추가  -->
 	<select id = "recipeNo" resultType="int">
-		select recipe.seq.nextval from dual
+		select recipe_seq.nextval from dual
 	</select>
 
 	<!--  추가  -->

@@ -77,12 +77,14 @@ public class AdminController {
 		//레시피 번호 뽑기 넣기
 		int recipeNo = recipeDao.recipeSequence();
 		recipeDto.setRecipeNo(recipeNo);
+		recipeDao.write(recipeDto);
 		
 		//레시피 내용 개수만큼 반복해서 레시피 내용 시퀀스 뽑고 넣기
 		for(RecipeContentDto content : recipeContentList) {
 			int recipeContentNo = recipeContentDao.sequence();  
 			content.setRecipeContentNo(recipeContentNo);
 			content.setRecipeNo(recipeNo);
+			recipeContentDao.insert(content);
 		}
 		
 		return "redirect:/admin/write-success";
