@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class CertDto {
 	private String certWho;
 	private String certSerial;
-	private Date sertWhen;
+	private Date certWhen;
 }

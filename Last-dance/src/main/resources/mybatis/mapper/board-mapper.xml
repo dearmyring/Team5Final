@@ -19,9 +19,7 @@
 		)
 	</insert>
 	
-	<select id="list" resultType="BoardVO" resultMap ="BoardVO">
-		
-	</select>
+
 	
 	<delete id="delete" parameterType="int">
 		delete board where board_no=#{boardNo}
