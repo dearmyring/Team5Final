@@ -22,7 +22,7 @@
 			cert_serial = #{certSerial}
 		and
 
-		certWhen >= sysdate- 5/24/60
+		cert_when >= sysdate- 5/24/60
 	</select>
 	
 	<delete id="clear">
