@@ -37,7 +37,17 @@
 <div class="search-ingredient"></div>
 <div class="add-ingredient"></div>
 
-요리 순서 <textarea name="recipeContentText"></textarea>
+요리 순서
+<br>
+<i class="fa-regular fa-lightbulb"></i>요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.
+<br>
+<textarea readonly rows="4" cols="100">
+예) 10분간 익혀주세요       10분간 약한불로 익혀주세요.
+      마늘편은 익혀주세요        마늘편은 충분히 익혀주셔야 매운 맛이 사라집니다.
+      꿀을 조금 넣어주세요         꿀이 없는 경우, 설탕 1스푼으로 대체 가능합니다.
+</textarea> 
+<br>
+Step01 <textarea name="recipeContentText"></textarea>
 <input type="file" class="file-input" accept=".jpg, .png, .gif">
 <img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
 <br>
@@ -63,8 +73,11 @@
 <script>
     $(function(){
     	/* 재료 입력 비동기 불러오기 */
-    	$(".input-ingredient").on("input", function(e){
+    	$(".input-ingredient").change(function(e){
     		var search = $(this).val();
+    		if(search == ""){
+    			$(".ingredientSearch").remove();
+    		}
             setTimeout(() => {
 	            $.ajax({
 	                url: "http://localhost:8888/rest/ingredient/"+search,
