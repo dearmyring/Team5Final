@@ -49,7 +49,7 @@
 		<!-- 검색 -->
 		<where>
 			<!-- 이름, 관리자 유사 대상 검색 -->
-			<if test="type != null and keyword != null">
+			<if test="type != null and keyword != ''">
 				and instr(${type}, #{keyword}) > 0
 			</if>
 		</where>

@@ -8,7 +8,7 @@
 	    <thead>
 			<tr>
 				<th colspan="3">
-					<select name="sort">
+					<select class="sort-click">
 						<option value="recipe_no desc">최근 작성일 순</option>
 						<option value="recipe_click desc">조회수 높은 순</option>
 						<option value="recipe_like desc">좋아요 많은 순</option>
@@ -19,6 +19,7 @@
 	        <tr>
 	            <th>번호</th>
 	            <th>제목</th>
+	            <th>조리시간</th>
 	            <th>작성자</th>
 	        </tr>
 	    </thead>
@@ -31,12 +32,21 @@
 						${recipeDto.recipeTitle}
 					</a>
 				</td>
+				<td>${recipeDto.recipeTime}분</td>
 				<td>${recipeDto.recipeNick}</td>
 	         </tr>
 	    	</c:forEach>
 	    </tbody>
 	</table>
 	<br>
+	<ul class="pagination">
+        <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+        <c:forEach var="no" begin="1" end="${voPagination.pageCnt}">
+	        <li class="page-item"><a class="page-link" href="#">${no}</a></li>
+        </c:forEach>
+        <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+    </ul>
+    <br>
 	<select class="input-type">
 		<option value="recipe_title">제목</option>
 		<option value="recipe_nick">작성자</option>
@@ -58,6 +68,7 @@
    	
 		/* 레시피 리스트 검색 */
 		$(".recipe-search-btn").click(function(){
+			var sort = $(".sort-click").val();
 			var type = $(".input-type").val();
 			var keyword = $(".input-keyword").val();
 			if(type == "" || keyword == "") {
@@ -70,7 +81,8 @@
 				contentType: "application/json",
 				data: JSON.stringify({
 					type: type,
-					keyword: keyword
+					keyword: keyword,
+					sort: sort
 				}),
 				success: function(resp){
 					$(".recipe-list").find("tr").remove();
@@ -78,8 +90,9 @@
 						var tr = $("<tr>");
 						var tdNo = $("<td>").text(resp[i].recipeNo);
 						var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle));
+						var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 						var tdNick = $("<td>").text(resp[i].recipeNick);
-						tr.append(tdNo).append(tdTitle).append(tdNick);
+						tr.append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
 						$(".recipe-list").append(tr);
 					}
 				}
@@ -88,21 +101,28 @@
 		});
     	
     	/* 레시피 리스트 정렬 */
-		$("[name=sort]").on("input", function(){
+		$(".sort-click").on("input", function(){
 			var sort = $(this).val();
+			var type = $(".input-type").val();
+			var keyword = $(".input-keyword").val();
 			$.ajax({
 				url: "http://localhost:8888/rest/recipe",
 				method: "post",
 				contentType: "application/json",
-				data: JSON.stringify({sort: sort}),
+				data: JSON.stringify({
+					type: type,
+					keyword: keyword,
+					sort: sort
+				}),
 				success: function(resp){
 					$(".recipe-list").find("tr").remove();
 					for(var i=0; i<resp.length; i++){
 						var tr = $("<tr>");
 						var tdNo = $("<td>").text(resp[i].recipeNo);
 						var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle));
+						var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 						var tdNick = $("<td>").text(resp[i].recipeNick);
-						tr.append(tdNo).append(tdTitle).append(tdNick);
+						tr.append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
 						$(".recipe-list").append(tr);
 					}
 				}
