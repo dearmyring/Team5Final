@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.repository.MypageDao;
 
@@ -22,18 +23,18 @@ public class MypageController {
 	@Autowired
 	private MypageDao mypageDao;
 	
+	private String loginId = SessionConstant.ID;
+	
 	@GetMapping("/list")
 	public String mypageHome(HttpSession session, Model model) {
-		session.setAttribute("loginId", "test01@naver.com"); //구현 완료 후 삭제 예정 코드@@@@@@@@@@@@@@@@@@@
+		model.addAttribute("myInfo", mypageDao.myInfo(loginId));
+		model.addAttribute("profileImg", mypageDao.profileImg(loginId));
 		
-		model.addAttribute("myInfo", mypageDao.myInfo((String) session.getAttribute("loginId")));
-		model.addAttribute("profileImg", mypageDao.profileImg((String)session.getAttribute("loginId")));
+		model.addAttribute("viewList", mypageDao.viewRecipeList(loginId));
+		model.addAttribute("likeList", mypageDao.likeRecipeList(loginId));
+		model.addAttribute("writeList", mypageDao.writeList(loginId));
 		
-		model.addAttribute("viewList", mypageDao.viewRecipeList((String) session.getAttribute("loginId")));
-		model.addAttribute("likeList", mypageDao.likeRecipeList((String) session.getAttribute("loginId")));
-		model.addAttribute("writeList", mypageDao.writeList((String) session.getAttribute("loginId")));
-		
-		model.addAttribute("myLike", mypageDao.myLikeListCount((String) session.getAttribute("loginId")));
+		model.addAttribute("myLike", mypageDao.myLikeListCount(loginId));
 		return "mypage/list";
 	}
 	
@@ -45,7 +46,6 @@ public class MypageController {
 	
 	@PostMapping("/pwConfirm")
 	public String pwConfirm(@RequestParam String inputPw, HttpSession session) {
-		session.setAttribute("loginId", "test01@naver.com"); //구현 완료 후 삭제 예정 코드@@@@@@@@@@@@@@@@@@@
 		String loginId = (String) session.getAttribute("loginId");
 		String memberPw = mypageDao.pwConfirm(loginId);
 		
@@ -60,7 +60,6 @@ public class MypageController {
 	
 	@GetMapping("/myInfo")
 	public String myInfo(HttpSession session, Model model) {
-		session.setAttribute("loginId", "test01@naver.com"); //구현 완료 후 삭제 예정 코드@@@@@@@@@@@@@@@@@@@
 		
 		String memberId = (String) session.getAttribute("loginId");
 		
@@ -71,7 +70,6 @@ public class MypageController {
 	
 	@PostMapping("/infoEdit")
 	public String infoEdit(@ModelAttribute MemberDto memberDto, RedirectAttributes attr, HttpSession session) {
-		session.setAttribute("loginId", "test01@naver.com"); //구현 완료 후 삭제 예정 코드@@@@@@@@@@@@@@@@@@@
 		boolean result = mypageDao.myInfoEdit(memberDto);
 		if(result) {
 			return "redirect:list";
@@ -85,7 +83,6 @@ public class MypageController {
 	
 	@GetMapping("/deleteMember")
 	public String deleteMember(HttpSession session, RedirectAttributes attr) {
-		session.setAttribute("loginId", "test01@naver.com"); //구현 완료 후 삭제 예정 코드@@@@@@@@@@@@@@@@@@@
 		boolean result = mypageDao.memberWithdrawal((String) session.getAttribute("loginId"));
 		
 		if(result) {

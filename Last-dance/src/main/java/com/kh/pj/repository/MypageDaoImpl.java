@@ -27,7 +27,7 @@ public class MypageDaoImpl implements MypageDao {
 	
 	//프로필 이미지
 	@Override
-	public int profileImg(String memberId) {
+	public AttachmentDto profileImg(String memberId) {
 		
 		return sqlSession.selectOne("mypage.profileImg", memberId);
 	}

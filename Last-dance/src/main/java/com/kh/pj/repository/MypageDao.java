@@ -14,7 +14,7 @@ public interface MypageDao {
 	public MemberDto myInfo(String memberId);
 	
 	//프로필 사진 출력
-	public int profileImg(String memberId);
+	public AttachmentDto profileImg(String memberId);
 	
 	//유저 정보 변경
 	public boolean myInfoEdit(MemberDto memberDto);

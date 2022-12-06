@@ -51,8 +51,14 @@
 	</delete>
 	
 	<!-- 프로필 사진 출력 -->
-	<select id="profileImg" parameterType="String" resultType="int">
-		select profile_attachment_no from profile_img where profile_id = #{memberId}
+	<select id="profileImg" parameterType="String" resultType="AttachmentDto">
+		 
+		<!-- select profile_attachment_no from profile_img where profile_id = #{memberId} -->
+		 
+		 <!-- select P.profile_attachment_no from 
+		 member M left outer join profile_img P on M.member_id = P.profile_id where M.member_id = #{memberId} -->
+		 
+		 select * from attachment A inner join profile_img P on A.attachment_no = P.profile_attachment_no where P.profile_id = #{memberId}
 	</select>
 	
 	

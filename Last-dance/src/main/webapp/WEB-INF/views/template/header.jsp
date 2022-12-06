@@ -55,7 +55,7 @@
 				                    <li class="right-menu">
 				                    	${loginNick}
 				                    	<ul>
-		             						<li><a href="#">마이페이지</a></li>
+		             						<li><a href="/mypage/list">마이페이지</a></li>
 											<li><a href="/member/logout">로그아웃</a></li>
 				                    	</ul>
 				                    </li>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="login" value="${loginId != null}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param name="title" value="메인페이지"/>
 </jsp:include>
@@ -10,13 +11,23 @@
 <!-- 유저 정보 카드 -->
         <div>
             <div>
-                <img class="profileImage" src="http://localhost:8888/rest/download/${profileImg}" style="width: 200px; height: 200px;">
+            	<c:choose>
+            		<c:when test="${profileImg.attachmentNo>0}">
+		                <img class="profileImage" src = "http://localhost:8888/rest/download/${profileImg.attachmentNo}" style="width: 50px; height: 50px;">
+            		</c:when>
+            		<c:otherwise>
+	            		<img class="profileImage" src="${pageContext.request.contextPath}/img/basicProfileImage.png" style="width: 50px; height: 50px;">
+            		</c:otherwise>
+            	</c:choose>
                 <input type="file" class="file-input" accept=".jpg .png .gif"/>
             </div>
             <div>
                 <ul>
                     <li>
-                        ${myInfo.memberNick}
+                    	<%-- <h2>${loginNick}</h2> --%>
+                    	<h2>${myInfo.memberNick}</h2>
+                    	
+                        
                     </li>
                     <li>
                         <p>좋아요</p><p>${myLike.myLikeListCount}</p>
@@ -28,9 +39,9 @@
             </div>
         </div>
         <!-- 유저 정보 카드 끝 -->
+	<div>
 	
 <c:forEach var="viewList" items="${viewList}">
-	
 	
 	<ul>
 		<li>최근 본 제목: ${viewList.recipeTitle}</li>
@@ -49,7 +60,7 @@
 		<li>내가 쓴 글 제목: ${writeList.boardTitle}</li>
 	</ul>
 </c:forEach>
-
+</div>
 <script>
         $(function(){
             $(".file-input").change(function(){
