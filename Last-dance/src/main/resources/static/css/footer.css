@@ -33,3 +33,7 @@
 .info-list  li a:hover {
     color: black;
 }
+
+.logo-footer {
+    width: 60%;
+}

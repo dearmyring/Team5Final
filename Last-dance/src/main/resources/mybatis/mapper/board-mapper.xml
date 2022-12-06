@@ -25,7 +25,7 @@
 		#{boardContent}
 		)
 	</insert>
-	
+
 	<delete id="delete" parameterType="int">
 		delete board where board_no=#{boardNo}
 	</delete>
