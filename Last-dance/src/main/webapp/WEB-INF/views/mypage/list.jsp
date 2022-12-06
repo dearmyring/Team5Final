@@ -5,11 +5,12 @@
 	<jsp:param name="title" value="메인페이지"/>
 </jsp:include>
 
-<h2>Test</h2>
+<h2>마이페이지</h2>
 
+<!-- 유저 정보 카드 -->
 <div>
 	<div>
-	
+		<img src="">
 	</div>
 	<div>
 		<ul>
