@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="자유 게시판" name="title"/>
+</jsp:include>
+
 
 <style>
 	.table > thead {
@@ -36,7 +40,7 @@
 		<table class="table table-slit table-border"> <!-- border="1" width="1000"> -->
 			<thead>
 				<tr>
-					<th>번호</th>
+					
 					<th>제목</th>
 					<th>작성자</th>
 					<th>내용</th>
@@ -48,7 +52,6 @@
 			<tbody align="center">
 			<c:forEach var = "boardList" items = "${boardList}">
 				<tr>
-					<td>${boardList.boardNo}</td>
 					<td><a href = "detail?boardNo=${boardList.boardNo}">${boardList.boardTitle}</a></td>
 					<td>${boardList.memberNick}</td>
 					<td>${boardList.boardContent}</td>
@@ -56,8 +59,8 @@
 					<td>${boardList.boardClick}</td>
 					<td>${boardList.boardLike}</td>
 					<td>
-						<a class="btn btn-neutral" style="padding:4px;" href = "edit?recipeNo=${boardList.boardNo}">수정</a>
-						<a class="btn btn-neutral" style="padding:4px;" href = "delete?recipeNo=${boardList.boardNo}">삭제</a>
+						<a class="btn btn-neutral" style="padding:4px;" href = "edit?boardNo=${boardList.boardNo}">수정</a>
+						<a class="btn btn-neutral" style="padding:4px;" href = "delete?boardNo=${boardList.boardNo}">삭제</a>
 				</tr>
 				</c:forEach>
 			</tbody>

@@ -39,9 +39,15 @@
 				board_edittime=sysdate
 	</update>
 	
-	<select id="get" parameterType="int" resultType="BoardDto">
-		select * from board where no = #{no}
+	<select id="get" parameterType="int" resultType="BoardListVO">
+		select * from board where board_no = #{boardNo}
 	</select>
+	
+	<!-- 조회수 증가 처리 -->
+	<update id="plusReadCount">
+	 update board set board_click=board_click+1
+	 	where board_no=#{boardNo}
+	</update>
 	
 
 </mapper>

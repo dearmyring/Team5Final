@@ -26,7 +26,7 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public boolean edit(BoardDto boardDto) {
-		int count = sqlSession.update("pocketmon.edit", boardDto);
+		int count = sqlSession.update("board.edit", boardDto);
 		if (count == 0)
 			throw new TargetNotFoundException();
 		return count > 0;
@@ -34,7 +34,7 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public boolean delete(int boardNo) {
-		int count = sqlSession.delete("pocketmon.delete", boardNo);
+		int count = sqlSession.delete("board.delete", boardNo);
 		if (count == 0)
 			throw new TargetNotFoundException();
 		return count > 0;
@@ -55,6 +55,7 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	
+	
 	@Override
 	public BoardListVO click(int boardNo) {
 		this.updateClickCount(boardNo);
@@ -63,7 +64,7 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public boolean updateClickCount(int boardNo) {
-		String sql = "update board " + "set board_click = board_click + 1 " + "where recipe_no=?";
+		String sql = "update board set board_click = board_click + 1 where board_no=?";
 		Object[] param = { boardNo };
 		return jdbcTemplate.update(sql, param) > 0;
 	}

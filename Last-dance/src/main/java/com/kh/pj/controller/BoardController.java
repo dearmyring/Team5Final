@@ -33,7 +33,9 @@ public class BoardController {
 		return "board/write";
 	}
 	@PostMapping("/write") 
-	public String write(@ModelAttribute BoardDto boardDto ) {
+	public String write(@ModelAttribute BoardDto boardDto,Model model,
+			RedirectAttributes attr,
+			HttpSession session ) {
 		boardDao.write(boardDto);
 		return "redirect:write_success";
 	}
@@ -62,10 +64,10 @@ public class BoardController {
 		boolean result = boardDao.edit(boardDto);
 		if(result) {
 			attr.addAttribute("boardNo",boardDto.getBoardNo());
-			return "redirect:detail";
+			return "redirect:writesuccess";
 		}
 		else {
-			return "redirect:edit_fail";
+			return "redirect:list";
 		}
 	}
 	

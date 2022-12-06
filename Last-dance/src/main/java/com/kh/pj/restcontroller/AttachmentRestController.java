@@ -35,15 +35,14 @@ public class AttachmentRestController {
 	private AttachmentDao attachmentDao;
 	
 	//기준 경로
-//	private File dir = new File(System.getProperty("user.home"), "/upload/kh10j");
+	private File dir = new File(System.getProperty("user.home"), "/upload/kh10j");
 //	맥북용
-	private final File dir = new File(System.getProperty("user.home")+"/upload/kh10j");
+//	private final File dir = new File(System.getProperty("user.home")+"/upload/kh10j");
 	
 	//업로드
 	@PostMapping("/upload")
 	public String upload(
-			@RequestParam MultipartFile attach,
-			@RequestBody RecipeContentDto content) throws IllegalStateException, IOException {
+			@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
 		//DB저장
 		int attachmentNo = attachmentDao.sequence();
 		attachmentDao.insert(AttachmentDto.builder()
@@ -60,7 +59,7 @@ public class AttachmentRestController {
 		attach.transferTo(target);
 		
 		return ServletUriComponentsBuilder.fromCurrentContextPath()
-						.path("/download/").path(String.valueOf(attachmentNo))
+						.path("/rest/download/").path(String.valueOf(attachmentNo))
 						.toUriString();
 	}
 	
