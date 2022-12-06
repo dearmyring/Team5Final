@@ -31,13 +31,11 @@
         <!-- navbar : 드롭다운 메뉴를 제공하는 상단 메뉴바 -->
         <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
 
-	        <div class="mt-4">&nbsp;</div>
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-            <div class="container-fluid">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid">
                 <!-- brand : 로고 이미지와 대표 상호를 적는 공간 -->
-                <a class="navbar-brand" href="/admin/">
-                    <img src="${pageContext.request.contextPath}/images/logo.png"/>
+                <a class="col-lg-3 col-md-4 navbar-brand" href="${pageContext.request.contextPath}/admin/">
+                    <img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarColor03" 
@@ -75,23 +73,15 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                                 aria-haspopup="true" aria-expanded="false">레시피</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="list">목록</a>
-                                <a class="dropdown-item" href="write">등록</a>
-<!--                                 <div class="dropdown-divider"></div> -->
-<!--                                 <a class="dropdown-item" href="#">Separated link</a> -->
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/list">목록</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/write">등록</a>
                             </div>
                         </li>
                     </ul>
-
-                    <!-- 검색 form -->
-                    <!-- <form class="d-flex">
-                        <input class="form-control me-sm-2" type="text" placeholder="Search">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                    </form> -->
                 </div>
             </div>
         </nav>
-        
-        <div class="mt-4">&nbsp;</div>
     </div>
 </div>
+
+<div class="mt-5">&nbsp;</div>

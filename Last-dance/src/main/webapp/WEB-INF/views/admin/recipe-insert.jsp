@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
+<div class="mt-5 col-6 offset-3">
 <div>
 	<h3>레시피등록</h3>
 </div>
@@ -68,6 +69,7 @@
 		<textarea name="recipeContentText"></textarea>
 		<input type="file" class="file-input" accept=".jpg, .png, .gif">
 		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200"><br>
+		<input type="hidden" name="recipeContentAttachmentNo">
 		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
 		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
 	</div>
@@ -77,8 +79,11 @@
 	요리 완성사진 
 	<button type="button">사진 한 번에 넣기</button>
 	<button type="button">사진 모두 지우기</button>
-	<input type="file" class="file-input" accept=".jpg, .png, .gif">
-	<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
+	<br>
+	<c:forEach begin="1" end="4">
+		<input type="file" class="file-input" accept=".jpg, .png, .gif">
+<!-- 		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200"> -->
+	</c:forEach>
 </div>
 
 <div>
@@ -91,7 +96,13 @@
 	</select>
 </div>
 
+<div class="col-10 offset-1">
+	<button class="col-5 btn btn-md text-lg btn-warning" type="submit">레시피 등록하기</button>
+	<button class="col-5 btn btn-md text-lg btn-warning" type="button">돌아가기</button>
+</div>
+
 </form>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>

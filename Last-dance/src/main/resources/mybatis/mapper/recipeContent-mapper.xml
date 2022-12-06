@@ -10,8 +10,8 @@
 	</select>
 	
 	<insert id="insert" parameterType="RecipeContentDto">
-		insert into recipe_content(recipe_content_no, recipe_no, recipe_content_text) 
-		values(#{recipeContentNo}, #{recipeNo}, #{recipeContentText})
+		insert into recipe_content(recipe_content_no, recipe_no, recipe_content_attachment_no, recipe_content_text) 
+		values(#{recipeContentNo}, #{recipeNo}, #{recipeContetnAttachmentNo}, #{recipeContentText})
 	</insert>
 
 </mapper>
