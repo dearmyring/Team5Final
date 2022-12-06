@@ -73,43 +73,84 @@ Step01 <textarea name="recipeContentText"></textarea>
 <script>
     $(function(){
     	/* 재료 입력 비동기 불러오기 */
-    	$(".input-ingredient").change(function(e){
-    		var search = $(this).val();
-    		if(search == ""){
-    			$(".ingredientSearch").remove();
-    		}
-            setTimeout(() => {
-	            $.ajax({
-	                url: "http://localhost:8888/rest/ingredient/"+search,
-	                method: "get",
-	                success: function(resp){
-                    	$(".ingredientSearch").remove();
-	                	for(var i=0; i<resp.length; i++){
-		                    var pTag = $("<p>")
-		                        .addClass("ingredientSearch")
-		                        .text(resp[i]);
+//     	$(".input-ingredient").change(function(e){
+//     		var search = $(this).val();
+//     		if(search == ""){
+//     			$(".ingredientSearch").remove();
+//     		}
+//             setTimeout(() => {
+// 	            $.ajax({
+// 	                url: "http://localhost:8888/rest/ingredient/"+search,
+// 	                method: "get",
+// 	                success: function(resp){
+//                     	$(".ingredientSearch").remove();
+// 	                	for(var i=0; i<resp.length; i++){
+// 		                    var pTag = $("<p>")
+// 		                        .addClass("ingredientSearch")
+// 		                        .text(resp[i]);
 		                    
-	                    	pTag.click(function(){
-		                    	var xMark = $("<i>").addClass("fa-solid fa-xmark");
-		        				xMark.click(function(){
-	        						$(this).parent().remove();
-        						});
+// 	                    	pTag.click(function(){
+// 		                    	var xMark = $("<i>").addClass("fa-solid fa-xmark");
+// 		        				xMark.click(function(){
+// 	        						$(this).parent().remove();
+//         						});
 		        				
-	                   	 		var p = $("<p>")
-			     					.attr("name", "recipeIngredientName")
-			     					.addClass("ingredientBtn")
-			     					.text($(this).text());
-			     				p.append(xMark);
-			     				$(".add-ingredient").append(p);
-			     				$(".ingredientSearch").remove();
-			     				$(".input-ingredient").val("");
-	                    	});
-		                	$(".search-ingredient").append(pTag);
-	                	}
-	                }
-	             });
-        	}, 1000);
-       	});
+// 	                   	 		var p = $("<p>")
+// 			     					.attr("name", "recipeIngredientName")
+// 			     					.addClass("ingredientBtn")
+// 			     					.text($(this).text());
+// 			     				p.append(xMark);
+// 			     				$(".add-ingredient").append(p);
+// 			     				$(".ingredientSearch").remove();
+// 			     				$(".input-ingredient").val("");
+// 	                    	});
+// 		                	$(".search-ingredient").append(pTag);
+// 	                	}
+// 	                }
+// 	             });
+//         	}, 1000);
+//        	});
+    	
+    	$(".input-ingredient").on("input", function(){
+            setTimeout(() => {
+                var search = $(".input-ingredient").val();
+                if(search == ""){
+                    $(".ingredientSearch").remove();
+                }
+                else{
+                    $.ajax({
+                        url: "http://localhost:8888/rest/ingredient/"+search,
+                        method: "get",
+                        success: function(resp){
+                            $(".ingredientSearch").remove();
+                            for(var i=0; i<resp.length; i++){
+                                var pTag = $("<p>")
+                                    .addClass("ingredientSearch")
+                                    .text(resp[i]);
+                                
+                                pTag.click(function(){
+                                    console.log($(this));
+                                    var xMark = $("<i>").addClass("fa-solid fa-xmark");
+                                    xMark.click(function(){
+                                        $(this).parent().remove();
+                                    });
+                                    
+                                    var p = $("<p>")
+                                        .attr("name", "recipeIngredientName")
+                                        .text($(this).text());
+                                    p.append(xMark);
+                                    $(".add-ingredient").append(p);
+                                    $(".ingredientSearch").remove();
+                                    $(".input-ingredient").val("");
+                                });
+                                
+                                $(".search-ingredient").append(pTag);
+                            }
+                        }
+                    });
+                }
+            }, 1000);
+        });
 
     	/* 재료 엔터 등록 */
     	$(".input-ingredient").keydown(function(e){
