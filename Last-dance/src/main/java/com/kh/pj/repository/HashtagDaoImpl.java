@@ -57,6 +57,11 @@ public class HashtagDaoImpl implements HashtagDao{
 
 	}
 
+	@Override
+	public List<HashtagDto> list() {
+		return sqlSession.selectList("hashtag.list");
+	}
+
 }
 		
 
