@@ -99,7 +99,7 @@
 </div>
 
 <div class="col-10 offset-1">
-	<button class="col-5 btn btn-md text-lg btn-warning" type="submit">레시피 등록하기</button>
+	<button class="col-5 btn btn-md text-lg btn-warning recipe-insert-btn" type="submit">레시피 등록하기</button>
 	<button class="col-5 btn btn-md text-lg btn-warning" type="button">돌아가기</button>
 </div>
 
@@ -109,43 +109,16 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
     $(function(){
-//     	$("[type=submit]").click(function(){
-//     		var recipeTitle = $("[name=recipeTitle]").val();
-//     		var recipeInfo = $("[name=recipeInfo]").val();
-//     		var recipeTime = $("[name=recipeTime]").val();
-//     		var recipeHashTag = $("[name=recipeHashtag]").val();
-//     		var recipeDifficulty = $("[name=recipeDifficulty]").val();
-    		
-//     		var recipeData = {
-//     				recipeTitle:recipeTitle,
-//     				recipeInfo:recipeInfo,
-//     				recipeTime:recipeTime,
-//     				recipeHashtag:recipeHashTag,
-//     				recipeDifficulty:recipeDifficulty
-//     		};
-    		
-//     		$.ajax({
-//     			url: "http://localhost:8888/rest/recipe-write",
-//     			method: "post",
-//     			contentType: "application/json",
-//     			data: JSON.stringify(recipeData),
-//     			success: function(resp){
-//     				console.log("레시피 등록 성공");
-//     			}
-//     		});
-//     	});
-    	
-    	/* 상태객체 true이면 form 활성화 시킬 예정 */
-//         var recipeStatus = {
-//             recipeTitleStatus : false,
-//             recipeInfoStatus : false, 
-//             recipeTimeStatus : false, 
-//             recipeHashtagStatus : false
-//         };
-    	
     	/* 레시피 등록 우선 비활성화 */
-//     	$(".recipe-insert-form").submit(function(e){
-//     		e.preventDefault();
+    	$(".recipe-insert-form").submit(function(e){
+    		e.preventDefault();
+    	});
+
+    	/* 레시피 등록 시 빈칸 삭제 구현 중 */
+//     	$(".recipe-insert-btn").click(function(){
+//     		var contextText = [];
+    		
+//     		console.log($(".content-page").find("[name=recipeContentText]").val());
 //     	});
     	
     	/* 재료 입력 비동기 불러오기 */
@@ -232,7 +205,7 @@
     		$(this).parent().hide();
     	});
 
-    	/* 파일 업로드 비동기 처리 구현 중.. */
+    	/* 이미지 업로드 비동기 후 미리보기 구현 */
         $(".file-input").change(function(){
         	var that = $(this);
             if(this.files.length > 0){
