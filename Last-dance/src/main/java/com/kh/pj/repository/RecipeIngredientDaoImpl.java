@@ -2,25 +2,25 @@ package com.kh.pj.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.RecipeIngredientDto;
 
+@Repository
 public class RecipeIngredientDaoImpl implements RecipeIngredientDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private SqlSession sqlSession;
 
 	@Override
 	public void insert(RecipeIngredientDto recipeIngredientDto) {
-		String sql = "insert into recipe_ingredient "
-					+ "recipe_ingredient_name "
-						+"values(?)";
-		Object[] param = {recipeIngredientDto.getRecipeIngredientName(),
-										recipeIngredientDto.getRecipeNo()
-		};
-		jdbcTemplate.update(sql, param);	
+		sqlSession.insert("recipeIngredient.insert", recipeIngredientDto);	
 	}
 
 	@Override

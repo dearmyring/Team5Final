@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.vo.RecipeListSearchVO;
 
 @Repository
 public class RecipeDaoImpl implements RecipeDao {
@@ -41,7 +42,7 @@ public class RecipeDaoImpl implements RecipeDao {
 	
 	//레시피 목록조회(SELECT)
 	@Override
-	public List<RecipeDto> recipeList(String recipeTitle) {
+	public List<RecipeDto> list(String recipeTitle) {
 		return sqlSession.selectList("recipe.list");
 
 	}
@@ -75,6 +76,16 @@ public class RecipeDaoImpl implements RecipeDao {
 							+ "where recipe_no=?";
 		Object[] param = {recipeNo};
 		return jdbcTemplate.update(sql,param) > 0;
+	}
+
+	@Override
+	public List<RecipeDto> adminList(RecipeListSearchVO vo) {
+		return sqlSession.selectList("recipe.adminList", vo);
+	}
+
+	@Override
+	public RecipeDto adminDetail(int recipeNo) {
+		return sqlSession.selectOne("recipe.adminDetail", recipeNo);
 	}
 
 }

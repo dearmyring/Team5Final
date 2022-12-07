@@ -42,7 +42,6 @@
 					<th>작성일</th>
 					<th>조회수</th>
 					<th>좋아요</th>
-					<th>메뉴</th>
 				</tr>
 			</thead>
 			<tbody align="center">
@@ -50,13 +49,10 @@
 				<tr>
 					<td>${recipeList.recipeNo}</td>
 					<td><a href = "detail?recipeNo=${recipeList.recipeNo}">${recipeList.recipeHashtag} / ${recipeList.recipeTitle}</a></td>
-					<td>${recipeList.recipeId}</td>
+					<td>${recipeList.recipeNick}</td>
 					<td>${recipeList.recipeWritetime}</td>
 					<td>${recipeList.recipeClick}</td>
 					<td>${recipeList.recipeLike}</td>
-					<td>
-						<a class="btn btn-neutral" style="padding:4px;" href = "edit?recipeNo=${recipeList.recipeNo}">수정</a>
-						<a class="btn btn-neutral" style="padding:4px;" href = "delete?recipeNo=${recipeList.recipeNo}">삭제</a>
 				</tr>
 				</c:forEach>
 			</tbody>
