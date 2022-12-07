@@ -45,11 +45,6 @@
    	            		return this.memberIdValid && this.memberIdConfirm;
    	            	}
     			}
-    			
-    			$(".join-form").submit(function(e){
-                    e.preventDefault();
-                });
-    			
                 $("input[name=memberId]").blur(function(){
                 	var memberId = $(this).val();
                 	var possible = $(".send-btn");
