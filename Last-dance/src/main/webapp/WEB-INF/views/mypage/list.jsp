@@ -19,7 +19,7 @@
 	            		<img class="profileImage" src="${pageContext.request.contextPath}/img/basicProfileImage.png" style="width: 50px; height: 50px;">
             		</c:otherwise>
             	</c:choose>
-                <input type="file" class="file-input" accept=".jpg .png .gif"/>
+                <input type="file" class="file-input" accept=".jpg, .png, .gif"/>
             </div>
             <div>
                 <ul>
@@ -78,6 +78,18 @@
                         contentType:false, //형태가 없음을 의미 => multipart
                         success: function(resp) {
                             $(".profileImage").attr("src", resp);
+                            
+                            var attachmentNo = (resp.split("download/")[1]);
+
+                            $.ajax({
+                                url: "http://localhost:8888/profileImg?attachmentNo="+attachmentNo,
+                                method: "post",
+                                contentType: "application/json",
+                                data: JSON.stringify({attachmentNo:attachmentNo}),
+                                success: function(resp) {
+                                }
+                            });//inner ajax end
+                            
                         }
                     });//ajax end
 

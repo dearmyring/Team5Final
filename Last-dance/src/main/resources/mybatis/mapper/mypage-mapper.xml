@@ -61,5 +61,15 @@
 		 select * from attachment A inner join profile_img P on A.attachment_no = P.profile_attachment_no where P.profile_id = #{memberId}
 	</select>
 	
+	<!-- 프로필 사진 등록 -->
+	<insert id="addProfileImage" parameterType="ProfileImageDto">
+		insert into profile_img values(#{profileId}, #{profileAttachmentNo}, sysdate)
+	</insert>
+	
+	<!-- 프로필 사진이 있을경우 수정 -->
+	<update id="edtiProfileImage" parameterType="ProfileImageDto">
+		update profile_img set profile_attachment_no = #{profileAttachmentNo} where profile_id = #{profileId}
+	</update>
+	
 	
 </mapper>

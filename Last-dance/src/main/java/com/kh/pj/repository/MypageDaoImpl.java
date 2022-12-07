@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.pj.entity.AttachmentDto;
 import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.MemberDto;
+import com.kh.pj.entity.ProfileImageDto;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.vo.MyLikeListCountVO;
 
@@ -25,11 +26,25 @@ public class MypageDaoImpl implements MypageDao {
 		return sqlSession.selectOne("mypage.userInfo", memberId);
 	}
 	
-	//프로필 이미지
+	//프로필 이미지 출력
 	@Override
 	public AttachmentDto profileImg(String memberId) {
 		
 		return sqlSession.selectOne("mypage.profileImg", memberId);
+	}
+	
+	//프로필 이미지 등록
+	@Override
+	public void addProfileImage(ProfileImageDto profileImageDto) {
+		sqlSession.insert("mypage.addProfileImage", profileImageDto);
+		
+	}
+	
+	//프로필 이미지 수정
+	@Override
+	public boolean editProfileImage(ProfileImageDto profileImageDto) {
+		int result = sqlSession.update("mypage.edtiProfileImage", profileImageDto);
+		return result > 0;
 	}
 	
 	//유저 정보 변경

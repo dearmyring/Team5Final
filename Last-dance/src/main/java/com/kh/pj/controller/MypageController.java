@@ -23,10 +23,10 @@ public class MypageController {
 	@Autowired
 	private MypageDao mypageDao;
 	
-	private String loginId = SessionConstant.ID;
 	
 	@GetMapping("/list")
 	public String mypageHome(HttpSession session, Model model) {
+		String loginId = (String) session.getAttribute("loginId");
 		model.addAttribute("myInfo", mypageDao.myInfo(loginId));
 		model.addAttribute("profileImg", mypageDao.profileImg(loginId));
 		
