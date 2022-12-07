@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.constant.SessionConstant;
@@ -73,7 +74,8 @@ public class AdminController {
 	@PostMapping("/write")
 	public String write(
 			@ModelAttribute RecipeDto recipeDto, 
-			@ModelAttribute List<RecipeContentDto> recipeContentList) {
+			@ModelAttribute List<RecipeContentDto> recipeContentList,
+			RedirectAttributes attr) {
 		//레시피 번호 뽑기 넣기
 		int recipeNo = recipeDao.recipeSequence();
 		recipeDto.setRecipeNo(recipeNo);
@@ -87,11 +89,17 @@ public class AdminController {
 			recipeContentDao.insert(content);
 		}
 		
+		//레시피 등록완료 페이지에 파라미터 넘겨주기
+		attr.addAttribute("recipeNo", recipeNo);
+		
 		return "redirect:/admin/write-success";
 	}
 	
 	@GetMapping("/write-success")
-	public String writeSuccess() {
+	public String writeSuccess(
+			@RequestParam int recipeNo,
+			Model model) {
+		model.addAttribute("recipeNo", recipeNo);
 		return "admin/recipe-success";
 	}
 	

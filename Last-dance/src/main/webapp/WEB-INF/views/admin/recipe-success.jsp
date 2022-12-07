@@ -19,7 +19,7 @@
         <div class="row mt-4">
             <div class="text-center col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
 				<a class="col-4 offset-1 btn btn-md rounded btn-warning" 
-					href="write">레시피 등록하러 가기</a>
+					href="detail/${recipeNo}">등록한 레시피 보러가기</a>
                 <a class="col-4 offset-1 btn btn-md rounded btn-warning" 
 					href="list">레시피 리스트로 가기</a>
             </div>
