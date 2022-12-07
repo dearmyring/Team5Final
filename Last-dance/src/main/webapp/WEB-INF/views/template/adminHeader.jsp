@@ -15,6 +15,16 @@
     
     <!-- js 파일 -->
     <script src="${pageContext.request.contextPath}/js/header.js"></script>
+    <script>
+    	$(function(){
+    		$(".logout-btn").click(function(e){
+    			var choice = confirm("로그아웃 하시겠습니까?");
+    			if(!choice){
+    				e.preventDefault();
+    			}
+    		});
+    	});
+    </script>
 
     <!-- Required meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -77,7 +87,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/logout">logout</a>
+                            <a class="nav-link logout-btn" href="${pageContext.request.contextPath}/admin/logout">logout</a>
                         </li>
                     </ul>
                 </div>

@@ -5,7 +5,7 @@ import java.util.List;
 import com.kh.pj.entity.RecipeImgDto;
 
 public interface RecipeImgDao {
-	void insert(RecipeImgDto recipeImgDto);
+	public void insert(RecipeImgDto recipeImgDto);
 	
-	List<Integer> find(int recipeNo);
+	public List<Integer> find(int recipeNo);
 }
