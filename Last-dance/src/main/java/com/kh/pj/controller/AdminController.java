@@ -59,7 +59,7 @@ public class AdminController {
 	
 	@GetMapping("/list")
 	public String list(
-			@ModelAttribute RecipeListSearchVO vo, 
+			@ModelAttribute(name="voPagination") RecipeListSearchVO vo, 
 			Model model) {
 		model.addAttribute("recipeList", recipeDao.adminList(vo));
 		return "admin/recipe-list";
