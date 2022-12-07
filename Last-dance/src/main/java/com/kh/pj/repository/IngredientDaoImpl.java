@@ -15,7 +15,7 @@ public class IngredientDaoImpl implements IngredientDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+		
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -62,13 +62,18 @@ public class IngredientDaoImpl implements IngredientDao {
 	}
 
 	@Override
-	public List<String> list(String ingredientCate) {
-		return sqlSession.selectList("ingredient.list", ingredientCate);
+	public List<String> list(String search) {
+		return sqlSession.selectList("ingredient.list", search);
 	}
 
 	@Override
 	public List<String> cate() {
 		return sqlSession.selectList("ingredient.cate");
+	}
+
+	@Override
+	public IngredientDto findIngredient(String ingredientName) {
+		return sqlSession.selectOne("ingredient.get",ingredientName);
 	}
 
 }
