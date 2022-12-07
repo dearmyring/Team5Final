@@ -1,6 +1,5 @@
 package com.kh.pj.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -158,4 +157,28 @@ public class AdminController {
 		model.addAttribute("recipeImgList", recipeImgDao.find(recipeNo));
 		return "admin/recipe-detail";
 	}
+	
+	@GetMapping("/update")
+	public String update() {
+		return "admin/recipe-update";
+	}
+	
+	@PostMapping("/update")
+	public String update(
+			@ModelAttribute RecipeDto recipeDto, 
+			@RequestParam List<String> recipeContentText,
+			@RequestParam List<Integer> recipeContentAttachmentNo,
+			@RequestParam List<String> recipeIngredientName,
+			@RequestParam List<Integer> recipeAttachmentNo,
+			RedirectAttributes attr,
+			HttpSession session) {
+		return "redirect:detail";
+	}
+	
+	@GetMapping("/delete/{recipeNo}")
+	public String delete(@PathVariable int recipeNo) {
+		recipeDao.delete(recipeNo);
+		return "redirect:../list";
+	}
+	
 }

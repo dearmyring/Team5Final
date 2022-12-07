@@ -29,4 +29,19 @@ ${recipeContentDto.recipeContentText}
 </c:forEach>
 <br>
 
+<a href="../update?recipeNo=${recipeDto.recipeNo}">수정</a>
+<a class="delete-btn" href="../delete/${recipeDto.recipeNo}">삭제</a>
+
+<script>
+    $(function(){
+    	$(".delete-btn").click(function(e){
+    		
+    		var choice = confirm("정말 삭제하시겠습니까?");
+    		if(!choice){
+    			e.preventDefault();
+    		}
+    	});
+    });
+</script>
+
 <jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

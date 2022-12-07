@@ -56,7 +56,6 @@
 	<button class="recipe-search-btn" type="button">검색</button>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
     $(function(){
     	/* 레시피 검색창에서 엔터치면 검색 */

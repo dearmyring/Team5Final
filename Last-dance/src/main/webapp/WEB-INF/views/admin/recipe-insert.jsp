@@ -106,7 +106,6 @@
 </form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
     $(function(){
     	/* 레시피 등록 우선 비활성화 */
