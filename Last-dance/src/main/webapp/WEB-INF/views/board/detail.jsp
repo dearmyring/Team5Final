@@ -183,20 +183,6 @@
 					<td>
 						${boardDto.boardTitle}
 						
-						<!-- 좋아요 하트 -->
-						<c:if test="${isLike == null}">
-							<a class="heart">♥</a>
-						</c:if>
-						<c:if test="${isLike == true}">
-							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♥</a>
-						</c:if>
-						<c:if test="${isLike == false}">
-							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♡</a>
-						</c:if>
-						
-						<!-- 좋아요 개수 -->
-						${likeCount}, ${boardDto.boardLike}		
-		
 					</td>
 				</tr>
 				<tr>
@@ -252,28 +238,34 @@
 			</tbody>
 			<tfoot>
 				<tr>
+					
 					<td colspan="2" align="right">
 						
 						<c:if test="${loginId != null}">
+						<!-- 좋아요 하트 -->
+						<c:if test="${isLike == null}">
+							<a class="heart">♥</a>
+						</c:if>
+						<c:if test="${isLike == true}">
+							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♥</a>
+						</c:if>
+						<c:if test="${isLike == false}">
+							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♡</a>
+						</c:if>
+						
+						<!-- 좋아요 개수 -->
+						${likeCount}, ${boardDto.boardLike}		
 						<a class="btn btn-positive" href="write">글쓰기</a>
 						<a class="btn btn-positive" href="write?boardParent=${boardDto.boardNo}">답글쓰기</a>
+						
 						</c:if>
 						
 						<%--
 							관리자는 삭제만, 회원은 자신의 글만 수정/삭제 가능하도록 처리
 						 --%>
 						<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
-						<c:set var="admin" value="${mg == '관리자'}"></c:set>
 						
-						<c:if test="${owner}">
-						<a class="btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정하기</a>
-						<a class="btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>
-						</c:if>
-						
-						<c:if test="${admin}">
-						<a class="btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>
-						</c:if>
-						
+						<a class="btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정하기</a>	
 						<a class="btn btn-neutral" href="list">목록으로</a>
 					</td>
 				</tr>

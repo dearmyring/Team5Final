@@ -145,6 +145,13 @@ public class BoardController {
 //		
 //		model.addAttribute("filesList", 
 //				AttachmentDao.selectBoardFileList(boardNo));
+		String boardId = (String) session.getAttribute(SessionConstant.ID);
+		if(boardId != null) {
+			BoardLikeDto likeDto = new BoardLikeDto();
+			likeDto.setBoardLikeId(boardId);
+			likeDto.setBoardLikeNo(boardNo);
+			model.addAttribute("isLike",boardLikeDao.check(likeDto));
+		}
 		return "board/detail";
 	}
 		
