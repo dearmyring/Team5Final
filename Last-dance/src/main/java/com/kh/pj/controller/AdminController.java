@@ -17,11 +17,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.AdminDto;
+import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
 import com.kh.pj.repository.HashtagDao;
+import com.kh.pj.repository.NoticeDao;
 import com.kh.pj.repository.RecipeContentDao;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.RecipeImgDao;
@@ -46,6 +48,9 @@ public class AdminController {
 	
 	@Autowired
 	private RecipeImgDao recipeImgDao;
+	
+	@Autowired
+	private NoticeDao noticeDao;
 	
 	@GetMapping("/")
 	public String main() {
@@ -191,4 +196,27 @@ public class AdminController {
 		return "redirect:../list";
 	}
 	
+	@GetMapping("/notice/write")
+	public String write() {
+		return "admin/notice-insert";
+	}
+	
+	@PostMapping("/notice/write")
+	public String write(
+			@ModelAttribute NoticeDto noticeDto,
+			RedirectAttributes attr) {
+		int noticeNo = noticeDao.sequence();
+		noticeDto.setNoticeNo(noticeNo);
+		noticeDao.insert(noticeDto);
+		attr.addAttribute("noticeNo", noticeNo);
+		return "redirect:write-success";
+	}
+	
+	@GetMapping("/notice/write-success")
+	public String noticeWriteSuccess(
+			@RequestParam int noticeNo,
+			Model model) {
+		model.addAttribute("noticeNo", noticeNo);
+		return "admin/notice-success";
+	}
 }
