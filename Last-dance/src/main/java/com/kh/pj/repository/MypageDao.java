@@ -23,8 +23,10 @@ public interface MypageDao {
 	//프로필 사진 변경
 	public boolean editProfileImage(ProfileImageDto profileImageDto);
 	
-	//유저 정보 변경
+	//유저 정보 변경(비밀번호 포함)
 	public boolean myInfoEdit(MemberDto memberDto);
+	//유저 정보 변경(비밀번호 미포함)
+	public boolean myInfoEdit2(MemberDto memberDto);
 	
 	//회원 탈퇴
 	public boolean memberWithdrawal(String memberId);

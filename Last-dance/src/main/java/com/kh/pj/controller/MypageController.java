@@ -79,7 +79,18 @@ public class MypageController {
 	
 	@PostMapping("/infoEdit")
 	public String infoEdit(@ModelAttribute MemberDto memberDto, RedirectAttributes attr, HttpSession session) {
-		boolean result = mypageDao.myInfoEdit(memberDto);
+		boolean result;
+		
+		System.err.println(memberDto.getMemberPw().isEmpty());
+		if(memberDto.getMemberPw().isEmpty()) {
+			result = mypageDao.myInfoEdit2(memberDto);
+			System.err.println("비밀번호 미포함");
+		}
+		else {
+			result = mypageDao.myInfoEdit(memberDto); 
+			System.err.println("비밀번호 포함");
+		}
+		
 		if(result) {
 			return "redirect:list";
 		}
@@ -87,6 +98,7 @@ public class MypageController {
 			attr.addAttribute("memberId", session.getAttribute("loginId"));
 			return "redirect:myInfo";
 		}
+		
 	}
 	
 	

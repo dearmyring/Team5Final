@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.AttachmentDto;
@@ -18,6 +19,9 @@ public class MypageDaoImpl implements MypageDao {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	//유저 정보
 	@Override
@@ -47,13 +51,24 @@ public class MypageDaoImpl implements MypageDao {
 		return result > 0;
 	}
 	
-	//유저 정보 변경
+	//유저 정보 변경(비밀번호 포함)
 	@Override
 	public boolean myInfoEdit(MemberDto memberDto) {
+		String encode = passwordEncoder.encode(memberDto.getMemberPw());
+		memberDto.setMemberPw(encode);
+		
 		int result = sqlSession.update("mypage.editInfo", memberDto);
 		
 		return result > 0;
 	}
+	
+	//유저 정보 변경(비밀번호 미포함)
+	@Override
+	public boolean myInfoEdit2(MemberDto memberDto) {
+		int result = sqlSession.update("mypage.editInfo2", memberDto);
+		return result > 0;
+	}
+	
 	
 	//회원 탈퇴
 	@Override

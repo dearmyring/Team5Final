@@ -38,11 +38,17 @@
 		select member_pw from member where member_id = #{memberId}
 	</select>
 	
-	<!-- 회원정보 수정 -->
+	<!-- 회원정보 수정(비밀번호 포함) -->
 	<update id="editInfo" parameterType="MemberDto">
 		update member set member_pw = #{memberPw}, member_nick = #{memberNick}, 
 		member_gender = #{memberGender}, member_phone = #{memberPhone} 
 		where member_id = #{memberId}
+	</update>
+	
+	<!-- 회원정보 수정(비밀번호 미포함) -->
+	<update id="editInfo2" parameterType="MemberDto">
+		update member set member_phone=#{memberPhone}, member_nick=#{memberNick}, 
+		member_gender=#{memberGender} where member_id =#{memberId}
 	</update>
 	
 	<!-- 회원 탈퇴 -->
