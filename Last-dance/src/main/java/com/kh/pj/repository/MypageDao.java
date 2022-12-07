@@ -40,6 +40,6 @@ public interface MypageDao {
 	public MyLikeListCountVO myLikeListCount(String memberId);
 	
 	//비밀번호 확인
-	public String pwConfirm(String memberId);
+	public MemberDto pwConfirm(String memberId);
 
 }

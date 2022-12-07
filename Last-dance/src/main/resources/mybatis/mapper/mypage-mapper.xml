@@ -34,7 +34,7 @@
 	
 	
 	<!-- 비밀번호 확인 -->
-	<select id="pwConfirm" parameterType="String" resultType="String">
+	<select id="pwConfirm" parameterType="String" resultType="MemberDto">
 		select member_pw from member where member_id = #{memberId}
 	</select>
 	

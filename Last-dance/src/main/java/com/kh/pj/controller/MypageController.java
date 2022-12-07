@@ -3,6 +3,7 @@ package com.kh.pj.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,9 @@ public class MypageController {
 	
 	@Autowired
 	private MypageDao mypageDao;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	
 	@GetMapping("/list")
@@ -47,9 +51,14 @@ public class MypageController {
 	@PostMapping("/pwConfirm")
 	public String pwConfirm(@RequestParam String inputPw, HttpSession session) {
 		String loginId = (String) session.getAttribute("loginId");
-		String memberPw = mypageDao.pwConfirm(loginId);
 		
-		if(memberPw.equals(inputPw)) {
+		//디비에서 가져온 비밀번호
+		MemberDto memberPw = mypageDao.pwConfirm(loginId);
+		
+		
+		boolean judge = encoder.matches(inputPw, memberPw.getMemberPw());
+		
+		if(judge) {
 			return "redirect:myInfo?memberId="+loginId;
 		}
 		else {

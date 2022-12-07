@@ -96,7 +96,7 @@ public class MypageDaoImpl implements MypageDao {
 	
 	//비밀번호 확인
 	@Override
-	public String pwConfirm(String memberId) {
+	public MemberDto pwConfirm(String memberId) {
 		
 		return sqlSession.selectOne("mypage.pwConfirm", memberId);
 	}
