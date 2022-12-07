@@ -148,7 +148,14 @@ public class AdminController {
 	public String detail(
 			@PathVariable int recipeNo, 
 			Model model) {
+		//레시피 정보
 		model.addAttribute("recipeDto", recipeDao.adminDetail(recipeNo));
+		//레시피 내용 정보
+		model.addAttribute("recipeContentList", recipeContentDao.find(recipeNo));
+		//레시피 재료 정보
+		model.addAttribute("recipeIngredientList", recipeIngredientDao.find(recipeNo));
+		//레시피 썸네일 사진 정보
+		model.addAttribute("recipeImgList", recipeImgDao.find(recipeNo));
 		return "admin/recipe-detail";
 	}
 }

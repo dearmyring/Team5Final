@@ -17,5 +17,6 @@ public interface RecipeIngredientDao {
 	//레시피 재료 삭제
 	boolean delete(String recipeIngredientName);
 	
-
+	//레시피 디테일에 전체 재료 출력
+	List<String> find(int recipeNo);
 }
