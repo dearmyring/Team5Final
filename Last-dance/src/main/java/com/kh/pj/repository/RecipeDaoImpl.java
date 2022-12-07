@@ -41,7 +41,7 @@ public class RecipeDaoImpl implements RecipeDao {
 	
 	//레시피 목록조회(SELECT)
 	@Override
-	public List<RecipeDto> recipeList(String recipeTitle) {
+	public List<RecipeDto> list(String recipeTitle) {
 		return sqlSession.selectList("recipe.list");
 
 	}
