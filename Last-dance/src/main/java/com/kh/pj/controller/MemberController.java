@@ -6,12 +6,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.repository.MemberDao;
@@ -58,7 +60,7 @@ public class MemberController {
 	
 	@GetMapping("/join_success")
 	public String joinSuccess() {
-		return "member/success";
+		return "member/join_success";
 	}
 	
 	@GetMapping("/login")
@@ -72,7 +74,6 @@ public class MemberController {
 		if(findDto == null) {
 			return "redirect:login?error";
 		}
-		// 비밀번호 검사
 		boolean judge = encoder.matches(inputDto.getMemberPw(), findDto.getMemberPw());
 		
 		if(judge) {
@@ -81,7 +82,8 @@ public class MemberController {
 			// 로그인 시각 업데이트
 			memberDao.updateLoginTime(inputDto.getMemberId());
 			return "redirect:/";
-		} else {
+		} 
+		else {
 			return "redirect:login?error";
 		}
 	}
@@ -91,6 +93,39 @@ public class MemberController {
 		session.removeAttribute(SessionConstant.ID);
 		session.removeAttribute(SessionConstant.NICK);
 		return "redirect:/";
+	}
+	
+	@GetMapping("/find_pw")
+	public String findPw() {
+		return "member/find_pw";
+	}
+	
+	@PostMapping("/find_pw")
+	public String findPw(
+			Model model,
+			@RequestParam String memberId,
+			RedirectAttributes attr) {
+		model.addAttribute("memberDto", memberDao.selectOneId(memberId));
+		attr.addAttribute("memberId", memberId);
+		return "redirect:edit_pw";
+	}
+	
+	@GetMapping("/edit_pw")
+	public String editPw(Model model,
+			@RequestParam(required = false) String memberId) {
+		model.addAttribute("memberDto", memberDao.selectOneId(memberId));
+		return "member/edit_pw";
+	}
+	
+	@PostMapping("/edit_pw")
+	public String editPw(@ModelAttribute MemberDto memberDto) {
+		memberDao.editPw(memberDto);
+		return "redirect:edit_success";
+	}
+	
+	@GetMapping("/edit_success")
+	public String editSuccess() {
+		return "member/edit_success";
 	}
 	
 	
