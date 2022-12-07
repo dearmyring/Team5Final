@@ -67,6 +67,14 @@ public class AdminController {
 		return "redirect:/admin/";
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute(SessionConstant.ID);
+		session.removeAttribute(SessionConstant.NICK);
+		
+		return "redirect:/admin/login";
+	}
+	
 	@GetMapping("/list")
 	public String list(
 			@ModelAttribute(name="voPagination") RecipeListSearchVO vo, 
@@ -172,6 +180,8 @@ public class AdminController {
 			@RequestParam List<Integer> recipeAttachmentNo,
 			RedirectAttributes attr,
 			HttpSession session) {
+		
+		attr.addAttribute("recipeNo", recipeDto.getRecipeNo());
 		return "redirect:detail";
 	}
 	

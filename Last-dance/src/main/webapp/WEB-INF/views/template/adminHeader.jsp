@@ -67,10 +67,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Pricing</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-
                         <!-- 드롭다운 메뉴 -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
@@ -79,6 +75,9 @@
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/list">목록</a>
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/write">등록</a>
                             </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/logout">logout</a>
                         </li>
                     </ul>
                 </div>
