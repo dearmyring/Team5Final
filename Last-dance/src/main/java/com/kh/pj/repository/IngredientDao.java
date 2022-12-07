@@ -14,6 +14,9 @@ public interface IngredientDao {
 	//재료 조회
 	List<IngredientDto> IngredientList(String IngredientName);
 	
+	//재료 가져오기
+	IngredientDto findIngredient(String ingredientName);
+	
 	//재료 삭제
 	boolean delete(String IngredientName);
 

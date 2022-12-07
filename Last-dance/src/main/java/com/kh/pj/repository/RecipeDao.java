@@ -16,7 +16,7 @@ public interface RecipeDao {
 	boolean update(RecipeDto recipeDto);
 	
 	//레시피 조회
-	List<RecipeDto> recipeList(String recipeTitle);
+	List<RecipeDto> list(String recipeTitle);
 	
 	//레시피 삭제
 	boolean delete(int recipeNo);
