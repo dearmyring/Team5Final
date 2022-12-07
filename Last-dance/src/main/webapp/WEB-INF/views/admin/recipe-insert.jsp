@@ -9,10 +9,9 @@
 	<h3>레시피등록</h3>
 </div>
 
-<form action="write" method="post">
+<form action="write" method="post" class="recipe-insert-form">
 
 <div>
-	<input type="hidden" name="recipeNick" value="${loginNick}">
 	레시피 제목 <input type="text" name="recipeTitle">
 </div>
 
@@ -24,7 +23,7 @@
 	레시피 정보 시간 <select name="recipeTime">
 		<option value="">시간</option>
 		<c:forEach var="i" begin="5" step="5" end="115">
-			<option value="i">${i}분</option>
+			<option value="${i}">${i}분</option>
 		</c:forEach>
 		<option value="120">120분 이상</option>
 	</select>
@@ -63,13 +62,13 @@
 	</textarea> 
 </div>
 
-<c:forEach var="num" begin="1" end="10">
+<c:forEach var="no" begin="1" end="10">
 	<div class="content-page">
-		Step<fmt:formatNumber value="${num}" minIntegerDigits="2"/> 
+		Step<fmt:formatNumber value="${no}" minIntegerDigits="2"/> 
 		<textarea name="recipeContentText"></textarea>
 		<input type="file" class="file-input" accept=".jpg, .png, .gif">
 		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200"><br>
-		<input type="hidden" name="recipeContentAttachmentNo">
+		<input type="hidden" class="img-no" name="recipeContentAttachmentNo">
 		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
 		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
 	</div>
@@ -80,9 +79,12 @@
 	<button type="button">사진 한 번에 넣기</button>
 	<button type="button">사진 모두 지우기</button>
 	<br>
-	<c:forEach begin="1" end="4">
-		<input type="file" class="file-input" accept=".jpg, .png, .gif">
-<!-- 		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200"> -->
+	<c:forEach var="no" begin="1" end="4">
+		<div>
+			<input type="file" class="file-input" accept=".jpg, .png, .gif">
+			<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
+			<input type="hidden" class="img-no" name="recipeAttachmentNo">
+		</div>
 	</c:forEach>
 </div>
 
@@ -107,6 +109,45 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
     $(function(){
+//     	$("[type=submit]").click(function(){
+//     		var recipeTitle = $("[name=recipeTitle]").val();
+//     		var recipeInfo = $("[name=recipeInfo]").val();
+//     		var recipeTime = $("[name=recipeTime]").val();
+//     		var recipeHashTag = $("[name=recipeHashtag]").val();
+//     		var recipeDifficulty = $("[name=recipeDifficulty]").val();
+    		
+//     		var recipeData = {
+//     				recipeTitle:recipeTitle,
+//     				recipeInfo:recipeInfo,
+//     				recipeTime:recipeTime,
+//     				recipeHashtag:recipeHashTag,
+//     				recipeDifficulty:recipeDifficulty
+//     		};
+    		
+//     		$.ajax({
+//     			url: "http://localhost:8888/rest/recipe-write",
+//     			method: "post",
+//     			contentType: "application/json",
+//     			data: JSON.stringify(recipeData),
+//     			success: function(resp){
+//     				console.log("레시피 등록 성공");
+//     			}
+//     		});
+//     	});
+    	
+    	/* 상태객체 true이면 form 활성화 시킬 예정 */
+//         var recipeStatus = {
+//             recipeTitleStatus : false,
+//             recipeInfoStatus : false, 
+//             recipeTimeStatus : false, 
+//             recipeHashtagStatus : false
+//         };
+    	
+    	/* 레시피 등록 우선 비활성화 */
+//     	$(".recipe-insert-form").submit(function(e){
+//     		e.preventDefault();
+//     	});
+    	
     	/* 재료 입력 비동기 불러오기 */
     	$(".input-ingredient").on("input", function(){
             setTimeout(() => {
@@ -126,16 +167,17 @@
                                     .text(resp[i]);
                                 
                                 pTag.click(function(){
-                                    console.log($(this));
                                     var xMark = $("<i>").addClass("fa-solid fa-xmark");
                                     xMark.click(function(){
                                         $(this).parent().remove();
                                     });
                                     
                                     var p = $("<p>")
-                                        .attr("name", "recipeIngredientName")
-                                        .text($(this).text());
-                                    p.append(xMark);
+                       				var input = $("<input>")
+										.attr("readolny", true)
+	                                    .attr("name", "recipeIngredientName")
+	                                    .val($(this).text());
+                                    p.append(input).append(xMark);
                                     $(".add-ingredient").append(p);
                                     $(".ingredientSearch").remove();
                                     $(".input-ingredient").val("");
@@ -151,17 +193,19 @@
 
     	/* 재료 엔터 등록 */
     	$(".input-ingredient").keydown(function(e){
-    		$(".ingredientSearch").remove();
-    		var search = $(this).val();
     		if(e.keyCode == 13) {
+	    		$(".ingredientSearch").remove();
+	    		var search = $(this).val();
 				var xMark = $("<i>").addClass("fa-solid fa-xmark");
 				xMark.click(function(){
 					$(this).parent().remove();
 				});
 				var p = $("<p>")
+				var input = $("<input>")
+					.attr("readonly", "readonly")
 					.attr("name", "recipeIngredientName")
-					.text(search);
-				p.append(xMark);
+					.val(search);
+				p.append(input).append(xMark);
 				$(".add-ingredient").append(p);
 				$(this).val("");
     		}
@@ -169,7 +213,7 @@
     	
     	/* 전체 삭제 클릭 시 등록된 재료 전부 삭제 */
     	$(".difficulty-clear").click(function(){
-    		$("[name=recipeIngredientName]").remove();
+    		$("[name=recipeIngredientName]").parent().remove();
     	});
     	
     	/* 순서 추가 버튼 클릭 시 다음 단계 등록 영역 생성 */
@@ -187,14 +231,6 @@
     		$(this).parent().prev().find(".step-minus-btn").show();
     		$(this).parent().hide();
     	});
-    	
-    	/* 상태객체 true이면 form 활성화 시킬 예정 */
-        var recipeStatus = {
-            recipeTitleStatus : false,
-            recipeInfoStatus : false, 
-            recipeTimeStatus : false, 
-            recipeHashtagStatus : false
-        };
 
     	/* 파일 업로드 비동기 처리 구현 중.. */
         $(".file-input").change(function(){
@@ -210,6 +246,9 @@
                     contentType: false,
                     success: function(resp){
                     	that.next().attr("src", resp);
+                    	var attachmentNo = parseInt((resp.split("download/"))[1]);
+                    	console.log(attachmentNo);
+						that.parent().find(".img-no").val(attachmentNo);
                     }
                 });
             }

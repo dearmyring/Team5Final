@@ -6,12 +6,12 @@
   
 <mapper namespace="recipeContent">
 	<select id="sequence" resultType="int">
-		select recipe_content_seq.nextval from dual;
+		select recipe_content_seq.nextval from dual
 	</select>
 	
 	<insert id="insert" parameterType="RecipeContentDto">
 		insert into recipe_content(recipe_content_no, recipe_no, recipe_content_attachment_no, recipe_content_text) 
-		values(#{recipeContentNo}, #{recipeNo}, #{recipeContetnAttachmentNo}, #{recipeContentText})
+		values(${recipeContentNo}, ${recipeNo}, ${recipeContentAttachmentNo}, #{recipeContentText})
 	</insert>
 
 </mapper>

@@ -12,9 +12,9 @@
 	</select>
 
 	<!--  추가  -->
-	<insert id = "insert" parameterType = "RecipeDto">
+	<insert id = "write" parameterType = "RecipeDto">
 		insert into recipe(recipe_no, recipe_nick, recipe_title, recipe_info, recipe_time, recipe_hashtag, recipe_difficulty)
-		values(#{recipeNo}, #{recipeNick}, #{recipeTitle}, #{recipeInfo}, #{recipeTime}, #{recipeHashtag} #{recipeDifficulty})
+		values(${recipeNo}, #{recipeNick}, #{recipeTitle}, #{recipeInfo}, ${recipeTime}, #{recipeHashtag}, #{recipeDifficulty})
 	</insert>
 	
 	<!--  목록 조회  -->

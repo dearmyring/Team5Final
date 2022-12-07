@@ -1,5 +1,6 @@
 package com.kh.pj.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -19,9 +20,13 @@ import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.AdminDto;
 import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.entity.RecipeImgDto;
+import com.kh.pj.entity.RecipeIngredientDto;
 import com.kh.pj.repository.HashtagDao;
 import com.kh.pj.repository.RecipeContentDao;
 import com.kh.pj.repository.RecipeDao;
+import com.kh.pj.repository.RecipeImgDao;
+import com.kh.pj.repository.RecipeIngredientDao;
 import com.kh.pj.vo.RecipeListSearchVO;
 
 @Controller
@@ -36,6 +41,12 @@ public class AdminController {
 	
 	@Autowired
 	private RecipeContentDao recipeContentDao;
+	
+	@Autowired
+	private RecipeIngredientDao recipeIngredientDao;
+	
+	@Autowired
+	private RecipeImgDao recipeImgDao;
 	
 	@GetMapping("/")
 	public String main() {
@@ -74,19 +85,49 @@ public class AdminController {
 	@PostMapping("/write")
 	public String write(
 			@ModelAttribute RecipeDto recipeDto, 
-			@ModelAttribute List<RecipeContentDto> recipeContentList,
-			RedirectAttributes attr) {
-		//레시피 번호 뽑기 넣기
+			@RequestParam List<String> recipeContentText,
+			@RequestParam List<Integer> recipeContentAttachmentNo,
+			@RequestParam List<String> recipeIngredientName,
+			@RequestParam List<Integer> recipeAttachmentNo,
+			RedirectAttributes attr,
+			HttpSession session) {
+		//레시피 번호 뽑아서 넣기
 		int recipeNo = recipeDao.recipeSequence();
 		recipeDto.setRecipeNo(recipeNo);
+		//로그인 닉네임 뽑아서 넣기
+		String loginNick = (String)session.getAttribute(SessionConstant.NICK);
+		recipeDto.setRecipeNick(loginNick);
+		//레시피 등록
 		recipeDao.write(recipeDto);
 		
 		//레시피 내용 개수만큼 반복해서 레시피 내용 시퀀스 뽑고 넣기
-		for(RecipeContentDto content : recipeContentList) {
-			int recipeContentNo = recipeContentDao.sequence();  
-			content.setRecipeContentNo(recipeContentNo);
-			content.setRecipeNo(recipeNo);
-			recipeContentDao.insert(content);
+		for(int i=0; i<recipeContentText.size(); i++){
+			int recipeContentNo = recipeContentDao.sequence();
+			RecipeContentDto contentDto = RecipeContentDto.builder()
+						.recipeContentNo(recipeContentNo)
+						.recipeNo(recipeNo)
+						.recipeContentAttachmentNo(recipeContentAttachmentNo.get(i))
+						.recipeContentText(recipeContentText.get(i))
+					.build();
+			recipeContentDao.insert(contentDto);
+		}
+		
+		//레시피 썸네일 개수만큼 반복해서 사진 첨부
+		for(int attachmentNo : recipeAttachmentNo) {
+			RecipeImgDto imgDto = RecipeImgDto.builder()
+						.recipeAttachmentNo(attachmentNo)
+						.recipeNo(recipeNo)
+					.build();
+			recipeImgDao.insert(imgDto);
+		}
+		
+		//레시피 재료 개수만큼 첨부
+		for(String ingredient : recipeIngredientName) {
+			RecipeIngredientDto ingredientDto = RecipeIngredientDto.builder()
+					.recipeIngredientName(ingredient)
+					.recipeNo(recipeNo)
+			.build();
+			recipeIngredientDao.insert(ingredientDto);
 		}
 		
 		//레시피 등록완료 페이지에 파라미터 넘겨주기
