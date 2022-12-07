@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<div>
-		<a href="#">로그인하러 가기</a>
+		<a href="../member/login">로그인하러 가기</a>
 	</div>
 </body>
 </html>

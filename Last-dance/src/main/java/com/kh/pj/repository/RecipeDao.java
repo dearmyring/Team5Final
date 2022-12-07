@@ -3,6 +3,7 @@ package com.kh.pj.repository;
 import java.util.List;
 
 import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.vo.RecipeListSearchVO;
 
 public interface RecipeDao {
 	//레시피 등록
@@ -26,5 +27,8 @@ public interface RecipeDao {
 	//레시피 조회수 증가
 	RecipeDto click(int noticeNo);
 	boolean updateClickCount(int noticeNo);
-
+	
+	//관리자 레시피 조회
+	List<RecipeDto> adminList(RecipeListSearchVO vo);
+	RecipeDto adminDetail(int recipeNo);
 }
