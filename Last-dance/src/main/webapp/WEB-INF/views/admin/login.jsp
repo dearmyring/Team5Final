@@ -24,7 +24,7 @@
 
         <div class="row mt-5">
             <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
-				<img class="w-100" src="/img/test-img.jpg" class="logo"/>
+				<img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
             </div>
 		</div>
 		
