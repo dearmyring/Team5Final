@@ -16,8 +16,8 @@ public interface BoardDao {
 	boolean delete(int boardNo);
 	
 	
-	BoardListVO find(int boardNo);
-	
+	//상세,좋아요
+	BoardListVO selectOne(int boardPostNo);
 	BoardListVO click(int boardNo);
 	boolean updateClickCount(int boardNo);
 

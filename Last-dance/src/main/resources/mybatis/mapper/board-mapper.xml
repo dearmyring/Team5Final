@@ -17,10 +17,11 @@
 	<insert id="insert" parameterType="BoardDto">
 		insert into board(
 		board_no,
+		board_id,
 		board_title,
 		board_content)
-		values(
-		board_seq.nextval,
+		values(${boardNo},
+		#{boardId},
 		#{boardTitle},
 		#{boardContent}
 		)

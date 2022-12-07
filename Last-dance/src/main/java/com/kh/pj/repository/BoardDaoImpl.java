@@ -1,10 +1,14 @@
 package com.kh.pj.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.BoardDto;
@@ -66,14 +70,44 @@ public class BoardDaoImpl implements BoardDao {
 		return count > 0;
 	}
 
+	
+private ResultSetExtractor<BoardListVO> detailExtractor = new ResultSetExtractor<BoardListVO>() {
+		
+		@Override
+		public BoardListVO extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if(rs.next()) {
+				return BoardListVO.builder()
+						.boardNo(rs.getInt("board_no"))
+						.memberNick(rs.getString("member_nick"))
+						.boardId(rs.getString("board_id"))
+						.boardTitle(rs.getString("board_title"))
+						.boardContent(rs.getString("board_content"))
+						.boardClick(rs.getInt("board_click"))
+						.boardWriteTime(rs.getDate("board_writetime"))
+						.boardEditTime(rs.getDate("board_edittime"))
+						.boardBlind(rs.getString("board_blind"))
+						.memberBadge(rs.getString("member_badge"))
+//						.replyNo(rs.getInt("reply_no"))
+//						.profileAttachmentNo(rs.getInt("profile_attachment_no"))
+//						.attachment_no(rs.getInt("attachment_no"))
+						.build();
+			}
+			else {
+				return null;
+			}
+		}
+	};
+	
+	
+	
 	@Override
-	public BoardListVO find(int boardNo) {
-		BoardListVO boardListVO = sqlSession.selectOne("board.get", boardNo);
-		if (boardListVO == null)
-			throw new TargetNotFoundException();
-		return boardListVO;
-	}
-
+	public BoardListVO selectOne(int boardNo) {
+		String sql="select"
+				+ " board.*,member_nick,member_badge"
+				+ " from board left outer join member on board_id=member_id where board_no=?";
+		Object[]param = {boardNo};
+		return jdbcTemplate.query(sql, detailExtractor,param);
+		}
 
 	@Override
 	public List<BoardListVO> boardList(String memberNick) {
@@ -85,7 +119,7 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public BoardListVO click(int boardNo) {
 		this.updateClickCount(boardNo);
-		return this.find(boardNo);
+		return this.selectOne(boardNo);
 	}
 
 	@Override
@@ -96,11 +130,11 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	@Override
-	public void connectAttachment(int boardOriginNo, int boardAttachmentNo) {
+	public void connectAttachment(int boardNo, int boardAttachmentNo) {
 		String sql = "insert into board_img("
-							+ "board_origin_no, board_attachment_no"
+							+ "board_no, board_attachment_no"
 						+ ") values(?, ?)";
-		Object[] param = {boardOriginNo, boardAttachmentNo};
+		Object[] param = {boardNo, boardAttachmentNo};
 		jdbcTemplate.update(sql, param);
 	}
 

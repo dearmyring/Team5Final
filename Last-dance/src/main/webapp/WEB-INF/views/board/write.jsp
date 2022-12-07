@@ -40,6 +40,7 @@
 		<label>첨부파일(1개당 1MB. 최대 10MB 가능)</label>
 		<input class="input w-100 file-input" type="file" name="attachment" multiple>
 		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
+		<input type="hidden" class="img-no" name="boardAttachmentNo">
 	</div>
 	
 	<div class="row right">
@@ -54,6 +55,7 @@
     $(function(){
         //목표: 파일이 선택되면 해당하는 파일을 서버에 업로드 
         $(".file-input").change(function(){
+        	var that = $(this);
                 //console.log("변화 감지!");
                 //console.log(this.filed);//선택된 파일 리스트
                 if(this.files.length>0){
@@ -77,7 +79,9 @@
                         processData: false,
                         contentType: false,
                         success: function(resp){
-                            $(".preview").attr("src", resp);
+                            that.next().attr("src", resp);
+                            var attachmentNo = parseInt((resp.split("download/"))[1]);
+                      		that.parent().find(".img-no").val(attachmentNo);
                         }
                     });
                 }
