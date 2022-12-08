@@ -19,4 +19,7 @@ public interface NoticeDao {
 	
 	//공지사항 수정
 	public void update(NoticeDto noticeDto);
+	
+	//공지사항 삭제
+	public void delete(int noticeNo);
 }

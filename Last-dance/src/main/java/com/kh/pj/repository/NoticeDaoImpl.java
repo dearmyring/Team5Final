@@ -38,4 +38,9 @@ public class NoticeDaoImpl implements NoticeDao{
 	public void update(NoticeDto noticeDto) {
 		sqlSession.update("notice.update", noticeDto);
 	}
+
+	@Override
+	public void delete(int noticeNo) {
+		sqlSession.delete("notice.delete", noticeNo);
+	}
 }

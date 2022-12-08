@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class RecipeListSearchVO {
-	private String sort;//정렬기준
+	private String sort = "recipe_no desc";//정렬기준 다른 일 없으면 번호 높은 순 
 	
 	private String type;//컬럼명
 	private String keyword;//검색어

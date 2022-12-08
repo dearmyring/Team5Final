@@ -12,10 +12,31 @@
 
 <div class="mt-5">&nbsp;</div>
 <h3>공지사항 상세</h3>
-${noticeDto.noticeTitle}
-${noticeDto.noticeContent}
-${noticeDto.noticeNick}
 
+<table class="table">
+	<tbody>
+		<tr>
+			<th>No.</th>
+			<td>${noticeDto.noticeNo}</td>
+			<th>조회수</th>
+			<td>${noticeDto.noticeClick}</td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td colspan="3">${noticeDto.noticeNick}</td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td colspan="3">${noticeDto.noticeTitle}</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td colspan="3">${noticeDto.noticeContent}</td>
+		</tr>
+	</tbody>
+</table>
+
+작성시간
 <c:set var="writeCurrent">
 	<fmt:formatDate value="${noticeDto.noticeWritetime}" pattern="yyyy-MM-dd"/>
 </c:set>
@@ -31,6 +52,7 @@ ${noticeDto.noticeNick}
 </c:choose>
 
 <c:if test="${noticeDto.noticeEdittime != null}">
+수정시간
 	<c:set var="editCurrent">
 		<fmt:formatDate value="${noticeDto.noticeEdittime}" pattern="yyyy-MM-dd"/>
 	</c:set>

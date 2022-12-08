@@ -15,6 +15,8 @@
     
     <!-- js 파일 -->
     <script src="${pageContext.request.contextPath}/js/header.js"></script>
+    <script src="${pageContext.request.contextPath}/js/checkbox.js"></script>
+    
     <script type="text/javascript">
     	$(function(){
     		$(".logout-btn").click(function(e){
@@ -92,7 +94,7 @@
                             <a class="nav-link logout-btn" href="${pageContext.request.contextPath}/admin/logout">logout</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link logout-btn" href="#">${loginNick}님</a>
+                            <a class="nav-link" href="#">${loginNick}님</a>
                         </li>
                     </ul>
                 </div>

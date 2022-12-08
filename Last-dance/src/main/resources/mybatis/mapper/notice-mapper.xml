@@ -26,4 +26,8 @@
 		update notice set notice_title=#{noticeTitle}, notice_content=#{noticeContent}, notice_edittime=sysdate 
 		where notice_no=${noticeNo}
 	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete notice where notice_no=${noticeNo}
+	</delete>
 </mapper>

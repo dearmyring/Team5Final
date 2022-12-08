@@ -256,4 +256,9 @@ public class AdminController {
 		return "redirect:detail/"+noticeDto.getNoticeNo();
 	}
 	
+	@GetMapping("/delete/{noticeNo}")
+	public String noticeDelete(@PathVariable int noticeNo) {
+		noticeDao.delete(noticeNo);
+		return "redirect:../list";
+	}
 }
