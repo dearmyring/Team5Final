@@ -204,10 +204,15 @@ public class AdminController {
 	@PostMapping("/notice/write")
 	public String write(
 			@ModelAttribute NoticeDto noticeDto,
-			RedirectAttributes attr) {
+			RedirectAttributes attr,
+			HttpSession session) {
+		String loginNick = (String)session.getAttribute(SessionConstant.NICK);
+		noticeDto.setNoticeNick(loginNick);
 		int noticeNo = noticeDao.sequence();
 		noticeDto.setNoticeNo(noticeNo);
+		
 		noticeDao.insert(noticeDto);
+		
 		attr.addAttribute("noticeNo", noticeNo);
 		return "redirect:write-success";
 	}
@@ -219,4 +224,36 @@ public class AdminController {
 		model.addAttribute("noticeNo", noticeNo);
 		return "admin/notice-success";
 	}
+	
+	@GetMapping("/notice/list")
+	public String noticeList(Model model) {
+		model.addAttribute("noticeList", noticeDao.list());
+		return "admin/notice-list";
+	}
+	
+	@GetMapping("/notice/detail/{noticeNo}")
+	public String noticeDetail(
+			@PathVariable int noticeNo,
+			Model model) {
+		model.addAttribute("noticeDto", noticeDao.find(noticeNo));
+		return "admin/notice-detail";
+	}
+	
+	@GetMapping("/notice/update")
+	public String noticeUpdate(
+			@RequestParam int noticeNo,
+			Model model) {
+		NoticeDto findDto = noticeDao.find(noticeNo);
+		model.addAttribute("noticeDto", findDto);
+		return "admin/notice-update";
+	}
+	
+	@PostMapping("/notice/update")
+	public String noticeUpdate(
+			@ModelAttribute NoticeDto noticeDto,
+			RedirectAttributes attr) {
+		noticeDao.update(noticeDto);
+		return "redirect:detail/"+noticeDto.getNoticeNo();
+	}
+	
 }

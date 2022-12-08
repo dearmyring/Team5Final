@@ -32,7 +32,7 @@ ${recipeContentDto.recipeContentText}
 <a href="../update?recipeNo=${recipeDto.recipeNo}">수정</a>
 <a class="delete-btn" href="../delete/${recipeDto.recipeNo}">삭제</a>
 
-<script>
+<script type="text/javascript">
     $(function(){
     	$(".delete-btn").click(function(e){
     		

@@ -1,5 +1,7 @@
 package com.kh.pj.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,6 +21,21 @@ public class NoticeDaoImpl implements NoticeDao{
 
 	@Override
 	public void insert(NoticeDto noticeDto) {
-		sqlSession.insert("noice.insert", noticeDto);
+		sqlSession.insert("notice.insert", noticeDto);
+	}
+
+	@Override
+	public List<NoticeDto> list() {
+		return sqlSession.selectList("notice.list");
+	}
+
+	@Override
+	public NoticeDto find(int noticeNo) {
+		return sqlSession.selectOne("notice.find", noticeNo);
+	}
+
+	@Override
+	public void update(NoticeDto noticeDto) {
+		sqlSession.update("notice.update", noticeDto);
 	}
 }
