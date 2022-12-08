@@ -10,24 +10,16 @@
 		B.*,
 		M.member_nick,
 		M.member_badge
-		from board B inner join member M on B.board_id = M.member_id 	
+		from board B inner join member M on B.board_id = M.member_id 
+		<where>
+			<if test="type != null and leyword !='' ">
+				and instr(${type},#{keyword})>0
+			</if>
+		</where>	
+		<if test = "sort !=null">
+			order by ${sort}
+		</if>
 	</select>
-
-
-	 <select id="adminList" parameterType="RecipeListSearchVO" resultType="RecipeDto">
-      select * from recipe
-      <!-- 검색 -->
-      <where>
-         <!-- 이름, 관리자 유사 대상 검색 -->
-         <if test="type != null and keyword != ''">
-            and instr(${type}, #{keyword}) > 0
-         </if>
-      </where>
-       <!-- 정렬 -->
-       <if test="sort != null">
-          order by ${sort}
-       </if>
-   </select>
 
 	<insert id="insert" parameterType="BoardDto">
 		insert into board(

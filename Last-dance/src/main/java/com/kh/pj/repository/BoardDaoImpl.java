@@ -114,18 +114,7 @@ private ResultSetExtractor<BoardListVO> detailExtractor = new ResultSetExtractor
 	public List<BoardListVO> boardList(String memberNick) {
 		return sqlSession.selectList("board.list");
 	}
-	@Override
-	public List<BoardListVO> boardClickList(String memberNick) {
-		return sqlSession.selectList("board.clicklist");
-	}
-	
-	@Override
-	public List<BoardListVO> boardLikekList(String memberNick) {
-		return sqlSession.selectList("board.likelist");
-	}
 
-	
-	
 	@Override
 	public BoardListVO click(int boardNo) {
 		this.updateClickCount(boardNo);
