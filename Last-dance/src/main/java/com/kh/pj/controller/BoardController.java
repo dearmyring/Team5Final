@@ -28,6 +28,7 @@ import com.kh.pj.repository.BoardDao;
 import com.kh.pj.repository.BoardImgDao;
 import com.kh.pj.repository.BoardLikeDao;
 import com.kh.pj.service.BoardService;
+import com.kh.pj.vo.BoardListSearchVO;
 
 @Controller
 @RequestMapping("/board")
@@ -86,9 +87,12 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/list")
-	public String list(Model model,HttpSession session) {
+	public String list(Model model,HttpSession session,
+						@ModelAttribute(name="boardListSearchVo")BoardListSearchVO vo) {
 		String memberNick =(String)session.getAttribute("memberNick");
 		model.addAttribute("boardList",boardDao.boardList(memberNick));
+		model.addAttribute("boardClickList",boardDao.boardClickList(memberNick));
+		model.addAttribute("boardLikeList",boardDao.boardLikeList(memberNick));
 		return "board/list";
 	}
 	
