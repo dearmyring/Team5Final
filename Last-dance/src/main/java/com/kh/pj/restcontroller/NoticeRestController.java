@@ -20,7 +20,7 @@ public class NoticeRestController {
 	@Autowired
 	private NoticeDao noticeDao;
 	
-	@DeleteMapping("/notice/{noticeNo}")
+	@DeleteMapping("/notice")
 	public List<NoticeDto> noticeDelete(@RequestBody List<String> noticeNoList) {
 		for(String no : noticeNoList) {
 			noticeDao.delete(Integer.parseInt(no));

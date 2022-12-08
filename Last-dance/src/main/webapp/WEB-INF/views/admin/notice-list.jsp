@@ -40,15 +40,23 @@
 				 noticeNo.push(num);
 			});
 			
-			$.ajax({
-				url: "http://localhost:8888/rest/notice",
-				method: "delete",
-				contentType: "application/json",
-				data: JSON.stringify(noticeNo),
-				success: function(resp){
-					console.log(resp);
+			var param = {};
+				for(var i=0; i<noticeNo.length; i++){
+					noticeNo:noticeNo[i]
 				}
-			});
+			
+			console.log(param);
+			
+// 			var str2 = $.param();
+			
+// 			$.ajax({
+// 				url: "http://localhost:8888/rest/notice",
+// 				method: "delete",
+// 				contentType: "application/json",
+// 				success: function(resp){
+// 					console.log(resp);
+// 				}
+// 			});
 		});
 	});
 </script>
