@@ -9,4 +9,8 @@
 		insert into recipe_img(recipe_attachment_no, recipe_no) 
 		values(${recipeAttachmentNo}, ${recipeNo})
 	</insert>
+	
+	<select id="find" parameterType="int" resultType="int">
+		select recipe_attachment_no from recipe_img where recipe_no=${recipeNo} order by recipe_attachment_no asc
+	</select>
 </mapper>

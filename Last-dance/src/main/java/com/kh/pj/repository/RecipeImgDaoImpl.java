@@ -1,5 +1,7 @@
 package com.kh.pj.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,6 +17,11 @@ public class RecipeImgDaoImpl implements RecipeImgDao{
 	@Override
 	public void insert(RecipeImgDto recipeImgDto) {
 		sqlSession.insert("recipeImg.insert", recipeImgDto);
+	}
+
+	@Override
+	public List<Integer> find(int recipeNo) {
+		return sqlSession.selectList("recipeImg.find", recipeNo);
 	}
 
 }
