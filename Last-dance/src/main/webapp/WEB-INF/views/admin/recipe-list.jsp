@@ -93,11 +93,13 @@
 					$(".recipe-list").find("tr").remove();
 					for(var i=0; i<resp.length; i++){
 						var tr = $("<tr>");
+						var check = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
+						var tdCheck = $("<td>").append(check);
 						var tdNo = $("<td>").text(resp[i].recipeNo);
 						var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle));
 						var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 						var tdNick = $("<td>").text(resp[i].recipeNick);
-						tr.append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
+						tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
 						$(".recipe-list").append(tr);
 					}
 				}
