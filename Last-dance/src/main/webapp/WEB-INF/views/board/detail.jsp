@@ -252,9 +252,8 @@
 						<c:if test="${isLike == false}">
 							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♡</a>
 						</c:if>
+						${likeCount}, ${boardDto.boardLike}	
 						
-						<!-- 좋아요 개수 -->
-						${likeCount}, ${boardDto.boardLike}		
 						<a class="btn btn-positive" href="write">글쓰기</a>
 						<a class="btn btn-positive" href="write?boardParent=${boardDto.boardNo}">답글쓰기</a>
 						

@@ -83,6 +83,7 @@ private ResultSetExtractor<BoardListVO> detailExtractor = new ResultSetExtractor
 						.boardTitle(rs.getString("board_title"))
 						.boardContent(rs.getString("board_content"))
 						.boardClick(rs.getInt("board_click"))
+						.boardLike(rs.getInt("board_like"))
 						.boardWriteTime(rs.getDate("board_writetime"))
 						.boardEditTime(rs.getDate("board_edittime"))
 						.boardBlind(rs.getString("board_blind"))
@@ -113,6 +114,15 @@ private ResultSetExtractor<BoardListVO> detailExtractor = new ResultSetExtractor
 	public List<BoardListVO> boardList(String memberNick) {
 		return sqlSession.selectList("board.list");
 	}
+	@Override
+	public List<BoardListVO> boardClickList(String memberNick) {
+		return sqlSession.selectList("board.clicklist");
+	}
+	
+	@Override
+	public List<BoardListVO> boardLikekList(String memberNick) {
+		return sqlSession.selectList("board.likelist");
+	}
 
 	
 	
@@ -137,5 +147,6 @@ private ResultSetExtractor<BoardListVO> detailExtractor = new ResultSetExtractor
 		Object[] param = {boardNo, boardAttachmentNo};
 		jdbcTemplate.update(sql, param);
 	}
+
 
 }

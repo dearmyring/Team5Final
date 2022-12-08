@@ -18,7 +18,7 @@ public class BoardLikeDaoImpl implements BoardLikeDao {
 	@Override
 	public void insert(BoardLikeDto dto) {
 		String sql = "insert into board_like"
-							+ "(board_like_no, board_like_id) values(?, ?)";
+							+ "(board_like_id, board_like_no) values(?, ?)";
 		Object[] param = {dto.getBoardLikeId(), dto.getBoardLikeNo()};
 		jdbcTemplate.update(sql, param);
 	}
@@ -26,7 +26,7 @@ public class BoardLikeDaoImpl implements BoardLikeDao {
 	@Override
 	public void delete(BoardLikeDto dto) {
 		String sql = "delete board_like "
-						+ "where board_like_no = ? and board_like_id = ?";
+						+ "where board_like_id = ? and board_like_no = ?";
 		Object[] param = {dto.getBoardLikeId(), dto.getBoardLikeNo()};
 		jdbcTemplate.update(sql, param);
 	}
@@ -34,7 +34,7 @@ public class BoardLikeDaoImpl implements BoardLikeDao {
 	@Override
 	public boolean check(BoardLikeDto dto) {
 		String sql = "select count(*) from board_like "
-							+ "where board_like_no = ? and board_like_id = ?";
+							+ "where board_like_id = ? and board_like_no = ?";
 		Object[] param = {dto.getBoardLikeId(), dto.getBoardLikeNo()};
 		int count = jdbcTemplate.queryForObject(sql, int.class, param);
 		return count == 1;//좋아요 상태면 1 아니면 0

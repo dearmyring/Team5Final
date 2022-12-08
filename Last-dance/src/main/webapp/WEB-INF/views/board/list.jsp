@@ -59,9 +59,9 @@
 				<!-- 추후 js.43번 참고해서 하기 -->
 				<option value=>정렬</option>
 				<option value="board_like"
-					<c:if test="${boardListSearchVo.sort=='board_likes'}">selected</c:if>>인기순</option>
+					<c:if test="${boardListVO.sort=='board_like'}">selected</c:if>>인기순</option>
 				<option value="board_click"
-					<c:if test="${boardListSearchVo.sort=='board_click'}">selected</c:if>>조회순</option>
+					<c:if test="${boardListVO.sort=='board_click'}">selected</c:if>>조회순</option>
 			</select>
 		</form>
 	</div>

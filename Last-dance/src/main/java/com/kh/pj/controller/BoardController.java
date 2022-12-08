@@ -159,13 +159,13 @@ public class BoardController {
 //	좋아요
 	@GetMapping("/like")
 	public String boardLike(
-				@RequestParam int boardLikeNo,
-				HttpSession session, RedirectAttributes attr
+				@RequestParam int boardNo,
+				HttpSession session, RedirectAttributes attr,BoardDto boardDto
 			) {
-		String boardLikeId = (String)session.getAttribute(SessionConstant.ID);
+		String boardId = (String)session.getAttribute(SessionConstant.ID);
 		BoardLikeDto dto = new BoardLikeDto();
-		dto.setBoardLikeId(boardLikeId);
-		dto.setBoardLikeNo(boardLikeNo);
+		dto.setBoardLikeId(boardId);
+		dto.setBoardLikeNo(boardNo);
 		
 		if(boardLikeDao.check(dto)) {//좋아요를 한 상태면
 			boardLikeDao.delete(dto);//지우세요
@@ -174,9 +174,9 @@ public class BoardController {
 			boardLikeDao.insert(dto);//추가하세요
 		}
 		
-		boardLikeDao.refresh(boardLikeNo);//조회수 갱신
+		boardLikeDao.refresh(boardNo);//조회수 갱신
 		
-		attr.addAttribute("boardLikeNo", boardLikeNo);
+		attr.addAttribute("boardNo", boardNo);
 		return "redirect:/board/detail";
 	}
 	
