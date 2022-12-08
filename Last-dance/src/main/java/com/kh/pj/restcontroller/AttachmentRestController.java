@@ -4,6 +4,7 @@ package com.kh.pj.restcontroller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,13 @@ import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -88,6 +91,14 @@ public class AttachmentRestController {
 							.build().toString())
 					.contentLength(attachmentDto.getAttachmentSize())
 				.body(resource);
+	}
+	
+	@DeleteMapping("/attachment/delete")
+	public String attachmentDelete(@RequestParam List<String> attachmentNo) {
+		for(String no : attachmentNo) {
+			attachmentDao.delete(Integer.parseInt(no));
+		}
+		return "success";
 	}
 	
 }

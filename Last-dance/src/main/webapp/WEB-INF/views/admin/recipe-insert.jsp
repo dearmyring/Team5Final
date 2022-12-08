@@ -62,9 +62,9 @@
 	</textarea> 
 </div>
 
-<c:forEach var="no" begin="1" end="10">
+<c:forEach var="no" begin="0" end="9">
 	<div class="content-page">
-		Step<fmt:formatNumber value="${no}" minIntegerDigits="2"/> 
+		Step<fmt:formatNumber value="${no+1}" minIntegerDigits="2"/> 
 		<textarea name="recipeContentText"></textarea>
 		<input type="file" class="file-input" accept=".jpg, .png, .gif">
 		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200"><br>
@@ -126,25 +126,41 @@
 
 <script type="text/javascript">
     $(function(){
-    	/* 모달 구현 중 */
-//     	const myModal = $('myModal');
-//     	const myInput = $('myInput');
-
-//     	myModal.handle('shown.bs.modal', function(){
-//     	  myInput.focus();
-//     	});
-    	
     	/* 레시피 등록 우선 비활성화 */
     	$(".recipe-insert-form").submit(function(e){
     		e.preventDefault();
     	});
 
     	/* 레시피 등록 시 빈칸 삭제 구현 중 */
-//     	$(".recipe-insert-btn").click(function(){
-//     		var contextText = [];
-    		
-//     		console.log($(".content-page").find("[name=recipeContentText]").val());
-//     	});
+    	$(".recipe-insert-btn").click(function(){
+			var contentText = $("[name=recipeContentText]");
+			var contentImg = $("[name=recipeContentAttachmentNo]");
+			
+			for(var i=0; i<contentText.length; i++){
+				
+				if(!contentText.eq(i).text() && !contentImg.eq(i).val()){
+					for(var j=i+1; j<contentText.length-i; j++){
+						if(contentText.eq(j).text() || contentImg.eq(j).val()){
+							alert("레시피 내용은 순서대로 입력해주세요.");
+							return;
+						}
+						else{
+							contentImg.eq(i).parent().remove();
+						}
+					}
+				}
+				else if(!contentText.eq(i).text() || !contentImg.eq(i).val()){
+					/* 모달 구현하기 */
+					alert("레시피 내용 사진 또는 내용을 추가해주세요.");
+					return;
+				}
+			}
+    	});
+    	
+    	/* 레시피 내용 블러 시 textarea 안에 값 넣어주기 */
+    	$("[name=recipeContentText]").blur(function(){
+    		$(this).text($(this).val());
+    	});
     	
     	/* 재료 입력 비동기 불러오기 */
     	$(".input-ingredient").on("input", function(){
@@ -254,6 +270,8 @@
                 $(".preview").attr("src", "https:/via.placeholder.com/240x180");
             }
         });
+    	
+    	/* 돌아가기 클릭 시 이미지 비동기 삭제 */
     });
 </script>
 <jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

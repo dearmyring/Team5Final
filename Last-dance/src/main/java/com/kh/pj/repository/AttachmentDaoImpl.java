@@ -26,4 +26,9 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	public AttachmentDto find(int attachmentNo) {
 		return sqlSession.selectOne("attachment.find", attachmentNo);
 	}
+
+	@Override
+	public void delete(int attachmentNo) {
+		sqlSession.delete("attachment.delete", attachmentNo);
+	}
 }
