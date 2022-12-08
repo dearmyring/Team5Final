@@ -15,12 +15,13 @@
 	<select id="cate" resultType="String">
 		select distinct(ingredient_category) from ingredient order by ingredient_category asc 
 	</select>
-
-
-	<select id="get" resultType="IngredientDto" parameterType="String">
-		select * from ingredient where ingredient_name=#{IngredientName}
-	</select>
 	
+		<select id="searchList" parameterType="String" resultType="String">
+		select ingredient_name from ingredient 
+		where instr(ingredient_name, #{ingredientName}) > 0 
+		order by ingredient_name asc
+	</select>
+
 </mapper>
 
 
