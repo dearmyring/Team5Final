@@ -6,7 +6,6 @@
 
 	<h1>홈</h1>
 	
-	
 <div>	
 	<form action="findIngredient" method="post" class="ingredient-search-form">
 
