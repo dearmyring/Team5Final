@@ -25,7 +25,7 @@ public class RecipeController {
 	public String recipeList(Model model, HttpSession session) {
 		String recipeTitle =(String)session.getAttribute("recipeTitle");
 		//model에 조회 유형에 따른 조회 결과를 첨부
-		model.addAttribute("recipeList", recipeDao.list(recipeTitle));		
+		model.addAttribute("recipeList", recipeDao.recipeList(recipeTitle));		
 		return "recipe/list";
 	}
 	

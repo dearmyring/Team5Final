@@ -5,6 +5,7 @@
 
 <div class="mt-5">&nbsp;</div>
 <h3>공지사항 리스트</h3>
+	<form class="noticeNoForm">
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -14,49 +15,47 @@
 			<th>작성자</th>
 		</tr>
 	</thead>
-	<tbody>
-<c:forEach var="noticeDto" items="${noticeList}">
-		<tr>
-			<td><input class="check-item" type="checkbox"></td>
-			<td>${noticeDto.noticeNo}</td>
-			<td><a href="detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}</a></td>
-			<td>${noticeDto.noticeNick}</td>
-		</tr>
-</c:forEach>
+	<tbody class="notice-list">
+		<c:forEach var="noticeDto" items="${noticeList}">
+			<tr>
+				<td><input class="check-item" name="noticeNo" value="${noticeDto.noticeNo}" type="checkbox"></td>
+				<td>${noticeDto.noticeNo}</td>
+				<td><a href="detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}</a></td>
+				<td>${noticeDto.noticeNick}</td>
+			</tr>
+		</c:forEach>
 	</tbody>
 </table>
+	</form>
 
 <button type="button" class="notice-async-delete">삭제하기</button>
 <a href="write">작성하기</a>
 
 <script type="text/javascript">
 	$(function(){
+		/* 체크박스 선택 삭제 시 비동기 처리 */
 		$(".notice-async-delete").click(function(){
 			
-			var noticeNo = new Array();
+			var param = $(".noticeNoForm input:checked").serialize();
 			
-			$(".check-item:checked").each(function(){
-				 var num=$(this).parent().next().text();
-				 noticeNo.push(num);
-			});
-			
-			var param = {};
-				for(var i=0; i<noticeNo.length; i++){
-					noticeNo:noticeNo[i]
+			$.ajax({
+				url: "http://localhost:8888/rest/notice?"+param,
+				method: "delete",
+				contentType: "application/json",
+				success: function(resp){
+					$(".notice-list").find("tr").remove();
+					for(var i=0; i<resp.length; i++){
+						var tr = $("<tr>");
+						var check = $("<input>").addClass("check-item").attr("name", "noticeNo").val(resp[i].noticeNo).attr("type", "checkbox");
+						var tdCheck = $("<td>").append(check);
+						var tdNo = $("<td>").text(resp[i].noticeNo);
+						var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].noticeNo).text(resp[i].noticeTitle));
+						var tdNick = $("<td>").text(resp[i].noticeNick);
+						tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdNick);
+						$(".notice-list").append(tr);
+					}
 				}
-			
-			console.log(param);
-			
-// 			var str2 = $.param();
-			
-// 			$.ajax({
-// 				url: "http://localhost:8888/rest/notice",
-// 				method: "delete",
-// 				contentType: "application/json",
-// 				success: function(resp){
-// 					console.log(resp);
-// 				}
-// 			});
+			});
 		});
 	});
 </script>
