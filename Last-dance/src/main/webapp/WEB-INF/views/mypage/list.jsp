@@ -30,7 +30,13 @@
                         
                     </li>
                     <li>
-                        <p>좋아요</p><p>${myLike.myLikeListCount}</p>
+                        <p>좋아요</p><p>${myLike}</p>
+                    </li>
+                    <li>
+                        <p>내가 쓴 글</p><p>${myWrite}</p>
+                    </li>
+                    <li>
+                        <p>읽은 레시피</p><p>${myRead}</p>
                     </li>
                 </ul>
                 <div>
@@ -41,23 +47,49 @@
         <!-- 유저 정보 카드 끝 -->
 	<div>
 	
+	<h1>최근 본 게시물</h1>
 <c:forEach var="viewList" items="${viewList}">
-	
 	<ul>
-		<li>최근 본 제목: ${viewList.recipeTitle}</li>
+		<li>조회 수: ${viewList.recipeDto.recipeClick}</li>
+		<li>좋아요 수: ${viewList.recipeDto.recipeLike}</li>
+		<li>최근 본 제목: ${viewList.recipeDto.recipeTitle}</li>
+		<li>
+			<ul>
+				<c:forEach var="ingredient" items="${viewList.recipeIngredientList}">
+					<li>
+						${ingredient.recipeIngredientName}
+					</li>
+				</c:forEach>
+			</ul>
+		</li>
 	</ul>
-	
 </c:forEach>
-
+<h1>좋아요 게시물</h1>
 <c:forEach var="likeList" items="${likeList}">
 	<ul>
-		<li>좋아요 제목: ${likeList.recipeTitle}</li>
+		<li>조회 수: ${likeList.recipeDto.recipeClick}</li>
+		<li>좋아요 수: ${likeList.recipeDto.recipeLike}</li>
+		<li>좋아요 제목: ${likeList.recipeDto.recipeTitle}</li>
+		<li>
+			<ul>
+				<c:forEach var="ingredient" items="${likeList.recipeIngredientList}">
+					<li>
+						${ingredient.recipeIngredientName}
+					</li>
+				</c:forEach>
+			</ul>
+		</li>
 	</ul>
 </c:forEach>
 
+<h1>내가 쓴 게시물</h1>
 <c:forEach var="writeList" items="${writeList}">
 	<ul>
+		<li>좋아요 수: ${writeList.boardLike}</li>
+		<li>조회 수: ${writeList.boardClick}</li>
 		<li>내가 쓴 글 제목: ${writeList.boardTitle}</li>
+		<li>작성 시간: ${writeList.boardWriteTime}</li>
+		<li>댓글 수: 힛</li>
 	</ul>
 </c:forEach>
 </div>

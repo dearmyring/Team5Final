@@ -39,6 +39,8 @@ public class MypageController {
 		model.addAttribute("writeList", mypageDao.writeList(loginId));
 		
 		model.addAttribute("myLike", mypageDao.myLikeListCount(loginId));
+		model.addAttribute("myWrite", mypageDao.myWriteCount(loginId));
+		model.addAttribute("myRead", mypageDao.readRecipeCount(loginId));
 		return "mypage/list";
 	}
 	

@@ -42,6 +42,5 @@ public class MypageRestController {
 //			System.err.println("수정");
 		}
 	}
-	//와우~~~~~~~ 셀렉트 값을 어떻게 구해오지? 18
 
 }

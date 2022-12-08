@@ -12,7 +12,7 @@ import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.ProfileImageDto;
 import com.kh.pj.entity.RecipeDto;
-import com.kh.pj.vo.MyLikeListCountVO;
+import com.kh.pj.vo.RecipeListVO;
 
 @Repository
 public class MypageDaoImpl implements MypageDao {
@@ -81,19 +81,19 @@ public class MypageDaoImpl implements MypageDao {
 
 	//내가 최근에 본 레시피
 	@Override
-	public List<RecipeDto> viewRecipeList(String memberId) {
+	public List<RecipeListVO> viewRecipeList(String memberId) {
 		
 		return sqlSession.selectList("mypage.viewList", memberId);
 	}
 	
 	//좋아요 한 레시피 리스트
 	@Override
-	public List<RecipeDto> likeRecipeList(String memberId) {
+	public List<RecipeListVO> likeRecipeList(String memberId) {
 		
-		return sqlSession.selectList("mypage.likeList", memberId);
+		return sqlSession.selectList("mypage.likeRecipeList", memberId);
 	}
 	
-	//내가 쓴 글 리시트
+	//내가 쓴 글 리스트
 	@Override
 	public List<BoardDto> writeList(String memberId) {
 		
@@ -101,13 +101,26 @@ public class MypageDaoImpl implements MypageDao {
 	}
 	
 	
-	//내가 좋아요 한 레시피
+	//내가 좋아요 한 레시피 카운트
 	@Override
-	public MyLikeListCountVO myLikeListCount(String memberId) {
+	public int myLikeListCount(String memberId) {
 		
 		return sqlSession.selectOne("mypage.myLikeListCount", memberId);
 	}
 	
+	//내가 쓴 글 카운트
+	@Override
+	public int myWriteCount(String memberId) {
+		
+		return sqlSession.selectOne("mypage.myWriteCount", memberId);
+	}
+	
+	//내가 읽은 레시피 카운트
+	@Override
+	public int readRecipeCount(String memberId) {
+		
+		return sqlSession.selectOne("mypage.readRecipeCount", memberId);
+	}
 	
 	//비밀번호 확인
 	@Override
