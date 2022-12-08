@@ -13,4 +13,6 @@ public interface MemberDao {
 	MemberDto selectOnePhone(String memberPhone);
 	// 로그인 시각 업데이트
 	boolean updateLoginTime(String memberId);
+	// 비밀번호 변경
+	boolean editPw(MemberDto memberDto);
 }

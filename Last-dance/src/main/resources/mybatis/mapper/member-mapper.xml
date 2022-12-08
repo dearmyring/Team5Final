@@ -37,4 +37,9 @@
 		update member set member_login = sysdate where member_id = #{memberId}
 	</update>
 	
+	<!-- 비밀번호 변경 -->
+	<update id="editPw" parameterType="MemberDto">
+		update member set member_pw = #{memberPw} where member_id = #{memberId}
+	</update>
+	
 </mapper>
