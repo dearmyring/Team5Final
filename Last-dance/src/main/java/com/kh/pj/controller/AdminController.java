@@ -80,7 +80,7 @@ public class AdminController {
 		return "redirect:/admin/login";
 	}
 	
-	@GetMapping("/list")
+	@GetMapping("/recipe/list")
 	public String list(
 			@ModelAttribute(name="voPagination") RecipeListSearchVO vo, 
 			Model model) {
@@ -88,13 +88,13 @@ public class AdminController {
 		return "admin/recipe-list";
 	}
 	
-	@GetMapping("/write")
+	@GetMapping("/recipe/write")
 	public String write(Model model) {
 		model.addAttribute("hashtagList", hashtagDao.list());
 		return "admin/recipe-insert";
 	}
 	
-	@PostMapping("/write")
+	@PostMapping("/recipe/write")
 	public String write(
 			@ModelAttribute RecipeDto recipeDto, 
 			@RequestParam List<String> recipeContentText,
@@ -145,10 +145,10 @@ public class AdminController {
 		//레시피 등록완료 페이지에 파라미터 넘겨주기
 		attr.addAttribute("recipeNo", recipeNo);
 		
-		return "redirect:/admin/write-success";
+		return "redirect:write-success";
 	}
 	
-	@GetMapping("/write-success")
+	@GetMapping("/recipe/write-success")
 	public String writeSuccess(
 			@RequestParam int recipeNo,
 			Model model) {
@@ -156,7 +156,7 @@ public class AdminController {
 		return "admin/recipe-success";
 	}
 	
-	@GetMapping("/detail/{recipeNo}")
+	@GetMapping("/recipe/detail/{recipeNo}")
 	public String detail(
 			@PathVariable int recipeNo, 
 			Model model) {
@@ -171,12 +171,12 @@ public class AdminController {
 		return "admin/recipe-detail";
 	}
 	
-	@GetMapping("/update")
+	@GetMapping("/recipe/update")
 	public String update() {
 		return "admin/recipe-update";
 	}
 	
-	@PostMapping("/update")
+	@PostMapping("/recipe/update")
 	public String update(
 			@ModelAttribute RecipeDto recipeDto, 
 			@RequestParam List<String> recipeContentText,
@@ -186,8 +186,7 @@ public class AdminController {
 			RedirectAttributes attr,
 			HttpSession session) {
 		
-		attr.addAttribute("recipeNo", recipeDto.getRecipeNo());
-		return "redirect:detail";
+		return "redirect:detail/"+recipeDto.getRecipeNo();
 	}
 	
 	@GetMapping("/delete/{recipeNo}")

@@ -69,8 +69,8 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                                 aria-haspopup="true" aria-expanded="false">레시피</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/list">레시피 목록</a>
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/write">레시피 등록</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/recipe/list">레시피 목록</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/recipe/write">레시피 등록</a>
                             </div>
                         </li>
                         <!-- 유저 관리 -->
