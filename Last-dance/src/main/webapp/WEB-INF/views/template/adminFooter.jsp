@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-    <div class="mt-4">&nbsp;</div>    
+
+<script type="text/javascript">
+	/* 모든 돌아가기 + 모달창 구현 예정 */
+	$(".return-btn").click(function(){
+		history.back();
+	});
+</script>
+
+
+<div class="mt-4">&nbsp;</div>    
 
 <footer class="text-center text-white">
   <!-- Grid container -->
