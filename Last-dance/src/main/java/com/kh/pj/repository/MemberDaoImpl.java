@@ -44,4 +44,11 @@ public class MemberDaoImpl implements MemberDao{
 		return result > 0;
 	}
 	
+	@Override
+	public boolean editPw(MemberDto memberDto) {
+		String enc = encoder.encode(memberDto.getMemberPw());
+		memberDto.setMemberPw(enc);
+		int result = sqlSession.update("member.editPw", memberDto);
+		return result > 0;
+	}
 }

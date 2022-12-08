@@ -29,7 +29,7 @@
 		<div>
 			<label>성별</label>
 			<c:choose>
-				<c:when test="${userInfo.memberGender}=M">
+				<c:when test="${userInfo.memberGender=='M'}">
 					<input id="genderM" type="radio" name="memberGender" value="M" checked/>
 					<label for="genderM">남</label>
 					<input id="genderF" type="radio" name="memberGender" value="F"/>
