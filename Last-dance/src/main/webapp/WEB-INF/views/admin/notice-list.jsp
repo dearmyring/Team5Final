@@ -5,7 +5,7 @@
 
 <div class="mt-5">&nbsp;</div>
 <h3>공지사항 리스트</h3>
-	<form class="noticeNoForm">
+	<form class="noticeNo-form">
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -36,7 +36,7 @@
 		/* 체크박스 선택 삭제 시 비동기 처리 */
 		$(".notice-async-delete").click(function(){
 			
-			var param = $(".noticeNoForm input:checked").serialize();
+			var param = $(".noticeNo-form input:checked").serialize();
 			
 			$.ajax({
 				url: "http://localhost:8888/rest/notice?"+param,

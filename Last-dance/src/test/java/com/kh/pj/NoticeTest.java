@@ -15,7 +15,7 @@ public class NoticeTest {
 	
 	@Test
 	public void insert() {
-		for(int i=0; i<100; i++) {
+		for(int i=0; i<15; i++) {
 			noticeDao.insert(NoticeDto.builder()
 					.noticeNo(noticeDao.sequence())
 					.noticeTitle("테스트 "+i+"번 째")
