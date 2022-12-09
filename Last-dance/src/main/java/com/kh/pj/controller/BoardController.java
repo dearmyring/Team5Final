@@ -27,6 +27,7 @@ import com.kh.pj.repository.AttachmentDao;
 import com.kh.pj.repository.BoardDao;
 import com.kh.pj.repository.BoardImgDao;
 import com.kh.pj.repository.BoardLikeDao;
+import com.kh.pj.repository.ReplyDao;
 import com.kh.pj.service.BoardService;
 import com.kh.pj.vo.BoardListSearchVO;
 
@@ -44,6 +45,8 @@ public class BoardController {
 	private AttachmentDao attachmentDao;
 	@Autowired
 	private BoardImgDao boardImgDao;
+	@Autowired
+	private ReplyDao replyDao;
 	
 	private final File directory = new File("D:/upload/kh10J");
 	@PostConstruct
@@ -89,10 +92,7 @@ public class BoardController {
 	@RequestMapping("/list")
 	public String list(Model model,HttpSession session,
 						@ModelAttribute(name="boardListSearchVo")BoardListSearchVO vo) {
-		String memberNick =(String)session.getAttribute("memberNick");
-		model.addAttribute("boardList",boardDao.boardList(memberNick));
-		model.addAttribute("boardClickList",boardDao.boardClickList(memberNick));
-		model.addAttribute("boardLikeList",boardDao.boardLikeList(memberNick));
+		model.addAttribute("boardList",boardDao.boardList(vo));
 		return "board/list";
 	}
 	
@@ -124,7 +124,6 @@ public class BoardController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int boardNo,Model model,HttpSession session) {	
 		model.addAttribute("boardImgDto", boardImgDao.find(boardNo));
-		
 		@SuppressWarnings("unchecked")
 		Set<Integer> history = (Set<Integer>)session.getAttribute("history");
 		if(history == null) {//history 가 없다면 신규 생성
@@ -141,14 +140,13 @@ public class BoardController {
 		}
 		
 		
-//		(4) 갱신된 저장소를 세션에 다시 저장
-		session.setAttribute("history", history);
+//	(4) 갱신된 저장소를 세션에 다시 저장
+	session.setAttribute("history", history);
+	
+//	(+ 추가) 댓글 목록을 조회하여 첨부
+		model.addAttribute("replyList",replyDao.selectList(boardNo));
+		model.addAttribute("filesList", attachmentDao.selectBoardFileList(boardNo));
 		
-//		(+ 추가) 댓글 목록을 조회하여 첨부
-//		model.addAttribute("replyList",replyDao.selectList(boardNo));
-//		
-//		model.addAttribute("filesList", 
-//				AttachmentDao.selectBoardFileList(boardNo));
 		String boardId = (String) session.getAttribute(SessionConstant.ID);
 		if(boardId != null) {
 			BoardLikeDto likeDto = new BoardLikeDto();

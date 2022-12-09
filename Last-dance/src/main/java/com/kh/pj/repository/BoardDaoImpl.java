@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.BoardDto;
 import com.kh.pj.error.TargetNotFoundException;
+import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
 
 @Repository
@@ -111,19 +112,10 @@ private ResultSetExtractor<BoardListVO> detailExtractor = new ResultSetExtractor
 		}
 
 	@Override
-	public List<BoardListVO> boardList(String memberNick) {
-		return sqlSession.selectList("board.list");
-	}
-	@Override
-	public List<BoardListVO> boardClickList(String memberNick) {
-		return sqlSession.selectList("board.clicklist");
+	public List<BoardListVO> boardList(BoardListSearchVO vo) {
+		return sqlSession.selectList("board.list", vo);
 	}
 	
-	@Override
-	public List<BoardListVO> boardLikeList(String memberNick) {
-		return sqlSession.selectList("board.likelist");
-	}
-
 	@Override
 	public BoardListVO click(int boardNo) {
 		this.updateClickCount(boardNo);

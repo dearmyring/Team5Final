@@ -51,6 +51,7 @@
 			var text = $(this).find("[name=replyContent]").val();
 			if(!text){
 				alert("내용을 작성해주세요");
+				$(this).focus();
 				return;
 			}
 			
@@ -60,17 +61,17 @@
 			$.ajax({
 				url:"http://localhost:8888/rest/reply/insert",
 				method:"post",
-				//data:{
-				//	replyOrigin:$(this).find("[name=replyOrigin]").val(),
-				//	replyContent:text
-				//},
-				data:$(form).serialize(),//form을 전송 가능한 형태의 문자로 변환한다
-				success:function(resp){
+				data:{
+					replyBoardNo:$(this).find("[name=replyBoardNo]").val(),
+					replyContent:text
+				},
+					success:function(resp){
+			/* 	data:$(form).serialize(),//form을 전송 가능한 형태의 문자로 변환한다
 					listHandler(resp);
 					
 					//입력창 초기화(= 폼 초기화) - 자바스크립트로 처리
-					form.reset();
-				}
+					//form.reset();
+				} 
 			});
 		});
 		
@@ -86,7 +87,7 @@
 				url:"/rest/reply/delete",
 				method:"post",
 				data:{
-					replyOrigin:$(this).data("reply-origin"),
+					replyOrigin:$(this).data("reply-board-no"),
 					replyNo:$(this).data("reply-no")
 				},
 				success:function(resp){
@@ -113,12 +114,13 @@
 				//console.log(resp[i]);
 				var item = $("#reply-list-item").text();
 				item = item.replace("{{memberNick}}", resp[i].memberNick);
-				item = item.replace("{{replyWriter}}", resp[i].replyWriter);
-				item = item.replace("{{memberGrade}}", resp[i].memberGrade);
+				item = item.replace("{{boardId}}", resp[i].boardId);
+				item = item.replace("{{memberBadge}}", resp[i].memberBadge);
 				item = item.replace("{{replyContent}}", resp[i].replyContent);
 				item = item.replace("{{replyWritetime}}", resp[i].replyWritetime);
+				item = item.replace("{{replyEdittime}}", resp[i].replyEdittime);
 				item = item.replace("{{replyNo}}", resp[i].replyNo);
-				item = item.replace("{{replyOrigin}}", resp[i].replyOrigin);
+				item = item.replace("{{replyBoardNo}}", resp[i].replyBoardNo);
 				var result  = $(item);
 				result.find(".delete-btn").click(deleteHandler);//개별 추가
 				console.log("result", result.find(".delete-btn"));
@@ -145,22 +147,24 @@
 					<td width="90%">
 						<!-- 작성자 -->
 						{{memberNick}}
-						({{replyWriter}})
+						({{boardId}})
 						(작성자)
 						
-						({{memberGrade}}) 
+						({{memberBadge}}) 
 						<br>
 						
 						<pre>{{replyContent}}</pre>
 						
 						<br><br>
 						{{replyWritetime}}
+						<br><br>
+						{{replyEdittime}}
 
 					</td>
 					<th>
 						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
 						<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/image/edit.png" width="20" height="20"></a>
-						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-origin="{{replyOrigin}}" data-reply-no="{{replyNo}}"><img src="/image/delete.png" width="20" height="20"></a>
+						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyBoardNo}}" data-reply-no="{{replyNo}}"><img src="/image/delete.png" width="20" height="20"></a>
 					</th>
 				</tr>	
 </script>
@@ -254,9 +258,7 @@
 						</c:if>
 						${likeCount}, ${boardDto.boardLike}	
 						
-						<a class="btn btn-positive" href="write">글쓰기</a>
-						<a class="btn btn-positive" href="write?boardParent=${boardDto.boardNo}">답글쓰기</a>
-						
+						<a class="btn btn-positive" href="write">글쓰기</a>	
 						</c:if>
 						
 						<%--
