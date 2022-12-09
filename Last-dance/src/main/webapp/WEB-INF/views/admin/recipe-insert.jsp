@@ -209,6 +209,31 @@
 			}
     	});
     	
+    	/* 다시 확인하기 */
+        $(".recipe-insert-btn").click(function(){
+			var contentText = $("[name=recipeContentText]");
+			var contentImg = $(".content-page").find(".file-input");
+            //레시피 컨텐트 빈칸 확인 및 삭제
+            var textCnt = 0;
+            var imgCnt = 0;
+			for(var i=0; i<contentText.length; i++){
+				if(contentText.eq(i).val()){
+                    textCnt++;
+                }
+                if(contentImg.eq(i).val()){
+                    imgCnt++;
+                }
+
+                if(textCnt != imgCnt){
+                    alert("레시피 내용 또는 사진을 등록해주세요.");
+                    return;
+                }
+			}
+            for(var j=textCnt; j<contentText.length; j++){
+                contentText.eq(j).parent().remove();
+            }
+        });
+    	
     	/* 레시피 내용 블러 시 textarea 안에 값 넣어주기 */
     	$("[name=recipeContentText]").blur(function(){
     		$(this).text($(this).val());
