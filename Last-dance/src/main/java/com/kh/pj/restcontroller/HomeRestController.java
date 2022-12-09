@@ -22,11 +22,11 @@ public class HomeRestController {
 	@Autowired
 	private IngredientDao ingredientDao;
 	
-	@GetMapping("/ingredient/{searchList}")
-	public List<String> putIngredient(@PathVariable String search) {
-		return ingredientDao.searchList(search);
-	}
-	
+//	@GetMapping("/ingredient/{searchList}")
+//	public List<String> putIngredient(@PathVariable String search) {
+//		return ingredientDao.searchList(search);
+//	}
+//	
 	
 //	@PostMapping("/??")
 //	public String find(

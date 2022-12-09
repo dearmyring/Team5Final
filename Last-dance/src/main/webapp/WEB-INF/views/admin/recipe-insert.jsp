@@ -9,7 +9,7 @@
 	<h3>레시피등록</h3>
 </div>
 
-<form action="write" method="post" class="recipe-insert-form">
+<form action="write" method="post" class="recipe-insert-form" autocomplete="off">
 
 <div>
 	레시피 제목 <input type="text" name="recipeTitle">
@@ -68,7 +68,6 @@
 		<textarea name="recipeContentText"></textarea>
 		<input type="file" class="file-input" accept=".jpg, .png, .gif">
 		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200"><br>
-		<input type="hidden" class="img-no" name="recipeContentAttachmentNo">
 		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
 		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
 	</div>
@@ -80,10 +79,9 @@
 	<button type="button">사진 모두 지우기</button>
 	<br>
 	<c:forEach var="no" begin="1" end="4">
-		<div>
+		<div class="thumb-page">
 			<input type="file" class="file-input" accept=".jpg, .png, .gif">
 			<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
-			<input type="hidden" class="img-no" name="recipeAttachmentNo">
 		</div>
 	</c:forEach>
 </div>
@@ -100,7 +98,7 @@
 
 <div class="col-10 offset-1">
 	<button class="col-5 btn btn-md text-lg btn-warning recipe-insert-btn" type="submit">레시피 등록하기</button>
-	<button class="col-5 btn btn-md text-lg btn-warning return-btn" type="button">돌아가기</button>
+	<button class="col-5 btn btn-md text-lg btn-warning recipe-return-btn" type="button">돌아가기</button>
 </div>
 
 </form>
@@ -126,33 +124,87 @@
 
 <script type="text/javascript">
     $(function(){
+    	/* 레시피 돌아가기 클릭 시 비동기로 첨부파일 삭제 */
+    	$(".recipe-return-btn").click(function(e){
+    		var param = $(".recipe-insert-form .img-no").serialize();
+    		console.log(param);
+    		$.ajax({
+    			url: "http://localhost:8888/rest/attachment/delete?"+param,
+    			method: "delete",
+    			success: function(resp){
+    				history.back();
+    			}
+    		});
+    	});
+    	
     	/* 레시피 등록 우선 비활성화 */
     	$(".recipe-insert-form").submit(function(e){
-    		e.preventDefault();
+//     		var choice = confirm("등록하시겠습니까?");
+//     		if(!choice){
+	    		e.preventDefault();
+//     		}	
     	});
 
     	/* 레시피 등록 시 빈칸 삭제 구현 중 */
     	$(".recipe-insert-btn").click(function(){
 			var contentText = $("[name=recipeContentText]");
-			var contentImg = $("[name=recipeContentAttachmentNo]");
+			var contentImg = $(".content-page").find(".file-input");
 			
+			//레시피 컨텐트 아예 없을 때 리턴
+			var contentCnt = 0;
+			var contentImgCnt = 0;
 			for(var i=0; i<contentText.length; i++){
-				
-				if(!contentText.eq(i).text() && !contentImg.eq(i).val()){
-					for(var j=i+1; j<contentText.length-i; j++){
-						if(contentText.eq(j).text() || contentImg.eq(j).val()){
-							alert("레시피 내용은 순서대로 입력해주세요.");
-							return;
-						}
-						else{
-							contentImg.eq(i).parent().remove();
-						}
-					}
+				if(contentText.eq(i).text()){
+					contentCnt++;
 				}
-				else if(!contentText.eq(i).text() || !contentImg.eq(i).val()){
-					/* 모달 구현하기 */
-					alert("레시피 내용 사진 또는 내용을 추가해주세요.");
-					return;
+				if(contentImg.eq(i).val()){
+					contentImgCnt++;
+				}
+			}
+			if(contentCnt == 0 && contentImgCnt == 0){
+				alert("레시피 내용을 등록해주세요.");
+				return;
+			}
+			
+			//레시피 썸네일 아예 없을 때 리턴
+			var recipeImg = $(".thumb-page").find(".file-input");
+			var recipeImgCnt = 0;
+			for(var i=0; i<recipeImg.length; i++){
+				if(recipeImg.eq(i).val()){
+					recipeImgCnt++;	
+				}
+			}
+			if(recipeImgCnt == 0){
+				alert("레시피 썸네일을 지정해주세요.");
+				return;
+			}
+			
+    		//레시피 컨텐트 빈칸 확인 및 삭제
+// 			for(var i=0; i<contentText.length; i++){
+				
+// 				if(!contentText.eq(i).text() && !contentImg.eq(i).val()){
+// 					for(var j=i+1; j<contentText.length-i; j++){
+// 						if(contentText.eq(j).text() || contentImg.eq(j).val()){
+// 							/* 모달 구현하기 */
+// 							alert("레시피 내용은 순서대로 입력해주세요.");
+// 							return;
+// 						}
+// 						else{
+// 							contentImg.eq(i).parent().remove();
+// 						}
+// 					}
+// 				}
+// 				else if(!contentText.eq(i).text() || !contentImg.eq(i).val()){
+// 					/* 모달 구현하기 */
+// 					alert("레시피 내용 사진 또는 내용을 추가해주세요.");
+// 					return;
+// 				}
+// 			}
+			
+			//레시피 썸네일 빈칸 삭제
+			for(var i=0; i<recipeImg.length; i++){
+				if(!recipeImg.eq(i).val()){
+					recipeImg.eq(i).parent().remove();
 				}
 			}
     	});
@@ -235,12 +287,31 @@
     	$(".step-minus-btn").first().remove();
     	$(".content-page").hide();
     	$(".content-page").first().show();
+
     	$(".step-plus-btn").click(function(){
+    		var contentText = $(this).parent().find("[name=recipeContentText]").val();
+    		var contentImg = $(this).parent().find(".file-input").val();
+    		if(!contentText || !contentImg){
+    			alert("레시피 내용은 순서대로 등록해주세요.");
+    			return;
+    		}
     		$(this).hide();
     		$(this).next().hide();
     		$(this).parent().next().show();
     	});
     	$(".step-minus-btn").click(function(){
+    		var contentText = $(this).parent().find("[name=recipeContentText]");
+    		var contentImg = $(this).parent().find(".file-input");
+    		if(contentText.val() || contentImg.val()){
+    			var choice = confirm("작성한 내용은 저장되지 않습니다. 삭제하시겠습니까?");
+    			if(!choice){
+    				return;
+    			}
+    		}
+			contentText.val("");
+			contentImg.val("");
+			$(this).parent().find(".preview").attr("src", "https:/via.placeholder.com/200x200");
+			$(this).parent().find("[name=recipeContentAttachmentNo]").remove();
     		$(this).parent().prev().find(".step-plus-btn").show();
     		$(this).parent().prev().find(".step-minus-btn").show();
     		$(this).parent().hide();
@@ -261,8 +332,13 @@
                     success: function(resp){
                     	that.next().attr("src", resp);
                     	var attachmentNo = parseInt((resp.split("download/"))[1]);
-                    	console.log(attachmentNo);
-						that.parent().find(".img-no").val(attachmentNo);
+                    	if(that.parent().attr("class") == "thumb-page"){
+	                    	var imgNo = $("<input>").attr("type", "hidden").addClass("img-no").attr("name", "recipeAttachmentNo").val(attachmentNo);
+                    	}
+                    	if(that.parent().attr("class") == "content-page"){
+	                    	var imgNo = $("<input>").attr("type", "hidden").addClass("img-no").attr("name", "recipeContentAttachmentNo").val(attachmentNo);
+                    	}
+						that.parent().append(imgNo);
                     }
                 });
             }

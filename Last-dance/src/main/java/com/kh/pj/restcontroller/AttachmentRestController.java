@@ -94,8 +94,15 @@ public class AttachmentRestController {
 	}
 	
 	@DeleteMapping("/attachment/delete")
-	public String attachmentDelete(@RequestParam List<String> attachmentNo) {
-		for(String no : attachmentNo) {
+	public String attachmentDelete(
+			@RequestParam(required = false) List<String> recipeAttachmentNo,
+			@RequestParam(required = false) List<String> recipeContentAttachmentNo) {
+		//레시피 썸네일 사진 정보 지우기
+		for(String no : recipeAttachmentNo) {
+			attachmentDao.delete(Integer.parseInt(no));
+		}
+		//레시피 내용 사진 정보 지우기
+		for(String no : recipeContentAttachmentNo) {
 			attachmentDao.delete(Integer.parseInt(no));
 		}
 		return "success";
