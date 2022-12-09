@@ -72,8 +72,13 @@ public class IngredientDaoImpl implements IngredientDao {
 	}
 
 	@Override
-	public IngredientDto findIngredient(String ingredientName) {
-		return sqlSession.selectOne("ingredient.get",ingredientName);
+	public List<String> searchList(String search) {
+		return sqlSession.selectList("ingredient.searchList", search);
 	}
+
+//	@Override
+//	public IngredientDto findIngredient(String ingredientName) {
+//		return sqlSession.selectOne("ingredient.get",ingredientName);
+//	}
 
 }
