@@ -106,38 +106,17 @@ public class RecipeDaoImpl implements RecipeDao {
 			recipeCountVO.setRecipeLike(rs.getInt("recipe_like"));
 			recipeCountVO.setRecipeHashtag(rs.getString("recipe_hashtag"));
 			recipeCountVO.setRecipeWritetime(rs.getDate("recipe_writetime"));
-			recipeCountVO.setRecipeEdittime(rs.getDate("recipe-edittime"));
+			recipeCountVO.setRecipeEdittime(rs.getDate("recipe_edittime"));
 			recipeCountVO.setRecipeDifficulty(rs.getString("recipe_difficulty"));
 			return recipeCountVO;
 		}
 	};
 	
-	//레시피 리스트 조회 위한 RowMapper
-	private RowMapper<RecipeListVO> recipeMapper = new RowMapper<>() {	
-		@Override
-		public RecipeListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return RecipeListVO.builder()
-					.recipeNo(rs.getInt("recipe_no"))
-					.recipeNick(rs.getString("recipe_nick"))
-					.recipeTitle(rs.getString("recipe_title"))
-					.recipeInfo(rs.getString("recipe_info"))
-					.recipeTime(rs.getInt("recipe_time"))
-					.recipeClick(rs.getInt("recipe_click"))
-					.recipeLike(rs.getInt("recipe_like"))
-					.recipeHashtag(rs.getString("recipe_hashtag"))
-					.recipeWritetime(rs.getDate("recipe_writetime"))
-					.recipeDifficulty(rs.getString("recipe_difficulty"))					
-					.ingredientName(rs.getString("ingredient_name"))				
-					.build();
-		}
-	};
-	//재료별 레시피 리스트 출력
+
+	//레시피 리스트 출력
 	@Override
-	public List<RecipeListVO> recipeList(String ingredientName) {
-		String sql = "select R.* ,RI.recipe_ingredient_name from recipe R inner join recipe_ingredient RI "
-								+"on R.recipe_no=RI.recipe_no where recipe_ingredient_name=?";
-		Object[] param = new Object[] {ingredientName};
-		return jdbcTemplate.query(sql, recipeMapper, param);
+	public List<RecipeListVO> recipeList() {
+		return sqlSession.selectList("recipe.recipeList");
 	}
 
 	//재료별 레시피 갯수 출력
