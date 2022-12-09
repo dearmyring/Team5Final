@@ -31,7 +31,7 @@
 	<div class = "row center">
 		<h1>레시피 리스트</h1>
 	</div>
-	
+		
 	<div class="row mt-30">
 		<table class="table table-slit table-border"> <!-- border="1" width="1000"> -->
 			<thead>
@@ -56,13 +56,6 @@
 				</tr>
 				</c:forEach>
 			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="8" align="right">
-						<a href = "write"><i class="fa-solid fa-plus"></i> 등록</a>
-					</td>
-				</tr>
-			</tfoot>
 		</table>
 		</div>
 </div>

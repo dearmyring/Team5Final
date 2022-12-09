@@ -1,18 +1,24 @@
 package com.kh.pj.vo;
 
 import java.sql.Date;
-import java.util.List;
 
-import com.kh.pj.entity.RecipeDto;
-import com.kh.pj.entity.RecipeIngredientDto;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data @AllArgsConstructor @NoArgsConstructor @Builder
+@Data
+@Builder
 public class RecipeListVO {
-	private RecipeDto recipeDto;
-	private List<RecipeIngredientDto> recipeIngredientList;
+	private int recipeNo;
+	private String recipeNick;
+	private String recipeTitle;
+	private String recipeInfo;
+	private int recipeTime;
+	private int recipeClick;
+	private int recipeLike;
+	private String recipeHashtag;
+	private Date recipeWritetime;
+	private Date recipeEdittime;
+	private String recipeDifficulty;	
+	private String ingredientName;
+
 }
