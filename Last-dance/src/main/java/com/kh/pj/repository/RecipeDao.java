@@ -39,4 +39,5 @@ public interface RecipeDao {
 	
 	//재료별 레시피 갯수 출력
 	List<RecipeCountVO> selectRecipeList();
+	
 }
