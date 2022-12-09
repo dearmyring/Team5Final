@@ -31,14 +31,11 @@ public class RecipeContentDaoImpl implements RecipeContentDao {
 		sqlSession.insert("recipeContent.insert", recipeContentDto);
 	}
 	
-	//레시피 내용 mapper 생성
-	private RowMapper<RecipeContentDto> mapper = (rs, idx)->{
-		return RecipeContentDto.builder()
-				.recipeContentNo(rs.getInt("recipe_content_no"))	
-				.recipeNo(rs.getInt("recipe_no"))
-				.recipeContentText(rs.getString("recipe_context_text"))				
-				.build();
-	};
+	//레시피 내용 조회
+	@Override
+	public List<RecipeContentDto> find(int recipeNo) {
+		return sqlSession.selectList("recipeContent.find", recipeNo);
+	}
 	
 	//레시피 내용 수정
 	@Override
@@ -48,14 +45,6 @@ public class RecipeContentDaoImpl implements RecipeContentDao {
 							+ "where recipe_content_no=?";
 		Object[] param = {recipeContentNo};
 		return jdbcTemplate.update(sql, param) > 0;
-	}
-
-	//레시피 내용 조회
-	@Override
-	public List<RecipeContentDto> RecipeContentList(int recipeContentNo) {
-		String sql = "select * from recipe_content where recipe_content_no=?";
-		Object[] param = {recipeContentNo};
-		return jdbcTemplate.query(sql, mapper, param);
 	}
 
 	//레시피 내용 추가 삭제

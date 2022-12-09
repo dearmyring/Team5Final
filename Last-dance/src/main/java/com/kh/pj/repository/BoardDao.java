@@ -17,6 +17,5 @@ public interface BoardDao {
 	
 	BoardListVO click(int boardNo);
 	boolean updateClickCount(int boardNo);
-
-
+	
 }

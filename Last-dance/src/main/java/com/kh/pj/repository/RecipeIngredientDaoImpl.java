@@ -22,6 +22,11 @@ public class RecipeIngredientDaoImpl implements RecipeIngredientDao {
 	public void insert(RecipeIngredientDto recipeIngredientDto) {
 		sqlSession.insert("recipeIngredient.insert", recipeIngredientDto);	
 	}
+	
+	@Override
+	public List<String> find(int recipeNo) {
+		return sqlSession.selectList("recipeIngredient.find", recipeNo);
+	}
 
 	@Override
 	public boolean update(String recipeIngredientName) {
