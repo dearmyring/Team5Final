@@ -2,16 +2,22 @@ package com.kh.pj.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.RecipeContentDto;
 
+@Repository
 public class RecipeContentDaoImpl implements RecipeContentDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private SqlSession sqlSession;
 	
 	//레시피 내용 mapper 생성
 	private RowMapper<RecipeContentDto> mapper = (rs, idx)->{
@@ -59,6 +65,11 @@ public class RecipeContentDaoImpl implements RecipeContentDao {
 		String sql = "delete recipe_content where recipe_content)no=?";
 		Object[] param = {recipeContentNo};
 		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+	@Override
+	public int sequence() {
+		return sqlSession.selectOne("recipeContent.sequence");
 	}
 
 }
