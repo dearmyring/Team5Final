@@ -61,6 +61,7 @@
 	</select> 
 	<input class="input-keyword" type="text">
 	<button class="board-search-btn" type="button">검색</button>
+
 </div>
 
 <script type="text/javascript">

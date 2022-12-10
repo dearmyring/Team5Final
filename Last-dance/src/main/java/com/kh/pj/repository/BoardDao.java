@@ -25,4 +25,5 @@ public interface BoardDao {
 	//첨부파일 관련 기능
 		void connectAttachment(int boardOriginNo, int boardAttachmentNo);
 		int insert2(BoardDto boardDto);
+
 }
