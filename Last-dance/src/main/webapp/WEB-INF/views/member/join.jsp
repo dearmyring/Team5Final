@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<!-- css commons -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons-ring-join.css">
 	
 	<div class="container-400 mt-50">
@@ -18,9 +19,6 @@
 				<button class="w-100 mt-10 send-btn btn" type="button" disabled>이메일 중복확인</button>
 				<div class="mt-5 help-text"></div>
 				<div class="cert"></div>
-			</div>
-			<div>
-				<!-- <button>이메일 인증하기</button> -->
 			</div>
 			<div>
 				<div class="mt-30 mb-10"><h3>비밀번호</h3></div>
@@ -60,7 +58,8 @@
 			<div class="mt-30">
 				<div class="mt-30 mb-10"><h3>휴대폰 번호</h3></div>
 				<label class="helper-text">입력하신 휴대폰 정보는 마케팅 용도로 사용하지 않습니다.</label>
-				<input class="input w-100 mt-5" type="tel" name="memberPhone" placeholder="휴대폰 번호를 입력하세요.">
+				<input class="input w-100 mt-5" type="tel" name="memberPhone" 
+				autocomplete="off" placeholder="휴대폰 번호를 입력하세요.">
 				<div class="mt-5 help-text"></div>
 			</div>
 			<div class="mt-30">
@@ -119,7 +118,7 @@
             $("input[name=memberId]").on("input", function(){
             	var memberId = $(this).val();
             	var possible = $(".send-btn");
-            	$("input[name=memberId]").next("button").next("span").text("");
+            	$("input[name=memberId]").next("button").next("div").text("");
             	 $.ajax({
                      url:"http://localhost:8888/rest/member/id",
                      method:"post",
@@ -130,7 +129,7 @@
                              validChecking.memberIdValid = true;
                          }
                          else if(resp == "NNNNN") {
-                             validChecking.userIdValid = false;
+                             validChecking.memberIdValid = false;
                              $("input[name=memberId]").next("button").next("div").text("이미 사용중인 아이디입니다.")
                          }
                      }

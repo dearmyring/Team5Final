@@ -1,10 +1,13 @@
 package com.kh.pj.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.BoardLikeDto;
+import com.kh.pj.vo.BoardLikeVO;
 
 @Repository
 public class BoardLikeDaoImpl implements BoardLikeDao {
@@ -54,4 +57,6 @@ public class BoardLikeDaoImpl implements BoardLikeDao {
 		Object[] param = {boardNo, boardNo};
 		jdbcTemplate.update(sql, param);
 	}
+
+	
 }

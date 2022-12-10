@@ -164,6 +164,7 @@ input::placeholder {
 .send-btn {
     border: 1px solid #CBCACA;
     font-size: 15px;
+    font-weight: bold;
     padding: 0.75em;/*글자 크기의 0.75배*/
     cursor: pointer;
     /* a 태그를 버튼으로 만들기 위해 추가 */
@@ -173,9 +174,16 @@ input::placeholder {
     border-radius: 5px;
 }
 
+.fail-btn {
+   	background-color: #373A3C;
+    color: white;
+    
+}
+
 .btn.btn-positive {
     background-color: #ECBE42;
     color: white;
+    font-weight: bold;
 }
 .btn.btn-positive:hover {
     background-color: #ECBE42;
@@ -200,6 +208,35 @@ input::placeholder {
 /*
     입력창은 버튼과 같이 등장하므로 비율이나 크기등이 같아야 한다
 */
+.login-input-email {
+    font-size: 15px;
+    padding: 0.75em;
+    outline: none;
+    border:1px solid #CBCACA;
+    border-bottom: none;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+
+.login-input-email:focus {
+    border-color: #ECBE42;
+    opacity: 70%;
+}
+
+.login-input-password {
+    font-size: 15px;
+    padding: 0.75em;
+    outline: none;
+    border:1px solid #CBCACA;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+}
+
+.login-input-password:focus {
+    border-color: #ECBE42;
+    opacity: 70%;
+}
+
 .input {
     font-size: 15px;
     padding: 0.75em;
@@ -208,7 +245,8 @@ input::placeholder {
     border-radius: 5px;
 }
 .input:focus {
-    border-color: black;
+    border-color: #ECBE42;
+    opacity: 70%;
 }
 /* input이라는 클래스가 있으면서 input-underline 클래스가 있다면 */
 .input.input-underline {
@@ -421,8 +459,8 @@ ul.pagination.pagination-small {
 .screen-center {
     position: absolute;
 
-        /* 중앙에 배치 */
-    top:50%;
+    /* 중앙에 배치 */
+    top:40%;
     left:50%;
 
     /*방법1 : 마진을 이용하여 좌측 상단으로 이동(크기를 알아야 함) */
@@ -435,17 +473,38 @@ ul.pagination.pagination-small {
     transform: translate(-50%, -50%);
 }
 
+.screen-bottom {
+	position: absolute;
+	top:90%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+@Keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		transform: translate3d(-50%, 100%, 0);
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+.notice-in {
+	animation: fadeInUp 1s;
+}
+
+
 /*
     드롭다운(drop down) 메뉴 만들기
     - HTML 구조는 ul로 구현한다
-
     (1) 1차 메뉴와 2차 메뉴, 모든 메뉴에 대한 선택자가 다르다
         - 1차 메뉴 : .dropdown-menu > li
         - 2차 메뉴 : .dropdown-menu > li > ul > li
         - 3차 메뉴 : .dropdown-menu > li > ul > li > ul > li
         - 모든 메뉴 : .dropdown-menu li
         - 2차 이상 메뉴 : .dropdown-menu ul > li
-
     (2) 모든 메뉴 태그의 여백과 표시방식을 변경
     (3) 1차 메뉴의 표시방식(display)을 inline-block으로 변경
     (4) 
@@ -458,10 +517,8 @@ ul.pagination.pagination-small {
     
     (+추가)
     (9) 우측에 붙는 메뉴를 구현
-
     (+추가)
     (10) 3차메뉴부터는 하단이 아닌 옆에 나오도록 처리
-
     (+추가)
     (11) 확장 스타일을 부여하면 메뉴를 상단에 고정하도록 변경
 */
@@ -589,7 +646,9 @@ ul.pagination.pagination-small {
 
         .float-left {
             float: left;
+            margin-left: 60px;
         }
         .float-right {
             float: right;
+            margin-right: 60px;
         }
