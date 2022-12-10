@@ -36,8 +36,8 @@
 		<table class="table table-slit table-border"> <!-- border="1" width="1000"> -->
 			<thead>
 				<tr>
-					<th>번호</th>
-					<th>제목</th>
+					<th>레시피번호</th>
+					<th>레시피명</th>
 					<th>작성자</th>
 					<th>작성일</th>
 					<th>조회수</th>
@@ -49,7 +49,7 @@
 			<c:forEach var = "recipeList" items = "${recipeList}">
 				<tr>
 					<td>${recipeList.recipeNo}</td>
-					<td><a href = "detail?recipeNo=${recipeList.recipeNo}">${recipeList.recipeTitle}</a></td>
+					<td><a href = "detail?recipeNo=${recipeList.recipeNo}">${recipeList.recipeHashtag} / ${recipeList.recipeTitle}</a></td>
 					<td>${recipeList.recipeId}</td>
 					<td>${recipeList.recipeWritetime}</td>
 					<td>${recipeList.recipeClick}</td>
