@@ -160,13 +160,18 @@
 				if(contentImg.eq(i).val()){
 					contentImgCnt++;
 				}
+                if(contentCnt != contentImgCnt){
+                    alert("레시피 내용 작성을 완료해주세요.");
+                    return;
+                }
 			}
+			//레시피 내용 아예 아무 것도 없을 때
 			if(contentCnt == 0 && contentImgCnt == 0){
 				alert("레시피 내용을 등록해주세요.");
 				return;
 			}
-			
-			//레시피 썸네일 아예 없을 때 리턴
+
+            //레시피 썸네일 아예 없을 때 리턴
 			var recipeImg = $(".thumb-page").find(".file-input");
 			var recipeImgCnt = 0;
 			for(var i=0; i<recipeImg.length; i++){
@@ -174,65 +179,23 @@
 					recipeImgCnt++;	
 				}
 			}
+			//레시피 썸네일 아예 없을 때
 			if(recipeImgCnt == 0){
 				alert("레시피 썸네일을 지정해주세요.");
 				return;
 			}
-			
-    		//레시피 컨텐트 빈칸 확인 및 삭제
-// 			for(var i=0; i<contentText.length; i++){
-				
-// 				if(!contentText.eq(i).text() && !contentImg.eq(i).val()){
-// 					for(var j=i+1; j<contentText.length-i; j++){
-// 						if(contentText.eq(j).text() || contentImg.eq(j).val()){
-// 							/* 모달 구현하기 */
-// 							alert("레시피 내용은 순서대로 입력해주세요.");
-// 							return;
-// 						}
-// 						else{
-// 							contentImg.eq(i).parent().remove();
-// 						}
-// 					}
-// 				}
-// 				else if(!contentText.eq(i).text() || !contentImg.eq(i).val()){
-// 					/* 모달 구현하기 */
-// 					alert("레시피 내용 사진 또는 내용을 추가해주세요.");
-// 					return;
-// 				}
-// 			}
-			
-			//레시피 썸네일 빈칸 삭제
+
+			//레시피 내용 작성 돼 있으면 그 다음 칸부터는 삭제
+            for(var j=contentCnt; j<contentText.length; j++){
+                contentText.eq(j).parent().remove();
+            }
+			//레시피 썸네일 없는 칸부터 빈칸 삭제
 			for(var i=0; i<recipeImg.length; i++){
 				if(!recipeImg.eq(i).val()){
 					recipeImg.eq(i).parent().remove();
 				}
 			}
     	});
-    	
-    	/* 다시 확인하기 */
-        $(".recipe-insert-btn").click(function(){
-			var contentText = $("[name=recipeContentText]");
-			var contentImg = $(".content-page").find(".file-input");
-            //레시피 컨텐트 빈칸 확인 및 삭제
-            var textCnt = 0;
-            var imgCnt = 0;
-			for(var i=0; i<contentText.length; i++){
-				if(contentText.eq(i).val()){
-                    textCnt++;
-                }
-                if(contentImg.eq(i).val()){
-                    imgCnt++;
-                }
-
-                if(textCnt != imgCnt){
-                    alert("레시피 내용 또는 사진을 등록해주세요.");
-                    return;
-                }
-			}
-            for(var j=textCnt; j<contentText.length; j++){
-                contentText.eq(j).parent().remove();
-            }
-        });
     	
     	/* 레시피 내용 블러 시 textarea 안에 값 넣어주기 */
     	$("[name=recipeContentText]").blur(function(){
