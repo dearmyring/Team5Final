@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="recipeImg">
+	<insert id="insert" parameterType="RecipeImgDto">
+		insert into recipe_img(recipe_attachment_no, recipe_no) 
+		values(${recipeAttachmentNo}, ${recipeNo})
+	</insert>
+	
+	<select id="find" parameterType="int" resultType="int">
+		select recipe_attachment_no from recipe_img where recipe_no=${recipeNo} order by recipe_attachment_no asc
+	</select>
+</mapper>

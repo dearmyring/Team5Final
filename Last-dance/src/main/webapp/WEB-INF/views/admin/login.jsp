@@ -24,7 +24,7 @@
 
         <div class="row mt-5">
             <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
-				<img class="w-100" src="/img/test-img.jpg" class="logo"/>
+				<img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
             </div>
 		</div>
 		
@@ -78,8 +78,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
 
-    <script src="http://code.jquery.com/jquery-3.6.1.js"></script>
-    <!-- 배포용 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    <!-- jquery 사용 위한 라이브러리 파일 불러옴 -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
     <script type="text/javascript">
         $(function(){
         	$(".admin-login-btn").on("click", function(e){

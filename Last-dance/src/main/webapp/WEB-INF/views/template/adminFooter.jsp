@@ -1,31 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-    <div class="mt-4">&nbsp;</div>    
-    <!-- 푸터 영역 시작 -->
-    <div id="footer">
-        <div>
 
-            <div>
-                <img src="" class="logo"/>
-                <div>
-                    <a href="#">다 같이 one!!</a>
-                </div>
-           </div>
-
-            <div class="footer-info">
-                <ul class="info-list">
-                    <li><a href="#">이용약관</a></li>
-                    <li><a href="#">개인정보 처리 방침</a></li>
-                    <li><a href="#">통합검색 고객센터</a></li>
-                    <li><a href="#">고객센터 02-1111-1111</a></li>
-                </ul>
-            </div>
-
-        </div>
-    </div><!-- 푸터 영역 끝 -->
+<script type="text/javascript">
+	/* 모든 돌아가기 + 모달창 구현 예정 */
+	$(".return-btn").click(function(){
+		history.back();
+	});
+</script>
 
 
+<div class="mt-4">&nbsp;</div>    
+
+<footer class="text-center text-white">
+  <!-- Grid container -->
+  <div class="container pt-4">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+
+      <a class="col-2 btn btn-floating btn-md text-dark" href="${pageContext.request.contextPath}/admin/">
+      	<img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
+      </a>
+
+      <a class="col-2 btn btn-floating btn-md text-dark" href="#">이용약관</a>
+
+      <a class="col-2 btn btn-floating btn-md text-dark" href="#">개인정보 처리 방침</a>
+
+      <a class="col-2 btn btn-floating btn-md text-dark" href="#">통합검색 고객센터</a>
+
+      <a class="col-2 btn btn-floating btn-md text-dark" href="#">고객센터 02-1111-1111</a>
+
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center text-dark p-3" style="background-color: #f1f1f1;">
+    &copy; Last-dance Corp. All rights reserved.
+  </div>
+  <!-- Copyright -->
+</footer>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

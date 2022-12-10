@@ -22,9 +22,24 @@
 		select * from member where member_nick = #{memberNick}
 	</select>
 	
-		<!-- 회원가입 비밀번호 중복 검사 -->
+	<!-- 회원가입 비밀번호 중복 검사 -->
 	<select id="getPhone" parameterType="String" resultType="MemberDto">
 		select * from member where member_phone = #{memberPhone}
 	</select>
+	
+	<!-- 로그인 단일 조회 -->
+	<select id="login" parameterType="String" resultType="MemberDto">
+		select * from member where member_id = #{memberId}
+	</select>
+	
+	<!-- 로그인 시각 업데이트 -->
+	<update id="updateLoginTime" parameterType="String">
+		update member set member_login = sysdate where member_id = #{memberId}
+	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="editPw" parameterType="MemberDto">
+		update member set member_pw = #{memberPw} where member_id = #{memberId}
+	</update>
 	
 </mapper>
