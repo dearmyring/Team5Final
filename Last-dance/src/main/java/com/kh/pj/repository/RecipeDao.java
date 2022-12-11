@@ -27,13 +27,26 @@ public interface RecipeDao {
 	public RecipeDto click(int noticeNo);
 	public boolean updateClickCount(int noticeNo);
 	
+<<<<<<< HEAD
 	//재료별 레시피 리스트 출력
 	List<RecipeListVO> recipeList(String ingredientName);
 	
 	//재료별 레시피 갯수 출력
 	List<RecipeCountVO> selectRecipeList();
 
+=======
+>>>>>>> refs/remotes/origin/main
 	//관리자 레시피 조회
 	public List<RecipeDto> adminList(RecipeListSearchVO vo);
 	public RecipeDto adminDetail(int recipeNo);
+<<<<<<< HEAD
+=======
+	
+	//레시피 리스트 출력
+	public List<RecipeListVO> recipeList();
+	
+	//재료별 레시피 갯수 출력
+	public List<RecipeCountVO> selectRecipeList();
+
+>>>>>>> refs/remotes/origin/main
 }
