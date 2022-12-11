@@ -45,15 +45,12 @@ public class RecipeDaoImpl implements RecipeDao {
 
 	}
 	
-<<<<<<< HEAD
-=======
 //	//레시피 목록조회(SELECT)
 //	@Override
 //	public List<RecipeDto> recipeList(String recipeTitle) {
 //		return sqlSession.selectList("recipe.list");
 //
 //	}
->>>>>>> refs/remotes/origin/main
 	//레시피 삭제(DELETE)
 	@Override
 	public boolean delete(int recipeNo) {
@@ -131,5 +128,3 @@ public class RecipeDaoImpl implements RecipeDao {
 	}
 
 }
-
-
