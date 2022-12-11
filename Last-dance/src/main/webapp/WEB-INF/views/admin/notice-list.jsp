@@ -37,25 +37,32 @@
 		$(".notice-async-delete").click(function(){
 			
 			var param = $(".noticeNo-form input:checked").serialize();
-			
-			$.ajax({
-				url: "http://localhost:8888/rest/notice?"+param,
-				method: "delete",
-				contentType: "application/json",
-				success: function(resp){
-					$(".notice-list").find("tr").remove();
-					for(var i=0; i<resp.length; i++){
-						var tr = $("<tr>");
-						var check = $("<input>").addClass("check-item").attr("name", "noticeNo").val(resp[i].noticeNo).attr("type", "checkbox");
-						var tdCheck = $("<td>").append(check);
-						var tdNo = $("<td>").text(resp[i].noticeNo);
-						var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].noticeNo).text(resp[i].noticeTitle));
-						var tdNick = $("<td>").text(resp[i].noticeNick);
-						tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdNick);
-						$(".notice-list").append(tr);
-					}
+			if(!param){
+				alert("삭제할 공지글을 선택하세요.");
+				return;
+			}
+			else{
+				if(confirm("정말 삭제하시겠습니까?")){
+					$.ajax({
+						url: "http://localhost:8888/rest/notice?"+param,
+						method: "delete",
+						contentType: "application/json",
+						success: function(resp){
+							$(".notice-list").find("tr").remove();
+							for(var i=0; i<resp.length; i++){
+								var tr = $("<tr>");
+								var check = $("<input>").addClass("check-item").attr("name", "noticeNo").val(resp[i].noticeNo).attr("type", "checkbox");
+								var tdCheck = $("<td>").append(check);
+								var tdNo = $("<td>").text(resp[i].noticeNo);
+								var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].noticeNo).text(resp[i].noticeTitle));
+								var tdNick = $("<td>").text(resp[i].noticeNick);
+								tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdNick);
+								$(".notice-list").append(tr);
+							}
+						}
+					});
 				}
-			});
+			}
 		});
 	});
 </script>

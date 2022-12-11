@@ -46,24 +46,31 @@
 		$(".ingredient-async-delete").click(function(){
 			
 			var param = $(".ingredientName-form input:checked").serialize();
-			
-			$.ajax({
-				url: "http://localhost:8888/rest/ingredient?"+param,
-				method: "delete",
-				contentType: "application/json",
-				success: function(resp){
-					$(".ingredient-list").find("tr").remove();
-					for(var i=0; i<resp.length; i++){
-						var tr = $("<tr>");
-						var check = $("<input>").addClass("check-item").attr("name", "ingredientName").val(resp[i].ingredientName).attr("type", "checkbox");
-						var tdCheck = $("<td>").append(check);
-						var tdCate = $("<td>").text(resp[i].ingredientCategory);
-						var tdName = $("<td>").text(resp[i].ingredientName);
-						tr.append(tdCheck).append(tdCate).append(tdName);
-						$(".ingredient-list").append(tr);
-					}
+			if(!param){
+				alert("삭제할 재료를 선택하세요.");
+				return;
+			}
+			else{
+				if(confirm("정말 삭제하시겠습니까?")){
+					$.ajax({
+						url: "http://localhost:8888/rest/ingredient?"+param,
+						method: "delete",
+						contentType: "application/json",
+						success: function(resp){
+							$(".ingredient-list").find("tr").remove();
+							for(var i=0; i<resp.length; i++){
+								var tr = $("<tr>");
+								var check = $("<input>").addClass("check-item").attr("name", "ingredientName").val(resp[i].ingredientName).attr("type", "checkbox");
+								var tdCheck = $("<td>").append(check);
+								var tdCate = $("<td>").text(resp[i].ingredientCategory);
+								var tdName = $("<td>").text(resp[i].ingredientName);
+								tr.append(tdCheck).append(tdCate).append(tdName);
+								$(".ingredient-list").append(tr);
+							}
+						}
+					});
 				}
-			});
+			}
 		});
 		
     	/* 레시피 검색창에서 엔터치면 검색 */

@@ -140,43 +140,50 @@
     	
 		/* 체크박스 선택 삭제 시 비동기 처리 */
 		$(".recipe-async-delete").click(function(){
-			
 			var param = $(".recipeNo-form input:checked").serialize();
 			
-			$.ajax({
-				url: "http://localhost:8888/rest/recipe?"+param,
-				method: "delete",
-				contentType: "application/json",
-				success: function(resp){
-					var sort = $(".sort-click").val();
-					var type = $(".input-type").val();
-					var keyword = $(".input-keyword").val();
+			if(!param){
+				alert("삭제할 레시피를 선택하세요.");
+				return;
+			}
+			else{
+				if(confirm("정말 삭제하시겠습니까?")){
 					$.ajax({
-						url: "http://localhost:8888/rest/recipe",
-						method: "post",
+						url: "http://localhost:8888/rest/recipe?"+param,
+						method: "delete",
 						contentType: "application/json",
-						data: JSON.stringify({
-							type: type,
-							keyword: keyword,
-							sort: sort
-						}),
 						success: function(resp){
-							$(".recipe-list").find("tr").remove();
-							for(var i=0; i<resp.length; i++){
-								var tr = $("<tr>");
-								var check = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
-								var tdCheck = $("<td>").append(check);
-								var tdNo = $("<td>").text(resp[i].recipeNo);
-								var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle));
-								var tdTime = $("<td>").text(resp[i].recipeTime+'분');
-								var tdNick = $("<td>").text(resp[i].recipeNick);
-								tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
-								$(".recipe-list").append(tr);
-							}
+							var sort = $(".sort-click").val();
+							var type = $(".input-type").val();
+							var keyword = $(".input-keyword").val();
+							$.ajax({
+								url: "http://localhost:8888/rest/recipe",
+								method: "post",
+								contentType: "application/json",
+								data: JSON.stringify({
+									type: type,
+									keyword: keyword,
+									sort: sort
+								}),
+								success: function(resp){
+									$(".recipe-list").find("tr").remove();
+									for(var i=0; i<resp.length; i++){
+										var tr = $("<tr>");
+										var check = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
+										var tdCheck = $("<td>").append(check);
+										var tdNo = $("<td>").text(resp[i].recipeNo);
+										var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle));
+										var tdTime = $("<td>").text(resp[i].recipeTime+'분');
+										var tdNick = $("<td>").text(resp[i].recipeNick);
+										tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
+										$(".recipe-list").append(tr);
+									}
+								}
+							});
 						}
 					});
 				}
-			});
+			}
 		});
     });
 </script>
