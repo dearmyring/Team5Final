@@ -124,35 +124,49 @@
 
 <script type="text/javascript">
     $(function(){
+    	$(".recipe-insert-form").keydown(function(e){
+    		if(e.keyCode === 13){
+	    		e.preventDefault();
+    		}
+    	});
+    	
     	/* 등록하기 버튼 클릭 시 모든 칸 검사 후 제출 */
     	$(".recipe-insert-form").submit(function(e){
-	   		var recipeTitle = $("[name=recipeTitle]").val();
-	   		if(!recipeTitle){
+	   		var recipeTitle = $("[name=recipeTitle]");
+	   		if(!recipeTitle.val()){
 	   			alert("레시피 제목을 등록해주세요.");
+	   			recipeTitle.focus();
+	   			$("html, body").animate({scrollTop: recipeTitle.offset().top-100},400);
 	   			return false;
 	   		}
 	   		
-	   		var recipeInfo = $("[name=recipeInfo]").val();
-	   		if(!recipeInfo){
+	   		var recipeInfo = $("[name=recipeInfo]");
+	   		if(!recipeInfo.val()){
 	   			alert("레시피 소개를 등록해주세요.");
+	   			recipeInfo.focus();
+	   			$("html, body").animate({scrollTop: recipeInfo.offset().top-100},400);
 	   			return false;
 	   		}
 	
-	   		var recipeTime = $("[name=recipeTime]").val();
-	   		if(!recipeTime){
+	   		var recipeTime = $("[name=recipeTime]");
+	   		if(!recipeTime.val()){
 	   			alert("레시피 소요시간을 선택해주세요.");
+	   			recipeTime.focus();
 	   			return false;
 	   		}
 	   		
-	   		var recipeDifficulty = $("[name=recipeDifficulty]").val();
-	   		if(!recipeDifficulty){
+	   		var recipeDifficulty = $("[name=recipeDifficulty]");
+	   		if(!recipeDifficulty.val()){
 	   			alert("레시피 난이도를 선택해주세요.");
+	   			recipeDifficulty.focus();
 	   			return false;
 	   		}
 	
-	   		var recipeIngredient = $("[name=recipeIngredientName]").val();
-	   		if(!recipeIngredient){
+	   		var recipeIngredient = $("[name=recipeIngredientName]");
+	   		if(!recipeIngredient.val()){
 	   			alert("레시피 재료를 선택해주세요.");
+	   			$(".input-ingredient").focus();
+	   			$("html, body").animate({scrollTop: $(".input-ingredient").offset().top-100},400);
 	   			return false;
 	   		}
 	   		
@@ -176,10 +190,12 @@
 			//레시피 컨텐트 아예 아무 것도 없을 때
 			if(contentCnt == 0 && contentImgCnt == 0){
 				alert("레시피 내용을 등록해주세요.");
+				contentText.first().focus();
+	   			$("html, body").animate({scrollTop: contentText.first().offset().top-100},400);
 				return false;
 			}
 	
-	           //레시피 썸네일 아예 없을 때 리턴
+           //레시피 썸네일 아예 없을 때 리턴
 			var recipeImg = $(".thumb-page").find(".file-input");
 			var recipeImgCnt = 0;
 			for(var i=0; i<recipeImg.length; i++){
@@ -190,12 +206,14 @@
 			//레시피 썸네일 아예 없을 때
 			if(recipeImgCnt == 0){
 				alert("레시피 썸네일을 지정해주세요.");
+	   			$("html, body").animate({scrollTop: recipeImg.first().offset().top-100},400);
 				return false;
 			}
 	   		
-	   		var recipeHashtag = $("[name=recipeHashtag]").val();
-	   		if(recipeDifficulty == ""){
+	   		var recipeHashtag = $("[name=recipeHashtag]");
+	   		if(!recipeHashtag.val()){
 	   			alert("레시피 해시태그를 선택해주세요.");
+	   			recipeHashtag.focus();
 	   			return false;
 	   		}
 	   		
@@ -281,7 +299,7 @@
             }, 1000);
         });
 
-    	/* 재료 엔터 등록 */
+    	/* 재료 엔터 등록 없을 시 등록 모달 구현 예정 */
     	$(".input-ingredient").keydown(function(e){
     		if(e.keyCode == 13) {
 	    		$(".ingredientSearch").remove();
@@ -298,20 +316,22 @@
                     		alert("등록되지 않은 재료입니다.");
 				    		return;
                     	}
+                    	else{
+							var xMark = $("<i>").addClass("fa-solid fa-xmark");
+							xMark.click(function(){
+								$(this).parent().remove();
+							});
+							var p = $("<p>")
+							var input = $("<input>")
+								.attr("readonly", "readonly")
+								.attr("name", "recipeIngredientName")
+								.val(keyword);
+							p.append(input).append(xMark);
+							$(".add-ingredient").append(p);
+							$(".input-ingredient").val("");
+                    	}
                     }
     			});
-				var xMark = $("<i>").addClass("fa-solid fa-xmark");
-				xMark.click(function(){
-					$(this).parent().remove();
-				});
-				var p = $("<p>")
-				var input = $("<input>")
-					.attr("readonly", "readonly")
-					.attr("name", "recipeIngredientName")
-					.val(keyword);
-				p.append(input).append(xMark);
-				$(".add-ingredient").append(p);
-				$(this).val("");
     		}
     	});
     	
