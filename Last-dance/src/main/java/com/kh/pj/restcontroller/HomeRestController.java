@@ -1,32 +1,24 @@
 package com.kh.pj.restcontroller;
 
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
-
-
-import com.kh.pj.repository.IngredientDao;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
 @RequestMapping("/rest")
 public class HomeRestController {
+//	
+//	@Autowired
+//	private IngredientDao ingredientDao;
 	
-	@Autowired
-	private IngredientDao ingredientDao;
-	
-//	@GetMapping("/ingredient/{searchList}")
+//	@GetMapping("/ingredient/{searchList}") -> 민영이 주소랑 겹침 바꾸기
 //	public List<String> putIngredient(@PathVariable String search) {
 //		return ingredientDao.searchList(search);
 //	}
-//	
+	
 	
 //	@PostMapping("/??")
 //	public String find(
@@ -41,4 +33,3 @@ public class HomeRestController {
 //	}
 
 }
-

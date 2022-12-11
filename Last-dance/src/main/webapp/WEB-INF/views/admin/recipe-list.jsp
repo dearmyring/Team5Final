@@ -6,7 +6,7 @@
 <h3>레시피리스트</h3>
 <form class="recipeNo-form">
 <button type="button" class="recipe-async-delete">삭제하기</button>
-	<table>
+	<table class="table table-hover">
 	    <thead>
 			<tr>
 				<th colspan="3">

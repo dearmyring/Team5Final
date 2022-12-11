@@ -17,12 +17,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.AdminDto;
+import com.kh.pj.entity.IngredientDto;
 import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
 import com.kh.pj.repository.HashtagDao;
+import com.kh.pj.repository.IngredientDao;
 import com.kh.pj.repository.NoticeDao;
 import com.kh.pj.repository.RecipeContentDao;
 import com.kh.pj.repository.RecipeDao;
@@ -51,6 +53,9 @@ public class AdminController {
 	
 	@Autowired
 	private NoticeDao noticeDao;
+	
+	@Autowired
+	private IngredientDao ingredientDao;
 	
 	@GetMapping("/")
 	public String main() {
@@ -260,4 +265,10 @@ public class AdminController {
 		noticeDao.delete(noticeNo);
 		return "redirect:../list";
 	}
+	
+	@GetMapping("/ingredient/list")
+	public String ingredientList() {
+		return "admin/ingredient-list";
+	}
+	
 }
