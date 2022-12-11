@@ -1,9 +1,6 @@
 package com.kh.pj.controller;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> branch 'kwhangking_boy' of https://github.com/dearmyring/Team5Final.git
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
