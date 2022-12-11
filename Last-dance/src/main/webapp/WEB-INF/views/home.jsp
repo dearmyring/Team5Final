@@ -6,8 +6,8 @@
 
 	<h1>홈</h1>
 	
-<<<<<<< Jenn
-=======
+
+
 <div>	
 	<form action="findIngredient" method="post" class="ingredient-search-form">
 
@@ -110,6 +110,6 @@
           e.preventDefault();
           
        });
->>>>>>> main
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

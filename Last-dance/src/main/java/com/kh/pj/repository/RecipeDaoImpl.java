@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeListSearchVO;
 import com.kh.pj.vo.RecipeListVO;
@@ -45,12 +46,12 @@ public class RecipeDaoImpl implements RecipeDao {
 
 	}
 	
-	//레시피 목록조회(SELECT)
-	@Override
-	public List<RecipeDto> recipeList(String recipeTitle) {
-		return sqlSession.selectList("recipe.list");
-
-	}
+//	//레시피 목록조회(SELECT)
+//	@Override
+//	public List<RecipeDto> recipeList(String recipeTitle) {
+//		return sqlSession.selectList("recipe.list");
+//
+//	}
 	//레시피 삭제(DELETE)
 	@Override
 	public boolean delete(int recipeNo) {
@@ -106,38 +107,17 @@ public class RecipeDaoImpl implements RecipeDao {
 			recipeCountVO.setRecipeLike(rs.getInt("recipe_like"));
 			recipeCountVO.setRecipeHashtag(rs.getString("recipe_hashtag"));
 			recipeCountVO.setRecipeWritetime(rs.getDate("recipe_writetime"));
-			recipeCountVO.setRecipeEdittime(rs.getDate("recipe-edittime"));
+			recipeCountVO.setRecipeEdittime(rs.getDate("recipe_edittime"));
 			recipeCountVO.setRecipeDifficulty(rs.getString("recipe_difficulty"));
 			return recipeCountVO;
 		}
 	};
 	
-	//레시피 리스트 조회 위한 RowMapper
-	private RowMapper<RecipeListVO> recipeMapper = new RowMapper<>() {	
-		@Override
-		public RecipeListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return RecipeListVO.builder()
-					.recipeNo(rs.getInt("recipe_no"))
-					.recipeNick(rs.getString("recipe_nick"))
-					.recipeTitle(rs.getString("recipe_title"))
-					.recipeInfo(rs.getString("recipe_info"))
-					.recipeTime(rs.getInt("recipe_time"))
-					.recipeClick(rs.getInt("recipe_click"))
-					.recipeLike(rs.getInt("recipe_like"))
-					.recipeHashtag(rs.getString("recipe_hashtag"))
-					.recipeWritetime(rs.getDate("recipe_writetime"))
-					.recipeDifficulty(rs.getString("recipe_difficulty"))					
-					.ingredientName(rs.getString("ingredient_name"))				
-					.build();
-		}
-	};
-	//재료별 레시피 리스트 출력
+
+	//레시피 리스트 출력
 	@Override
-	public List<RecipeListVO> recipeList(String ingredientName) {
-		String sql = "select R.* ,RI.recipe_ingredient_name from recipe R inner join recipe_ingredient RI "
-								+"on R.recipe_no=RI.recipe_no where recipe_ingredient_name=?";
-		Object[] param = new Object[] {ingredientName};
-		return jdbcTemplate.query(sql, recipeMapper, param);
+	public List<RecipeListVO> recipeList() {
+		return sqlSession.selectList("recipe.recipeList");
 	}
 
 	//재료별 레시피 갯수 출력
@@ -146,6 +126,41 @@ public class RecipeDaoImpl implements RecipeDao {
 		String sql = "select COUNT(*) cnt from recipe R inner join recipe_ingredient RI "
 						+"on R.recipe_no=RI.recipe_no where recipe_ingredient_name=?";
 		return jdbcTemplate.query(sql,  countMapper);
+	}
+	
+	
+	
+	
+	
+	
+	//여기부터 레시피 디테일
+	
+	//레시피 상세페이지 출력
+	@Override
+	public RecipeDto selectDetail(int recipeNo) {
+		
+		return sqlSession.selectOne("recipe.detail", recipeNo);
+	}
+	
+	//내가 본 레시피 조회
+	@Override
+	public RecipeViewDto myViewRecipe(RecipeViewDto recipeViewDto) {
+		
+		return sqlSession.selectOne("recipe.myViewRecipe", recipeViewDto);
+	}
+	
+	//내가 본 레시피 등록
+	@Override
+	public void insertRecipeView(RecipeViewDto recipeViewDto) {
+		sqlSession.insert("recipe.insertViewRecipe", recipeViewDto);
+		
+	}
+	
+	//내가 본 레시피 시간 업데이트
+	@Override
+	public boolean updateRecipeViewTime(RecipeViewDto recipeViewDto) {
+		int result = sqlSession.update("recipe.updateRecipeViewTime", recipeViewDto);
+		return result > 0;
 	}
 
 }
