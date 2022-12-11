@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="login" value="${loginId != null}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param name="title" value="메인페이지"/>
+	<jsp:param name="title" value="마이페이지"/>
 </jsp:include>
 
 <h2>마이페이지</h2>
