@@ -1,5 +1,7 @@
 package com.kh.pj.repository;
 
+import java.util.List;
+
 import com.kh.pj.entity.MemberDto;
 
 public interface MemberDao {
@@ -15,4 +17,7 @@ public interface MemberDao {
 	boolean updateLoginTime(String memberId);
 	// 비밀번호 변경
 	boolean editPw(MemberDto memberDto);
+	
+	//관리자 회원 목록 조회
+	List<MemberDto> adminList();
 }

@@ -20,6 +20,7 @@ public class NoticeRestController {
 	@Autowired
 	private NoticeDao noticeDao;
 	
+	//검색 & 정렬 있을 시 삭제할 때 처리 추가하기
 	@DeleteMapping("/notice")
 	public List<NoticeDto> noticeDelete(@RequestParam List<String> noticeNo) {
 		for(String no : noticeNo) {

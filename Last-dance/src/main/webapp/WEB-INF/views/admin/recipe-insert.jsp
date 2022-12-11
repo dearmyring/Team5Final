@@ -237,20 +237,24 @@
     	/* 재료 입력 비동기 불러오기 */
     	$(".input-ingredient").on("input", function(){
             setTimeout(() => {
-                var search = $(".input-ingredient").val();
-                if(search == ""){
+                var keyword = $(".input-ingredient").val();
+                if(keyword == ""){
                     $(".ingredientSearch").remove();
                 }
                 else{
+                	var param = new String();
+                	param.type = "ingredient_name";
+                	param.keyword = keyword;
+                	var search = $.param(param);
                     $.ajax({
-                        url: "http://localhost:8888/rest/ingredient/"+search,
+                        url: "http://localhost:8888/rest/ingredient?"+search,
                         method: "get",
                         success: function(resp){
                             $(".ingredientSearch").remove();
                             for(var i=0; i<resp.length; i++){
                                 var pTag = $("<p>")
                                     .addClass("ingredientSearch")
-                                    .text(resp[i]);
+                                    .text(resp[i].ingredientName);
                                 
                                 pTag.click(function(){
                                     var xMark = $("<i>").addClass("fa-solid fa-xmark");
@@ -281,9 +285,13 @@
     	$(".input-ingredient").keydown(function(e){
     		if(e.keyCode == 13) {
 	    		$(".ingredientSearch").remove();
-    			var search = $(this).val();
+    			var keyword = $(this).val();
+    			var param = new String();
+            	param.type = "ingredient_name";
+            	param.keyword = keyword;
+            	var search = $.param(param);
     			$.ajax({
-                    url: "http://localhost:8888/rest/ingredient/"+search,
+                    url: "http://localhost:8888/rest/ingredient?"+search,
                     method: "get",
                     success: function(resp){
                     	if(resp.length == 0){
@@ -300,7 +308,7 @@
 				var input = $("<input>")
 					.attr("readonly", "readonly")
 					.attr("name", "recipeIngredientName")
-					.val(search);
+					.val(keyword);
 				p.append(input).append(xMark);
 				$(".add-ingredient").append(p);
 				$(this).val("");

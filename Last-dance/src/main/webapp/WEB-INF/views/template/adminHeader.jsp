@@ -71,6 +71,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/recipe/list">레시피 목록</a>
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/recipe/write">레시피 등록</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/ingredient/list">재료 목록</a>
                             </div>
                         </li>
                         <!-- 유저 관리 -->
@@ -78,8 +79,8 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                                 aria-haspopup="true" aria-expanded="false">매니지먼트</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}">사용자 관리</a>
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}">유저 게시판</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/member/list">사용자 관리</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/board/list">유저 게시판</a>
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/list">고객센터</a>
                             </div>
                         </li>

@@ -29,6 +29,7 @@ public class RecipeRestController {
 		return recipeDao.adminList(vo); 
 	}
 	
+	//검색 & 정렬 있을 시 삭제할 때 처리 추가하기
 	@DeleteMapping("/recipe")
 	public List<RecipeDto> adminDeleteList(
 			@RequestParam List<String> recipeNo){

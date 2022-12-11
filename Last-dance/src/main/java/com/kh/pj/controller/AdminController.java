@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.AdminDto;
-import com.kh.pj.entity.IngredientDto;
 import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
@@ -25,11 +24,13 @@ import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
 import com.kh.pj.repository.HashtagDao;
 import com.kh.pj.repository.IngredientDao;
+import com.kh.pj.repository.MemberDao;
 import com.kh.pj.repository.NoticeDao;
 import com.kh.pj.repository.RecipeContentDao;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
+import com.kh.pj.vo.IngredientListSearchVO;
 import com.kh.pj.vo.RecipeListSearchVO;
 
 @Controller
@@ -56,6 +57,12 @@ public class AdminController {
 	
 	@Autowired
 	private IngredientDao ingredientDao;
+	
+//	@Autowired
+//	private BoardDao boardDao;
+	
+	@Autowired
+	private MemberDao memberDao;
 	
 	@GetMapping("/")
 	public String main() {
@@ -85,6 +92,7 @@ public class AdminController {
 		return "redirect:/admin/login";
 	}
 	
+	//관리자 레시피 컨트롤러
 	@GetMapping("/recipe/list")
 	public String list(
 			@ModelAttribute(name="voPagination") RecipeListSearchVO vo, 
@@ -200,6 +208,7 @@ public class AdminController {
 		return "redirect:../list";
 	}
 	
+	//관리자 공지사항 컨트롤러
 	@GetMapping("/notice/write")
 	public String write() {
 		return "admin/notice-insert";
@@ -266,9 +275,26 @@ public class AdminController {
 		return "redirect:../list";
 	}
 	
+	//관리자 재료 컨트롤러
 	@GetMapping("/ingredient/list")
-	public String ingredientList() {
+	public String ingredientList(Model model) {
+		IngredientListSearchVO vo = IngredientListSearchVO.builder().build();
+		model.addAttribute("ingredientList", ingredientDao.adminList(vo));
 		return "admin/ingredient-list";
 	}
+	
+	//관리자 사용자 컨트롤러
+	@GetMapping("/member/list")
+	public String memberList(Model model) {
+		model.addAttribute("memberList", memberDao.adminList());
+		return "admin/member-list";
+	}
+	
+	//관리자 게시판 컨트롤러
+//	@GetMapping("/board/list")
+//	public String boardList(Model model) {
+//		model.addAttribute("boardList", boardDao.adminList());
+//		return "admin/board-list";
+//	}
 	
 }

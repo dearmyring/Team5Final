@@ -1,5 +1,7 @@
 package com.kh.pj.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,5 +52,10 @@ public class MemberDaoImpl implements MemberDao{
 		memberDto.setMemberPw(enc);
 		int result = sqlSession.update("member.editPw", memberDto);
 		return result > 0;
+	}
+
+	@Override
+	public List<MemberDto> adminList() {
+		return sqlSession.selectList("member.adminList");
 	}
 }
