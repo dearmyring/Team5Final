@@ -87,7 +87,7 @@
 				url:"/rest/reply/delete",
 				method:"post",
 				data:{
-					replyOrigin:$(this).data("reply-board-no"),
+					replyBoardNo:$(this).data("reply-board-no"),
 					replyNo:$(this).data("reply-no")
 				},
 				success:function(resp){
@@ -318,17 +318,17 @@
 						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
 						<c:if test="${loginId == replyDto.replyId}">
 							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/image/edit.png" width="20" height="20"></a>
-							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-origin="${replyDto.replyOrigin}" data-reply-no="${replyDto.replyNo}"><img src="/image/delete.png" width="20" height="20"></a>
+							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-origin="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/image/delete.png" width="20" height="20"></a>
 						</c:if>
 						
 						<c:if test="${admin}">
 							<!-- 블라인드 여부에 따라 다르게 표시 -->
 							<c:choose>
 								<c:when test="${replyDto.replyBlind}">
-									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyOrigin=${replyDto.replyOrigin}"><img src="/image/blind2.png" width="20" height="20"></a>
+									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyBoardNo=${replyDto.replyBoardNo}"><img src="/image/blind2.png" width="20" height="20"></a>
 								</c:when>
 								<c:otherwise>
-									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyOrigin=${replyDto.replyOrigin}"><img src="/image/blind.png" width="20" height="20"></a>
+									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyBoardNo=${replyDto.replyBoardNo}"><img src="/image/blind.png" width="20" height="20"></a>
 								</c:otherwise>
 							</c:choose>
 							
@@ -343,8 +343,8 @@
 						<form action="reply/edit" method="post">
 							<input type="hidden" name="replyNo" 
 														value="${replyDto.replyNo}">
-							<input type="hidden" name="replyOrigin"
-														value="${replyDto.replyOrigin}">
+							<input type="hidden" name="replyBoardNo"
+														value="${replyDto.replyBoardNo}">
 							<textarea name="replyContent" rows="5" cols="50" 
 									required>${replyDto.replyContent}</textarea>
 							<button type="submit">변경</button>
@@ -366,7 +366,7 @@
 				<!-- 댓글 작성 -->
 <!-- 			<form action="reply/write" method="post"> -->
 				<form class="reply-insert-form">
-				<input type="hidden" name="replyOrigin" value="${boardDto.boardNo}">
+				<input type="hidden" name="replyBoardNo" value="${boardDto.boardNo}">
 				<table class="table">
 					<tbody>
 						<tr>
