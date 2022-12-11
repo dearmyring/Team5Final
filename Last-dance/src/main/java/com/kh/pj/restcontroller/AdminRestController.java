@@ -11,8 +11,8 @@ import com.kh.pj.entity.AdminDto;
 import com.kh.pj.repository.AdminDao;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
-@RestController
 @RequestMapping("/rest")
+@RestController
 public class AdminRestController {
 
 	@Autowired

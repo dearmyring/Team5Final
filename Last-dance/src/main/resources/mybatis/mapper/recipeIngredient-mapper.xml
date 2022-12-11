@@ -9,4 +9,8 @@
 		insert into recipe_ingredient(recipe_ingredient_name, recipe_no) 
 		values(#{recipeIngredientName}, ${recipeNo})
 	</insert>
+	
+	<select id="find" parameterType="int" resultType="String">
+		select recipe_ingredient_name from recipe_ingredient where recipe_no=${recipeNo} order by recipe_ingredient_name asc
+	</select>
 </mapper>

@@ -100,15 +100,40 @@
 
 <div class="col-10 offset-1">
 	<button class="col-5 btn btn-md text-lg btn-warning recipe-insert-btn" type="submit">레시피 등록하기</button>
-	<button class="col-5 btn btn-md text-lg btn-warning" type="button">돌아가기</button>
+	<button class="col-5 btn btn-md text-lg btn-warning return-btn" type="button">돌아가기</button>
 </div>
 
 </form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script>
+<!-- <div class="modal" tabindex="-1"> -->
+<!-- 	<div class="modal-dialog modal-dialog-centered"> -->
+<!-- 		<div class="modal-content"> -->
+<!-- 			<div class="modal-header"> -->
+<!-- 				<h5 class="modal-title">Modal title</h5> -->
+<!-- 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+<!-- 			</div> -->
+<!-- 			<div class="modal-body"> -->
+<!-- 				<p>Modal body text goes here.</p> -->
+<!-- 			</div> -->
+<!-- 			<div class="modal-footer"> -->
+<!-- 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+<!-- 				<button type="button" class="btn btn-primary">Save changes</button> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+
+<script type="text/javascript">
     $(function(){
+    	/* 모달 구현 중 */
+//     	const myModal = $('myModal');
+//     	const myInput = $('myInput');
+
+//     	myModal.handle('shown.bs.modal', function(){
+//     	  myInput.focus();
+//     	});
+    	
     	/* 레시피 등록 우선 비활성화 */
     	$(".recipe-insert-form").submit(function(e){
     		e.preventDefault();

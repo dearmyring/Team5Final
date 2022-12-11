@@ -1,6 +1,7 @@
 package com.kh.pj.vo;
 
 import java.sql.Date;
+
 import java.util.List;
 
 import com.kh.pj.entity.RecipeDto;
@@ -15,4 +16,5 @@ import lombok.NoArgsConstructor;
 public class RecipeListVO {
 	private RecipeDto recipeDto;
 	private List<RecipeIngredientDto> recipeIngredientList;
+
 }

@@ -1,6 +1,5 @@
 package com.kh.pj.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,11 +17,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.AdminDto;
+import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
 import com.kh.pj.repository.HashtagDao;
+import com.kh.pj.repository.NoticeDao;
 import com.kh.pj.repository.RecipeContentDao;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.RecipeImgDao;
@@ -48,6 +49,9 @@ public class AdminController {
 	@Autowired
 	private RecipeImgDao recipeImgDao;
 	
+	@Autowired
+	private NoticeDao noticeDao;
+	
 	@GetMapping("/")
 	public String main() {
 		return "admin/main";
@@ -66,6 +70,14 @@ public class AdminController {
 		session.setAttribute(SessionConstant.NICK, adminDto.getAdminNick());
 		
 		return "redirect:/admin/";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute(SessionConstant.ID);
+		session.removeAttribute(SessionConstant.NICK);
+		
+		return "redirect:/admin/login";
 	}
 	
 	@GetMapping("/list")
@@ -148,7 +160,105 @@ public class AdminController {
 	public String detail(
 			@PathVariable int recipeNo, 
 			Model model) {
+		//레시피 정보
 		model.addAttribute("recipeDto", recipeDao.adminDetail(recipeNo));
+		//레시피 내용 정보
+		model.addAttribute("recipeContentList", recipeContentDao.find(recipeNo));
+		//레시피 재료 정보
+		model.addAttribute("recipeIngredientList", recipeIngredientDao.find(recipeNo));
+		//레시피 썸네일 사진 정보
+		model.addAttribute("recipeImgList", recipeImgDao.find(recipeNo));
 		return "admin/recipe-detail";
+	}
+	
+	@GetMapping("/update")
+	public String update() {
+		return "admin/recipe-update";
+	}
+	
+	@PostMapping("/update")
+	public String update(
+			@ModelAttribute RecipeDto recipeDto, 
+			@RequestParam List<String> recipeContentText,
+			@RequestParam List<Integer> recipeContentAttachmentNo,
+			@RequestParam List<String> recipeIngredientName,
+			@RequestParam List<Integer> recipeAttachmentNo,
+			RedirectAttributes attr,
+			HttpSession session) {
+		
+		attr.addAttribute("recipeNo", recipeDto.getRecipeNo());
+		return "redirect:detail";
+	}
+	
+	@GetMapping("/delete/{recipeNo}")
+	public String delete(@PathVariable int recipeNo) {
+		recipeDao.delete(recipeNo);
+		return "redirect:../list";
+	}
+	
+	@GetMapping("/notice/write")
+	public String write() {
+		return "admin/notice-insert";
+	}
+	
+	@PostMapping("/notice/write")
+	public String write(
+			@ModelAttribute NoticeDto noticeDto,
+			RedirectAttributes attr,
+			HttpSession session) {
+		String loginNick = (String)session.getAttribute(SessionConstant.NICK);
+		noticeDto.setNoticeNick(loginNick);
+		int noticeNo = noticeDao.sequence();
+		noticeDto.setNoticeNo(noticeNo);
+		
+		noticeDao.insert(noticeDto);
+		
+		attr.addAttribute("noticeNo", noticeNo);
+		return "redirect:write-success";
+	}
+	
+	@GetMapping("/notice/write-success")
+	public String noticeWriteSuccess(
+			@RequestParam int noticeNo,
+			Model model) {
+		model.addAttribute("noticeNo", noticeNo);
+		return "admin/notice-success";
+	}
+	
+	@GetMapping("/notice/list")
+	public String noticeList(Model model) {
+		model.addAttribute("noticeList", noticeDao.list());
+		return "admin/notice-list";
+	}
+	
+	@GetMapping("/notice/detail/{noticeNo}")
+	public String noticeDetail(
+			@PathVariable int noticeNo,
+			Model model) {
+		model.addAttribute("noticeDto", noticeDao.find(noticeNo));
+		return "admin/notice-detail";
+	}
+	
+	@GetMapping("/notice/update")
+	public String noticeUpdate(
+			@RequestParam int noticeNo,
+			Model model) {
+		NoticeDto findDto = noticeDao.find(noticeNo);
+		model.addAttribute("noticeDto", findDto);
+		return "admin/notice-update";
+	}
+	
+	@PostMapping("/notice/update")
+	public String noticeUpdate(
+			@ModelAttribute NoticeDto noticeDto,
+			RedirectAttributes attr) {
+		noticeDao.update(noticeDto);
+		return "redirect:detail/"+noticeDto.getNoticeNo();
+	}
+	
+	@GetMapping("/delete/{noticeNo}")
+	public String noticeDelete(@PathVariable int noticeNo) {
+		noticeDao.delete(noticeNo);
+		return "redirect:../list";
 	}
 }
