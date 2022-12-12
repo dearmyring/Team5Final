@@ -69,8 +69,9 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                                 aria-haspopup="true" aria-expanded="false">레시피</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/list">레시피 목록</a>
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/write">레시피 등록</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/recipe/list">레시피 목록</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/recipe/write">레시피 등록</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/ingredient/list">재료 목록</a>
                             </div>
                         </li>
                         <!-- 유저 관리 -->
@@ -78,8 +79,8 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                                 aria-haspopup="true" aria-expanded="false">매니지먼트</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}">사용자 관리</a>
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}">유저 게시판</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/member/list">사용자 관리</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/board/list">유저 게시판</a>
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/list">고객센터</a>
                             </div>
                         </li>
@@ -88,7 +89,7 @@
                             <a class="nav-link" href="#">Page</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/">회원 페이지</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link logout-btn" href="${pageContext.request.contextPath}/admin/logout">logout</a>

@@ -6,4 +6,5 @@ public interface AttachmentDao {
 	public int sequence();
 	public void insert(AttachmentDto attachmentDto);
 	public AttachmentDto find(int attachmentNo);
+	public void delete(int attachmentNo);
 }
