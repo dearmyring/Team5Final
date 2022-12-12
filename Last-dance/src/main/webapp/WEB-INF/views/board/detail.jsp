@@ -119,8 +119,8 @@
 				item = item.replace("{{boardId}}", resp[i].boardId);
 				item = item.replace("{{memberBadge}}", resp[i].memberBadge);
 				item = item.replace("{{replyContent}}", resp[i].replyContent);
-				//item = item.replace("{{replyWriteTime}}", resp[i].replyWriteTime);
-				//item = item.replace("{{replyEditTime}}", resp[i].replyEditTime);
+				item = item.replace("{{replyWriteTime}}", resp[i].replyWriteTime);
+				item = item.replace("{{replyEditTime}}", resp[i].replyEditTime);
 				item = item.replace("{{replyNo}}", resp[i].replyNo);
 				item = item.replace("{{replyBoardNo}}", resp[i].replyBoardNo);
 				var result  = $(item);
@@ -288,13 +288,13 @@
 				<tr class="view">
 					<td width="90%">
 						<!-- 작성자 -->
+						(${replyDto.memberBadge}) 
 						${replyDto.memberNick}
 						(${replyDto.replyId})
 						<c:if test="${boardDto.boardId ==  replyDto.replyId}">
 						(작성자)
 						</c:if>
 						
-						(${replyDto.memberBadge}) 
 						<br>
 						
 						<!-- 블라인드 여부에 따라 다르게 표시 -->
