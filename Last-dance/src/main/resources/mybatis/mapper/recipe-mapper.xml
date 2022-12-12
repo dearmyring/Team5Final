@@ -97,7 +97,17 @@
 		select * from recipe where recipe_no=#{recipeNo}
 	</select>
 	
-
+	<update id="adminUpdate" parameterType="RecipeDto">
+		update recipe set 
+			recipe_title=#{recipeTitle}, 
+			recipe_Info=#{recipeInfo}, 
+			recipe_time=${recipeTime}, 
+			recipe_difficulty=#{recipeDifficulty}, 
+			recipe_nick=#{recipeNick}, 
+			recipe_hashtag=#{recipeHashtag}, 
+			recipe_edittime=sysdate 
+		where recipe_no=${recipeNo}
+	</update>
 	
 </mapper>
 

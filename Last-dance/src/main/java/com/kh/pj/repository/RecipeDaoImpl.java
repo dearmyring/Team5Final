@@ -127,4 +127,9 @@ public class RecipeDaoImpl implements RecipeDao {
 		return jdbcTemplate.query(sql,  countMapper);
 	}
 
+	@Override
+	public void adminUpdate(RecipeDto recipeDto) {
+		sqlSession.update("recipe.adminUpdate", recipeDto);
+	}
+
 }

@@ -438,25 +438,33 @@
     		$(this).parent().next().show();
     	});
     	$(".step-minus-btn").click(function(){
+    		var that = $(this);
     		var contentText = $(this).parent().find("[name=recipeContentText]");
     		var contentImg = $(this).parent().find(".preview");
+    		if(!contentText && contentImg.attr("src").includes("img_plus.png")){
+    			return;
+    		}
     		if(contentText.val() || !contentImg.attr("src").includes("img_plus.png")){
     			var choice = confirm("작성한 내용은 저장되지 않습니다. 삭제하시겠습니까?");
     			if(!choice){
     				return;
     			}
+    			else{
+		    		var recipeContentAttachmentNo = $(this).parent().find(".img-no").val();
+    				var attachmentNo = {recipeContentAttachmentNo : recipeContentAttachmentNo};
+    				var param = $.param(attachmentNo);
+    			}
     		}
-    		var recipeContentAttachmentNo = $(this).parent().find("[name=recipeContentAttachmentNo]");
     		$.ajax({
-    			url: "http://localhost:8888/rest/attachment/delete?"+recipeContentAttachmentNo.val(),
+    			url: "http://localhost:8888/rest/attachment/delete?"+param,
     			method: "delete",
     			success: function(resp){
 					contentText.val("");
 					contentImg.attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
 					recipeContentAttachmentNo.remove();
-		    		$(this).parent().prev().find(".step-plus-btn").show();
-		    		$(this).parent().prev().find(".step-minus-btn").show();
-		    		$(this).parent().hide();
+					that.parent().prev().find(".step-plus-btn").show();
+					that.parent().prev().find(".step-minus-btn").show();
+					that.parent().hide();
     			}
     		});
     	});
@@ -490,8 +498,6 @@
                 $(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
             }
         });
-    	
-    	/* 돌아가기 클릭 시 이미지 비동기 삭제 */
     });
 </script>
 <jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

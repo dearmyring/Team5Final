@@ -30,6 +30,7 @@ public interface RecipeDao {
 	//관리자 레시피 조회
 	public List<RecipeDto> adminList(RecipeListSearchVO vo);
 	public RecipeDto adminDetail(int recipeNo);
+	public void adminUpdate(RecipeDto recipeDto);
 	
 	//레시피 리스트 출력
 	public List<RecipeListVO> recipeList();

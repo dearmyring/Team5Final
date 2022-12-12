@@ -213,10 +213,51 @@ public class AdminController {
 			@RequestParam List<Integer> recipeContentAttachmentNo,
 			@RequestParam List<String> recipeIngredientName,
 			@RequestParam List<Integer> recipeAttachmentNo,
-			RedirectAttributes attr,
 			HttpSession session) {
+		//recipe 업데이트
+		String loginNick = (String)session.getAttribute(SessionConstant.NICK);
+		recipeDto.setRecipeNick(loginNick);
+		recipeDao.adminUpdate(recipeDto);
 		
-		return "redirect:detail/"+recipeDto.getRecipeNo();
+		int recipeNo = recipeDto.getRecipeNo();
+		
+		//recipeContent 다 지우고 다시 넣기
+		recipeContentDao.adminDelete(recipeNo);
+		//레시피 내용 개수만큼 반복해서 레시피 내용 시퀀스 뽑고 넣기
+		for(int i=0; i<recipeContentText.size(); i++){
+			int recipeContentNo = recipeContentDao.sequence();
+			RecipeContentDto contentDto = RecipeContentDto.builder()
+						.recipeContentNo(recipeContentNo)
+						.recipeNo(recipeNo)
+						.recipeContentAttachmentNo(recipeContentAttachmentNo.get(i))
+						.recipeContentText(recipeContentText.get(i))
+					.build();
+			recipeContentDao.insert(contentDto);
+		}
+		
+		//recipeImg 다 지우고 다시 넣기
+		recipeImgDao.adminDelete(recipeNo);
+		//레시피 썸네일 개수만큼 반복해서 사진 첨부
+		for(int attachmentNo : recipeAttachmentNo) {
+			RecipeImgDto imgDto = RecipeImgDto.builder()
+						.recipeAttachmentNo(attachmentNo)
+						.recipeNo(recipeNo)
+					.build();
+			recipeImgDao.insert(imgDto);
+		}
+		
+		//recipeIngredient 다 지우고 다시 넣기
+		recipeIngredientDao.adminDelete(recipeNo);
+		//레시피 재료 개수만큼 첨부
+		for(String ingredient : recipeIngredientName) {
+			RecipeIngredientDto ingredientDto = RecipeIngredientDto.builder()
+					.recipeIngredientName(ingredient)
+					.recipeNo(recipeNo)
+			.build();
+			recipeIngredientDao.insert(ingredientDto);
+		}
+		
+		return "redirect:detail/"+recipeNo;
 	}
 	
 	@GetMapping("/delete/{recipeNo}")

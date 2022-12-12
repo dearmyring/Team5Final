@@ -8,8 +8,8 @@
 	<h3>레시피등록</h3>
 </div>
 
-<form action="write" method="post" class="recipe-update-form" autocomplete="off" enctype="multipart/form-data">
-
+<form action="update" method="post" class="recipe-update-form" autocomplete="off" enctype="multipart/form-data">
+<input type="hidden" name="recipeNo" value="${recipeDto.recipeNo}">
 <div>
 	레시피 제목 <input type="text" name="recipeTitle" value="${recipeDto.recipeTitle}">
 </div>
@@ -103,6 +103,9 @@
 		</c:choose>
 		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
 		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
+		<c:if test="${recipeContentList[no] != null}">
+			<input type="hidden" name="recipeContentAttachmentNo" value="${recipeContentList[no].recipeContentAttachmentNo}">
+		</c:if>
 	</div>
 </c:forEach>
 
@@ -117,6 +120,7 @@
 		<c:choose>
 			<c:when test="${recipeImgList[no] != null}">
 				<img class="preview" src="${pageContext.request.contextPath}/rest/download/${recipeImgList[no]}" width="200" height="200"><br>
+				<input type="hidden" name="recipeAttachmentNo" value="${recipeImgList[no]}">
 			</c:when>
 			<c:otherwise>
 				<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
@@ -151,13 +155,28 @@
 </form>
 </div>
 
+<style>
+	.file-input{
+		display: none;
+	}
+	.preview{
+		border: 1px solid #C2C2C2;
+		cursor: pointer;
+	}
+</style>
+
 <script type="text/javascript">
 	$(function(){
 		$(".fa-xmark").click(function(){
 			$(this).parent().remove();
 		});
 		
-		/* 재료 등록 후 바로 추가 안내 */
+		/* 미리보기 클릭 시 파일 추가 */
+    	$(".preview").click(function(){
+    		$(this).parent().find(".file-input").click();
+    	});
+    	
+    	/* 재료 등록 후 바로 추가 안내 */
     	$(".ingredient-insert-btn").click(function(e){
     		if(confirm("재료를 등록하시겠습니까?")){
     			var ingredientName = $(this).parent().prev().find(".insert-ingredientName").val();
@@ -259,7 +278,7 @@
 	   		}
 	   		
 			var contentText = $("[name=recipeContentText]");
-			var contentImg = $(".content-page").find(".file-input");
+			var contentImg = $(".content-page").find(".preview");
 			//레시피 컨텐트 아예 없을 때 리턴
 			var contentCnt = 0;
 			var contentImgCnt = 0;
@@ -267,13 +286,13 @@
 				if(contentText.eq(i).text()){
 					contentCnt++;
 				}
-				if(contentImg.eq(i).val()){
+				if(!contentImg.eq(i).attr("src").includes("img_plus.png")){
 					contentImgCnt++;
 				}
-	               if(contentCnt != contentImgCnt){
-	                   alert("레시피 내용 작성을 완료해주세요.");
-	                   return false;
-	               }
+				if(contentCnt != contentImgCnt){
+				    alert("레시피 내용 작성을 완료해주세요.");
+				    return false;
+				}
 			}
 			//레시피 컨텐트 아예 아무 것도 없을 때
 			if(contentCnt == 0 && contentImgCnt == 0){
@@ -284,10 +303,10 @@
 			}
 	
            //레시피 썸네일 아예 없을 때 리턴
-			var recipeImg = $(".thumb-page").find(".file-input");
+			var recipeImg = $(".thumb-page").find(".preview");
 			var recipeImgCnt = 0;
 			for(var i=0; i<recipeImg.length; i++){
-				if(recipeImg.eq(i).val()){
+				if(!recipeImg.eq(i).attr("src").includes("img_plus.png")){
 					recipeImgCnt++;	
 				}
 			}
@@ -316,7 +335,7 @@
 	            }
 				//레시피 썸네일 없는 칸부터 빈칸 삭제
 				for(var i=0; i<recipeImg.length; i++){
-					if(!recipeImg.eq(i).val()){
+					if(recipeImg.eq(i).attr("src").includes("img_plus.png")){
 						recipeImg.eq(i).parent().remove();
 					}
 				}
@@ -325,7 +344,7 @@
 
     	/* 레시피 돌아가기 클릭 시 업데이트한 첨부파일 비동기로 삭제 구현 예정 */
     	$(".recipe-return-btn").click(function(e){
-    		var param = $(".recipe-insert-form .img-no").serialize();
+    		var param = $(".recipe-update-form .img-no").serialize();
     	});
     	
     	/* 레시피 내용 블러 시 textarea 안에 값 넣어주기 */
@@ -433,14 +452,18 @@
     			contentUpdateCnt++;
     		}
     	}
+    	for(var i=0; i<contentUpdateCnt-1; i++){
+        	$(".step-plus-btn").eq(i).hide();
+        	$(".step-minus-btn").eq(i).hide();
+    	}
     	for(var i=contentUpdateCnt; i<contentUpdateInput.length; i++){
 	    	$(".content-page").eq(i).hide();
     	}
 
     	$(".step-plus-btn").click(function(){
     		var contentText = $(this).parent().find("[name=recipeContentText]").val();
-    		var contentImg = $(this).parent().find(".file-input").val();
-    		if(!contentText || !contentImg){
+    		var contentImg = $(this).parent().find(".preview").attr("src").includes("img_plus.png");
+    		if(!contentText || contentImg){
     			alert("레시피 내용은 순서대로 등록해주세요.");
     			return;
     		}
@@ -449,26 +472,35 @@
     		$(this).parent().next().show();
     	});
     	$(".step-minus-btn").click(function(){
+    		var that = $(this);
     		var contentText = $(this).parent().find("[name=recipeContentText]");
-    		var contentImg = $(this).parent().find(".file-input");
-    		if(contentText.val() || contentImg.val()){
+    		var contentImg = $(this).parent().find(".preview");
+    		
+    		if(!contentText && contentImg.attr("src").includes("img_plus.png")){
+    			return;
+    		}
+    		if(contentText.val() || !contentImg.attr("src").includes("img_plus.png")){
     			var choice = confirm("작성한 내용은 저장되지 않습니다. 삭제하시겠습니까?");
     			if(!choice){
     				return;
     			}
+    			else{
+		    		var recipeContentAttachmentNo = $(this).parent().find(".img-no").val();
+		    		var recipeContentAttachmentNo = $(this).parent().find(".img-no").val();
+    				var attachmentNo = {recipeContentAttachmentNo : recipeContentAttachmentNo};
+    				var param = $.param(attachmentNo);
+    			}
     		}
-    		var recipeContentAttachmentNo = $(this).parent().find("[name=recipeContentAttachmentNo]");
     		$.ajax({
-    			url: "http://localhost:8888/rest/attachment/delete?"+recipeContentAttachmentNo.val(),
+    			url: "http://localhost:8888/rest/attachment/delete?"+param,
     			method: "delete",
     			success: function(resp){
 					contentText.val("");
-					contentImg.val("");
-					$(this).parent().find(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
-					recipeContentAttachmentNo.remove();
-		    		$(this).parent().prev().find(".step-plus-btn").show();
-		    		$(this).parent().prev().find(".step-minus-btn").show();
-		    		$(this).parent().hide();
+					contentImg.attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
+					that.parent().find(".img-no").remove();
+					that.parent().prev().find(".step-plus-btn").show();
+					that.parent().prev().find(".step-minus-btn").show();
+					that.parent().hide();
     			}
     		});
     	});
