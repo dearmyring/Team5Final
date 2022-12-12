@@ -12,7 +12,7 @@ public interface AttachmentDao {
 	AttachmentDto find(int attachmentNo);
 	
 	
-	boolean delete(int filesNo); //프라이머리키로 삭제
+	public void delete(int attachmentNo);
 	List<AttachmentDto> selectBoardFileList(int boardAttachmentNo);
 
 

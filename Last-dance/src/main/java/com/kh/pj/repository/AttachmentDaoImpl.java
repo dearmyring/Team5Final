@@ -83,7 +83,8 @@ public class AttachmentDaoImpl implements AttachmentDao{
 				+ "where board_attachment_no = ?";
 		Object[] param = {boardAttachmentNo};
 		return jdbcTemplate.query(sql, mapper, param);
-=======
+	}
+	
 	@Override
 	public void delete(int attachmentNo) {
 		sqlSession.delete("attachment.delete", attachmentNo);
