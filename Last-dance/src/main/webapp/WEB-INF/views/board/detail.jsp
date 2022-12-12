@@ -51,7 +51,6 @@
 			var text = $(this).find("[name=replyContent]").val();
 			if(!text){
 				alert("내용을 작성해주세요");
-				$(this).focus();
 				return;
 			}
 			
@@ -59,18 +58,19 @@
 			
 			//정상적으로 입력되었다면 비동기 통신으로 등록 요청
 			$.ajax({
-				url:"http://localhost:8888/rest/reply/insert",
+				url:"${pageContext.request.contextPath}/rest/reply/insert",
 				method:"post",
-				data:{
+			/* 	data:{
 					replyBoardNo:$(this).find("[name=replyBoardNo]").val(),
 					replyContent:text
 				},
 					success:function(resp){
+						console.log(resp); */
 			/* 	data:$(form).serialize(),//form을 전송 가능한 형태의 문자로 변환한다
 					listHandler(resp);
 					
 					//입력창 초기화(= 폼 초기화) - 자바스크립트로 처리
-					//form.reset();
+					form.reset();
 				} 
 			});
 		});
@@ -84,7 +84,7 @@
 			console.log(this);
 			
 			$.ajax({
-				url:"/rest/reply/delete",
+				url:"${pageContext.request.contextPath}/rest/reply/delete",
 				method:"post",
 				data:{
 					replyBoardNo:$(this).data("reply-board-no"),
@@ -117,8 +117,8 @@
 				item = item.replace("{{boardId}}", resp[i].boardId);
 				item = item.replace("{{memberBadge}}", resp[i].memberBadge);
 				item = item.replace("{{replyContent}}", resp[i].replyContent);
-				item = item.replace("{{replyWritetime}}", resp[i].replyWritetime);
-				item = item.replace("{{replyEdittime}}", resp[i].replyEdittime);
+				item = item.replace("{{replyWriteTime}}", resp[i].replyWriteTime);
+				item = item.replace("{{replyEditTime}}", resp[i].replyEditTime);
 				item = item.replace("{{replyNo}}", resp[i].replyNo);
 				item = item.replace("{{replyBoardNo}}", resp[i].replyBoardNo);
 				var result  = $(item);
@@ -156,9 +156,9 @@
 						<pre>{{replyContent}}</pre>
 						
 						<br><br>
-						{{replyWritetime}}
+						{{replyWriteTime}}
 						<br><br>
-						{{replyEdittime}}
+						{{replyEditTime}}
 
 					</td>
 					<th>
@@ -297,7 +297,7 @@
 						(작성자)
 						</c:if>
 						
-						(${replyDto.memberGrade}) 
+						(${replyDto.memberBadge}) 
 						<br>
 						
 						<!-- 블라인드 여부에 따라 다르게 표시 -->
@@ -311,14 +311,14 @@
 						</c:choose>
 						
 						<br><br>
-						<fmt:formatDate value="${replyDto.replyWritetime}" 
+						<fmt:formatDate value="${replyDto.replyWriteTime}" 
 													pattern="yyyy-MM-dd HH:mm"/>
 					</td>
 					<th>
 						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
 						<c:if test="${loginId == replyDto.replyId}">
 							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/image/edit.png" width="20" height="20"></a>
-							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-origin="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/image/delete.png" width="20" height="20"></a>
+							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/image/delete.png" width="20" height="20"></a>
 						</c:if>
 						
 						<c:if test="${admin}">
@@ -336,7 +336,7 @@
 					</th>
 				</tr>
 				
-				<c:if test="${loginId ==  replyDto.replyWriter}">
+				<c:if test="${loginId ==  replyDto.replyId}">
 				<!-- 수정하기 위한 화면 : 댓글 작성자 본인에게만 출력 -->
 				<tr class="editor">
 					<th colspan="2">
@@ -364,7 +364,6 @@
 		<c:choose>
 			<c:when test="${loginId != null}">
 				<!-- 댓글 작성 -->
-<!-- 			<form action="reply/write" method="post"> -->
 				<form class="reply-insert-form">
 				<input type="hidden" name="replyBoardNo" value="${boardDto.boardNo}">
 				<table class="table">

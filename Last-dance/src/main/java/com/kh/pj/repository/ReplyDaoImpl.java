@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -31,10 +33,30 @@ public class ReplyDaoImpl implements ReplyDao {
 										.replyEditTime(rs.getDate("reply_edittime"))
 										.replyBlind(rs.getString("reply_blind"))
 										.memberBadge(rs.getString("member_badge"))
-										.profileAttachmentNo(rs.getInt("profile_attachment_no"))
+//										.profileAttachmentNo(rs.getInt("profile_attachment_no"))
 									.build();
 		}
 	};
+	private ResultSetExtractor<ReplyDto> extractor = new ResultSetExtractor<ReplyDto>() {
+		@Override
+		public ReplyDto extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if(rs.next()) {
+				return ReplyDto.builder()
+						.replyNo(rs.getInt("reply_no"))
+						.replyBoardNo(rs.getInt("reply_board_no"))
+						.replyId(rs.getString("reply_id"))
+						.replyContent(rs.getString("reply_content"))
+						.replyWriteTime(rs.getDate("reply_writetime"))
+						.replyEditTime(rs.getDate("reply_edittime"))
+						.replyBlind(rs.getString("reply_blind") != null)
+					.build();
+			}
+			else {
+				return null;
+			}
+		}
+	};
+	
 	
 	@Override
 	public void insert(ReplyDto replyDto) {
@@ -53,15 +75,16 @@ public class ReplyDaoImpl implements ReplyDao {
 		String sql = "select R.*, M.member_nick,M.member_badge "
 				+ "from reply R left outer join member M on R.reply_id = M.member_id "
 				+ "where reply_board_no = ? "
-				+ "order by reply_writetime desc";
+				+ "order by reply_no asc";
 		Object[] param = {replyBoardNo};
 		return jdbcTemplate.query(sql, listMapper, param);
 	}
 
 	@Override
 	public ReplyDto selectOne(int replyNo) {
-		// TODO Auto-generated method stub
-		return null;
+			String sql = "select * from reply where where reply_no=?";
+			Object[]param = {replyNo};
+			return jdbcTemplate.query(sql, extractor,param);
 	}
 
 	@Override
@@ -82,4 +105,13 @@ public class ReplyDaoImpl implements ReplyDao {
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 
+	@Override
+	public boolean updateBlind(int replyNo, boolean blind) {
+		String sql = "update reply "
+				+ "set reply_blind = ? "
+				+ "where reply_no = ?";
+		String replyBlind = blind ? "Y" : null;//삼항연산
+		Object[] param = {replyBlind, replyNo};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
 }

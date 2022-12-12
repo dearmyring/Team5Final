@@ -15,6 +15,6 @@ public class ReplyDto {
 	private String replyContent;
 	private Date replyWriteTime;
 	private Date replyEditTime;
-	private String replyBlind;
+	private boolean replyBlind;
 	
 }

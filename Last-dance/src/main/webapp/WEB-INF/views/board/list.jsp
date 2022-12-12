@@ -14,7 +14,7 @@
 				<th colspan="3"><select class="sort-click">
 						<option value="board_no desc">최근 작성일 순</option>
 						<option value="board_click desc">조회수 높은 순</option>
-						<option value="board_like desc">좋아요 많은 순</option>
+						<option value="board_like desc">추천 많은 순</option>
 				</select></th>
 			</tr>
 			<tr>

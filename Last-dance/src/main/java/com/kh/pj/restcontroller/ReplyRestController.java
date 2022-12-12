@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +26,18 @@ public class ReplyRestController {
 	private ReplyDao replyDao;
 	
 	@PostMapping("/insert")
-	public List<ReplyListVO> insert(@ModelAttribute ReplyDto replyDto,HttpSession session) {
+	public List<ReplyListVO> insert(@ModelAttribute ReplyDto replyDto, HttpSession session) {
 		String boardId = (String)session.getAttribute(SessionConstant.ID);
 		replyDto.setReplyId(boardId);
 		replyDao.insert(replyDto);
 		
 		return replyDao.selectList(replyDto.getReplyBoardNo());
 	}
+	
+	@PostMapping("/delete")
+	public List<ReplyListVO> delete(@ModelAttribute ReplyDto replyDto) {
+		replyDao.delete(replyDto.getReplyNo());
+		return replyDao.selectList(replyDto.getReplyBoardNo());
+	}
+	
 }

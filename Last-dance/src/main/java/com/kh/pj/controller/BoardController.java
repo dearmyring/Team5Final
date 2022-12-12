@@ -23,6 +23,7 @@ import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.BoardImgDto;
 import com.kh.pj.entity.BoardLikeDto;
+import com.kh.pj.entity.ReplyDto;
 import com.kh.pj.repository.AttachmentDao;
 import com.kh.pj.repository.BoardDao;
 import com.kh.pj.repository.BoardImgDao;
@@ -182,5 +183,45 @@ public class BoardController {
 		return "redirect:/board/detail";
 	}
 	
+	@PostMapping("/reply/write")
+	public String replyWrite(@ModelAttribute ReplyDto replyDto,
+								RedirectAttributes attr, HttpSession session) {
+		String boardId = (String)session.getAttribute(SessionConstant.ID);
+		replyDto.setReplyId(boardId);
+		replyDao.insert(replyDto);
+		attr.addAttribute("boardNo",replyDto.getReplyBoardNo());
+		return "redirect:/board/detail";
+	}
+	
+	@GetMapping("/reply/delete")
+	public String replyDelete(
+			@RequestParam int replyNo,
+			@RequestParam int replyBoardNo,
+			RedirectAttributes attr) {
+		replyDao.delete(replyNo);
+		attr.addAttribute("boardNo", replyBoardNo);
+		return "redirect:/board/detail";
+	}
+	
+	@PostMapping("/reply/edit")
+	public String replyEdit(
+			@ModelAttribute ReplyDto replyDto,
+			RedirectAttributes attr) {
+		replyDao.update(replyDto);
+		attr.addAttribute("boardNo", replyDto.getReplyBoardNo());
+		return "redirect:/board/detail";
+	}
+	
+	@GetMapping("/reply/blind")
+	public String replyBlind(
+			@RequestParam int replyNo,
+			@RequestParam int replyBoardNo,
+			RedirectAttributes attr) {
+		ReplyDto replyDto = replyDao.selectOne(replyNo);
+		replyDao.updateBlind(replyNo, !replyDto.isReplyBlind());
+		
+		attr.addAttribute("boardNo", replyBoardNo);
+		return "redirect:/board/detail";
+	}
 }
 
