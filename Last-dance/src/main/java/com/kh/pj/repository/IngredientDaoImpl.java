@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.IngredientDto;
+import com.kh.pj.vo.IngredientListSearchVO;
 
 @Repository
 public class IngredientDaoImpl implements IngredientDao {
@@ -62,8 +63,8 @@ public class IngredientDaoImpl implements IngredientDao {
 	}
 
 	@Override
-	public List<String> list(String search) {
-		return sqlSession.selectList("ingredient.list", search);
+	public List<IngredientDto> adminList(IngredientListSearchVO vo) {
+		return sqlSession.selectList("ingredient.adminList", vo);
 	}
 
 	@Override
@@ -72,8 +73,18 @@ public class IngredientDaoImpl implements IngredientDao {
 	}
 
 	@Override
-	public IngredientDto findIngredient(String ingredientName) {
-		return sqlSession.selectOne("ingredient.get",ingredientName);
+	public List<String> searchList(String search) {
+		return sqlSession.selectList("ingredient.searchList", search);
 	}
+
+	@Override
+	public String adminSelect(String ingredientName) {
+		return sqlSession.selectOne("ingredient.adminSelect", ingredientName);
+	}
+
+//	@Override
+//	public IngredientDto findIngredient(String ingredientName) {
+//		return sqlSession.selectOne("ingredient.get",ingredientName);
+//	}
 
 }

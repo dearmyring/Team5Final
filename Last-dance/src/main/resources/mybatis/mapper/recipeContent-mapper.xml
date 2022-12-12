@@ -13,5 +13,9 @@
 		insert into recipe_content(recipe_content_no, recipe_no, recipe_content_attachment_no, recipe_content_text) 
 		values(${recipeContentNo}, ${recipeNo}, ${recipeContentAttachmentNo}, #{recipeContentText})
 	</insert>
+	
+	<select id="find" parameterType="int" resultType="RecipeContentDto">
+		select * from recipe_content where recipe_no=${recipeNo} order by recipe_content_no asc
+	</select>
 
 </mapper>

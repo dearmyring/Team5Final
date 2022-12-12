@@ -6,21 +6,30 @@
   
 <mapper namespace="ingredient">
 
-	<select id="list" parameterType="String" resultType="String">
-		select ingredient_name from ingredient 
-		where instr(ingredient_name, #{ingredientName}) > 0 
-		order by ingredient_name asc
+	<select id="adminList" parameterType="IngredientListSearchVO" resultType="IngredientDto">
+		select * from ingredient 
+		<where>
+			<if test="type != null and keyword != ''">
+				instr(${type}, #{keyword}) > 0 
+			</if>
+		</where>
+		order by ingredient_name ${sort}
 	</select>
 	
 	<select id="cate" resultType="String">
 		select distinct(ingredient_category) from ingredient order by ingredient_category asc 
 	</select>
-
-
-	<select id="get" resultType="IngredientDto" parameterType="String">
-		select * from ingredient where ingredient_name=#{IngredientName}
+	
+		<select id="searchList" parameterType="String" resultType="String">
+		select ingredient_name from ingredient 
+		where instr(ingredient_name, #{ingredientName}) > 0 
+		order by ingredient_name asc
 	</select>
 	
+	<select id="adminSelect" parameterType="String" resultType="String">
+		select ingredient_name from ingredient where ingredient_name=#{ingredient_name}
+	</select>
+
 </mapper>
 
 
