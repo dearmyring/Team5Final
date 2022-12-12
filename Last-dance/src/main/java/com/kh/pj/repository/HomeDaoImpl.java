@@ -1,11 +1,16 @@
 package com.kh.pj.repository;
 
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.pj.vo.MainRecipeListTop5VO;
+import com.kh.pj.vo.PushRecipeListVO;
 import com.kh.pj.vo.RecipeTotalCountVO;
+import com.kh.pj.vo.TodayMemberRankingVO;
 
 @Repository
 public class HomeDaoImpl implements HomeDao{
@@ -15,5 +20,25 @@ public class HomeDaoImpl implements HomeDao{
 	@Override
 	public RecipeTotalCountVO counting() {
 		return sqlSession.selectOne("home.totalCount");
+	}
+	
+	@Override
+	public RecipeTotalCountVO todayCounting() {
+		return sqlSession.selectOne("home.todayAddCount");
+	}
+	
+	@Override
+	public TodayMemberRankingVO ranking() {
+		return sqlSession.selectOne("home.todayMemberRanking"); 
+	}
+	
+	@Override
+	public List<PushRecipeListVO> pushRecipe() {
+		return sqlSession.selectList("home.pushRecipeForMain");
+	}
+	
+	@Override
+	public List<MainRecipeListTop5VO> mainRecipe() {
+		return sqlSession.selectList("home.MainRecipeTop5");
 	}
 }
