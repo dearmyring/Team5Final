@@ -3,63 +3,54 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
-
-<script>
-	
-</script>
-
-<div class="modal ingredient-insert-modal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">재료 등록</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-       	<select class="insert-ingredientCategory" name="ingredientCategory">
-       		<option value="">카테고리 선택</option>
-       		<c:forEach var="category" items="${categoryList}">
-	       		<option>${category}</option>
-       		</c:forEach>
-       	</select>
-       	<input class="insert-ingredientName" type="text" name="ingredientName" placeholder="재료명">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary ingredient-insert-btn">등록하기</button>
-        <button type="button" class="btn btn-secondary ingredient-insert-cancel" data-bs-dismiss="modal">돌아가기</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="mt-5 col-6 offset-3">
 <div>
 	<h3>레시피등록</h3>
 </div>
 
-<form action="write" method="post" class="recipe-insert-form" autocomplete="off" enctype="multipart/form-data">
+<form action="write" method="post" class="recipe-update-form" autocomplete="off" enctype="multipart/form-data">
 
 <div>
-	레시피 제목 <input type="text" name="recipeTitle">
+	레시피 제목 <input type="text" name="recipeTitle" value="${recipeDto.recipeTitle}">
 </div>
 
 <div>
-	레시피 소개 <input type="text" name="recipeInfo">
+	레시피 소개 <input type="text" name="recipeInfo" value="${recipeDto.recipeInfo}">
 </div>
 
 <div>
 	레시피 정보 시간 <select name="recipeTime">
 		<option value="">시간</option>
-		<c:forEach var="i" begin="5" step="5" end="115">
-			<option value="${i}">${i}분</option>
+		<c:forEach var="i" begin="5" step="5" end="120">
+			<c:choose>
+				<c:when test="${i != 120}">
+					<option <c:if test="${recipeDto.recipeTime == i}">selected</c:if> value="${i}">${i}분</option>
+				</c:when>
+				<c:otherwise>
+					<option <c:if test="${recipeDto.recipeTime == i}">selected</c:if> value="${i}">120분 이상</option>
+				</c:otherwise>
+			</c:choose>
 		</c:forEach>
-		<option value="120">120분 이상</option>
 	</select>
 	난이도 <select name="recipeDifficulty">
 	    <option value="">난이도</option>
-	    <option value="쉬워요">쉬워요</option>
-	    <option value="보통이에요">보통이에요</option>
-	    <option value="어려워요">어려워요</option>
+	    <c:choose>
+	    	<c:when test="${recipeDto.recipeDifficulty == '쉬워요'}">
+			    <option selected value="쉬워요">쉬워요</option>
+			    <option value="보통이에요">보통이에요</option>
+			    <option value="어려워요">어려워요</option>
+	    	</c:when>
+	    	<c:when test="${recipeDto.recipeDifficulty == '보통이에요'}">
+			    <option value="쉬워요">쉬워요</option>
+			    <option selected value="보통이에요">보통이에요</option>
+			    <option value="어려워요">어려워요</option>
+	    	</c:when>
+	    	<c:otherwise>
+			    <option value="쉬워요">쉬워요</option>
+			    <option value="보통이에요">보통이에요</option>
+			    <option selected value="어려워요">어려워요</option>
+	    	</c:otherwise>
+	    </c:choose>
 	</select>
 </div>
 
@@ -73,7 +64,14 @@
 </div>
 
 <div class="search-ingredient"></div>
-<div class="add-ingredient"></div>
+<div class="add-ingredient">
+	<c:forEach var="ingredient" items="${recipeIngredientList}">
+		<p>
+			<input type="text" name="recipeIngredientName" value="${ingredient}" readonly>
+			<i class="fa-solid fa-xmark"></i>
+		</p>
+	</c:forEach>
+</div>
 
 <div>
 	요리 순서
@@ -93,9 +91,16 @@
 <c:forEach var="no" begin="0" end="9">
 	<div class="content-page">
 		Step<fmt:formatNumber value="${no+1}" minIntegerDigits="2"/> 
-		<textarea name="recipeContentText"></textarea>
+		<textarea name="recipeContentText">${recipeContentList[no].recipeContentText}</textarea>
 		<input type="file" class="file-input" accept=".jpg, .png, .gif">
-		<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
+		<c:choose>
+			<c:when test="${recipeContentList[no].recipeContentAttachmentNo != null}">
+				<img class="preview" src="${pageContext.request.contextPath}/rest/download/${recipeContentList[no].recipeContentAttachmentNo}" width="200" height="200"><br>
+			</c:when>
+			<c:otherwise>
+				<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
+			</c:otherwise>
+		</c:choose>
 		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
 		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
 	</div>
@@ -104,28 +109,42 @@
 <div>
 	요리 완성사진 
 	<button type="button">사진 한 번에 넣기</button>
-	<button class="thumb-all-clear" type="button">사진 모두 지우기</button>
+	<button type="button">사진 모두 지우기</button>
 	<br>
 	<c:forEach var="no" begin="0" end="3">
 		<div class="thumb-page">
 			<input type="file" class="file-input" accept=".jpg, .png, .gif">
-			<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200">
+		<c:choose>
+			<c:when test="${recipeImgList[no] != null}">
+				<img class="preview" src="${pageContext.request.contextPath}/rest/download/${recipeImgList[no]}" width="200" height="200"><br>
+			</c:when>
+			<c:otherwise>
+				<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
+			</c:otherwise>
+		</c:choose>
 		</div>
 	</c:forEach>
 </div>
 
 <div>
-	요리 해시태그 
+	요리 해시태그
 	<select name="recipeHashtag">
 		<option value="">해시태그</option>
 		<c:forEach var="hashtagDto" items="${hashtagList}">
-			<option>${hashtagDto.hashtagName}</option>
+		<c:choose>
+			<c:when test="${hashtagDto.hashtagName == recipeDto.recipeHashtag}">
+				<option selected>${hashtagDto.hashtagName}</option>
+			</c:when>
+			<c:otherwise>
+				<option>${hashtagDto.hashtagName}</option>
+			</c:otherwise>
+		</c:choose>
 		</c:forEach>
 	</select>
 </div>
 
 <div class="col-10 offset-1">
-	<button class="col-5 btn btn-md text-lg btn-warning recipe-insert-btn" type="submit">레시피 등록하기</button>
+	<button class="col-5 btn btn-md text-lg btn-warning recipe-insert-btn" type="submit">레시피 수정하기</button>
 	<button class="col-5 btn btn-md text-lg btn-warning recipe-return-btn" type="button">돌아가기</button>
 </div>
 
@@ -133,63 +152,12 @@
 </div>
 
 <script type="text/javascript">
-    $(function(){
-    	/* 재료 등록 후 바로 추가 안내 */
-    	$(".ingredient-insert-btn").click(function(e){
-    		if(confirm("재료를 등록하시겠습니까?")){
-    			var ingredientName = $(this).parent().prev().find(".insert-ingredientName").val();
-    			var ingredientCategory = $(this).parent().prev().find(".insert-ingredientCategory").val();
-    			$.ajax({
-    				url: "http://localhost:8888/rest/ingredient",
-    				method: "post",
-    				contentType: "application/json",
-    				data: JSON.stringify({
-    					ingredientName : ingredientName,
-    					ingredientCategory : ingredientCategory
-    				}),
-    				success: function(resp){
-    					if(confirm("레시피에 바로 추가하시겠습니까?")){
-    						var xMark = $("<i>").addClass("fa-solid fa-xmark");
-							xMark.click(function(){
-								$(this).parent().remove();
-							});
-							var p = $("<p>")
-							var input = $("<input>")
-								.attr("readonly", "readonly")
-								.attr("name", "recipeIngredientName")
-								.val(ingredientName);
-							p.append(input).append(xMark);
-							$(".add-ingredient").append(p);
-    					}
-						$(".input-ingredient").val("");
-                        $(".ingredient-insert-modal").modal("hide");
-    				}
-    			});
-    		}
-    	});
-    	
-    	/* 재료 등록 취소 */
-    	$(".ingredient-insert-cancel").click(function(e){
-    		if(!confirm("재료 등록을 취소하시겠습니까?")){
-	    		e.preventDefault();
-    		}
-    	});
-    	
-    	/* 썸네일 사진 모두 지우기 클릭 시 비동기 삭제 & 미리보기 사진 변경 */
-    	$(".thumb-all-clear").click(function(){
-    		var param = $(".thumb-page .img-no").serialize();
-    		console.log(param);
-    		$.ajax({
-    			url: "http://localhost:8888/rest/attachment/delete?"+param,
-    			method: "delete",
-    			success: function(resp){
-		    		$(".thumb-page").find(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
-    			}
-    		});
-    	});
-    	
-    	/* 엔터 시 폼 전송 방지 */
-    	$(".recipe-insert-form").keydown(function(e){
+	$(function(){
+		$(".fa-xmark").click(function(){
+			$(this).parent().remove();
+		});
+		
+		$(".recipe-insert-form").keydown(function(e){
     		if(e.keyCode === 13){
 	    		e.preventDefault();
     		}
@@ -374,16 +342,12 @@
             	param.keyword = keyword;
             	var search = $.param(param);
     			$.ajax({
-                    url: "http://localhost:8888/rest/ingredient/"+search,
+                    url: "http://localhost:8888/rest/ingredient?"+search,
                     method: "get",
                     success: function(resp){
-                    	if(!resp){
-                    		if(confirm("등록되지 않은 재료입니다. 해당 재료를 등록하시겠습니까?")){
-                    			$(".insert-ingredientName").val(keyword);
-	                            $(".ingredient-insert-modal").modal("hide");
-	                            var modal = new bootstrap.Modal($(".ingredient-insert-modal"), {});
-	                            modal.show();
-                    		}
+                    	if(resp.length == 0){
+                    		alert("등록되지 않은 재료입니다.");
+				    		return;
                     	}
                     	else{
 							var xMark = $("<i>").addClass("fa-solid fa-xmark");
@@ -480,8 +444,7 @@
                 $(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
             }
         });
-    	
-    	/* 돌아가기 클릭 시 이미지 비동기 삭제 */
-    });
+	});
 </script>
+
 <jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

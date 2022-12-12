@@ -4,7 +4,9 @@
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 <div class="mt-5">
 <h3>레시피리스트</h3>
-	<table>
+<form class="recipeNo-form">
+<button type="button" class="recipe-async-delete">삭제하기</button>
+	<table class="table table-hover">
 	    <thead>
 			<tr>
 				<th colspan="3">
@@ -17,6 +19,7 @@
 					</select>
 				</th>
 	        <tr>
+	        	<th><input type="checkbox" class="check-all"></th>
 	            <th>번호</th>
 	            <th>제목</th>
 	            <th>조리시간</th>
@@ -26,6 +29,7 @@
 	    <tbody class="recipe-list">
 	    	<c:forEach var="recipeDto" items="${recipeList}">
 	         <tr>
+	         	<td><input type="checkbox" class="check-item" name="recipeNo" value="${recipeDto.recipeNo}"></td>
 				<td>${recipeDto.recipeNo}</td>
 				<td>
 					<a href="detail/${recipeDto.recipeNo}">
@@ -38,6 +42,8 @@
 	    	</c:forEach>
 	    </tbody>
 	</table>
+	
+</form>
 	<br>
 	<ul class="pagination">
         <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
@@ -87,11 +93,13 @@
 					$(".recipe-list").find("tr").remove();
 					for(var i=0; i<resp.length; i++){
 						var tr = $("<tr>");
+						var check = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
+						var tdCheck = $("<td>").append(check);
 						var tdNo = $("<td>").text(resp[i].recipeNo);
 						var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle));
 						var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 						var tdNick = $("<td>").text(resp[i].recipeNick);
-						tr.append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
+						tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
 						$(".recipe-list").append(tr);
 					}
 				}
@@ -117,16 +125,66 @@
 					$(".recipe-list").find("tr").remove();
 					for(var i=0; i<resp.length; i++){
 						var tr = $("<tr>");
+						var check = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
+						var tdCheck = $("<td>").append(check);
 						var tdNo = $("<td>").text(resp[i].recipeNo);
 						var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle));
 						var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 						var tdNick = $("<td>").text(resp[i].recipeNick);
-						tr.append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
+						tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
 						$(".recipe-list").append(tr);
 					}
 				}
 			});
-		});    	
+		});
+    	
+		/* 체크박스 선택 삭제 시 비동기 처리 */
+		$(".recipe-async-delete").click(function(){
+			var param = $(".recipeNo-form input:checked").serialize();
+			
+			if(!param){
+				alert("삭제할 레시피를 선택하세요.");
+				return;
+			}
+			else{
+				if(confirm("정말 삭제하시겠습니까?")){
+					$.ajax({
+						url: "http://localhost:8888/rest/recipe?"+param,
+						method: "delete",
+						contentType: "application/json",
+						success: function(resp){
+							var sort = $(".sort-click").val();
+							var type = $(".input-type").val();
+							var keyword = $(".input-keyword").val();
+							$.ajax({
+								url: "http://localhost:8888/rest/recipe",
+								method: "post",
+								contentType: "application/json",
+								data: JSON.stringify({
+									type: type,
+									keyword: keyword,
+									sort: sort
+								}),
+								success: function(resp){
+									$(".recipe-list").find("tr").remove();
+									for(var i=0; i<resp.length; i++){
+										var tr = $("<tr>");
+										var check = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
+										var tdCheck = $("<td>").append(check);
+										var tdNo = $("<td>").text(resp[i].recipeNo);
+										var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle));
+										var tdTime = $("<td>").text(resp[i].recipeTime+'분');
+										var tdNick = $("<td>").text(resp[i].recipeNick);
+										tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
+										$(".recipe-list").append(tr);
+									}
+								}
+							});
+						}
+					});
+				}
+			}
+		});
     });
 </script>
 <jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

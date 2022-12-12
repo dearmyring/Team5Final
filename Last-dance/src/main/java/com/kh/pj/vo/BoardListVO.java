@@ -20,6 +20,7 @@ public class BoardListVO {
 	private Date boardWriteTime;
 	private Date boardEditTime;
 	private String boardBlind;
+	private int memberPoint;
 	private String memberBadge;
 	private int replyNo;//댓글번호
 	private int profileAttachmentNo;//프로필 이미지

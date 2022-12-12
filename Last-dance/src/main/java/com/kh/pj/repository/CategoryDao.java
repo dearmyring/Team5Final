@@ -21,5 +21,7 @@ public interface CategoryDao {
 	//카테고리 삭제
 	public boolean delete(String CategoryMain);
 	
+	//카테고리 전체 출력
+	public List<String> adminList();
 
 }

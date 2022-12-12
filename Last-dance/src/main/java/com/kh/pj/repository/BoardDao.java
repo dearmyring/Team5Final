@@ -17,6 +17,8 @@ public interface BoardDao {
 	boolean delete(int boardNo);
 	
 	
+	
+	
 	//상세,좋아요
 	BoardListVO selectOne(int boardPostNo);
 	BoardListVO click(int boardNo);

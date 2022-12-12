@@ -72,6 +72,8 @@ public class BoardController {
 		boardDto.setBoardNo(boardNo);
 		boardDao.write(boardDto);
 		
+		
+		
 		for(int attachmentNo : boardAttachmentNo) {
 			BoardImgDto imgDto = BoardImgDto.builder()
 				.boardAttachmentNo(attachmentNo)

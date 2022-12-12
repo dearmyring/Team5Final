@@ -51,6 +51,9 @@
 		board_no = #{boardNo}
 	</update>
 
+
+
+
 	<select id="get" parameterType="int" resultType="BoardListVO">
 		select * from
 		board where board_no = #{boardNo}

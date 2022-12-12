@@ -44,7 +44,6 @@
 	//댓글 등록 처리
 	$(function(){
 		$(".reply-insert-form").submit(function(e){
-			//기본 이벤트를 차단한다(form을 사용하지 않을 예정)
 			e.preventDefault();
 			
 			//댓글 입력값을 가져와서 검사 후 전송
@@ -56,24 +55,27 @@
 			
 			var form = this;
 			
-			//정상적으로 입력되었다면 비동기 통신으로 등록 요청
-			$.ajax({
-				url:"${pageContext.request.contextPath}/rest/reply/insert",
-				method:"post",
-			/* 	data:{
-					replyBoardNo:$(this).find("[name=replyBoardNo]").val(),
-					replyContent:text
-				},
-					success:function(resp){
-						console.log(resp); */
-			/* 	data:$(form).serialize(),//form을 전송 가능한 형태의 문자로 변환한다
-					listHandler(resp);
+ 			//정상적으로 입력되었다면 비동기 통신으로 등록 요청
+ 			$.ajax({
+ 				url:"${pageContext.request.contextPath}/rest/reply/insert",
+ 				method:"post",
+ 			 /* 	data:{
+ 					replyBoardNo:$(this).find("[name=replyBoardNo]").val(),
+ 					replyContent:text
+ 				},
+ 					success:function(resp){
+ 						console.log(resp);  */
+ 			 		data:$(form).serialize(),//form을 전송 가능한 형태의 문자로 변환한다
+ 					success:function(resp){
+ 			 		listHandler(resp);
 					
-					//입력창 초기화(= 폼 초기화) - 자바스크립트로 처리
-					form.reset();
-				} 
-			});
+ 					//입력창 초기화(= 폼 초기화) - 자바스크립트로 처리
+ 					form.reset();
+ 				} 
+ 			});
+			
 		});
+// 		
 		
 		//댓글 삭제버튼을 누르면 삭제 후 목록 갱신
 		$(".delete-btn").click(deleteHandler);
@@ -117,8 +119,8 @@
 				item = item.replace("{{boardId}}", resp[i].boardId);
 				item = item.replace("{{memberBadge}}", resp[i].memberBadge);
 				item = item.replace("{{replyContent}}", resp[i].replyContent);
-				item = item.replace("{{replyWriteTime}}", resp[i].replyWriteTime);
-				item = item.replace("{{replyEditTime}}", resp[i].replyEditTime);
+				//item = item.replace("{{replyWriteTime}}", resp[i].replyWriteTime);
+				//item = item.replace("{{replyEditTime}}", resp[i].replyEditTime);
 				item = item.replace("{{replyNo}}", resp[i].replyNo);
 				item = item.replace("{{replyBoardNo}}", resp[i].replyBoardNo);
 				var result  = $(item);
@@ -146,25 +148,20 @@
 				<tr class="view">
 					<td width="90%">
 						<!-- 작성자 -->
-						{{memberNick}}
-						({{boardId}})
-						(작성자)
-						
 						({{memberBadge}}) 
+						{{memberNick}}			
 						<br>
-						
+						<br>
 						<pre>{{replyContent}}</pre>
-						
 						<br><br>
 						{{replyWriteTime}}
-						<br><br>
-						{{replyEditTime}}
+						
 
 					</td>
 					<th>
 						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
-						<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/image/edit.png" width="20" height="20"></a>
-						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyBoardNo}}" data-reply-no="{{replyNo}}"><img src="/image/delete.png" width="20" height="20"></a>
+						<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
+						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyBoardNo}}" data-reply-no="{{replyNo}}"><img src="/images/delete.png" width="20" height="20"></a>
 					</th>
 				</tr>	
 </script>
@@ -232,7 +229,7 @@
 								(${attachmentDto.attachmentSize} bytes) 
 								- 
 								[${attachmentDto.attachmentType}]
-								<a href="/attachment/download/${attachmentDto.attachmentNo}"><img src="/image/download.png" width="15" height="15"></a>
+								<a href="/attachment/download/${attachmentDto.attachmentNo}"><img src="/images/download.png" width="15" height="15"></a>
 							</li>
 							</c:forEach>
 						</ul>
@@ -317,18 +314,18 @@
 					<th>
 						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
 						<c:if test="${loginId == replyDto.replyId}">
-							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/image/edit.png" width="20" height="20"></a>
-							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/image/delete.png" width="20" height="20"></a>
+							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
+							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/images/delete.png" width="20" height="20"></a>
 						</c:if>
 						
 						<c:if test="${admin}">
 							<!-- 블라인드 여부에 따라 다르게 표시 -->
 							<c:choose>
 								<c:when test="${replyDto.replyBlind}">
-									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyBoardNo=${replyDto.replyBoardNo}"><img src="/image/blind2.png" width="20" height="20"></a>
+									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyBoardNo=${replyDto.replyBoardNo}"><img src="/images/blind2.png" width="20" height="20"></a>
 								</c:when>
 								<c:otherwise>
-									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyBoardNo=${replyDto.replyBoardNo}"><img src="/image/blind.png" width="20" height="20"></a>
+									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyBoardNo=${replyDto.replyBoardNo}"><img src="/images/blind.png" width="20" height="20"></a>
 								</c:otherwise>
 							</c:choose>
 							

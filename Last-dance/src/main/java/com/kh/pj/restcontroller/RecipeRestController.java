@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.pj.entity.RecipeDto;
@@ -25,5 +27,15 @@ public class RecipeRestController {
 	public List<RecipeDto> adminList(
 			@RequestBody RecipeListSearchVO vo){
 		return recipeDao.adminList(vo); 
+	}
+	
+	//검색 & 정렬 있을 시 삭제할 때 처리 추가하기
+	@DeleteMapping("/recipe")
+	public List<RecipeDto> adminDeleteList(
+			@RequestParam List<String> recipeNo){
+		for(String no : recipeNo) {
+			recipeDao.delete(Integer.parseInt(no));
+		}
+		return recipeDao.adminList(null);
 	}
 }

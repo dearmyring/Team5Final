@@ -41,9 +41,6 @@ public class AttachmentDaoImpl implements AttachmentDao{
 
 	
 	
-	
-	
-	
 	private RowMapper<AttachmentDto> mapper = new RowMapper<>(){
 
 		@Override
@@ -78,12 +75,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	};
 	
 	
-	@Override
-	public boolean delete(int attachmentNo) {
-		String sql="delete attachment where attachment_no = ?";
-		Object[] param = {attachmentNo};
-		return jdbcTemplate.update(sql,param)>0;
-	}
+
 
 	@Override
 	public List<AttachmentDto> selectBoardFileList(int boardAttachmentNo) {
@@ -91,5 +83,10 @@ public class AttachmentDaoImpl implements AttachmentDao{
 				+ "where board_attachment_no = ?";
 		Object[] param = {boardAttachmentNo};
 		return jdbcTemplate.query(sql, mapper, param);
+=======
+	@Override
+	public void delete(int attachmentNo) {
+		sqlSession.delete("attachment.delete", attachmentNo);
+
 	}
 }
