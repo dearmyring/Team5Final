@@ -69,6 +69,29 @@ $(function(){
         $(".confirm-form-box").removeClass("box-hide");
     });
     
+    
+    //비밀번호 확인
+	$(".pw-confirm-btn").click(function(e){
+		e.preventDefault();
+		var inputPw = $(".login-input-password").val();
+		$.ajax({
+			url: "http://localhost:8888/rest/pwConfirm",
+			method: "post",
+			contentType: "application/json",
+			data: JSON.stringify({memberPw : inputPw}),
+			success: function(resp) {
+				if(resp == "Y") {
+					$(".pw-confirm-form").submit();
+				}
+				else {
+					$(".pw-confirm-form").find("div").find("div").find("span").removeClass("box-hide");
+					$(".pw-confirm-form").find("div").find("div").addClass("vibration");
+				}
+			}
+		}); // ajax end
+				$(".pw-confirm-form").find("div").find("div").removeClass("vibration");
+	});
+    
 
 
 

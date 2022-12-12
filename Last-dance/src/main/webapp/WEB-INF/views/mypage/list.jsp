@@ -10,11 +10,6 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param name="title" value="마이페이지"/>
 </jsp:include>
-<style>
-    
-    
-
-</style>
 
 <!-- js 불러옴 -->
 <script src="/js/mypage.js"></script>
@@ -184,6 +179,9 @@
 					<div>
 						<label for="pwConfirm">비밀번호 확인</label>
 						<input class="w-100 login-input-password" id="pwConfirm" type="password" placeholder="비밀번호를 입력해주세요"/>
+						<div>
+							<span class="box-hide">비밀번호가 일치하지 않습니다.</span>
+						</div>
 					</div>
 					<div>
 						<button class="w-100 mt-10 btn btn-positive pw-confirm-btn" type="submit">확인</button>
@@ -194,25 +192,7 @@
         
 </div>
 <script>
-$(function(){
-	//비밀번호 확인
-	$(".pw-confirm-form").click(function(e){
-		e.preventDefault();
-		var inputPw = $(".login-input-password").val();
-		$.ajax({
-			url: "http://localhost:8888/rest/pwConfirm",
-			method: "post",
-			contentType: "application/json",
-			data: JSON.stringify({memberPw : inputPw}),
-			success: function(resp) {
-				if(resp == "Y") {
-					$(".pw-confirm-form").submit();
-				} 
-			}
-		}); // ajax end
-	});
-	
-});
+
 </script>
 
 

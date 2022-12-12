@@ -148,3 +148,60 @@
     justify-content: center;
     align-items: center;
 }
+
+.pw-confirm-form > div:nth-child(1) > div {
+	height: 20px;
+	color: red;
+	
+}
+
+.vibration {
+	animation: vibration 0.1s 3;
+}
+
+@keyframes vibration {
+  from {
+    transform: rotate(1deg);
+  }
+  to {
+    transform: rotate(-1deg);
+  }
+}
+
+/* myInfo 페이지 CSS */
+
+.my-info-box {
+	min-height: 700px;
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	align-content: center;
+}
+
+.my-info-box > div {
+	display: flex;
+	width: 400px;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
+}
+
+.my-info-box > div input {
+	border-radius: 5px;
+}
+
+.my-info-box label,
+.my-info-box button {
+	margin-bottom: 10px;
+}
+
+.my-info-box label {
+	margin-right: 10px;
+}
+
+.my-info-box .withDrawal {
+	margin-bottom: 30px;
+}
+
