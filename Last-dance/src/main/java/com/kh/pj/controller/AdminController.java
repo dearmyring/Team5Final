@@ -22,6 +22,7 @@ import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
+import com.kh.pj.repository.BoardDao;
 import com.kh.pj.repository.CategoryDao;
 import com.kh.pj.repository.HashtagDao;
 import com.kh.pj.repository.IngredientDao;
@@ -62,8 +63,8 @@ public class AdminController {
 	@Autowired
 	private CategoryDao categoryDao;
 	
-//	@Autowired
-//	private BoardDao boardDao;
+	@Autowired
+	private BoardDao boardDao;
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -349,10 +350,10 @@ public class AdminController {
 	}
 	
 	//관리자 게시판 컨트롤러
-//	@GetMapping("/board/list")
-//	public String boardList(Model model) {
-//		model.addAttribute("boardList", boardDao.adminList());
-//		return "admin/board-list";
-//	}
+	@GetMapping("/board/list")
+	public String boardList(Model model) {
+		model.addAttribute("boardList");
+		return "admin/board-list";
+	}
 	
 }

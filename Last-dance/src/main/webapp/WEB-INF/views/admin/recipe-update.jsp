@@ -104,7 +104,7 @@
 		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
 		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
 		<c:if test="${recipeContentList[no] != null}">
-			<input type="hidden" name="recipeContentAttachmentNo" value="${recipeContentList[no].recipeContentAttachmentNo}">
+			<input type="hidden" class="img-no" name="recipeContentAttachmentNo" value="${recipeContentList[no].recipeContentAttachmentNo}">
 		</c:if>
 	</div>
 </c:forEach>
@@ -120,7 +120,7 @@
 		<c:choose>
 			<c:when test="${recipeImgList[no] != null}">
 				<img class="preview" src="${pageContext.request.contextPath}/rest/download/${recipeImgList[no]}" width="200" height="200"><br>
-				<input type="hidden" name="recipeAttachmentNo" value="${recipeImgList[no]}">
+				<input type="hidden" class="img-no" name="recipeAttachmentNo" value="${recipeImgList[no]}">
 			</c:when>
 			<c:otherwise>
 				<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
