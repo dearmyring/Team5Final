@@ -50,6 +50,7 @@
 	<h1>최근 본 게시물</h1>
 <c:forEach var="viewList" items="${viewList}">
 	<ul>
+		<li>글번호: ${viewList.recipeDto.recipeNo}</li>
 		<li>조회 수: ${viewList.recipeDto.recipeClick}</li>
 		<li>좋아요 수: ${viewList.recipeDto.recipeLike}</li>
 		<li>최근 본 제목: ${viewList.recipeDto.recipeTitle}</li>
@@ -62,19 +63,40 @@
 				</c:forEach>
 			</ul>
 		</li>
+		<li>
+			<ul>
+				<c:forEach var="recipeImg" items="${viewList.recipeImgList}">
+					<li style="color: red">
+						<img class="thumbnailImage" src = "http://localhost:8888/rest/download/${recipeImg.recipeAttachmentNo}" style="width: 150px; height: 150px;">
+						이미지 번호: ${recipeImg.recipeAttachmentNo}
+					</li>
+				</c:forEach>
+			</ul>
+		</li>
 	</ul>
 </c:forEach>
 <h1>좋아요 게시물</h1>
 <c:forEach var="likeList" items="${likeList}">
 	<ul>
+		<li>글번호: ${likeList.recipeDto.recipeNo}</li>
 		<li>조회 수: ${likeList.recipeDto.recipeClick}</li>
 		<li>좋아요 수: ${likeList.recipeDto.recipeLike}</li>
 		<li>좋아요 제목: ${likeList.recipeDto.recipeTitle}</li>
 		<li>
 			<ul>
 				<c:forEach var="ingredient" items="${likeList.recipeIngredientList}">
-					<li>
+					<li style="color: green">
 						${ingredient.recipeIngredientName}
+					</li>
+				</c:forEach>
+			</ul>
+		</li>
+		<li>
+			<ul>
+				<c:forEach var="recipeImg" items="${likeList.recipeImgList}">
+					<li style="color: red">
+						<img class="thumbnailImage" src = "http://localhost:8888/rest/download/${recipeImg.recipeAttachmentNo}" style="width: 150px; height: 150px;">
+						이미지 번호: ${recipeImg.recipeAttachmentNo}
 					</li>
 				</c:forEach>
 			</ul>
@@ -85,6 +107,7 @@
 <h1>내가 쓴 게시물</h1>
 <c:forEach var="writeList" items="${writeList}">
 	<ul>
+		<li>좋아요 수: ${writeList.boardNo}</li>
 		<li>좋아요 수: ${writeList.boardLike}</li>
 		<li>조회 수: ${writeList.boardClick}</li>
 		<li>내가 쓴 글 제목: ${writeList.boardTitle}</li>
