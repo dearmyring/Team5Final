@@ -3,17 +3,14 @@ package com.kh.pj.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.repository.MypageDao;
 
@@ -24,8 +21,8 @@ public class MypageController {
 	@Autowired
 	private MypageDao mypageDao;
 	
-	@Autowired
-	private PasswordEncoder encoder;
+//	@Autowired
+//	private PasswordEncoder encoder;
 	
 	
 	@GetMapping("/list")
@@ -44,30 +41,30 @@ public class MypageController {
 		return "mypage/list";
 	}
 	
-	@GetMapping("/pwConfirm")
-	public String pwConfirm() {
-		
-		return "mypage/pwConfirm";
-	}
+//	@GetMapping("/pwConfirm")
+//	public String pwConfirm() {
+//		
+//		return "mypage/pwConfirm";
+//	}
 	
-	@PostMapping("/pwConfirm")
-	public String pwConfirm(@RequestParam String inputPw, HttpSession session) {
-		String loginId = (String) session.getAttribute("loginId");
-		
-		//디비에서 가져온 비밀번호
-		MemberDto memberPw = mypageDao.pwConfirm(loginId);
-		
-		
-		boolean judge = encoder.matches(inputPw, memberPw.getMemberPw());
-		
-		if(judge) {
-			return "redirect:myInfo?memberId="+loginId;
-		}
-		else {
-			return "redirect:pwConfirm";
-		}
-		
-	}
+//	@PostMapping("/pwConfirm")
+//	public String pwConfirm(@RequestParam String inputPw, HttpSession session) {
+//		String loginId = (String) session.getAttribute("loginId");
+//		
+//		//디비에서 가져온 비밀번호
+//		MemberDto memberPw = mypageDao.pwConfirm(loginId);
+//		
+//		
+//		boolean judge = encoder.matches(inputPw, memberPw.getMemberPw());
+//		
+//		if(judge) {
+//			return "redirect:myInfo?memberId="+loginId;
+//		}
+//		else {
+//			return "redirect:pwConfirm";
+//		}
+//		
+//	}
 	
 	@GetMapping("/myInfo")
 	public String myInfo(HttpSession session, Model model) {

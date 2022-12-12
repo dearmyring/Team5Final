@@ -1,0 +1,150 @@
+.my-activity-list-box {
+    /* background-color: red; */
+    position: relative;
+    left: 300px;
+    width: 900px;
+    top: -220px;
+    display: flex;
+}
+
+.recipe-item-box,
+.board-item-box,
+.confirm-form-box {
+    /* background-color: blue; */
+    width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.recipe-item {
+    display: flex;
+    width: 900px;
+    justify-content: space-between;
+}
+
+.recipe-item-box > a {
+    border-top: 1px solid #CBCACA;
+}
+
+.recipe-item-box > a:hover {
+    background-color: #F7F7F7;
+}
+
+.recipe-item-box > a:last-child {
+    border-bottom: 1px solid #CBCACA;
+}
+
+.box-hide {
+    display: none;
+}
+
+.view-recipe-list,
+.like-recipe-list,
+.write-board-list {
+    overflow: scroll;
+    height: 856px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.view-recipe-list::-webkit-scrollbar, 
+.like-recipe-list::-webkit-scrollbar, 
+.write-board-list::-webkit-scrollbar {
+    display: none; /* Chrome , Safari , Opera */
+}
+
+.view-recipe-list > div,
+.like-recipe-list > div,
+.write-board-list > div,
+.recipe-item-box {
+    /* background-color: red; */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.detail-list-img {
+    width: 40px;
+    height: 40px;
+}
+
+.recipe-item > div > ul {
+    padding: 20px 10px;
+}
+
+.recipe-item > div > ul > li:nth-child(1) > ul > li{
+    font-size: 10px;
+    margin-right: 20px;
+}
+
+.recipe-item > div > ul > li:nth-child(2) {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.recipe-item > div > ul > li > ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    
+}
+
+.recipe-item > div > ul > li:nth-child(3) > ul > li {
+    background-color: #8BC96E;
+    font-size: 14px;
+    border-radius: 5px;
+    height: 26px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 4px 17px;
+    color: white;
+    font-weight: 400;
+}
+
+.recipe-item > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100px;
+}
+
+.recipe-item > div:nth-child(2) img{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.view-list-btn:hover,
+.like-list-btn:hover,
+.write-list-btn:hover {
+    cursor: pointer;
+    background-color: #F7F7F7;
+    border-radius: 10px;
+}
+
+.confirm-form > form {
+	height: 50px;
+	width: 500px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+.confirm-form > form > div {
+	width: 100%;
+}
+
+.confirm-form > form > div input,
+.confirm-form > form > div button {
+	margin: 10px auto;
+	height: 50px;
+	border-radius: 5px;
+}
+
+.confirm-form-box {
+    height: 856px;
+    justify-content: center;
+    align-items: center;
+}

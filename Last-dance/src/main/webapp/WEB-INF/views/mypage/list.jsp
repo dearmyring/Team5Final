@@ -2,161 +2,218 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="login" value="${loginId != null}"></c:set>
+<!-- css 불러옴  -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mypage.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/user-card.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons-ring-join.css">
+
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param name="title" value="마이페이지"/>
 </jsp:include>
+<style>
+    
+    
 
-<h2>마이페이지</h2>
+</style>
+
+<!-- js 불러옴 -->
+<script src="/js/mypage.js"></script>
 
 <!-- 유저 정보 카드 -->
-        <div>
-            <div>
+        <div class="user-card">
+            <div class="profileImgBox">
             	<c:choose>
             		<c:when test="${profileImg.attachmentNo>0}">
-		                <img class="profileImage" src = "http://localhost:8888/rest/download/${profileImg.attachmentNo}" style="width: 50px; height: 50px;">
+		                <img class="profileImage" src = "${pageContext.request.contextPath}/rest/download/${profileImg.attachmentNo}">
             		</c:when>
             		<c:otherwise>
-	            		<img class="profileImage" src="${pageContext.request.contextPath}/img/basicProfileImage.png" style="width: 50px; height: 50px;">
+	            		<img class="profileImage" src="${pageContext.request.contextPath}/img/basicProfileImage.png">
             		</c:otherwise>
             	</c:choose>
                 <input type="file" class="file-input" accept=".jpg, .png, .gif"/>
+                <button type="button" class="img-change-btn"><i class="fa-solid fa-camera"></i></button>
             </div>
-            <div>
-                <ul>
-                    <li>
-                    	<%-- <h2>${loginNick}</h2> --%>
-                    	<h2>${myInfo.memberNick}</h2>
-                    	
-                        
-                    </li>
-                    <li>
-                        <p>좋아요</p><p>${myLike}</p>
-                    </li>
-                    <li>
-                        <p>내가 쓴 글</p><p>${myWrite}</p>
-                    </li>
-                    <li>
-                        <p>읽은 레시피</p><p>${myRead}</p>
-                    </li>
-                </ul>
+            <div class="user-card-detail">
                 <div>
-                    <a href="pwConfirm">정보변경</a>
+                    <h2>${myInfo.memberNick}</h2>
+                        <div class="edit-info-btn" href="#">정보변경</div>
+                </div>
+                <div>
+                    <span>10%</span>
+                    <div class="progressbar">
+                        <div class="inner"></div>
+                    </div>
+                </div>
+                <div>
+                    <ul class="user-card-count-list">
+                        <li class="like-list-btn">
+                            <i class="fa-regular fa-heart"></i>
+                            <p>좋아요</p>
+                            <p>${myLike}</p>
+                        </li>
+                        <li class="write-list-btn">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                            <p>내가 쓴 글</p>
+                            <p>${myWrite}</p>
+                        </li>
+                        <li class="view-list-btn">
+                            <i class="fa-regular fa-bookmark"></i>
+                            <p>읽은 레시피</p>
+                            <p>${myRead}</p>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
         <!-- 유저 정보 카드 끝 -->
-	<div>
+        
+        
 	
-	<h1>최근 본 게시물</h1>
-<c:forEach var="viewList" items="${viewList}">
-	<ul>
-		<li>글번호: ${viewList.recipeDto.recipeNo}</li>
-		<li>조회 수: ${viewList.recipeDto.recipeClick}</li>
-		<li>좋아요 수: ${viewList.recipeDto.recipeLike}</li>
-		<li>최근 본 제목: ${viewList.recipeDto.recipeTitle}</li>
-		<li>
-			<ul>
-				<c:forEach var="ingredient" items="${viewList.recipeIngredientList}">
-					<li>
-						${ingredient.recipeIngredientName}
-					</li>
-				</c:forEach>
-			</ul>
-		</li>
-		<li>
-			<ul>
-				<c:forEach var="recipeImg" items="${viewList.recipeImgList}">
-					<li style="color: red">
-						<img class="thumbnailImage" src = "http://localhost:8888/rest/download/${recipeImg.recipeAttachmentNo}" style="width: 150px; height: 150px;">
-						이미지 번호: ${recipeImg.recipeAttachmentNo}
-					</li>
-				</c:forEach>
-			</ul>
-		</li>
-	</ul>
-</c:forEach>
-<h1>좋아요 게시물</h1>
-<c:forEach var="likeList" items="${likeList}">
-	<ul>
-		<li>글번호: ${likeList.recipeDto.recipeNo}</li>
-		<li>조회 수: ${likeList.recipeDto.recipeClick}</li>
-		<li>좋아요 수: ${likeList.recipeDto.recipeLike}</li>
-		<li>좋아요 제목: ${likeList.recipeDto.recipeTitle}</li>
-		<li>
-			<ul>
-				<c:forEach var="ingredient" items="${likeList.recipeIngredientList}">
-					<li style="color: green">
-						${ingredient.recipeIngredientName}
-					</li>
-				</c:forEach>
-			</ul>
-		</li>
-		<li>
-			<ul>
-				<c:forEach var="recipeImg" items="${likeList.recipeImgList}">
-					<li style="color: red">
-						<img class="thumbnailImage" src = "http://localhost:8888/rest/download/${recipeImg.recipeAttachmentNo}" style="width: 150px; height: 150px;">
-						이미지 번호: ${recipeImg.recipeAttachmentNo}
-					</li>
-				</c:forEach>
-			</ul>
-		</li>
-	</ul>
-</c:forEach>
+<div class="my-activity-list-box">
+        <div class="view-recipe-list">
+            <div>
+                <img class="detail-list-img" src="/images/detail-list-paper.png">
+                <h1>내가 읽은 레시피</h1>
+            </div>
+        <c:forEach var="viewList" items="${viewList}">
+            <div class="recipe-item-box">
+            
+                <a class="recipe-item" href="/recipe/detail?recipeNo=${viewList.recipeDto.recipeNo}">
+                    <div>
+                        <ul>
+                            <li>
+                                <ul>
+                                    <li>조회 수: ${viewList.recipeDto.recipeClick}</li>
+                                    <li>좋아요 수: ${viewList.recipeDto.recipeLike}</li>
+                            </ul>
+                        </li>
+                        <li>${viewList.recipeDto.recipeTitle}</li>
+                        <li>
+                            <ul>
+                                <c:forEach var="ingredient" items="${viewList.recipeIngredientList}">
+                                    <li>
+                                        ${ingredient.recipeIngredientName}
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <c:forEach var="recipeImg" items="${viewList.recipeImgList}">
+                        <img class="thumbnailImage" src = "http://localhost:8888/rest/download/${recipeImg.recipeAttachmentNo}">
+                    </c:forEach>
+                </div>
+                </a>
+               
+            </div>
+        </c:forEach>
+        </div>
+        
+<div class="like-recipe-list box-hide">
+            <div>
+                <img class="detail-list-img" src="/images/detail-list-heart.png">
+                <h1>좋아요 한 레시피</h1>
+            </div>
+            <c:forEach var="likeList" items="${likeList}">
+            <div class="recipe-item-box">
+                <a class="recipe-item" href="/recipe/detail?recipeNo=${likeList.recipeDto.recipeNo}">
+                    <div>
+                        <ul>
+                            <li>
+                                <ul>
+                                    <li>조회 수: ${likeList.recipeDto.recipeClick}</li>
+                                    <li>좋아요 수: ${likeList.recipeDto.recipeLike}</li>
+                            </ul>
+                        </li>
+                        <li>${likeList.recipeDto.recipeTitle}</li>
+                        <li>
+                            <ul>
+                                <c:forEach var="ingredient" items="${likeList.recipeIngredientList}">
+                                    <li>
+                                        ${ingredient.recipeIngredientName}
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <c:forEach var="recipeImg" items="${likeList.recipeImgList}">
+                        <img class="thumbnailImage" src = "http://localhost:8888/rest/download/${recipeImg.recipeAttachmentNo}">
+                    </c:forEach>
+                </div>
+                </a>
+            </div>
+        </c:forEach>
+        </div>
 
-<h1>내가 쓴 게시물</h1>
-<c:forEach var="writeList" items="${writeList}">
-	<ul>
-		<li>좋아요 수: ${writeList.boardNo}</li>
-		<li>좋아요 수: ${writeList.boardLike}</li>
-		<li>조회 수: ${writeList.boardClick}</li>
-		<li>내가 쓴 글 제목: ${writeList.boardTitle}</li>
-		<li>작성 시간: ${writeList.boardWriteTime}</li>
-		<li>댓글 수: 힛</li>
-	</ul>
-</c:forEach>
+<div class="write-board-list box-hide">
+            <div>
+                <img class="detail-list-img" src="/images/detail-list-write.png">
+                <h1>내가 쓴 게시글</h1>
+            </div>
+            <c:forEach var="writeList" items="${writeList}">
+            <div class="board-item-box">
+                <a class="recipe-item" href="/board/detail?=${writeList.boardNo}">
+                    <div>
+                        <ul>
+                            <li>
+                                <ul>
+                                    <li>좋아요 수: ${writeList.boardLike}</li>
+                                    <li>조회 수: ${writeList.boardClick}</li>
+                                    <li>댓글 수: 8546</li>
+                                    <li>작성 시간: ${writeList.boardWriteTime}</li>
+                                </ul>
+                            </li>
+                            <li>내가 쓴 글 제목: ${writeList.boardTitle}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <img src="/images/logo.png" />
+                    </div>
+                </a>
+            </div>
+            </c:forEach>
+        </div>
+        
+        <!-- 비밀번호 확인창 -->
+        <div class="confirm-form-box box-hide">
+        	<div class="confirm-form">
+				<form class="pw-confirm-form" action="myInfo" method="get">
+					<div>
+						<label for="pwConfirm">비밀번호 확인</label>
+						<input class="w-100 login-input-password" id="pwConfirm" type="password" placeholder="비밀번호를 입력해주세요"/>
+					</div>
+					<div>
+						<button class="w-100 mt-10 btn btn-positive pw-confirm-btn" type="submit">확인</button>
+					</div>
+				</form>
+        	</div>
+		</div>
+        
 </div>
 <script>
-        $(function(){
-            $(".file-input").change(function(){
-                if(this.files.length > 0){
-                    console.log()
-                    var imgData = new FormData();
-
-                    imgData.append("attach", this.files[0]);
-
-                    $.ajax({
-                        url: "http://localhost:8888/rest/upload",
-                        method: "post",
-                        data: imgData,
-                        processData:false, // 일반 폼에서 전송되는 형식(key = value)
-                        contentType:false, //형태가 없음을 의미 => multipart
-                        success: function(resp) {
-                            $(".profileImage").attr("src", resp);
-                            
-                            var attachmentNo = (resp.split("download/")[1]);
-
-                            $.ajax({
-                                url: "http://localhost:8888/profileImg?attachmentNo="+attachmentNo,
-                                method: "post",
-                                contentType: "application/json",
-                                data: JSON.stringify({attachmentNo:attachmentNo}),
-                                success: function(resp) {
-                                }
-                            });//inner ajax end
-                            
-                        }
-                    });//ajax end
-
-                }//if end
-                else {
-                    $(".profileImage").attr("src","");
-                }//else end
-
-            });//.file-input change end
-
-        });
-    </script>
+$(function(){
+	//비밀번호 확인
+	$(".pw-confirm-form").click(function(e){
+		e.preventDefault();
+		var inputPw = $(".login-input-password").val();
+		$.ajax({
+			url: "http://localhost:8888/rest/pwConfirm",
+			method: "post",
+			contentType: "application/json",
+			data: JSON.stringify({memberPw : inputPw}),
+			success: function(resp) {
+				if(resp == "Y") {
+					$(".pw-confirm-form").submit();
+				} 
+			}
+		}); // ajax end
+	});
+	
+});
+</script>
 
 
 

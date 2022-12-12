@@ -1,0 +1,126 @@
+.user-card {
+    background-color: white;
+    position: relative;
+    width: 250px;
+    height: 340px;
+    top: 120px;
+    border: 1px solid #CBCACA;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 10px 20px;
+}
+
+.file-input  {
+    display: none;
+}
+
+.profileImgBox {
+    position: relative;
+    text-align: center;
+
+    overflow: hidden;
+    /* border-radius: 50%; */
+}
+
+.profileImage {
+    width: 90px;
+    height: 90px;
+    border: 1px solid #CBCACA;
+    border-radius: 70px;
+
+    /* width: 100%;
+    height: 100%; */
+    object-fit: cover;
+}
+
+.img-change-btn {
+    position: absolute;
+    bottom: 0;
+    left: 55%;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+}
+
+.user-card-detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-card-detail > div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.user-card-detail > div:nth-child(1) {
+    text-align: center;
+    flex-direction: column;
+}
+
+.user-card-detail > div:nth-child(2) {
+    display: flex;
+    align-items: stretch;
+    margin-top: 10px;
+}
+
+.user-card-detail > div:nth-child(3) {
+    display: flex;
+    flex-grow: 1;
+    align-items: stretch;
+    margin-top: 15px;
+    border-top: 1px solid #CBCACA;
+    padding-top: 15px;
+}
+
+.user-card-count-list {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.user-card-count-list > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70px;
+}
+.user-card-count-list i {
+    font-size: 26px;
+}
+
+.edit-info-btn {
+    margin-top: 10px;
+    width: 70px;
+    height: 20px;
+    line-height: 16px;
+    border: 1px solid #CBCACA;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 프로그래스 바 */
+.progressbar {
+    /* border: 1px solid black; */
+    height: 8px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.progressbar > .inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    transition: width 0.5s linear;
+    border-radius: 10px;
+}
