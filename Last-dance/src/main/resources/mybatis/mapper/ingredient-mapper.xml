@@ -25,6 +25,10 @@
 		where instr(ingredient_name, #{ingredientName}) > 0 
 		order by ingredient_name asc
 	</select>
+	
+	<select id="adminSelect" parameterType="String" resultType="String">
+		select ingredient_name from ingredient where ingredient_name=#{ingredient_name}
+	</select>
 
 </mapper>
 

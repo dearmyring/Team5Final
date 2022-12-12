@@ -4,6 +4,34 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
+<script>
+	
+</script>
+
+<div class="modal ingredient-insert-modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">재료 등록</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       	<select class="insert-ingredientCategory" name="ingredientCategory">
+       		<option value="">카테고리 선택</option>
+       		<c:forEach var="category" items="${categoryList}">
+	       		<option>${category}</option>
+       		</c:forEach>
+       	</select>
+       	<input class="insert-ingredientName" type="text" name="ingredientName" placeholder="재료명">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary ingredient-insert-btn">등록하기</button>
+        <button type="button" class="btn btn-secondary ingredient-insert-cancel" data-bs-dismiss="modal">돌아가기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="mt-5 col-6 offset-3">
 <div>
 	<h3>레시피등록</h3>
@@ -76,7 +104,7 @@
 <div>
 	요리 완성사진 
 	<button type="button">사진 한 번에 넣기</button>
-	<button type="button">사진 모두 지우기</button>
+	<button class="thumb-all-clear" type="button">사진 모두 지우기</button>
 	<br>
 	<c:forEach var="no" begin="0" end="3">
 		<div class="thumb-page">
@@ -104,26 +132,63 @@
 </form>
 </div>
 
-<!-- <div class="modal" tabindex="-1"> -->
-<!-- 	<div class="modal-dialog modal-dialog-centered"> -->
-<!-- 		<div class="modal-content"> -->
-<!-- 			<div class="modal-header"> -->
-<!-- 				<h5 class="modal-title">Modal title</h5> -->
-<!-- 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-<!-- 			</div> -->
-<!-- 			<div class="modal-body"> -->
-<!-- 				<p>Modal body text goes here.</p> -->
-<!-- 			</div> -->
-<!-- 			<div class="modal-footer"> -->
-<!-- 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-<!-- 				<button type="button" class="btn btn-primary">Save changes</button> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- </div> -->
-
 <script type="text/javascript">
     $(function(){
+    	/* 재료 등록 후 바로 추가 안내 */
+    	$(".ingredient-insert-btn").click(function(e){
+    		if(confirm("재료를 등록하시겠습니까?")){
+    			var ingredientName = $(this).parent().prev().find(".insert-ingredientName").val();
+    			var ingredientCategory = $(this).parent().prev().find(".insert-ingredientCategory").val();
+    			$.ajax({
+    				url: "http://localhost:8888/rest/ingredient",
+    				method: "post",
+    				contentType: "application/json",
+    				data: JSON.stringify({
+    					ingredientName : ingredientName,
+    					ingredientCategory : ingredientCategory
+    				}),
+    				success: function(resp){
+    					if(confirm("레시피에 바로 추가하시겠습니까?")){
+    						var xMark = $("<i>").addClass("fa-solid fa-xmark");
+							xMark.click(function(){
+								$(this).parent().remove();
+							});
+							var p = $("<p>")
+							var input = $("<input>")
+								.attr("readonly", "readonly")
+								.attr("name", "recipeIngredientName")
+								.val(ingredientName);
+							p.append(input).append(xMark);
+							$(".add-ingredient").append(p);
+    					}
+						$(".input-ingredient").val("");
+                        $(".ingredient-insert-modal").modal("hide");
+    				}
+    			});
+    		}
+    	});
+    	
+    	/* 재료 등록 취소 */
+    	$(".ingredient-insert-cancel").click(function(e){
+    		if(!confirm("재료 등록을 취소하시겠습니까?")){
+	    		e.preventDefault();
+    		}
+    	});
+    	
+    	/* 썸네일 사진 모두 지우기 클릭 시 비동기 삭제 & 미리보기 사진 변경 */
+    	$(".thumb-all-clear").click(function(){
+    		var param = $(".thumb-page .img-no").serialize();
+    		console.log(param);
+    		$.ajax({
+    			url: "http://localhost:8888/rest/attachment/delete?"+param,
+    			method: "delete",
+    			success: function(resp){
+		    		$(".thumb-page").find(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
+    			}
+    		});
+    	});
+    	
+    	/* 엔터 시 폼 전송 방지 */
     	$(".recipe-insert-form").keydown(function(e){
     		if(e.keyCode === 13){
 	    		e.preventDefault();
@@ -309,12 +374,16 @@
             	param.keyword = keyword;
             	var search = $.param(param);
     			$.ajax({
-                    url: "http://localhost:8888/rest/ingredient?"+search,
+                    url: "http://localhost:8888/rest/ingredient/"+search,
                     method: "get",
                     success: function(resp){
-                    	if(resp.length == 0){
-                    		alert("등록되지 않은 재료입니다.");
-				    		return;
+                    	if(!resp){
+                    		if(confirm("등록되지 않은 재료입니다. 해당 재료를 등록하시겠습니까?")){
+                    			$(".insert-ingredientName").val(keyword);
+	                            $(".ingredient-insert-modal").modal("hide");
+	                            var modal = new bootstrap.Modal($(".ingredient-insert-modal"), {});
+	                            modal.show();
+                    		}
                     	}
                     	else{
 							var xMark = $("<i>").addClass("fa-solid fa-xmark");
@@ -385,7 +454,6 @@
     	/* 이미지 업로드 비동기 후 미리보기 구현 */
         $(".file-input").change(function(){
         	var that = $(this);
-        	console.log(that.val());
             if(this.files.length > 0){
                 var fd = new FormData();
                 fd.append("attach", this.files[0]);

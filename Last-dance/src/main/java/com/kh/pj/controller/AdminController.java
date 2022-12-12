@@ -22,6 +22,7 @@ import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
+import com.kh.pj.repository.CategoryDao;
 import com.kh.pj.repository.HashtagDao;
 import com.kh.pj.repository.IngredientDao;
 import com.kh.pj.repository.MemberDao;
@@ -57,6 +58,9 @@ public class AdminController {
 	
 	@Autowired
 	private IngredientDao ingredientDao;
+	
+	@Autowired
+	private CategoryDao categoryDao;
 	
 //	@Autowired
 //	private BoardDao boardDao;
@@ -104,6 +108,7 @@ public class AdminController {
 	@GetMapping("/recipe/write")
 	public String write(Model model) {
 		model.addAttribute("hashtagList", hashtagDao.list());
+		model.addAttribute("categoryList", categoryDao.adminList());
 		return "admin/recipe-insert";
 	}
 	
