@@ -16,4 +16,8 @@
 	<select id="find" parameterType="int" resultType="AttachmentDto">
 		select * from attachment where attachment_no=#{attachmentNo}
 	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete attachment where attachment_no=${attachmentNo}
+	</delete>
 </mapper>

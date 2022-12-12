@@ -9,7 +9,15 @@
 ${recipeDto.recipeTitle}<br>
 ${recipeDto.recipeNick}<br>
 ${recipeDto.recipeInfo}<br>
-${recipeDto.recipeTime}<br>
+<c:choose>
+	<c:when test="${recipeDto.recipeTime != 120}">
+		${recipeDto.recipeTime}분
+	</c:when>
+	<c:otherwise>
+		${recipeDto.recipeTime}분 이상
+	</c:otherwise>
+</c:choose>
+<br>
 ${recipeDto.recipeDifficulty}<br>
 ${recipeDto.recipeHashtag}<br>
 
