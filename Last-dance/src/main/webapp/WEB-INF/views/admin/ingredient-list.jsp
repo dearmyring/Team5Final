@@ -76,7 +76,7 @@
     	/* 레시피 검색창에서 엔터치면 검색 */
     	$(".input-keyword").keydown(function(e){
     		if(e.keyCode == 13) {
-    			$("ingredient-search-btn").click();
+    			$(".ingredient-search-btn").click();
     		}
    		});
    	

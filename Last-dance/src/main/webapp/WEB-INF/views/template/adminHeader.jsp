@@ -89,7 +89,7 @@
                             <a class="nav-link" href="#">Page</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/">회원 페이지</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link logout-btn" href="${pageContext.request.contextPath}/admin/logout">logout</a>

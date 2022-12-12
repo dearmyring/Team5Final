@@ -3,35 +3,54 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
-
 <div class="mt-5 col-6 offset-3">
 <div>
 	<h3>레시피등록</h3>
 </div>
 
-<form action="write" method="post" class="recipe-insert-form" autocomplete="off" enctype="multipart/form-data">
+<form action="write" method="post" class="recipe-update-form" autocomplete="off" enctype="multipart/form-data">
 
 <div>
-	레시피 제목 <input type="text" name="recipeTitle">
+	레시피 제목 <input type="text" name="recipeTitle" value="${recipeDto.recipeTitle}">
 </div>
 
 <div>
-	레시피 소개 <input type="text" name="recipeInfo">
+	레시피 소개 <input type="text" name="recipeInfo" value="${recipeDto.recipeInfo}">
 </div>
 
 <div>
 	레시피 정보 시간 <select name="recipeTime">
 		<option value="">시간</option>
-		<c:forEach var="i" begin="5" step="5" end="115">
-			<option value="${i}">${i}분</option>
+		<c:forEach var="i" begin="5" step="5" end="120">
+			<c:choose>
+				<c:when test="${i != 120}">
+					<option <c:if test="${recipeDto.recipeTime == i}">selected</c:if> value="${i}">${i}분</option>
+				</c:when>
+				<c:otherwise>
+					<option <c:if test="${recipeDto.recipeTime == i}">selected</c:if> value="${i}">120분 이상</option>
+				</c:otherwise>
+			</c:choose>
 		</c:forEach>
-		<option value="120">120분 이상</option>
 	</select>
 	난이도 <select name="recipeDifficulty">
 	    <option value="">난이도</option>
-	    <option value="쉬워요">쉬워요</option>
-	    <option value="보통이에요">보통이에요</option>
-	    <option value="어려워요">어려워요</option>
+	    <c:choose>
+	    	<c:when test="${recipeDto.recipeDifficulty == '쉬워요'}">
+			    <option selected value="쉬워요">쉬워요</option>
+			    <option value="보통이에요">보통이에요</option>
+			    <option value="어려워요">어려워요</option>
+	    	</c:when>
+	    	<c:when test="${recipeDto.recipeDifficulty == '보통이에요'}">
+			    <option value="쉬워요">쉬워요</option>
+			    <option selected value="보통이에요">보통이에요</option>
+			    <option value="어려워요">어려워요</option>
+	    	</c:when>
+	    	<c:otherwise>
+			    <option value="쉬워요">쉬워요</option>
+			    <option value="보통이에요">보통이에요</option>
+			    <option selected value="어려워요">어려워요</option>
+	    	</c:otherwise>
+	    </c:choose>
 	</select>
 </div>
 
@@ -45,7 +64,14 @@
 </div>
 
 <div class="search-ingredient"></div>
-<div class="add-ingredient"></div>
+<div class="add-ingredient">
+	<c:forEach var="ingredient" items="${recipeIngredientList}">
+		<p>
+			<input type="text" name="recipeIngredientName" value="${ingredient}" readonly>
+			<i class="fa-solid fa-xmark"></i>
+		</p>
+	</c:forEach>
+</div>
 
 <div>
 	요리 순서
@@ -65,9 +91,16 @@
 <c:forEach var="no" begin="0" end="9">
 	<div class="content-page">
 		Step<fmt:formatNumber value="${no+1}" minIntegerDigits="2"/> 
-		<textarea name="recipeContentText"></textarea>
+		<textarea name="recipeContentText">${recipeContentList[no].recipeContentText}</textarea>
 		<input type="file" class="file-input" accept=".jpg, .png, .gif">
-		<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
+		<c:choose>
+			<c:when test="${recipeContentList[no].recipeContentAttachmentNo != null}">
+				<img class="preview" src="${pageContext.request.contextPath}/rest/download/${recipeContentList[no].recipeContentAttachmentNo}" width="200" height="200"><br>
+			</c:when>
+			<c:otherwise>
+				<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
+			</c:otherwise>
+		</c:choose>
 		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
 		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
 	</div>
@@ -81,50 +114,50 @@
 	<c:forEach var="no" begin="0" end="3">
 		<div class="thumb-page">
 			<input type="file" class="file-input" accept=".jpg, .png, .gif">
-			<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200">
+		<c:choose>
+			<c:when test="${recipeImgList[no] != null}">
+				<img class="preview" src="${pageContext.request.contextPath}/rest/download/${recipeImgList[no]}" width="200" height="200"><br>
+			</c:when>
+			<c:otherwise>
+				<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
+			</c:otherwise>
+		</c:choose>
 		</div>
 	</c:forEach>
 </div>
 
 <div>
-	요리 해시태그 
+	요리 해시태그
 	<select name="recipeHashtag">
 		<option value="">해시태그</option>
 		<c:forEach var="hashtagDto" items="${hashtagList}">
-			<option>${hashtagDto.hashtagName}</option>
+		<c:choose>
+			<c:when test="${hashtagDto.hashtagName == recipeDto.recipeHashtag}">
+				<option selected>${hashtagDto.hashtagName}</option>
+			</c:when>
+			<c:otherwise>
+				<option>${hashtagDto.hashtagName}</option>
+			</c:otherwise>
+		</c:choose>
 		</c:forEach>
 	</select>
 </div>
 
 <div class="col-10 offset-1">
-	<button class="col-5 btn btn-md text-lg btn-warning recipe-insert-btn" type="submit">레시피 등록하기</button>
+	<button class="col-5 btn btn-md text-lg btn-warning recipe-insert-btn" type="submit">레시피 수정하기</button>
 	<button class="col-5 btn btn-md text-lg btn-warning recipe-return-btn" type="button">돌아가기</button>
 </div>
 
 </form>
 </div>
 
-<!-- <div class="modal" tabindex="-1"> -->
-<!-- 	<div class="modal-dialog modal-dialog-centered"> -->
-<!-- 		<div class="modal-content"> -->
-<!-- 			<div class="modal-header"> -->
-<!-- 				<h5 class="modal-title">Modal title</h5> -->
-<!-- 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-<!-- 			</div> -->
-<!-- 			<div class="modal-body"> -->
-<!-- 				<p>Modal body text goes here.</p> -->
-<!-- 			</div> -->
-<!-- 			<div class="modal-footer"> -->
-<!-- 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-<!-- 				<button type="button" class="btn btn-primary">Save changes</button> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- </div> -->
-
 <script type="text/javascript">
-    $(function(){
-    	$(".recipe-insert-form").keydown(function(e){
+	$(function(){
+		$(".fa-xmark").click(function(){
+			$(this).parent().remove();
+		});
+		
+		$(".recipe-insert-form").keydown(function(e){
     		if(e.keyCode === 13){
 	    		e.preventDefault();
     		}
@@ -385,7 +418,6 @@
     	/* 이미지 업로드 비동기 후 미리보기 구현 */
         $(".file-input").change(function(){
         	var that = $(this);
-        	console.log(that.val());
             if(this.files.length > 0){
                 var fd = new FormData();
                 fd.append("attach", this.files[0]);
@@ -412,8 +444,7 @@
                 $(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
             }
         });
-    	
-    	/* 돌아가기 클릭 시 이미지 비동기 삭제 */
-    });
+	});
 </script>
+
 <jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

@@ -185,7 +185,19 @@ public class AdminController {
 	}
 	
 	@GetMapping("/recipe/update")
-	public String update() {
+	public String update(
+			Model model,
+			@RequestParam int recipeNo) {
+		//레시피 정보
+		model.addAttribute("recipeDto", recipeDao.adminDetail(recipeNo));
+		//레시피 내용 정보
+		model.addAttribute("recipeContentList", recipeContentDao.find(recipeNo));
+		//레시피 재료 정보
+		model.addAttribute("recipeIngredientList", recipeIngredientDao.find(recipeNo));
+		//레시피 썸네일 사진 정보
+		model.addAttribute("recipeImgList", recipeImgDao.find(recipeNo));
+		//레시피 해시태그 정보
+		model.addAttribute("hashtagList", hashtagDao.list());
 		return "admin/recipe-update";
 	}
 	
