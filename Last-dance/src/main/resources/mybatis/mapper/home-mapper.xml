@@ -7,4 +7,58 @@
 	<select id="totalCount" resultType="RecipeTotalCountVO">
 		select count(*) cnt from recipe
 	</select>
+	
+	<select id="todayAddCount" resultType="RecipeTotalCountVO">
+		<![CDATA[
+			select count(*) cnt 
+			from recipe where to_char(recipe_writetime, 'YYYY-MM-DD hh24:mi:ss') > to_char(trunc(sysdate),'YYYY-MM-DD hh24:mi:ss')
+		]]>
+	</select>
+	
+	<select id="todayMemberRanking" resultType="TodayMemberRankingVO">
+		<![CDATA[
+			select * from (
+			    select TMP.*, rownum rn from (
+			        select member_nick, member_badge from member order by member_point
+			    )TMP
+			) where rn = 1
+		]]>
+	</select>
+	
+	<select id="pushRecipeForMain" resultType="PushRecipeListVO">
+		<![CDATA[
+			select 
+				R.recipe_attachment_no,
+				T.*
+			from
+				recipe_img R right outer join 
+				(select * from(
+				    select TMP.*, rownum rn from(
+				        select recipe_no, recipe_title, recipe_info, ((recipe_click + (recipe_like*2))/2.5) cal from recipe order by cal desc, recipe_time asc    
+    			)TMP) where rn between 1 and 10) T 
+    		on R.recipe_no = T.recipe_no order by rn asc
+		]]>
+	</select>
+	
+	<select id="MainRecipeTop5" resultType="MainRecipeListTop5VO">
+		<![CDATA[
+			select * from (
+			    select TMP.*, rownum rn from (
+			        select 
+			            R.recipe_no,
+			            R.recipe_info,
+			            R.recipe_click,
+			            R.recipe_like,
+			            R.recipe_time,
+			            R.recipe_hashtag,
+			            R.recipe_difficulty,
+			            ((R.recipe_click + (R.recipe_like*2))/2.5 - recipe_time) cal,
+			            RI.recipe_attachment_no
+			        from recipe R left outer join recipe_img RI 
+			        on R.recipe_no = RI.recipe_no order by cal desc, R.recipe_time asc, R.recipe_like, R.recipe_click
+			    )TMP
+			) where rn between 1 and 5
+		]]>
+	</select>
+   
 </mapper>
