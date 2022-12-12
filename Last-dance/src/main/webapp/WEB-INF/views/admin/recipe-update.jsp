@@ -109,7 +109,7 @@
 <div>
 	요리 완성사진 
 	<button type="button">사진 한 번에 넣기</button>
-	<button type="button">사진 모두 지우기</button>
+	<button class="thumb-all-clear" type="button">사진 모두 지우기</button>
 	<br>
 	<c:forEach var="no" begin="0" end="3">
 		<div class="thumb-page">
@@ -157,14 +157,69 @@
 			$(this).parent().remove();
 		});
 		
-		$(".recipe-insert-form").keydown(function(e){
+		/* 재료 등록 후 바로 추가 안내 */
+    	$(".ingredient-insert-btn").click(function(e){
+    		if(confirm("재료를 등록하시겠습니까?")){
+    			var ingredientName = $(this).parent().prev().find(".insert-ingredientName").val();
+    			var ingredientCategory = $(this).parent().prev().find(".insert-ingredientCategory").val();
+    			$.ajax({
+    				url: "http://localhost:8888/rest/ingredient",
+    				method: "post",
+    				contentType: "application/json",
+    				data: JSON.stringify({
+    					ingredientName : ingredientName,
+    					ingredientCategory : ingredientCategory
+    				}),
+    				success: function(resp){
+    					if(confirm("레시피에 바로 추가하시겠습니까?")){
+    						var xMark = $("<i>").addClass("fa-solid fa-xmark");
+							xMark.click(function(){
+								$(this).parent().remove();
+							});
+							var p = $("<p>")
+							var input = $("<input>")
+								.attr("readonly", "readonly")
+								.attr("name", "recipeIngredientName")
+								.val(ingredientName);
+							p.append(input).append(xMark);
+							$(".add-ingredient").append(p);
+    					}
+						$(".input-ingredient").val("");
+                        $(".ingredient-insert-modal").modal("hide");
+    				}
+    			});
+    		}
+    	});
+    	
+    	/* 재료 등록 취소 */
+    	$(".ingredient-insert-cancel").click(function(e){
+    		if(!confirm("재료 등록을 취소하시겠습니까?")){
+	    		e.preventDefault();
+    		}
+    	});
+    	
+    	/* 썸네일 사진 모두 지우기 클릭 시 비동기 삭제 & 미리보기 사진 변경 */
+    	$(".thumb-all-clear").click(function(){
+    		var param = $(".thumb-page .img-no").serialize();
+    		console.log(param);
+    		$.ajax({
+    			url: "http://localhost:8888/rest/attachment/delete?"+param,
+    			method: "delete",
+    			success: function(resp){
+		    		$(".thumb-page").find(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
+    			}
+    		});
+    	});
+    	
+    	/* 엔터 시 폼 전송 방지 */
+    	$(".recipe-update-form").keydown(function(e){
     		if(e.keyCode === 13){
 	    		e.preventDefault();
     		}
     	});
     	
     	/* 등록하기 버튼 클릭 시 모든 칸 검사 후 제출 */
-    	$(".recipe-insert-form").submit(function(e){
+    	$(".recipe-update-form").submit(function(e){
 	   		var recipeTitle = $("[name=recipeTitle]");
 	   		if(!recipeTitle.val()){
 	   			alert("레시피 제목을 등록해주세요.");
@@ -268,16 +323,9 @@
 	   		}
     	});
 
-    	/* 레시피 돌아가기 클릭 시 비동기로 첨부파일 삭제 */
+    	/* 레시피 돌아가기 클릭 시 업데이트한 첨부파일 비동기로 삭제 구현 예정 */
     	$(".recipe-return-btn").click(function(e){
     		var param = $(".recipe-insert-form .img-no").serialize();
-    		$.ajax({
-    			url: "http://localhost:8888/rest/attachment/delete?"+param,
-    			method: "delete",
-    			success: function(resp){
-    				history.back();
-    			}
-    		});
     	});
     	
     	/* 레시피 내용 블러 시 textarea 안에 값 넣어주기 */
@@ -337,17 +385,17 @@
     		if(e.keyCode == 13) {
 	    		$(".ingredientSearch").remove();
     			var keyword = $(this).val();
-    			var param = new String();
-            	param.type = "ingredient_name";
-            	param.keyword = keyword;
-            	var search = $.param(param);
     			$.ajax({
-                    url: "http://localhost:8888/rest/ingredient?"+search,
+                    url: "http://localhost:8888/rest/ingredient/"+keyword,
                     method: "get",
                     success: function(resp){
-                    	if(resp.length == 0){
-                    		alert("등록되지 않은 재료입니다.");
-				    		return;
+                    	if(!resp){
+                    		if(confirm("등록되지 않은 재료입니다. 해당 재료를 등록하시겠습니까?")){
+                    			$(".insert-ingredientName").val(keyword);
+	                            $(".ingredient-insert-modal").modal("hide");
+	                            var modal = new bootstrap.Modal($(".ingredient-insert-modal"), {});
+	                            modal.show();
+                    		}
                     	}
                     	else{
 							var xMark = $("<i>").addClass("fa-solid fa-xmark");
@@ -376,8 +424,18 @@
     	/* 순서 추가 버튼 클릭 시 다음 단계 등록 영역 생성 */
     	$(".step-plus-btn").last().remove();
     	$(".step-minus-btn").first().remove();
-    	$(".content-page").hide();
-    	$(".content-page").first().show();
+
+    	/* 레시피 내용 있는 곳 이후로 hide */
+    	var contentUpdateCnt = 0;
+    	var contentUpdateInput = $(".content-page").find("[name=recipeContentText]");
+    	for(var i=0; i<contentUpdateInput.length; i++){
+    		if(contentUpdateInput.eq(i).val()){
+    			contentUpdateCnt++;
+    		}
+    	}
+    	for(var i=contentUpdateCnt; i<contentUpdateInput.length; i++){
+	    	$(".content-page").eq(i).hide();
+    	}
 
     	$(".step-plus-btn").click(function(){
     		var contentText = $(this).parent().find("[name=recipeContentText]").val();

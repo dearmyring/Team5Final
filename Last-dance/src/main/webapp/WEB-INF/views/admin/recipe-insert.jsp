@@ -369,12 +369,8 @@
     		if(e.keyCode == 13) {
 	    		$(".ingredientSearch").remove();
     			var keyword = $(this).val();
-    			var param = new String();
-            	param.type = "ingredient_name";
-            	param.keyword = keyword;
-            	var search = $.param(param);
     			$.ajax({
-                    url: "http://localhost:8888/rest/ingredient/"+search,
+                    url: "http://localhost:8888/rest/ingredient/"+keyword,
                     method: "get",
                     success: function(resp){
                     	if(!resp){
