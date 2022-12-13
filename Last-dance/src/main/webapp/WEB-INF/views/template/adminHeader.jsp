@@ -86,9 +86,6 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Page</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/">회원 페이지</a>
                         </li>
                         <li class="nav-item">

@@ -24,7 +24,6 @@ public class BoardRestController {
 	@PostMapping("/board")
 	public List<BoardListVO> boardList(
 			@RequestBody BoardListSearchVO vo){
-		System.out.println(vo);
 		return boardDao.boardList(vo);
 	}
 }
