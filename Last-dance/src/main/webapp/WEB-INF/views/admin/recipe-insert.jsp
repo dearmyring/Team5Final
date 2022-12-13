@@ -109,7 +109,14 @@
 	<c:forEach var="no" begin="0" end="3">
 		<div class="thumb-page">
 			<input type="file" class="file-input" accept=".jpg, .png, .gif">
-			<img class="preview rounded" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200">
+			<c:choose>
+				<c:when test="${no != 0}">
+					<img class="preview preview-disabled rounded" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200">
+				</c:when>
+				<c:otherwise>
+					<img class="preview rounded" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200">
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</c:forEach>
 </div>
@@ -140,13 +147,22 @@
 		border: 1px solid #C2C2C2;
 		cursor: pointer;
 	}
+	.preview.preview-disabled{
+		cursor: default;
+		opacity: 0.5; 
+	}
+	.thumb-page{
+		display: inline;
+	}
 </style>
 
 <script type="text/javascript">
     $(function(){
     	/* 미리보기 클릭 시 파일 추가 */
     	$(".preview").click(function(){
-    		$(this).parent().find(".file-input").click();
+    		if(!$(this).hasClass("preview-disabled")){
+	    		$(this).parent().find(".file-input").click();
+    		}
     	});
     	
     	/* 재료 등록 후 바로 추가 안내 */
