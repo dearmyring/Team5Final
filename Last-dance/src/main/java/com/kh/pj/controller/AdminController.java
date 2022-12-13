@@ -357,7 +357,7 @@ public class AdminController {
 	//관리자 게시판 컨트롤러
 	@GetMapping("/board/list")
 	public String boardList(Model model) {
-		model.addAttribute("boardList");
+		model.addAttribute("boardList", boardDao.boardList(null));
 		return "admin/board-list";
 	}
 	
