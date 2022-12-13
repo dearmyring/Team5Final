@@ -28,62 +28,121 @@
   </div>
 </div>
 
-<div class="mt-5 col-6 offset-3">
-<div>
-	<h3>레시피등록</h3>
+<div class="container-fluid mt-5">
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<h3>레시피등록</h3>
+	</div>
 </div>
 
 <form action="write" method="post" class="recipe-insert-form" autocomplete="off" enctype="multipart/form-data">
 
-<div>
-	레시피 제목 <input type="text" name="recipeTitle">
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="col-2">레시피 제목</div>
+			<div class="col-10">
+				<input type="text" name="recipeTitle" class="w-100" placeholder="예) 치즈 라볶이">
+			</div>
+		</div>
+	</div>
 </div>
 
-<div>
-	레시피 소개 <input type="text" name="recipeInfo">
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="col-2">레시피 소개</div>
+			<div class="col-10">
+				<input type="text" name="recipeInfo" class="w-100" 
+				placeholder="예) 생일에 빼놓을 수 없는 소고기를 넣어 더욱 깊은 맛으로 즐겨보세요.">
+			</div>
+		</div>
+	</div>
+</div>
+	
+	<div class="row mt-5">
+		<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+			<div class="row">
+			<div class="col-2">레시피 정보</div>
+			<div class="col-2">시간</div>
+			<div class="col-2">
+				<select name="recipeTime">
+					<option value="">시간</option>
+					<c:forEach var="i" begin="5" step="5" end="115">
+						<option value="${i}">${i}분</option>
+					</c:forEach>
+					<option value="120">120분 이상</option>
+				</select>
+			</div>
+			<div class="col-2">난이도</div>
+			<div class="col-2">
+				<select name="recipeDifficulty">
+				    <option value="">난이도</option>
+				    <option value="쉬워요">쉬워요</option>
+				    <option value="보통이에요">보통이에요</option>
+				    <option value="어려워요">어려워요</option>
+				</select>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div>
-	레시피 정보 시간 <select name="recipeTime">
-		<option value="">시간</option>
-		<c:forEach var="i" begin="5" step="5" end="115">
-			<option value="${i}">${i}분</option>
-		</c:forEach>
-		<option value="120">120분 이상</option>
-	</select>
-	난이도 <select name="recipeDifficulty">
-	    <option value="">난이도</option>
-	    <option value="쉬워요">쉬워요</option>
-	    <option value="보통이에요">보통이에요</option>
-	    <option value="어려워요">어려워요</option>
-	</select>
+
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="col-4">
+				<label>
+					<i class="fa-regular fa-lightbulb"></i>음식의 재료를 입력해주세요.
+					<input type="text" class="input-ingredient" placeholder="재료">
+				</label>
+			</div>
+			<div class="col-2">
+				<button type="button" class="ingredient-all-clear w-100">모두 지우기</button>	
+			</div>
+		</div>
+	</div>
 </div>
 
-<div>
-	<i class="fa-regular fa-lightbulb"></i>음식의 재료를 입력해주세요.
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="search-ingredient col-6"></div>
+		</div>
+	</div>
 </div>
 
-<div>
-	<input type="text" class="input-ingredient" placeholder="재료">
-	<button type="button" class="ingredient-all-clear">모두 지우기</button>
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="add-ingredient col-6"></div>
+		</div>
+	</div>
 </div>
 
-<div class="search-ingredient"></div>
-<div class="add-ingredient"></div>
-
-<div>
-	요리 순서
-</div>
-<div>
-	<i class="fa-regular fa-lightbulb"></i>요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="col-2">요리 순서</div>
+		</div>
+	</div>
 </div>
 
-<div>
-	<textarea readonly rows="4" cols="100">
-	예) 10분간 익혀주세요       10분간 약한불로 익혀주세요.
-	      마늘편은 익혀주세요        마늘편은 충분히 익혀주셔야 매운 맛이 사라집니다.
-	      꿀을 조금 넣어주세요         꿀이 없는 경우, 설탕 1스푼으로 대체 가능합니다.
-	</textarea> 
+<div class="row">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="col-12">
+				<label>
+					<i class="fa-regular fa-lightbulb"></i>요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.
+					<textarea readonly rows="4" cols="100">
+					예) 10분간 익혀주세요       10분간 약한불로 익혀주세요.
+					      마늘편은 익혀주세요        마늘편은 충분히 익혀주셔야 매운 맛이 사라집니다.
+					      꿀을 조금 넣어주세요         꿀이 없는 경우, 설탕 1스푼으로 대체 가능합니다.
+					</textarea> 
+				</label>
+			</div>
+		</div>
+	</div>
 </div>
 
 <c:forEach var="no" begin="0" end="9">
