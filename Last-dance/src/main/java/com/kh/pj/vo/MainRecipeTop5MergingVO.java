@@ -2,6 +2,7 @@ package com.kh.pj.vo;
 
 import java.util.List;
 
+import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
 
 import lombok.AllArgsConstructor;
@@ -14,5 +15,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MainRecipeTop5MergingVO {
 	private MainRecipeListTop5VO mainRecipeListTop5VO;
-	private List<RecipeIngredientDto> ingredientList;
+	private List<RecipeIngredientDto> recipeIngredientList;
+	private List<RecipeImgDto> recipeImgList;
 }

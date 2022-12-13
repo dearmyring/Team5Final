@@ -40,9 +40,13 @@
 		]]>
 	</select>
 	
-   <select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
-      select * from recipe_ingredient where recipe_no = #{recipeNo}
-   </select>
+	<select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
+	      select * from recipe_ingredient where recipe_no = #{recipeNo}
+	</select>
+	
+	<select id="recipeImg" parameterType="int" resultType="RecipeImgDto">
+		select * from recipe_img where recipe_no = #{recipeNo}
+	</select>
 
    <resultMap type="MainRecipeTop5MergingVO" id="mainRecipeList">
    		<association property="mainRecipeListTop5VO">
@@ -51,36 +55,38 @@
    			<result column="recipe_like" property="recipeLike"/>
    			<result column="recipe_time" property="recipeTime"/>
    			<result column="cal" property="cal"/>
-   			<result column="recipe_attachment_no" property="recipeAttachmentNo"/>
    			<result column="rn" property="rn"/>
    			<result column="recipe_info" property="recipeInfo"/>
    			<result column="recipe_hashtag" property="recipeHashtag"/>
    			<result column="recipe_difficulty" property="recipeDifficulty"/>
    		</association>
-   		<collection property="ingredientList" javaType="java.util.List" 
+   		
+   		<collection property="recipeIngredientList" javaType="java.util.List" 
    		ofType="RecipeIngredientDto" column="recipe_no" select="recipeIngredientList">
    			<result column="recipe_ingredient_name" property="recipeIngredientName"/>
    			<result column="recipe_no" property="recipeNo"/>
    		</collection>
+   		
+  		<collection property="recipeImgList" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImg" column="recipe_no">
+			<result column="recipe_attachment_no" property="recipeAttachmentNo"/>
+			<result column="recipe_no" property="recipeNo"/>
+		</collection>
    </resultMap>
    
    <select id="mainRecipeTop5" resultMap="mainRecipeList">
    		select * from (
 		    select TMP.*, dense_rank() over(order by cal desc) rn from (
 		        select 
-		            R.recipe_no,
-		            R.recipe_info,
-		            R.recipe_click,
-		            R.recipe_like,
-		            R.recipe_time,
-		            R.recipe_hashtag,
-		            R.recipe_difficulty,
-		            ((R.recipe_click + (R.recipe_like*2))/2.5 - recipe_time) cal,
-		            RI.recipe_attachment_no,
-		            RD.recipe_ingredient_name
-		        from recipe R left outer join recipe_img RI 
-		        on R.recipe_no = RI.recipe_no left outer join recipe_ingredient RD on R.recipe_no = RD.recipe_no order by cal desc, R.recipe_time asc, R.recipe_like, R.recipe_click
-		    )TMP
+		            recipe_no,
+		            recipe_info,
+		            recipe_click,
+		            recipe_like,
+		            recipe_time,
+		            recipe_hashtag,
+		            recipe_difficulty,
+		            ((recipe_click + (recipe_like*2))/2.5 - recipe_time) cal
+		        from recipe
+		        )TMP
 		) where rn between 1 and 5
    </select>
    

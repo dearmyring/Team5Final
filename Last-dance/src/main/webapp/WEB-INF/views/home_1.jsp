@@ -11,7 +11,6 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="냉장고를 부탁해" name="title"/>
 </jsp:include>
-
 	<style>
 		.border-box {
 			position: relative;
@@ -37,6 +36,22 @@
 			width: 100%;
 			height:100%;
 			object-fit:cover;
+		}
+		
+				
+		.hash-tag {
+			position: relative;
+			top: 50px;
+			left: 20px;
+		   	border: none;
+		    font-size: 15px;
+		    padding: 0.5em 1em 0.5em 1em;
+		    display: inline-block;
+		    text-align: center;
+		    text-decoration: none;
+		    border-radius: 10px;
+		    color: #373A3C;
+		    background-color: #EEEEEE;
 		}
 		
 		.main-2 {
@@ -79,18 +94,18 @@
 		}
 		
 		.customer-service {
-			    border: none;
-			    font-size: 15px;
-			    padding: 0.75em;/*글자 크기의 0.75배*/
-			    cursor: pointer;
-			    /* a 태그를 버튼으로 만들기 위해 추가 */
-			    display: inline-block;
-			    text-align: center;
-			    text-decoration: none;
-			    border-radius: 5px;
-		        background-color: #FEE102;
-			    color: black;
-			    font-weight: bold;
+		    border: none;
+		    font-size: 15px;
+		    padding: 0.75em;/*글자 크기의 0.75배*/
+		    cursor: pointer;
+		    /* a 태그를 버튼으로 만들기 위해 추가 */
+		    display: inline-block;
+		    text-align: center;
+		    text-decoration: none;
+		    border-radius: 5px;
+	        background-color: #FEE102;
+		    color: black;
+		    font-weight: bold;
 		}
 		
 		.cnt {
@@ -131,20 +146,6 @@
 			width: 10%;
 		}
 		
-		.hash-tag {
-			position: relative;
-			top: 50px;
-			left: 20px;
-		   	border: none;
-		    font-size: 15px;
-		    padding: 0.5em 1em 0.5em 1em;
-		    display: inline-block;
-		    text-align: center;
-		    text-decoration: none;
-		    border-radius: 10px;
-		    color: #373A3C;
-		    background-color: #EEEEEE;
-		}
 		.view-count,
 		.like-count {
 			position: relative;
@@ -197,9 +198,44 @@
 			font-size:15px;
 		}
 		
+		.hashtag-box {
+			position: relative;
+			left: 20px;
+			display: inline-block;
+			border: none;
+			background-color: #8BC96E;
+			text-align: center;
+			padding: 0.5em 1em 0.5em 1em;
+			border-radius: 10px;
+			font-weight: 600;
+			color: white;
+			font-size:15px;
+		}
+		
+		.hashtag-box-scroll {
+			margin-top: 3px;
+			margin-right: 10px;
+			height: 90px;
+			overflow: auto;
+		}
+		
 		.swiper-button-next::after,
 		.swiper-button-prev::after {
 		  display: none;
+		}
+		
+		.hashtag-box-scroll::-webkit-scrollbar {
+			width: 7px;
+		}
+		
+		.hashtag-box-scroll::-webkit-scrollbar-track {
+		  border-radius: 10px;
+		  border: 1px solid #EDEDED;
+		}
+		
+		.hashtag-box-scroll::-webkit-scrollbar-thumb {
+		  border-radius: 10px;
+		  border: 1px solid #EDEDED;
 		}
 		
 	</style>
@@ -219,16 +255,18 @@
 							<span class="view-count">조회수 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeClick}" pattern="#,###"/></span>
 							<span class="like-count">좋아요 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeLike}" pattern="#,###"/></span>
 							<div class="recipe-title mt-20">${mainRecipe.mainRecipeListTop5VO.recipeInfo}</div>
-							<div class="how-long mt-10 me-10">
+							<div class="how-long mt-10 me-5">
 								<i class="fa-regular fa-clock"></i>
 								${mainRecipe.mainRecipeListTop5VO.recipeTime}분 이내
 							</div>
 							<div class="cooking-level">${mainRecipe.mainRecipeListTop5VO.recipeDifficulty}</div>
-							
-							<c:forEach var="mainRecipeIngredient" items="${mainRecipe.ingredientList}">
-								<div>${mainRecipeIngredient.recipeIngredientName}</div>
+							<div class="hashtag-box-scroll">
+							<c:forEach var="mainRecipeIngredient" items="${mainRecipe.recipeIngredientList}">
+								<div class="hashtag-box mt-10">
+									<div>${mainRecipeIngredient.recipeIngredientName}</div>
+								</div>
 							</c:forEach>
-							 
+							</div>
 							<div class="img-box">
 								<div class="hash-tag">${mainRecipe.mainRecipeListTop5VO.recipeHashtag}</div>
 								<img class="main-1-img" src="/images/test.jpg">
@@ -237,12 +275,10 @@
 					</c:forEach>
 				</div>
 	            <div class="swiper-pagination"></div>
-	
 	            <div class="swiper-button-prev"></div>
 	            <div class="swiper-button-next"></div>
-	
-	            <div class="swiper-scrollbar"></div>
 			</div>
+			
 			<div class="add-recipe-box main-box-shadow main-2 container-300 float-left">
 				<div>
 					<span class="left">
