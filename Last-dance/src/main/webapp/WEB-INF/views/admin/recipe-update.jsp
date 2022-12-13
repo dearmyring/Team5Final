@@ -324,7 +324,7 @@
 	   			return false;
 	   		}
 	   		
-	   		var choice = confirm("등록하시겠습니까?");
+	   		var choice = confirm("수정하시겠습니까?");
 	   		if(!choice){
 	    		e.preventDefault();
 	   		}
