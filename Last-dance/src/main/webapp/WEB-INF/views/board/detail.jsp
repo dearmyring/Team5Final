@@ -264,6 +264,7 @@
 						<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
 						
 						<a class="btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정하기</a>	
+						<a class="btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>	
 						<a class="btn btn-neutral" href="list">목록으로</a>
 					</td>
 				</tr>
