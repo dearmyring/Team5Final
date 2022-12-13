@@ -52,11 +52,25 @@
 	</update>
 
 
+	<update id="updatePoint"  parameterType="MemberDto">
+		update member set member_point = member_point + #{memberPoint}
+		where member_id = #{memberId}
+  </update>  
+  
+  <!-- 오늘 하루 게시글 insert 카운트  -->
+  	<select id="boardCNT" parameterType="MemberDto" resultType="int">
+ 	 	select count(*) from board where board_id=#{memberId} and to_date(board_writetime, 'yy/mm/dd')=to_date(sysdate, 'yy/mm/dd')
+  	</select>
 
-
-	<select id="get" parameterType="int" resultType="BoardListVO">
-		select * from
-		board where board_no = #{boardNo}
+<!--오늘 하루 댓글 수 카운트 -->
+	<select id="replyCNT" parameterType="MemberDto" resultType="int">
+		select count(*) from reply where reply_id=#{memberId} and to_date(reply_writetime, 'yy/mm/dd')=to_date(sysdate, 'yy/mm/dd')
+	</select>
+	
+	<select id="detail" parameterType="int" resultType="BoardListVO">
+		select board.*,member_nick,member_badge 
+		from board left outer join member on board_id=member_id 
+		where board_no=#{boardNo}
 	</select>
 
 	<!-- 조회수 증가 처리 -->

@@ -148,11 +148,10 @@
 				<tr class="view">
 					<td width="90%">
 						<!-- 작성자 -->
+						<pre>{{replyContent}}</pre>
+						<br>
 						({{memberBadge}}) 
 						{{memberNick}}			
-						<br>
-						<br>
-						<pre>{{replyContent}}</pre>
 						<br><br>
 						{{replyWriteTime}}
 						
@@ -188,7 +187,7 @@
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td>${boardDto.boardId}</td>
+					<td>${boardDto.memberNick}</td>
 				</tr>
 				<tr height="200" valign="top">
 					<th>내용</th>
@@ -289,11 +288,11 @@
 				<tr class="view">
 					<td width="90%">
 						<!-- 작성자 -->
+						${replyDto.memberNick}(${replyDto.replyId})
 						(${replyDto.memberBadge}) 
-						${replyDto.memberNick}
-						(${replyDto.replyId})
+						<br>
 						<c:if test="${boardDto.boardId ==  replyDto.replyId}">
-						(작성자)
+						
 						</c:if>
 						
 						<br>
@@ -343,7 +342,7 @@
 														value="${replyDto.replyNo}">
 							<input type="hidden" name="replyBoardNo"
 														value="${replyDto.replyBoardNo}">
-							<textarea name="replyContent" rows="5" cols="50" 
+							<textarea class="input" name="replyContent" rows="5" cols="50" 
 									required>${replyDto.replyContent}</textarea>
 							<button type="submit">변경</button>
 							<a class="cancel-btn">취소</a>

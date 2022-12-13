@@ -44,13 +44,13 @@ input {
 	<h3 class="mt-20" align="center">레시피를 작성/댓글 작성으로 참여도를 올려서 귀여운 뱃지를
 		착용해보세요 :)
 		</h3>
-	<!-- <select class="input-type">
+	<div class="center search mt-10">
+	 <select class="input-type input">
 		<option value="board_title">제목</option>
 		<option value="member_nick">작성자</option>
 		<option value="board_content">내용</option>
 		<option value="">제목</option>
-	</select>  -->
-	<div class="center search mt-10">
+	</select> 
 		<input class="input input-keyword input-seach" type="text" placeholder="검색어를 입력하세요">
 		<button class="board-search-btn" type="button"></button>	
 	</div>
@@ -59,7 +59,7 @@ input {
 		<thead>
 			<tr>
 				<th colspan="12">
-					<select class="sort-click float-left">
+					<select class="sort-click float-left input">
 						<option value="board_no desc">최근 작성일 순</option>
 						<option value="board_click desc">조회수 높은 순</option>
 						<option value="board_like desc">추천 많은 순</option>
@@ -152,7 +152,7 @@ input {
 																						+ resp[i].boardNo)
 																		.text(
 																				resp[i].boardTitle));
-												var tdContent = $("<td>").text(
+												var tdContent = $("<td>").html(
 														resp[i].boardContent);
 												var tdNick = $("<td>").text(
 														resp[i].memberNick);
@@ -215,7 +215,7 @@ input {
 																						+ resp[i].boardNo)
 																		.text(
 																				resp[i].boardTitle));
-												var tdContent = $("<td>").text(
+												var tdContent = $("<td>").html(
 														resp[i].boardContent);
 												var tdNick = $("<td>").text(
 														resp[i].memberNick);
