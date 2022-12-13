@@ -76,7 +76,7 @@ create sequence recipe_content_seq;
 
 --레시피 재료
 create table recipe_ingredient(
-recipe_ingredient_name references ingredient(ingredient_name) on delete set null,
+recipe_ingredient_name references ingredient(ingredient_name) on delete cascade,
 recipe_no references recipe(recipe_no) on delete cascade
 );
 
