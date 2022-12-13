@@ -27,6 +27,11 @@
       select * from recipe_ingredient where recipe_no = #{recipeNo}
    </select>
    
+   	<!-- 썸네일 출력 -->
+   <select id="recipeImgList" resultType="RecipeImgDto" parameterType="int">
+      select * from recipe_img where recipe_no = #{recipeNo}
+   </select>
+   
    <!-- 레시피 리스트 계층형 조회 구문 -->
    <resultMap type="RecipeListVO" id="recipeList">
       <association property="recipeDto">
@@ -47,13 +52,30 @@
          <result column="recipe_ingredient_name" property="recipeIngredientName"/>      
          <result column="recipe_no" property="recipeNo"/>      
       </collection>
+      
+       <collection property="recipeImgList" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImgList" column="recipe_no">
+         <result column="recipe_attachment_no" property="recipeAttachmentNo"/> 
+          <result column="recipe_no" property="recipeNo"/>            
+      </collection>
    </resultMap>
 	
 	
 		<!--  레시피 전체조회(통합)  -->
    <select id="recipeList" resultMap="recipeList" >
-	select R.* ,RI.recipe_ingredient_name
-	 from recipe R inner join recipe_ingredient RI on R.recipe_no=RI.recipe_no 
+select 
+    A.recipe_no,
+    A.recipe_info,
+    A.recipe_time,
+    A.recipe_click,
+    A.recipe_like,
+    A.recipe_ingredient_name,
+    B.recipe_attachment_no,
+    A.recipe_hashtag
+from 
+    (select R.*, RI.recipe_ingredient_name from recipe R left outer join recipe_ingredient RI on R.recipe_no = RI.recipe_no) A 
+left outer join 
+    (select * from recipe_img) B 
+on A.recipe_no = B.recipe_no
    </select>
 	
 	<!--  단일 조회 -->
@@ -100,7 +122,6 @@
 
 	
 </mapper>
-
 
 
 
