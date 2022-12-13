@@ -14,5 +14,4 @@ import lombok.NoArgsConstructor;
 public class RecipeListVO {
    private RecipeDto recipeDto;
    private List<RecipeIngredientDto> recipeIngredientList;
-
 }

@@ -214,18 +214,23 @@
 		<div class="border-box">
 			<div class="swiper add-recipe-box main-box-shadow main-1 container-450 float-left">
 				<div class="swiper-wrapper">
-					<c:forEach var="mainRecipe" items="${mainRecipe}" varStatus="status">
+					<c:forEach var="mainRecipe" items="${mainRecipeTop5}">
 						<div class="swiper-slide">
-							<span class="view-count">조회수 <fmt:formatNumber value="${mainRecipe.recipeClick}" pattern="#,###"/></span>
-							<span class="like-count">좋아요 <fmt:formatNumber value="${mainRecipe.recipeLike}" pattern="#,###"/></span>
-							<div class="recipe-title mt-20">${mainRecipe.recipeInfo}</div>
+							<span class="view-count">조회수 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeClick}" pattern="#,###"/></span>
+							<span class="like-count">좋아요 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeLike}" pattern="#,###"/></span>
+							<div class="recipe-title mt-20">${mainRecipe.mainRecipeListTop5VO.recipeInfo}</div>
 							<div class="how-long mt-10 me-10">
 								<i class="fa-regular fa-clock"></i>
-								${mainRecipe.recipeTime}분 이내
+								${mainRecipe.mainRecipeListTop5VO.recipeTime}분 이내
 							</div>
-							<div class="cooking-level">${mainRecipe.recipeDifficulty}</div>
+							<div class="cooking-level">${mainRecipe.mainRecipeListTop5VO.recipeDifficulty}</div>
+							
+							<c:forEach var="mainRecipeIngredient" items="${mainRecipe.ingredientList}">
+								<div>${mainRecipeIngredient.recipeIngredientName}</div>
+							</c:forEach>
+							 
 							<div class="img-box">
-								<div class="hash-tag">${mainRecipe.recipeHashtag}</div>
+								<div class="hash-tag">${mainRecipe.mainRecipeListTop5VO.recipeHashtag}</div>
 								<img class="main-1-img" src="/images/test.jpg">
 							</div>
 						</div>
