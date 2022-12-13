@@ -368,6 +368,16 @@
                                     .text(resp[i].ingredientName);
                                 
                                 pTag.click(function(){
+                                	var addIngredientCnt = $(".add-ingredient").find("[name=recipeIngredientName]");
+                                	for(var i=0; i<addIngredientCnt.length; i++){
+	                                	if($(this).text() == $(".add-ingredient").find("[name=recipeIngredientName]").eq(i).val()){
+	                                		alert("이미 등록된 재료입니다.");
+	                                		$(".ingredientSearch").remove();
+	                                		$(".input-ingredient").val("");
+	                                		return;
+	                                	}
+                                	}
+                                		
                                     var xMark = $("<i>").addClass("fa-solid fa-xmark");
                                     xMark.click(function(){
                                         $(this).parent().remove();
@@ -409,6 +419,16 @@
                     		}
                     	}
                     	else{
+                        	var addIngredientCnt = $(".add-ingredient").find("[name=recipeIngredientName]");
+                        	for(var i=0; i<addIngredientCnt.length; i++){
+                            	if(keyword == $(".add-ingredient").find("[name=recipeIngredientName]").eq(i).val()){
+                            		alert("이미 등록된 재료입니다.");
+                            		$(".ingredientSearch").remove();
+                            		$(".input-ingredient").val("");
+                            		return;
+                            	}
+                        	}
+                        	
 							var xMark = $("<i>").addClass("fa-solid fa-xmark");
 							xMark.click(function(){
 								$(this).parent().remove();
