@@ -49,11 +49,11 @@ public class RecipeController {
 			
 			//내가 본 레시피 등록
 			recipeDao.insertRecipeView(recipeViewDto);
-			System.err.println("등록 실행");
+//			System.err.println("등록 실행");
 		}
 		else {
 			recipeDao.updateRecipeViewTime(recipeViewDto);
-			System.err.println("수정 실행");
+//			System.err.println("수정 실행");
 		}
 		
 		model.addAttribute("recipe", recipeDao.selectDetail(recipeNo));
