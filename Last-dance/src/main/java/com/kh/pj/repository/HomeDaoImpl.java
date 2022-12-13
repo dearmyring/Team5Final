@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.pj.vo.MainRecipeListTop5VO;
+import com.kh.pj.vo.MainRecipeTop5MergingVO;
 import com.kh.pj.vo.PushRecipeListVO;
 import com.kh.pj.vo.RecipeTotalCountVO;
 import com.kh.pj.vo.TodayMemberRankingVO;
@@ -38,7 +38,7 @@ public class HomeDaoImpl implements HomeDao{
 	}
 	
 	@Override
-	public List<MainRecipeListTop5VO> mainRecipe() {
-		return sqlSession.selectList("home.MainRecipeTop5");
+	public List<MainRecipeTop5MergingVO> mainRecipeTop5() {
+		return sqlSession.selectList("home.mainRecipeTop5");
 	}
 }
