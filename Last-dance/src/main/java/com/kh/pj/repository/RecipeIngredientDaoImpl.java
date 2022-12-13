@@ -50,4 +50,9 @@ public class RecipeIngredientDaoImpl implements RecipeIngredientDao {
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 
+	@Override
+	public void adminDelete(int recipeNo) {
+		sqlSession.delete("recipeIngredient.adminDelete", recipeNo);
+	}
+
 }

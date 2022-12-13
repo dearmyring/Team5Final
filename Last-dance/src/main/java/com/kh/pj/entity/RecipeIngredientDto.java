@@ -9,5 +9,4 @@ import lombok.NoArgsConstructor;
 public class RecipeIngredientDto{
 	private String recipeIngredientName;
 	private int recipeNo;
-	
 }

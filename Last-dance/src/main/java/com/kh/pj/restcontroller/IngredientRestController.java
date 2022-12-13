@@ -1,4 +1,4 @@
-package com.kh.pj.restcontroller;
+	package com.kh.pj.restcontroller;
 
 import java.util.List;
 
@@ -48,9 +48,11 @@ public class IngredientRestController {
 	
 	@PostMapping("/ingredient")
 	public List<IngredientDto> ingredient(
-			@RequestBody IngredientDto ingredientDto,
+			@RequestBody List<IngredientDto> ingredientList,
 			@RequestBody(required = false) IngredientListSearchVO vo){
-		ingredientDao.insert(ingredientDto);
+		for(IngredientDto ingredient : ingredientList) {
+			ingredientDao.insert(ingredient);
+		}
 		return ingredientDao.adminList(vo);
 	}
 	

@@ -13,4 +13,8 @@
 	<select id="find" parameterType="int" resultType="String">
 		select recipe_ingredient_name from recipe_ingredient where recipe_no=${recipeNo} order by recipe_ingredient_name asc
 	</select>
+	
+	<delete id="adminDelete" parameterType="int">
+		delete recipe_ingredient where recipe_no=${recipeNo}
+	</delete>
 </mapper>
