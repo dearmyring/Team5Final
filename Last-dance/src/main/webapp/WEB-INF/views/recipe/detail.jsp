@@ -16,5 +16,6 @@
 작성일: ${recipe.recipeWritetime}
 수정일: ${recipe.recipeEdittime}
 난이도: ${recipe.recipeDifficulty}
+>>>>>>> refs/remotes/origin/main
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

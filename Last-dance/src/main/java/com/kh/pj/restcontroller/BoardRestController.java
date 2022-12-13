@@ -3,41 +3,28 @@ package com.kh.pj.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.pj.entity.BoardDto;
 import com.kh.pj.repository.BoardDao;
+import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
-@RestController
+@CrossOrigin(origins ="http://127.0.0.1:5500")
 @RequestMapping("/rest")
+@RestController
 public class BoardRestController {
 
 	@Autowired
-	private BoardDao dao;
+	private BoardDao boardDao;
 	
-	
-//	@PostMapping("/board")
-//	public void write(@RequestBody BoardDto dto) {
-//		dao.insert(dto);
-//	}
-//	
-//	//PUT 방식은 POST 처럼 데이터를 Body에 전송할 수 있는 방식
-//	@PutMapping("/board")
-//	public boolean edit(@RequestBody BoardDto dto) {
-//		return dao.edit(dto);
-//	}
-//	
-//	@DeleteMapping("/board/{boardNo}")
-//	public boolean delete(@PathVariable int no) {
-//		return dao.delete(no);
-//	}
+	@PostMapping("/board")
+	public List<BoardListVO> boardList(
+			@RequestBody BoardListSearchVO vo){
+		System.out.println(vo);
+		return boardDao.boardList(vo);
+	}
 }

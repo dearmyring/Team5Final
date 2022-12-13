@@ -100,6 +100,7 @@
 .ms-60 { margin-left: 60px;}
 
 .me-0 { margin-right: 0px;}
+.me-5 { margin-right: 5px;}
 .me-10 { margin-right: 10px;}
 .me-20 { margin-right: 20px;}
 .me-30 { margin-right: 30px;}
@@ -508,14 +509,12 @@ ul.pagination.pagination-small {
 /*
     드롭다운(drop down) 메뉴 만들기
     - HTML 구조는 ul로 구현한다
-
     (1) 1차 메뉴와 2차 메뉴, 모든 메뉴에 대한 선택자가 다르다
         - 1차 메뉴 : .dropdown-menu > li
         - 2차 메뉴 : .dropdown-menu > li > ul > li
         - 3차 메뉴 : .dropdown-menu > li > ul > li > ul > li
         - 모든 메뉴 : .dropdown-menu li
         - 2차 이상 메뉴 : .dropdown-menu ul > li
-
     (2) 모든 메뉴 태그의 여백과 표시방식을 변경
     (3) 1차 메뉴의 표시방식(display)을 inline-block으로 변경
     (4) 
@@ -528,10 +527,8 @@ ul.pagination.pagination-small {
     
     (+추가)
     (9) 우측에 붙는 메뉴를 구현
-
     (+추가)
     (10) 3차메뉴부터는 하단이 아닌 옆에 나오도록 처리
-
     (+추가)
     (11) 확장 스타일을 부여하면 메뉴를 상단에 고정하도록 변경
 */

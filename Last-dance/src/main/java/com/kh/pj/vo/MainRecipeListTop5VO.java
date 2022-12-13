@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MainRecipeListTop5VO {
-	private int recipeNo, recipeClick, recipeLike, recipeTime, cal, recipeAttachmentNo, rn;
+	private int recipeNo, recipeClick, recipeLike, recipeTime, cal, rn;
 	private String recipeInfo, recipeHashtag, recipeDifficulty;
 }
