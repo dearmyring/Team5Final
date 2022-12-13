@@ -507,6 +507,9 @@
 	                    	var imgNo = $("<input>").attr("type", "hidden").addClass("img-no").attr("name", "recipeContentAttachmentNo").val(attachmentNo);
                     	}
 						that.parent().append(imgNo);
+						if(that.parent().hasClass("thumb-page")){
+							that.parent().next().find(".preview-disabled").removeClass("preview-disabled");
+						}
                     }
                 });
             }
