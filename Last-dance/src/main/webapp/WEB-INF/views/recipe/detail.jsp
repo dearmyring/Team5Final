@@ -1,55 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="ìŒì› ìƒì„¸ì •ë³´" name="title"/>
+	<jsp:param name="title" value="¸¶ÀÌÆäÀÌÁö"/>
 </jsp:include>
 
-<div class="container-500 mt-40 mb-40">
-	<div class="row center">
-		<h1>ìŒì› ìƒì„¸ì •ë³´</h1>
-	</div>
-	<div class="row">
-		<table class="table table-border">
-			<tbody>
-				<tr>
-					<th width="25%">ë²ˆí˜¸</th>
-					<td>${musicDto.musicNo}</td>
-				</tr>
-				<tr>
-					<th width="25%">ì œëª©</th>
-					<td>${musicDto.musicTitle}</td>
-				</tr>
-				<tr>
-					<th width="25%">ê°€ìˆ˜</th>
-					<td>${musicDto.musicArtist}</td>
-				</tr>
-				<tr>
-					<th width="25%">ì•¨ë²”</th>
-					<td>${musicDto.musicAlbum}</td>
-				</tr>
-				<tr>
-					<th width="25%">ì¬ìƒìˆ˜</th>
-					<td>${musicDto.musicPlay}</td>
-				</tr>
-				<tr>
-					<th width="25%">ë°œë§¤ì¼</th>
-		<%-- 			<td>${musicDto.releaseTime}</td> --%>
-					<td>
-						<fmt:formatDate value="${musicDto.releaseTime}" pattern="yë…„ Mì›” dì¼ Eìš”ì¼"/>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	
-	<div class="row center">
-		<a class="btn btn-neutral" href="list">ëª©ë¡ë³´ê¸°</a>
-		<a class="btn btn-negative" href="edit?musicNo=${musicDto.musicNo}">ìˆ˜ì •í•˜ê¸°</a>
-		<a class="btn btn-negative" href="delete?musicNo=${musicDto.musicNo}">ì‚­ì œí•˜ê¸°</a>	
-	</div>
-</div>
+<h1>·¹½ÃÇÇ »ó¼¼ÆäÀÌÁö</h1>
+
+Á¦¸ñ: ${recipe.recipeTitle}
+ÀÛ¼ºÀÚ: ${recipe.recipeNick}
+¼Ò°³: ${recipe.recipeInfo}
+¼Ò¿ä½Ã°£: ${recipe.recipeTime}
+Á¶È¸¼ö: ${recipe.recipeClick}
+ÁÁ¾Æ¿ä: ${recipe.recipeLike}
+ÇØ½ÃÅÂ±×: ${recipe.recipeHashtag}
+ÀÛ¼ºÀÏ: ${recipe.recipeWritetime}
+¼öÁ¤ÀÏ: ${recipe.recipeEdittime}
+³­ÀÌµµ: ${recipe.recipeDifficulty}
+>>>>>>> refs/remotes/origin/main
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
