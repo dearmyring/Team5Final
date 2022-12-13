@@ -343,6 +343,7 @@ public class AdminController {
 	public String ingredientList(Model model) {
 		IngredientListSearchVO vo = IngredientListSearchVO.builder().build();
 		model.addAttribute("ingredientList", ingredientDao.adminList(vo));
+		model.addAttribute("categoryList", categoryDao.adminList());
 		return "admin/ingredient-list";
 	}
 	

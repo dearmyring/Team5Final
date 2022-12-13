@@ -4,10 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
-<script>
-	
-</script>
-
 <div class="modal ingredient-insert-modal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
@@ -170,14 +166,15 @@
     		if(confirm("재료를 등록하시겠습니까?")){
     			var ingredientName = $(this).parent().prev().find(".insert-ingredientName").val();
     			var ingredientCategory = $(this).parent().prev().find(".insert-ingredientCategory").val();
+    			var ingredinetList = [{
+    				ingredientName : ingredientName,
+    				ingredientCategory : ingredientCategory
+				}];
     			$.ajax({
     				url: "http://localhost:8888/rest/ingredient",
     				method: "post",
     				contentType: "application/json",
-    				data: JSON.stringify({
-    					ingredientName : ingredientName,
-    					ingredientCategory : ingredientCategory
-    				}),
+    				data: JSON.stringify(ingredinetList),
     				success: function(resp){
     					if(confirm("레시피에 바로 추가하시겠습니까?")){
     						var xMark = $("<i>").addClass("fa-solid fa-xmark");
@@ -407,7 +404,6 @@
                     	if(!resp){
                     		if(confirm("등록되지 않은 재료입니다. 해당 재료를 등록하시겠습니까?")){
                     			$(".insert-ingredientName").val(keyword);
-	                            $(".ingredient-insert-modal").modal("hide");
 	                            var modal = new bootstrap.Modal($(".ingredient-insert-modal"), {});
 	                            modal.show();
                     		}
