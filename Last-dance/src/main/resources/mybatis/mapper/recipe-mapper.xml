@@ -97,6 +97,29 @@
 		select * from recipe where recipe_no=#{recipeNo}
 	</select>
 	
+	
+	
+	
+	<!-- 여기부터 레시피 디테일 -->
+	<!-- 레시피 상세 -->
+	<select id="detail" parameterType="int" resultType="recipeDto">
+		select * from recipe where recipe_no = #{recipeNo}
+	</select>
+	
+	<!-- 내가 본 레시피가 있는지 조회 -->
+	<select id="myViewRecipe" parameterType="RecipeViewDto" resultType="RecipeViewDto">
+		select * from recipe_view where recipe_view_id = #{recipeViewId} and recipe_view_no = #{recipeViewNo}
+	</select>
+	
+	<!-- 내가 본 레시피 등록 -->
+	<insert id="insertViewRecipe" parameterType="RecipeViewDto">
+		insert into recipe_view values(#{recipeViewId}, #{recipeViewNo}, sysdate)
+	</insert>
+	
+	<!-- 내가 본 레시피 수정 -->
+	<update id="updateRecipeViewTime" parameterType="RecipeViewDto">
+		update recipe_view set recipe_view_time = sysdate where recipe_view_id = #{recipeViewId} and recipe_view_no = #{recipeViewNo}
+	</update>
 
 	
 </mapper>
