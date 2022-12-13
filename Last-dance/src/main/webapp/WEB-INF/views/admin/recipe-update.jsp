@@ -8,8 +8,8 @@
 	<h3>레시피등록</h3>
 </div>
 
-<form action="write" method="post" class="recipe-update-form" autocomplete="off" enctype="multipart/form-data">
-
+<form action="update" method="post" class="recipe-update-form" autocomplete="off" enctype="multipart/form-data">
+<input type="hidden" name="recipeNo" value="${recipeDto.recipeNo}">
 <div>
 	레시피 제목 <input type="text" name="recipeTitle" value="${recipeDto.recipeTitle}">
 </div>
@@ -103,13 +103,16 @@
 		</c:choose>
 		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
 		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
+		<c:if test="${recipeContentList[no] != null}">
+			<input type="hidden" class="img-no" name="recipeContentAttachmentNo" value="${recipeContentList[no].recipeContentAttachmentNo}">
+		</c:if>
 	</div>
 </c:forEach>
 
 <div>
 	요리 완성사진 
 	<button type="button">사진 한 번에 넣기</button>
-	<button type="button">사진 모두 지우기</button>
+	<button class="thumb-all-clear" type="button">사진 모두 지우기</button>
 	<br>
 	<c:forEach var="no" begin="0" end="3">
 		<div class="thumb-page">
@@ -117,6 +120,7 @@
 		<c:choose>
 			<c:when test="${recipeImgList[no] != null}">
 				<img class="preview" src="${pageContext.request.contextPath}/rest/download/${recipeImgList[no]}" width="200" height="200"><br>
+				<input type="hidden" class="img-no" name="recipeAttachmentNo" value="${recipeImgList[no]}">
 			</c:when>
 			<c:otherwise>
 				<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
@@ -151,20 +155,90 @@
 </form>
 </div>
 
+<style>
+	.file-input{
+		display: none;
+	}
+	.preview{
+		border: 1px solid #C2C2C2;
+		cursor: pointer;
+	}
+</style>
+
 <script type="text/javascript">
 	$(function(){
 		$(".fa-xmark").click(function(){
 			$(this).parent().remove();
 		});
 		
-		$(".recipe-insert-form").keydown(function(e){
+		/* 미리보기 클릭 시 파일 추가 */
+    	$(".preview").click(function(){
+    		$(this).parent().find(".file-input").click();
+    	});
+    	
+    	/* 재료 등록 후 바로 추가 안내 */
+    	$(".ingredient-insert-btn").click(function(e){
+    		if(confirm("재료를 등록하시겠습니까?")){
+    			var ingredientName = $(this).parent().prev().find(".insert-ingredientName").val();
+    			var ingredientCategory = $(this).parent().prev().find(".insert-ingredientCategory").val();
+    			$.ajax({
+    				url: "http://localhost:8888/rest/ingredient",
+    				method: "post",
+    				contentType: "application/json",
+    				data: JSON.stringify({
+    					ingredientName : ingredientName,
+    					ingredientCategory : ingredientCategory
+    				}),
+    				success: function(resp){
+    					if(confirm("레시피에 바로 추가하시겠습니까?")){
+    						var xMark = $("<i>").addClass("fa-solid fa-xmark");
+							xMark.click(function(){
+								$(this).parent().remove();
+							});
+							var p = $("<p>")
+							var input = $("<input>")
+								.attr("readonly", "readonly")
+								.attr("name", "recipeIngredientName")
+								.val(ingredientName);
+							p.append(input).append(xMark);
+							$(".add-ingredient").append(p);
+    					}
+						$(".input-ingredient").val("");
+                        $(".ingredient-insert-modal").modal("hide");
+    				}
+    			});
+    		}
+    	});
+    	
+    	/* 재료 등록 취소 */
+    	$(".ingredient-insert-cancel").click(function(e){
+    		if(!confirm("재료 등록을 취소하시겠습니까?")){
+	    		e.preventDefault();
+    		}
+    	});
+    	
+    	/* 썸네일 사진 모두 지우기 클릭 시 비동기 삭제 & 미리보기 사진 변경 */
+    	$(".thumb-all-clear").click(function(){
+    		var param = $(".thumb-page .img-no").serialize();
+    		console.log(param);
+    		$.ajax({
+    			url: "http://localhost:8888/rest/attachment/delete?"+param,
+    			method: "delete",
+    			success: function(resp){
+		    		$(".thumb-page").find(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
+    			}
+    		});
+    	});
+    	
+    	/* 엔터 시 폼 전송 방지 */
+    	$(".recipe-update-form").keydown(function(e){
     		if(e.keyCode === 13){
 	    		e.preventDefault();
     		}
     	});
     	
     	/* 등록하기 버튼 클릭 시 모든 칸 검사 후 제출 */
-    	$(".recipe-insert-form").submit(function(e){
+    	$(".recipe-update-form").submit(function(e){
 	   		var recipeTitle = $("[name=recipeTitle]");
 	   		if(!recipeTitle.val()){
 	   			alert("레시피 제목을 등록해주세요.");
@@ -204,7 +278,7 @@
 	   		}
 	   		
 			var contentText = $("[name=recipeContentText]");
-			var contentImg = $(".content-page").find(".file-input");
+			var contentImg = $(".content-page").find(".preview");
 			//레시피 컨텐트 아예 없을 때 리턴
 			var contentCnt = 0;
 			var contentImgCnt = 0;
@@ -212,13 +286,13 @@
 				if(contentText.eq(i).text()){
 					contentCnt++;
 				}
-				if(contentImg.eq(i).val()){
+				if(!contentImg.eq(i).attr("src").includes("img_plus.png")){
 					contentImgCnt++;
 				}
-	               if(contentCnt != contentImgCnt){
-	                   alert("레시피 내용 작성을 완료해주세요.");
-	                   return false;
-	               }
+				if(contentCnt != contentImgCnt){
+				    alert("레시피 내용 작성을 완료해주세요.");
+				    return false;
+				}
 			}
 			//레시피 컨텐트 아예 아무 것도 없을 때
 			if(contentCnt == 0 && contentImgCnt == 0){
@@ -229,10 +303,10 @@
 			}
 	
            //레시피 썸네일 아예 없을 때 리턴
-			var recipeImg = $(".thumb-page").find(".file-input");
+			var recipeImg = $(".thumb-page").find(".preview");
 			var recipeImgCnt = 0;
 			for(var i=0; i<recipeImg.length; i++){
-				if(recipeImg.eq(i).val()){
+				if(!recipeImg.eq(i).attr("src").includes("img_plus.png")){
 					recipeImgCnt++;	
 				}
 			}
@@ -250,7 +324,7 @@
 	   			return false;
 	   		}
 	   		
-	   		var choice = confirm("등록하시겠습니까?");
+	   		var choice = confirm("수정하시겠습니까?");
 	   		if(!choice){
 	    		e.preventDefault();
 	   		}
@@ -261,23 +335,16 @@
 	            }
 				//레시피 썸네일 없는 칸부터 빈칸 삭제
 				for(var i=0; i<recipeImg.length; i++){
-					if(!recipeImg.eq(i).val()){
+					if(recipeImg.eq(i).attr("src").includes("img_plus.png")){
 						recipeImg.eq(i).parent().remove();
 					}
 				}
 	   		}
     	});
 
-    	/* 레시피 돌아가기 클릭 시 비동기로 첨부파일 삭제 */
+    	/* 레시피 돌아가기 클릭 시 업데이트한 첨부파일 비동기로 삭제 구현 예정 */
     	$(".recipe-return-btn").click(function(e){
-    		var param = $(".recipe-insert-form .img-no").serialize();
-    		$.ajax({
-    			url: "http://localhost:8888/rest/attachment/delete?"+param,
-    			method: "delete",
-    			success: function(resp){
-    				history.back();
-    			}
-    		});
+    		var param = $(".recipe-update-form .img-no").serialize();
     	});
     	
     	/* 레시피 내용 블러 시 textarea 안에 값 넣어주기 */
@@ -337,17 +404,17 @@
     		if(e.keyCode == 13) {
 	    		$(".ingredientSearch").remove();
     			var keyword = $(this).val();
-    			var param = new String();
-            	param.type = "ingredient_name";
-            	param.keyword = keyword;
-            	var search = $.param(param);
     			$.ajax({
-                    url: "http://localhost:8888/rest/ingredient?"+search,
+                    url: "http://localhost:8888/rest/ingredient/"+keyword,
                     method: "get",
                     success: function(resp){
-                    	if(resp.length == 0){
-                    		alert("등록되지 않은 재료입니다.");
-				    		return;
+                    	if(!resp){
+                    		if(confirm("등록되지 않은 재료입니다. 해당 재료를 등록하시겠습니까?")){
+                    			$(".insert-ingredientName").val(keyword);
+	                            $(".ingredient-insert-modal").modal("hide");
+	                            var modal = new bootstrap.Modal($(".ingredient-insert-modal"), {});
+	                            modal.show();
+                    		}
                     	}
                     	else{
 							var xMark = $("<i>").addClass("fa-solid fa-xmark");
@@ -376,13 +443,27 @@
     	/* 순서 추가 버튼 클릭 시 다음 단계 등록 영역 생성 */
     	$(".step-plus-btn").last().remove();
     	$(".step-minus-btn").first().remove();
-    	$(".content-page").hide();
-    	$(".content-page").first().show();
+
+    	/* 레시피 내용 있는 곳 이후로 hide */
+    	var contentUpdateCnt = 0;
+    	var contentUpdateInput = $(".content-page").find("[name=recipeContentText]");
+    	for(var i=0; i<contentUpdateInput.length; i++){
+    		if(contentUpdateInput.eq(i).val()){
+    			contentUpdateCnt++;
+    		}
+    	}
+    	for(var i=0; i<contentUpdateCnt-1; i++){
+        	$(".step-plus-btn").eq(i).hide();
+        	$(".step-minus-btn").eq(i).hide();
+    	}
+    	for(var i=contentUpdateCnt; i<contentUpdateInput.length; i++){
+	    	$(".content-page").eq(i).hide();
+    	}
 
     	$(".step-plus-btn").click(function(){
     		var contentText = $(this).parent().find("[name=recipeContentText]").val();
-    		var contentImg = $(this).parent().find(".file-input").val();
-    		if(!contentText || !contentImg){
+    		var contentImg = $(this).parent().find(".preview").attr("src").includes("img_plus.png");
+    		if(!contentText || contentImg){
     			alert("레시피 내용은 순서대로 등록해주세요.");
     			return;
     		}
@@ -391,26 +472,35 @@
     		$(this).parent().next().show();
     	});
     	$(".step-minus-btn").click(function(){
+    		var that = $(this);
     		var contentText = $(this).parent().find("[name=recipeContentText]");
-    		var contentImg = $(this).parent().find(".file-input");
-    		if(contentText.val() || contentImg.val()){
+    		var contentImg = $(this).parent().find(".preview");
+    		
+    		if(!contentText && contentImg.attr("src").includes("img_plus.png")){
+    			return;
+    		}
+    		if(contentText.val() || !contentImg.attr("src").includes("img_plus.png")){
     			var choice = confirm("작성한 내용은 저장되지 않습니다. 삭제하시겠습니까?");
     			if(!choice){
     				return;
     			}
+    			else{
+		    		var recipeContentAttachmentNo = $(this).parent().find(".img-no").val();
+		    		var recipeContentAttachmentNo = $(this).parent().find(".img-no").val();
+    				var attachmentNo = {recipeContentAttachmentNo : recipeContentAttachmentNo};
+    				var param = $.param(attachmentNo);
+    			}
     		}
-    		var recipeContentAttachmentNo = $(this).parent().find("[name=recipeContentAttachmentNo]");
     		$.ajax({
-    			url: "http://localhost:8888/rest/attachment/delete?"+recipeContentAttachmentNo.val(),
+    			url: "http://localhost:8888/rest/attachment/delete?"+param,
     			method: "delete",
     			success: function(resp){
 					contentText.val("");
-					contentImg.val("");
-					$(this).parent().find(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
-					recipeContentAttachmentNo.remove();
-		    		$(this).parent().prev().find(".step-plus-btn").show();
-		    		$(this).parent().prev().find(".step-minus-btn").show();
-		    		$(this).parent().hide();
+					contentImg.attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
+					that.parent().find(".img-no").remove();
+					that.parent().prev().find(".step-plus-btn").show();
+					that.parent().prev().find(".step-minus-btn").show();
+					that.parent().hide();
     			}
     		});
     	});
