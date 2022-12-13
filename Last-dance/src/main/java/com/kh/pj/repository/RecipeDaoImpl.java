@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeListSearchVO;
 import com.kh.pj.vo.RecipeListVO;
@@ -125,6 +126,41 @@ public class RecipeDaoImpl implements RecipeDao {
 		String sql = "select COUNT(*) cnt from recipe R inner join recipe_ingredient RI "
 						+"on R.recipe_no=RI.recipe_no where recipe_ingredient_name=?";
 		return jdbcTemplate.query(sql,  countMapper);
+	}
+	
+	
+	
+	
+	
+	
+	//여기부터 레시피 디테일
+	
+	//레시피 상세페이지 출력
+	@Override
+	public RecipeDto selectDetail(int recipeNo) {
+		
+		return sqlSession.selectOne("recipe.detail", recipeNo);
+	}
+	
+	//내가 본 레시피 조회
+	@Override
+	public RecipeViewDto myViewRecipe(RecipeViewDto recipeViewDto) {
+		
+		return sqlSession.selectOne("recipe.myViewRecipe", recipeViewDto);
+	}
+	
+	//내가 본 레시피 등록
+	@Override
+	public void insertRecipeView(RecipeViewDto recipeViewDto) {
+		sqlSession.insert("recipe.insertViewRecipe", recipeViewDto);
+		
+	}
+	
+	//내가 본 레시피 시간 업데이트
+	@Override
+	public boolean updateRecipeViewTime(RecipeViewDto recipeViewDto) {
+		int result = sqlSession.update("recipe.updateRecipeViewTime", recipeViewDto);
+		return result > 0;
 	}
 
 }
