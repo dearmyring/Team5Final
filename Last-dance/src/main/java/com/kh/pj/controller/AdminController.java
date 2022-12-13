@@ -22,6 +22,7 @@ import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
+import com.kh.pj.repository.AdminDao;
 import com.kh.pj.repository.BoardDao;
 import com.kh.pj.repository.CategoryDao;
 import com.kh.pj.repository.HashtagDao;
@@ -69,6 +70,9 @@ public class AdminController {
 	@Autowired
 	private MemberDao memberDao;
 	
+	@Autowired
+	private AdminDao adminDao;
+	
 	@GetMapping("/")
 	public String main() {
 		return "admin/main";
@@ -84,7 +88,7 @@ public class AdminController {
 			@ModelAttribute AdminDto adminDto,
 			HttpSession session) {
 		session.setAttribute(SessionConstant.ID, adminDto.getAdminId());
-		session.setAttribute(SessionConstant.NICK, adminDto.getAdminNick());
+		session.setAttribute(SessionConstant.NICK, adminDao.login(adminDto.getAdminId()).getAdminNick());
 		
 		return "redirect:/admin/";
 	}

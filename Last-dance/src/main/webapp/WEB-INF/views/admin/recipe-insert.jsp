@@ -95,7 +95,7 @@
 		Step<fmt:formatNumber value="${no+1}" minIntegerDigits="2"/> 
 		<textarea name="recipeContentText"></textarea>
 		<input type="file" class="file-input" accept=".jpg, .png, .gif">
-		<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
+		<img class="preview rounded" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200"><br>
 		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
 		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
 	</div>
@@ -109,7 +109,7 @@
 	<c:forEach var="no" begin="0" end="3">
 		<div class="thumb-page">
 			<input type="file" class="file-input" accept=".jpg, .png, .gif">
-			<img class="preview" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200">
+			<img class="preview rounded" src="${pageContext.request.contextPath}/images/img_plus.png" width="200" height="200">
 		</div>
 	</c:forEach>
 </div>
