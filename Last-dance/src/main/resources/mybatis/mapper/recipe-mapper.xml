@@ -110,6 +110,7 @@
    </update>
    
    
+   
    <!-- 여기부터 레시피 디테일 -->
    <!-- 레시피 상세 -->
    <select id="detail" parameterType="int" resultMap="recipeDetail">
@@ -178,8 +179,6 @@
 			<result column="recipe_content_attachment_no" property="recipeContentAttachmentNo"/>
 		</collection>
    </resultMap>
-	
-	
-	
+
    
 </mapper>
