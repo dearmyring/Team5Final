@@ -6,23 +6,23 @@
   
 <mapper namespace="recipe">
 
-	<!--  레시피 등록 시퀀스 추가  -->
-	<select id = "recipeNo" resultType="int">
-		select recipe_seq.nextval from dual
-	</select>
+   <!--  레시피 등록 시퀀스 추가  -->
+   <select id = "recipeNo" resultType="int">
+      select recipe_seq.nextval from dual
+   </select>
 
-	<!--  추가  -->
-	<insert id = "write" parameterType = "RecipeDto">
-		insert into recipe(recipe_no, recipe_nick, recipe_title, recipe_info, recipe_time, recipe_hashtag, recipe_difficulty)
-		values(${recipeNo}, #{recipeNick}, #{recipeTitle}, #{recipeInfo}, ${recipeTime}, #{recipeHashtag}, #{recipeDifficulty})
-	</insert>
-	
-<!-- 	 레시피 조회  
-	<select id = "recipeList"  resultType = "RecipeDto" >
-		select * from recipe order by recipe_no
-	</select> -->
-	
-	<!-- 재료 출력 -->
+   <!--  추가  -->
+   <insert id = "write" parameterType = "RecipeDto">
+      insert into recipe(recipe_no, recipe_nick, recipe_title, recipe_info, recipe_time, recipe_hashtag, recipe_difficulty)
+      values(${recipeNo}, #{recipeNick}, #{recipeTitle}, #{recipeInfo}, ${recipeTime}, #{recipeHashtag}, #{recipeDifficulty})
+   </insert>
+   
+<!--     레시피 조회  
+   <select id = "recipeList"  resultType = "RecipeDto" >
+      select * from recipe order by recipe_no
+   </select> -->
+   
+   <!-- 재료 출력 -->
    <select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
       select * from recipe_ingredient where recipe_no = #{recipeNo}
    </select>
@@ -48,100 +48,137 @@
          <result column="recipe_no" property="recipeNo"/>      
       </collection>
    </resultMap>
-	
-	
-		<!--  레시피 전체조회(통합)  -->
+   
+   
+      <!--  레시피 전체조회(통합)  -->
    <select id="recipeList" resultMap="recipeList" >
-	select R.* ,RI.recipe_ingredient_name
-	 from recipe R inner join recipe_ingredient RI on R.recipe_no=RI.recipe_no 
+   select R.* ,RI.recipe_ingredient_name
+    from recipe R inner join recipe_ingredient RI on R.recipe_no=RI.recipe_no 
    </select>
-	
-	<!--  단일 조회 -->
-	<select id = "one" parameterType="int" resultType="RecipeCountVO">
-		select * from recipe  where recipe_no = #{recipeNo}
+   
+   <!--  단일 조회 -->
+   <select id = "one" parameterType="int" resultType="RecipeCountVO">
+      select * from recipe  where recipe_no = #{recipeNo}
+   </select>
+   
+   <!-- 수정 -->
+   <update id = "edit" parameterType = "RecipeDto">
+      update recipe
+      set
+         recipe_title = #{recipeTitle},
+         recipe_info = #{recipeInfo},
+         recipe_time = #{recipeTime},
+         recipe_hashtag = #{recipeHashtag},
+         recipe_difficulty = #{recipeDifficulty},
+      where
+         recipe_no = #{recipeNo}   
+   </update>
+   
+   <delete id = "delete" parameterType = "int">
+      delete recipe where recipe_no = #{recipeNo}
+   </delete>
+   
+   <select id="adminList" parameterType="RecipeListSearchVO" resultType="RecipeDto">
+      select * from recipe
+      <!-- 검색 -->
+      <where>
+         <!-- 이름, 관리자 유사 대상 검색 -->
+         <if test="type != null and keyword != ''">
+            and instr(${type}, #{keyword}) > 0
+         </if>
+      </where>
+       <!-- 정렬 -->
+       <if test="sort != null">
+          order by ${sort}
+       </if>
+   </select>
+   
+   <select id="adminDetail" parameterType="int" resultType="RecipeDto">
+      select * from recipe where recipe_no=#{recipeNo}
+   </select>
+   
+   <update id="adminUpdate" parameterType="RecipeDto">
+      update recipe set 
+         recipe_title=#{recipeTitle}, 
+         recipe_Info=#{recipeInfo}, 
+         recipe_time=${recipeTime}, 
+         recipe_difficulty=#{recipeDifficulty}, 
+         recipe_nick=#{recipeNick}, 
+         recipe_hashtag=#{recipeHashtag}, 
+         recipe_edittime=sysdate 
+      where recipe_no=${recipeNo}
+   </update>
+   
+   
+   
+   <!-- 여기부터 레시피 디테일 -->
+   <!-- 레시피 상세 -->
+   <select id="detail" parameterType="int" resultMap="recipeDetail">
+      select * from recipe where recipe_no = #{recipeNo}
+   </select>
+   
+   <!-- 내가 본 레시피가 있는지 조회 -->
+   <select id="myViewRecipe" parameterType="RecipeViewDto" resultType="RecipeViewDto">
+      select * from recipe_view where recipe_view_id = #{recipeViewId} and recipe_view_no = #{recipeViewNo}
+   </select>
+   
+   <!-- 내가 본 레시피 등록 -->
+   <insert id="insertViewRecipe" parameterType="RecipeViewDto">
+      insert into recipe_view values(#{recipeViewId}, #{recipeViewNo}, sysdate)
+   </insert>
+   
+   <!-- 내가 본 레시피 수정 -->
+   <update id="updateRecipeViewTime" parameterType="RecipeViewDto">
+      update recipe_view set recipe_view_time = sysdate where recipe_view_id = #{recipeViewId} and recipe_view_no = #{recipeViewNo}
+   </update>
+   
+   <!-- 레시피별 재료 출력 -->
+   <select id="recipeDetailIngredientList" parameterType="int" resultType="RecipeIngredientDto">
+		select * from recipe_ingredient where recipe_no = #{recipeNo}
+   </select>
+   
+   <!-- 썸네일 이미지 출력 -->
+	<select id="recipeImgList" parameterType="int" resultType="RecipeImgDto">
+		select * from recipe_img where recipe_no = #{recipeNo}
 	</select>
 	
-	<!-- 수정 -->
-	<update id = "edit" parameterType = "RecipeDto">
-		update recipe
-		set
-			recipe_title = #{recipeTitle},
-			recipe_info = #{recipeInfo},
-			recipe_time = #{recipeTime},
-			recipe_hashtag = #{recipeHashtag},
-			recipe_difficulty = #{recipeDifficulty},
-		where
-			recipe_no = #{recipeNo}	
-	</update>
-	
-	<delete id = "delete" parameterType = "int">
-		delete recipe where recipe_no = #{recipeNo}
-	</delete>
-	
-	<select id="adminList" parameterType="RecipeListSearchVO" resultType="RecipeDto">
-		select * from recipe
-		<!-- 검색 -->
-		<where>
-			<!-- 이름, 관리자 유사 대상 검색 -->
-			<if test="type != null and keyword != ''">
-				and instr(${type}, #{keyword}) > 0
-			</if>
-		</where>
-	 	<!-- 정렬 -->
-	 	<if test="sort != null">
-	 		order by ${sort}
-	 	</if>
+	<!-- 레시피 컨텐츠 출력  -->
+	<select id="recipeContentList" parameterType="int" resultType="RecipeContentDto">
+		select * from recipe_content where recipe_no = #{recipeNo}
 	</select>
-	
-	<select id="adminDetail" parameterType="int" resultType="RecipeDto">
-		select * from recipe where recipe_no=#{recipeNo}
-	</select>
-	
-	<update id="adminUpdate" parameterType="RecipeDto">
-		update recipe set 
-			recipe_title=#{recipeTitle}, 
-			recipe_Info=#{recipeInfo}, 
-			recipe_time=${recipeTime}, 
-			recipe_difficulty=#{recipeDifficulty}, 
-			recipe_nick=#{recipeNick}, 
-			recipe_hashtag=#{recipeHashtag}, 
-			recipe_edittime=sysdate 
-		where recipe_no=${recipeNo}
-	</update>
-	
-	
-	
-	<!-- 여기부터 레시피 디테일 -->
-	<!-- 레시피 상세 -->
-	<select id="detail" parameterType="int" resultType="recipeDto">
-		select * from recipe where recipe_no = #{recipeNo}
-	</select>
-	
-	<!-- 내가 본 레시피가 있는지 조회 -->
-	<select id="myViewRecipe" parameterType="RecipeViewDto" resultType="RecipeViewDto">
-		select * from recipe_view where recipe_view_id = #{recipeViewId} and recipe_view_no = #{recipeViewNo}
-	</select>
-	
-	<!-- 내가 본 레시피 등록 -->
-	<insert id="insertViewRecipe" parameterType="RecipeViewDto">
-		insert into recipe_view values(#{recipeViewId}, #{recipeViewNo}, sysdate)
-	</insert>
-	
-	<!-- 내가 본 레시피 수정 -->
-	<update id="updateRecipeViewTime" parameterType="RecipeViewDto">
-		update recipe_view set recipe_view_time = sysdate where recipe_view_id = #{recipeViewId} and recipe_view_no = #{recipeViewNo}
-	</update>
+   
+   <resultMap type="RecipeDetailVO" id="recipeDetail">
+		<association property="recipeDto">
+			<result column="recipe_no" property="recipeNo"/>
+			<result column="recipe_nick" property="recipeNick"/>
+			<result column="recipe_title" property="recipeTitle"/>
+			<result column="recipe_info" property="recipeInfo"/>
+			<result column="recipe_time" property="recipeTime"/>
+			<result column="recipe_click" property="recipeClick"/>
+			<result column="recipe_like" property="recipeLike"/>
+			<result column="recipe_hashtag" property="recipeHashtag"/>
+			<result column="recipe_writetime" property="recipeWritetime" javaType="java.sql.Date"/>
+			<result column="recipe_edittime" property="recipeEdittime" javaType="java.sql.Date"/>
+			<result column="recipe_diffculty" property="recipeDiffculty"/>
+		</association>
+		
+		<collection property="recipeDetailIngredientList" javaType="java.util.List" ofType="RecipeIngredientDto" select="recipeDetailIngredientList" column="recipe_no">
+			<result column="recipe_ingredient_name" property="recipeIngredientName"/>
+			<result column="recipe_no" property="recipeNo"/>
+		</collection>
+		
+		<collection property="recipeImages" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImgList" column="recipe_no">
+			<result column="recipe_attachment_no" property="recipeAttachmentNo"/>
+			<result column="recipe_no" property="recipeNo"/>
+		</collection>
+		
+		<collection property="recipeContentList" javaType="java.util.List" ofType="RecipeContentDto" select="recipeContentList" column="recipe_no">
+			<result column="recipe_content_no" property="recipeContentNo"/>
+			<result column="recipe_no" property="recipeNo"/>
+			<result column="recipe_content_text" property="recipeContentText"/>
+			<result column="recipe_content_attachment_no" property="recipeContentAttachmentNo"/>
+		</collection>
+   </resultMap>
 
-	
+   
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
