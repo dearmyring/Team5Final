@@ -318,15 +318,19 @@
     	
     	/* 썸네일 사진 모두 지우기 클릭 시 비동기 삭제 & 미리보기 사진 변경 */
     	$(".thumb-all-clear").click(function(){
-    		var param = $(".thumb-page .img-no").serialize();
-    		$.ajax({
-    			url: "http://localhost:8888/rest/attachment/delete?"+param,
-    			method: "delete",
-    			success: function(resp){
-		    		$(".thumb-page").find(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png").addClass("preview-disabled");
-		    		$(".thumb-page").find(".preview").first().removeClass("preview-disabled");
-    			}
-    		});
+    		if(confirm("모두 삭제하시겠습니까?")){
+	    		var param = $(".thumb-page .img-no").serialize();
+	    		$.ajax({
+	    			url: "http://localhost:8888/rest/attachment/delete?"+param,
+	    			method: "delete",
+	    			success: function(resp){
+	    				$(".thumb-page").find(".file-input").val("");
+			    		$(".thumb-page").find(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png").addClass("preview-disabled");
+			    		$(".thumb-page").find(".img-no").remove();
+			    		$(".thumb-page").find(".preview").first().removeClass("preview-disabled");
+	    			}
+	    		});
+    		}
     	});
     	
     	/* 엔터 시 폼 전송 방지 */
@@ -610,6 +614,7 @@
 					contentText.val("");
 					contentImg.attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
 					that.parents(".content-page").find(".img-no").remove();
+					that.parents(".content-page").find(".file-input").val("");
 					that.parents(".content-page").prev().find(".step-plus-btn").show();
 					that.parents(".content-page").prev().find(".step-minus-btn").show();
 					that.parents(".content-page").hide();

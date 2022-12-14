@@ -43,7 +43,7 @@
 		<div class="row">
 			<div class="col-2">레시피 제목</div>
 			<div class="col-10">
-				<input type="text" name="recipeTitle" value="${recipeDto.recipeTitle}" class="w-100">
+				<input type="text" name="recipeTitle" value="${recipeDto.recipeTitle}" class="w-100" placeholder="예) 치즈라볶이">
 				<div class="invalid-feedback">이미 존재하는 레시피 제목입니다.</div>
 			</div>
 		</div>
@@ -55,7 +55,8 @@
 		<div class="row">
 			<div class="col-2">레시피 소개</div>
 			<div class="col-10">
-				<input type="text" class="w-100" name="recipeInfo" value="${recipeDto.recipeInfo}">
+				<input type="text" class="w-100" name="recipeInfo" value="${recipeDto.recipeInfo}" 
+				placeholder="예) 생일에 빼놓을 수 없는 소고기를 넣어 더욱 깊은 맛으로 즐겨보세요.">
 			</div>
 		</div>
 	</div>
@@ -367,15 +368,19 @@
     	
     	/* 썸네일 사진 모두 지우기 클릭 시 비동기 삭제 & 미리보기 사진 변경 */
     	$(".thumb-all-clear").click(function(){
-    		var param = $(".thumb-page .img-no").serialize();
-    		$.ajax({
-    			url: "http://localhost:8888/rest/attachment/delete?"+param,
-    			method: "delete",
-    			success: function(resp){
-		    		$(".thumb-page").find(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png").addClass("preview-disabled");
-		    		$(".thumb-page").find(".preview").first().removeClass("preview-disabled");
-    			}
-    		});
+    		if(confirm("모두 삭제하시겠습니까?")){
+	    		var param = $(".thumb-page .img-no").serialize();
+	    		$.ajax({
+	    			url: "http://localhost:8888/rest/attachment/delete?"+param,
+	    			method: "delete",
+	    			success: function(resp){
+	    				$(".thumb-page").find(".file-input").val("");
+			    		$(".thumb-page").find(".preview").attr("src", "${pageContext.request.contextPath}/images/img_plus.png").addClass("preview-disabled");
+			    		$(".thumb-page").find(".img-no").remove();
+			    		$(".thumb-page").find(".preview").first().removeClass("preview-disabled");
+	    			}
+	    		});
+    		}
     	});
     	
     	/* 엔터 시 폼 전송 방지 */
@@ -665,9 +670,10 @@
     			url: "http://localhost:8888/rest/attachment/delete?"+param,
     			method: "delete",
     			success: function(resp){
-    				contentText.val("");
+					contentText.val("");
 					contentImg.attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
 					that.parents(".content-page").find(".img-no").remove();
+					that.parents(".content-page").find(".file-input").val("");
 					that.parents(".content-page").prev().find(".step-plus-btn").show();
 					that.parents(".content-page").prev().find(".step-minus-btn").show();
 					that.parents(".content-page").hide();
@@ -690,19 +696,25 @@
                     success: function(resp){
                     	that.next().attr("src", resp);
                     	var attachmentNo = parseInt((resp.split("download/"))[1]);
-                    	if(that.parent().hasClass("thumb-page")){
-	                    	var imgNo = $("<input>").attr("type", "hidden").addClass("img-no").attr("name", "recipeAttachmentNo").val(attachmentNo);
-							that.parent().find(".preview-disabled").first().removeClass("preview-disabled");
-                    	}
-                    	if(that.parents(".content-page").hasClass("content-page")){
-	                    	var imgNo = $("<input>").attr("type", "hidden").addClass("img-no").attr("name", "recipeContentAttachmentNo").val(attachmentNo);
-                    	}
-                    	if(that.prev().hasClass("img-no")){
-                    		that.prev().val(attachmentNo);
-                    	}
-                    	else{
-							that.before(imgNo);
-                    	}
+//                     	여기부터
+//                     	if(that.prev().hasClass("img-no")){
+// 	                    	if(that.parent().hasClass("thumb-page")){
+// 		                    	var changeNo = $("<input>").attr("type", "hidden").addClass("change-img-no").attr("name", "recipeAttachmentNo").val(attachmentNo);
+// 								that.parent().find(".preview-disabled").first().removeClass("preview-disabled");
+// 	                    	}
+// 	                    	if(that.parents(".content-page").hasClass("content-page")){
+// 		                    	var changeNo = $("<input>").attr("type", "hidden").addClass("change-img-no").attr("name", "recipeContentAttachmentNo").val(attachmentNo);
+// 	                    	}
+// 	                    	if(that.prev().prev().hasClass("change-img-no")){
+// 	                    		that.prev().prev().val(changeNo);
+// 	                    	}
+// 	                    	else{
+// 	                    		that.before().before(changeNo);
+// 	                    	}
+//                     	}
+//                     	else{
+// 							that.before(imgNo);
+//                     	}
                     }
                 });
             }
