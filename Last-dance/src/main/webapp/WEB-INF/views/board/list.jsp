@@ -9,6 +9,10 @@
 
 
 <style>
+.badge {
+	width: 10%;
+}
+
 .search {
 	position: relative;
 }
@@ -33,8 +37,9 @@ input {
 	background-position-x: 27.75em;
 	background-position-y: center;
 }
-.board-search-btn{
-	display:none;
+
+.board-search-btn {
+	display: none;
 }
 </style>
 
@@ -42,72 +47,91 @@ input {
 
 	<h1 class="mt-30" align="center">나만의 레시피를 공유 해보세요!!</h1>
 	<h3 class="mt-20" align="center">레시피를 작성/댓글 작성으로 참여도를 올려서 귀여운 뱃지를
-		착용해보세요 :)
-		</h3>
+		착용해보세요 :)</h3>
 	<div class="center search mt-10">
-	 <select class="input-type input">
-		<option value="board_title">제목</option>
-		<option value="member_nick">작성자</option>
-		<option value="board_content">내용</option>
-		<option value="">제목</option>
-	</select> 
-		<input class="input input-keyword input-seach" type="text" placeholder="검색어를 입력하세요">
-		<button class="board-search-btn" type="button"></button>	
+		<select class="input-type input">
+			<option value="board_title">제목</option>
+			<option value="member_nick">작성자</option>
+			<option value="board_content">내용</option>
+			<option value="">제목</option>
+		</select> <input class="input input-keyword input-seach" type="text"
+			placeholder="검색어를 입력하세요">
+		<button class="board-search-btn" type="button"></button>
 	</div>
 </div>
 
-		<thead>
-			<tr>
-				<th colspan="12">
-					<select class="sort-click float-left input">
-						<option value="board_no desc">최근 작성일 순</option>
-						<option value="board_click desc">조회수 높은 순</option>
-						<option value="board_like desc">추천 많은 순</option>
-					</select>
-				<a class="btn btn-positive float-right mt-10" href="write">글쓰기</a>	
-				</th>
-<!-- 			<tr>
-				<th>제목</th>
-				<th>내용</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>마지막 수정일</th>
-				<th>추천</th>
-				<th>조회수</th>
-			</tr> -->
-		</thead>
+<thead>
+	<tr>
+		<th colspan="12"><select class="sort-click float-left input">
+				<option value="">정렬</option>
+				<option value="board_no desc">최근 작성일 순</option>
+				<option value="board_click desc">조회수 높은 순</option>
+				<option value="board_like desc">추천 많은 순</option>
+				<option value="reply_cnt desc">댓글 많은 순</option>
+				
+		</select> <a class="btn btn-positive float-right mt-10" href="write">글쓰기</a></th>
+</thead>
 
-	<table class="table table-hover">
-		<tbody class="board-list center">
-			<c:forEach var="boardDto" items="${boardList}">
-				<tr>
-					<%-- <td>${boardDto.boardNo}</td> --%>
-					<td><a href="detail?boardNo=${boardDto.boardNo}">
-							${boardDto.boardTitle} </a></td>
-					<td align="left">${boardDto.boardContent}</td>
-					<td>${boardDto.memberNick}</td>
-					<td>${boardDto.boardWriteTime}</td>
-					<td>${boardDto.boardEditTime}</td>
-					<td>${boardDto.boardLike}</td>
-					<td>${boardDto.boardClick}</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<br>
-	<ul class="pagination">
-		<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
-		<c:forEach var="no" begin="1" end="${boardListSearchVo.pageCnt}">
-			<li class="page-item"><a class="page-link" href="#">${no}</a></li>
+<table class="table table-hover">
+	<tr class="table">
+		<th>제목</th>
+		<th width="30%">내용</th>
+		<th width="15%">작성자</th>
+		<th>작성일</th>
+		<th>마지막 수정일</th>
+		<th>추천</th>
+		<th>조회수</th>
+		<th>댓글</th>
+		
+	</tr>
+
+	<tbody class="board-list center mt-50">
+		<c:forEach var="boardDto" items="${boardList}">
+			<tr>
+				<%-- <td>${boardDto.boardNo}</td> --%>
+				<td><a href="detail?boardNo=${boardDto.boardNo}">
+						${boardDto.boardTitle} </a></td>
+						
+										
+						
+				<td class="board-content" align="left">${boardDto.boardContent}</td>			
+			
+			
+			
+				<td>
+					${boardDto.memberNick} 
+					<c:if test="${boardDto.memberBadge == 1 }">
+						<img class="badge" src="/images/badge-1.png">
+					</c:if>
+				</td>
+				<td>${boardDto.boardWriteTime}</td>
+				<td>${boardDto.boardEditTime}</td>
+				<td>${boardDto.boardLike}</td>
+				<td>${boardDto.boardClick}</td>
+				<td>${boardDto.replyCnt }</td>
+			</tr>
 		</c:forEach>
-		<li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-	</ul>
-	<br>
+	</tbody>
+</table>
+<br>
+<ul class="pagination">
+	<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+	<c:forEach var="no" begin="1" end="${boardListSearchVo.pageCnt}">
+		<li class="page-item"><a class="page-link" href="#">${no}</a></li>
+	</c:forEach>
+	<li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+</ul>
+<br>
 
 </div>
 
 <script type="text/javascript">
 	$(function() {
+		$(".board-content").find("img").remove();
+		var contentCnt = $(".board-content");
+		for(var i=0; i<contentCnt.length; i++){
+			$(".board-content").eq(i).text($(".board-content").eq(i).text());
+		}
 		/* 레시피 검색창에서 엔터치면 검색 */
 		$(".input-keyword").keydown(function(e) {
 			if (e.keyCode == 13) {
@@ -141,8 +165,8 @@ input {
 													.remove();
 											for (var i = 0; i < resp.length; i++) {
 												var tr = $("<tr>");
-												var tdNo = $("<td>").text(
-														resp[i].boardNo);
+												/* var tdNo = $("<td>").text(
+														resp[i].boardNo); */
 												var tdTitle = $("<td>")
 														.append(
 																$("<a>")
@@ -150,12 +174,25 @@ input {
 																				"href",
 																				"detail?boardNo="
 																						+ resp[i].boardNo)
-																		.text(
-																				resp[i].boardTitle));
-												var tdContent = $("<td>").html(
-														resp[i].boardContent);
-												var tdNick = $("<td>").text(
-														resp[i].memberNick);
+																		.text(resp[i].boardTitle));
+														
+												var tdContent = $("<td>").addClass("board-content")
+																		.attr("align", "left")
+																		.attr("width", "30%")
+																		.html(resp[i].boardContent);
+												
+												var url = "";
+												if (resp[i].memberBadge == 1) {
+													url = "/images/badge-1.png";
+												}
+
+												var badge = $("<img>").attr(
+														"src", url).addClass(
+														"badge");
+												var tdNick = $("<td>").attr(
+														"width", "15%").text(
+														resp[i].memberNick)
+														.append(badge);
 												var tdWriteTime = $("<td>")
 														.text(
 																resp[i].boardWriteTime);
@@ -166,14 +203,21 @@ input {
 														resp[i].boardLike);
 												var tdClick = $("<td>").text(
 														resp[i].boardClick);
-												tr.append(tdNo).append(tdTitle)
-														.append(tdContent)
-														.append(tdNick).append(
-																tdWriteTime)
-														.append(tdEditTime)
-														.append(tdLike).append(
-																tdClick);
+												var tdReply = $("<td>").text(
+														resp[i].replyCnt);
+												tr.append(tdTitle).append(
+														tdContent).append(
+														tdNick).append(
+														tdWriteTime).append(
+														tdEditTime).append(
+														tdLike).append(tdClick)
+														.append(tdReply);
 												$(".board-list").append(tr);
+												$(".board-content").find("img").remove();
+												var contentCnt = $(".board-content");
+												for(var i=0; i<contentCnt.length; i++){
+													$(".board-content").eq(i).text($(".board-content").eq(i).text());
+												}
 											}
 										}
 									});
@@ -181,66 +225,72 @@ input {
 						});
 
 		/* 레시피 리스트 정렬 */
-		$(".sort-click")
-				.on(
-						"input",
-						function() {
-							var sort = $(this).val();
-							var type = $(".input-type").val();
-							var keyword = $(".input-keyword").val();
-							$
-									.ajax({
-										url : "http://localhost:8888/rest/board",
-										method : "post",
-										contentType : "application/json",
-										data : JSON.stringify({
-											type : type,
-											keyword : keyword,
-											sort : sort
-										}),
-										success : function(resp) {
-											console.log(resp);
-											$(".board-list").find("tr")
-													.remove();
-											for (var i = 0; i < resp.length; i++) {
-												var tr = $("<tr>");
-												var tdNo = $("<td>").text(
-														resp[i].boardNo);
-												var tdTitle = $("<td>")
-														.append(
-																$("<a>")
-																		.attr(
-																				"href",
-																				"detail?boardNo="
-																						+ resp[i].boardNo)
-																		.text(
-																				resp[i].boardTitle));
-												var tdContent = $("<td>").html(
-														resp[i].boardContent);
-												var tdNick = $("<td>").text(
-														resp[i].memberNick);
-												var tdWriteTime = $("<td>")
-														.text(
-																resp[i].boardWriteTime);
-												var tdEditTime = $("<td>")
-														.text(
-																resp[i].boardEditTime);
-												var tdLike = $("<td>").text(
-														resp[i].boardLike);
-												var tdClick = $("<td>").text(
-														resp[i].boardClick);
-												tr.append(tdNo).append(tdTitle)
-														.append(tdContent)
-														.append(tdNick).append(
-																tdWriteTime)
-														.append(tdEditTime)
-														.append(tdLike).append(
-																tdClick);
-												$(".board-list").append(tr);
-											}
-										}
-									});
-						});
+		$(".sort-click").on(
+				"input",
+				function() {
+					var sort = $(this).val();
+					var type = $(".input-type").val();
+					var keyword = $(".input-keyword").val();
+					$.ajax({
+						url : "http://localhost:8888/rest/board",
+						method : "post",
+						contentType : "application/json",
+						data : JSON.stringify({
+							type : type,
+							keyword : keyword,
+							sort : sort
+						}),
+						success : function(resp) {
+							console.log(resp);
+							$(".board-list").find("tr").remove();
+							for (var i = 0; i < resp.length; i++) {
+								var tr = $("<tr>");
+								/* var tdNo = $("<td>").text(
+										resp[i].boardNo); */
+								var tdTitle = $("<td>").append(
+										$("<a>").attr("href","detail?boardNo="+ resp[i].boardNo)
+												.text(resp[i].boardTitle));
+								var tdContent = $("<td>")
+										.addClass("board-content")
+										.attr("align", "left")
+										.attr("width", "30%")
+										.html(resp[i].boardContent);
+
+								var url = "";
+								if (resp[i].memberBadge == 1) {
+									url = "/images/badge-1.png";
+								}
+
+								var badge = $("<img>").attr("src", url)
+										.addClass("badge");
+								var tdNick = $("<td>").text(resp[i].memberNick)
+										.attr("width", "15%").append(badge);
+
+								var tdWriteTime = $("<td>").text(
+										resp[i].boardWriteTime);
+								var tdEditTime = $("<td>").text(
+										resp[i].boardEditTime);
+								var tdLike = $("<td>").text(resp[i].boardLike);
+								var tdClick = $("<td>")
+										.text(resp[i].boardClick);
+								var tdReply = $("<td>").text(
+										resp[i].replyCnt);
+								tr.append(tdTitle).append(tdContent).append(
+										tdNick)
+
+								.append(tdWriteTime).append(tdEditTime).append(
+										tdLike).append(tdClick)
+										.append(tdReply);
+								$(".board-list").append(tr);
+								$(".board-content").find("img").remove();
+								var contentCnt = $(".board-content");
+								for(var i=0; i<contentCnt.length; i++){
+									$(".board-content").eq(i).text($(".board-content").eq(i).text());
+								}
+							}
+						}
+					});
+				});
 	});
 </script>
 <jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

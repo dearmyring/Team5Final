@@ -110,6 +110,11 @@ public class BoardDaoImpl implements BoardDao {
 	public void updatePoint(MemberDto memberDto) {
 		sqlSession.update("board.updatePoint",memberDto);	
 	}
+	
+	@Override
+	public void deletePoint(MemberDto memberDto) {
+		sqlSession.update("board.deletePoint",memberDto);
+	}
 
 	@Override
 	public int boardCNT(MemberDto memberDto) {

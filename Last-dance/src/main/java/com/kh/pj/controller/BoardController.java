@@ -101,6 +101,7 @@ public class BoardController {
 	@RequestMapping("/list")
 	public String list(Model model,HttpSession session,
 						@ModelAttribute(name="boardListSearchVo")BoardListSearchVO vo) {
+		
 		model.addAttribute("boardList",boardDao.boardList(vo));
 		return "board/list";
 	}

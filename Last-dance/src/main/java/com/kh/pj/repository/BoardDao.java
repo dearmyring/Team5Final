@@ -18,6 +18,7 @@ public interface BoardDao {
 	boolean delete(int boardNo);
 	
 	public void updatePoint(MemberDto memberDto);//회원 포인트 업데이트
+	public void deletePoint(MemberDto memberDto);//회원 포인트 삭제
 	public int boardCNT(MemberDto memberDto);//유저 게시판 등록 카운트
 	public int replyCNT(MemberDto memberDto);//댓글 수 등록 카운트
 	
