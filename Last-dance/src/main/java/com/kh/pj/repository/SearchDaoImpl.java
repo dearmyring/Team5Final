@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.kh.pj.entity.IngredientDto;
 import com.kh.pj.entity.SearchDto;
 @Repository
 public class SearchDaoImpl implements SearchDao {
@@ -39,7 +40,9 @@ public class SearchDaoImpl implements SearchDao {
 		return jdbcTemplate.query(sql, mapper,param);
 
 	}
-
-
-
+	
+	@Override
+	public List<IngredientDto> searchForIngredients(String ingredientName) {
+		return sqlSession.selectList("search.searchForIngredient", ingredientName);
+	}
 }
