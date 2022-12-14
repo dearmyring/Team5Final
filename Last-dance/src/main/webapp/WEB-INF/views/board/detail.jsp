@@ -264,6 +264,7 @@
 						<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
 						
 						<a class="btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정하기</a>	
+						<a class="btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>	
 						<a class="btn btn-neutral" href="list">목록으로</a>
 					</td>
 				</tr>
@@ -318,10 +319,10 @@
 							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/images/delete.png" width="20" height="20"></a>
 						</c:if>
 						
-						<c:if test="${admin}">
+						<c:if test="${loginNick.contains('관리자')}">
 							<!-- 블라인드 여부에 따라 다르게 표시 -->
 							<c:choose>
-								<c:when test="${replyDto.replyBlind}">
+								<c:when test="${replyDto.replyBlind == 'Y'}">
 									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyBoardNo=${replyDto.replyBoardNo}"><img src="/images/blind2.png" width="20" height="20"></a>
 								</c:when>
 								<c:otherwise>

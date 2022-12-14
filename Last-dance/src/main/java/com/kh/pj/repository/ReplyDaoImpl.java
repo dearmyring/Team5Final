@@ -82,7 +82,7 @@ public class ReplyDaoImpl implements ReplyDao {
 
 	@Override
 	public ReplyDto selectOne(int replyNo) {
-			String sql = "select * from reply where where reply_no=?";
+			String sql = "select * from reply where reply_no=?";
 			Object[]param = {replyNo};
 			return jdbcTemplate.query(sql, extractor,param);
 	}

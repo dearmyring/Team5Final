@@ -9,13 +9,39 @@
 
 
 <style>
+.search {
+	position: relative;
+}
 
+h3 {
+	font-size: 7px;
+}
+
+input {
+	width: 50%;
+	border: 2px solid #bbb;
+	border-radius: 8px;
+	padding: 10px 12px;
+	font-size: 14px;
+}
+
+.input.input-seach {
+	padding-right: 2.5em;
+	background-image: url("/images/search.png");
+	background-size: 1em;
+	background-repeat: no-repeat;
+	background-position-x: 27.75em;
+	background-position-y: center;
+}
+.board-search-btn{
+	display:none;
+}
 </style>
 
-<div class="mt-5 float-center">
+<div class="container-900 mt-5 float-center">
 
-	<h2 align="center">나만의 레시피를 공유 해보세요!!</h2>
-	<h3 class="mt-10" align="center">레시피를 작성/댓글 작성으로 참여도를 올려서 귀여운 뱃지를
+	<h1 class="mt-30" align="center">나만의 레시피를 공유 해보세요!!</h1>
+	<h3 class="mt-20" align="center">레시피를 작성/댓글 작성으로 참여도를 올려서 귀여운 뱃지를
 		착용해보세요 :)
 		</h3>
 	<!-- <select class="input-type">
@@ -24,12 +50,12 @@
 		<option value="board_content">내용</option>
 		<option value="">제목</option>
 	</select>  -->
-	<input class="input-keyword" type="text" placeholder="검색어를 입력하세요">
-	<button class="board-search-btn" type="button">검색</button>	
+	<div class="center search mt-10">
+		<input class="input input-keyword input-seach" type="text" placeholder="검색어를 입력하세요">
+		<button class="board-search-btn" type="button"></button>	
 	</div>
+</div>
 
-
-	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th colspan="12">
@@ -50,6 +76,8 @@
 				<th>조회수</th>
 			</tr> -->
 		</thead>
+
+	<table class="table table-hover">
 		<tbody class="board-list center">
 			<c:forEach var="boardDto" items="${boardList}">
 				<tr>

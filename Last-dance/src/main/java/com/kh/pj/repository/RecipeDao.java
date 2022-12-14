@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
+import com.kh.pj.vo.RecipeDetailVO;
 import com.kh.pj.vo.RecipeListSearchVO;
 import com.kh.pj.vo.RecipeListVO;
 
@@ -31,6 +32,7 @@ public interface RecipeDao {
 	//관리자 레시피 조회
 	public List<RecipeDto> adminList(RecipeListSearchVO vo);
 	public RecipeDto adminDetail(int recipeNo);
+	public void adminUpdate(RecipeDto recipeDto);
 	
 	//레시피 리스트 출력
 	public List<RecipeListVO> recipeList();
@@ -44,7 +46,7 @@ public interface RecipeDao {
 	//여기부터 레시피 디테일
 	
 	//레시피 상세페이지 출력
-	RecipeDto selectDetail(int recipeNo);
+	RecipeDetailVO selectDetail(int recipeNo);
 	
 	//내가 본 레시피 조회
 	RecipeViewDto myViewRecipe(RecipeViewDto recipeViewDto);

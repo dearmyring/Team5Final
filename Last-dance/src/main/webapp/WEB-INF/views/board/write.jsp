@@ -81,7 +81,9 @@
                         success: function(resp){
                             that.next().attr("src", resp);
                             var attachmentNo = parseInt((resp.split("download/"))[1]);
-                      		that.parent().find(".img-no").val(attachmentNo);
+                            that.parent().find(".img-no").val(attachmentNo);
+                            var img = $("<img>").attr("src", resp);
+                            $(".note-editable").append(img);
                         }
                     });
                 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
+import com.kh.pj.vo.RecipeDetailVO;
 import com.kh.pj.vo.RecipeListSearchVO;
 import com.kh.pj.vo.RecipeListVO;
 
@@ -137,7 +138,7 @@ public class RecipeDaoImpl implements RecipeDao {
 	
 	//레시피 상세페이지 출력
 	@Override
-	public RecipeDto selectDetail(int recipeNo) {
+	public RecipeDetailVO selectDetail(int recipeNo) {
 		
 		return sqlSession.selectOne("recipe.detail", recipeNo);
 	}
@@ -161,6 +162,11 @@ public class RecipeDaoImpl implements RecipeDao {
 	public boolean updateRecipeViewTime(RecipeViewDto recipeViewDto) {
 		int result = sqlSession.update("recipe.updateRecipeViewTime", recipeViewDto);
 		return result > 0;
+	}
+
+	@Override
+	public void adminUpdate(RecipeDto recipeDto) {
+		sqlSession.update("recipe.adminUpdate", recipeDto);
 	}
 
 }
