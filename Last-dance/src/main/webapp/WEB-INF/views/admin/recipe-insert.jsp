@@ -61,9 +61,9 @@
 	</div>
 </div>
 	
-	<div class="row mt-5">
-		<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-			<div class="row">
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
 			<div class="col-2">레시피 정보</div>
 			<div class="col-2">시간</div>
 			<div class="col-2">
@@ -107,17 +107,13 @@
 
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="row">
-			<div class="search-ingredient col-6"></div>
-		</div>
+		<div class="search-ingredient col-6"></div>
 	</div>
 </div>
 
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="row">
-			<div class="add-ingredient col-6"></div>
-		</div>
+		<div class="add-ingredient col-6"></div>
 	</div>
 </div>
 
@@ -594,6 +590,7 @@
     			$(this).parents(".content-page").prev().find(".step-plus-btn").show();
     			$(this).parents(".content-page").prev().find(".step-minus-btn").show();
     			$(this).parents(".content-page").hide();
+    			return;
     		}
     		if(contentText.val() || !contentImg.attr("src").includes("img_plus.png")){
     			var choice = confirm("작성한 내용은 저장되지 않습니다. 삭제하시겠습니까?");
@@ -612,7 +609,7 @@
     			success: function(resp){
 					contentText.val("");
 					contentImg.attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
-					$(this).parents(".content-page").find(".img-no").remove();
+					that.parents(".content-page").find(".img-no").remove();
 					that.parents(".content-page").prev().find(".step-plus-btn").show();
 					that.parents(".content-page").prev().find(".step-minus-btn").show();
 					that.parents(".content-page").hide();
@@ -642,7 +639,12 @@
                     	if(that.parents(".content-page").hasClass("content-page")){
 	                    	var imgNo = $("<input>").attr("type", "hidden").addClass("img-no").attr("name", "recipeContentAttachmentNo").val(attachmentNo);
                     	}
-						that.next().append(imgNo);
+                    	if(that.prev().hasClass("img-no")){
+                    		that.prev().val(attachmentNo);
+                    	}
+                    	else{
+							that.before(imgNo);
+                    	}
                     }
                 });
             }
