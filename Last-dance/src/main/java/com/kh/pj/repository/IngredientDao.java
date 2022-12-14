@@ -28,7 +28,5 @@ public interface IngredientDao {
 	
 	//재료 전체 조회 - 검색어 등록시 출력용
 	List<String> searchList(String search);
-	
-
 
 }
