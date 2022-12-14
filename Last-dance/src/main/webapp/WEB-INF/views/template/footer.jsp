@@ -18,6 +18,30 @@
             </div>
         </div>
     </div><!-- 푸터 영역 끝 -->
-
+  	<script>
+ 		$(function(){
+ 			
+ 			$(".complex").click(function(){
+                $(".search-box").slideToggle(600);
+            });
+ 			
+ 			var searchList = [];
+ 			
+ 			$(".search-input").on("input", function(){
+ 				var keyword = $(this).val();
+		  		$.ajax({
+					url:"http://localhost:8888/rest/search/"+keyword,
+					method:"get",
+					success: function(resp) {
+						searchList = resp;
+						for(var i = 0; i < searchList.length; i++) {
+							console.log(searchList[i]);
+						}
+					}
+				}); // ajax 종료
+ 			})
+ 			
+ 		});
+ 	</script>
 </body>
 </html>

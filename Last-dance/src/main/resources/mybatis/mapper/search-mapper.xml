@@ -19,6 +19,10 @@
 		order by search_ingredient asc
 	</select>
 	
-
+	<select id="searchForIngredient" resultType="IngredientDto" parameterType="String">
+		select * from ingredient where instr(ingredient_name, #{ingredientName}) > 0
+	</select>
+	
+	
 	
 </mapper>
