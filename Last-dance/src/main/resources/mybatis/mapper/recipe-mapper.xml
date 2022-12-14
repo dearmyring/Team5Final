@@ -179,6 +179,35 @@
 			<result column="recipe_content_attachment_no" property="recipeContentAttachmentNo"/>
 		</collection>
    </resultMap>
+   
+   <!-- 좋아요 업데이트 -->
+   <update id="likeUp">
+   	update recipe set recipe_like= recipe_like+1 where recipe_no = #{recipeNo}
+   </update>
+   
+   <update id="likeDown">
+   	update recipe set recipe_like= recipe_like-1 where recipe_no = #{recipeNo}
+   </update>
+   
+   <!-- 좋아요한 글이 있는지 조회 -->
+   <select id="selectRecipeLike" parameterType="RecipeLikeDto" resultType="RecipeLikeDto">
+		select * from recipe_like where recipe_like_no = #{recipeLikeNo} and recipe_like_id = #{recipeLikeId}
+   </select>
+   
+   <!-- 좋아요 정보 등록 -->
+   <insert id="addRecipeLike" parameterType="RecipeLikeDto">
+		insert into recipe_like values(#{recipeLikeNo}, #{recipeLikeId}, sysdate)
+   </insert>
+   
+   <!-- 좋아요 정보 삭제 -->
+   <delete id="removeRecipeLike" parameterType="RecipeLikeDto">
+		delete recipe_like where recipe_like_no = #{recipeLikeNo} and recipe_like_id = #{recipeLikeId}
+   </delete>
+   
+   <!-- 좋아요 개수 출력 -->
+   <select id="countLike" parameterType="int" resultType="int">
+		select recipe_like from recipe where recipe_no = #{recipeNo}
+   </select>
 
    
 </mapper>

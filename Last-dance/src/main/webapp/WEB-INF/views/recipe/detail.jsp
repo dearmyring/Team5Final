@@ -16,14 +16,26 @@
 <script src="/js/recipe-detail.js"></script>
 
 <style>
-	
+	.heart-color {
+        color: red;
+    }
 </style>
 
 <div class="recipe-detail-container">
 	<div class="recipe-detail-titleBox">
 		<div class="recipe-popularity">
 			<span>조회수 ${recipe.recipeDto.recipeClick}</span>
-			<span>좋아요 ${recipe.recipeDto.recipeLike}</span>
+			<span>
+			<c:choose>
+				<c:when test="${like==null}">
+					<i class="fa-regular fa-heart like-btn"></i> 
+				</c:when>
+				<c:otherwise>
+					<i class="fa-solid fa-heart like-btn heart-color"></i> 
+				</c:otherwise>
+			</c:choose>
+			<span>${recipe.recipeDto.recipeLike}</span>
+			</span>
 		</div>
 		<div class="swiper recipe-detail-thumbnail">
 			<div class="swiper-wrapper">
@@ -92,6 +104,29 @@
 </div>
 
 <script type="text/javascript">
+
+$(function(){
+
+    $(".like-btn").click(function(){
+
+        $(this).toggleClass("fa-solid fa-regular heart-color");
+        var url = location.href;
+        var recipeNo = (url.slice(url.indexOf('=') + 1, url.length));
+
+        var that = $(this);
+        $.ajax({
+            url: "http://localhost:8888/rest/recipe_like/"+recipeNo,
+            method: "get",
+            success: function(resp) {
+             that.next().text(resp);
+            }
+
+        });
+        // ajax end
+    });
+    
+    
+});
 
 </script>
 

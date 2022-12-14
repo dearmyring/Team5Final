@@ -134,7 +134,7 @@
                     </ul>
                 </div>
                 <div>
-                    <c:forEach var="recipeImg" items="${likeList.recipeImgList}">
+                    <c:forEach var="recipeImg" begin="0" end="0" step="1" items="${likeList.recipeImgList}">
                         <img class="thumbnailImage" src = "${pageContext.request.contextPath}/rest/download/${recipeImg.recipeAttachmentNo}">
                     </c:forEach>
                 </div>
