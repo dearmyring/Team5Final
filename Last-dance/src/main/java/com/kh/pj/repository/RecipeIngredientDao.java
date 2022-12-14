@@ -19,4 +19,7 @@ public interface RecipeIngredientDao {
 	
 	//레시피 디테일에 전체 재료 출력
 	public List<String> find(int recipeNo);
+	
+	//레시피 재료 한 번에 삭제
+	public void adminDelete(int recipeNo);
 }

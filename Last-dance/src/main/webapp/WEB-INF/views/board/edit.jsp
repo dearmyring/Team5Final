@@ -7,6 +7,7 @@
 	<jsp:param value="자유 게시판" name="title"/>
 </jsp:include>
 
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <script>
@@ -46,12 +47,14 @@
 	
 	<div class="row left">
 		<label>내용</label>
-		<textarea name="boardContent"></textarea>
+		<textarea name="boardContent" required value="${boardDto.boardContent}" required></textarea>
 	</div>
 	
 	<div class="row left">
 		<label>첨부파일(1개당 1MB. 최대 10MB 가능)</label>
-		<input class="input w-100" type="file" name="attachment" multiple>
+	<input class="input w-100 file-input" type="file" name="attachment" multiple>
+		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
+		<input type="hidden" class="img-no" name="boardAttachmentNo">
 	</div>
 	
 	<div class="row right">
@@ -62,5 +65,47 @@
 
 </form>
 
+<script>
+
+$(function(){
+    //목표: 파일이 선택되면 해당하는 파일을 서버에 업로드 
+    $(".file-input").change(function(){
+    	var that = $(this);
+            //console.log("변화 감지!");
+            //console.log(this.filed);//선택된 파일 리스트
+            if(this.files.length>0){
+                //console.log("파일선택")
+
+                //프론트엔드에서 미리보기만 가능하며 향후에 관리가 안됨
+               // var obj=URL.createObjectURL(this.files[0]);
+                //$(".preview").attr("src",obj);
+
+                //서버에 비동기로 파일을 업로드하는 코드(ajax를 이용해서 multipart 전송 구현)
+                var fd= new FormData();
+                fd.append("attach", this.files[0]);
+                //fd.append("이름",데이터);
+
+
+
+                $.ajax({
+                    url:" http://localhost:8888/rest/upload",
+                    method:"post",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    success: function(resp){
+                        that.next().attr("src", resp);
+                        var attachmentNo = parseInt((resp.split("download/"))[1]);
+                        that.parent().find(".img-no").val(attachmentNo);
+                        var img = $("<img>").attr("src", resp);
+                        $(".note-editable").append(img);
+                    }
+                });
+            }
+            else{
+                $(".preview").attr("src", "https:/via.placeholder.com/240x180");
+            }
+    });
+});
+</script>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-</form>

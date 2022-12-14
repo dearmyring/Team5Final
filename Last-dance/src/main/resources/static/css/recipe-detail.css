@@ -1,0 +1,147 @@
+.thumbnail-image {
+	width: 600px;
+	height: 400px;
+}
+
+.content-image {
+	width: 600px;
+	height: 400px;
+}
+
+.recipe-detail-container {
+	width: 1200px;
+	margin: auto;
+}
+
+.recipe-detail-titleBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.recipe-detail-titleBox > div {
+	width: 600px;
+	margin-bottom: 30px;
+}
+
+.recipe-popularity {
+	display: flex;
+	justify-content: flex-end;
+	/* margin-bottom: 30px; */
+}
+
+.recipe-popularity > span:nth-child(1) {
+	margin-right: 20px;
+}
+
+.recipe-detail-info > h1 {
+	margin-bottom: 30px;
+}
+
+.recipe-detail-thumbnail {
+		/*display: flex; */
+		/*flex-direction: column; */
+	
+}
+
+.title-icon-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+.title-icon-box > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title-icon-box > div > i {
+	font-size: 40px;
+	margin-bottom: 20px;
+}
+
+.ingredient-list-box {
+	display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    margin-top: 20px;
+}
+
+.ingredient-list-box li {
+	background-color: #8BC96E;
+    font-size: 14px;
+    border-radius: 5px;
+    height: 26px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    padding: 4px 17px;
+    color: white;
+    font-weight: 400;
+}
+
+.recipe-detail-write-info {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.recipe-detail-write-info > span:nth-child(1) {
+	margin-right: 30px;
+}
+
+
+/* 디테일 페이지 타이틀 영역 끝 */
+
+
+.recipe-detail-contentBox {
+	border-top: 1px solid #CBCACA;
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+
+.recipe-detail-contentBox > div:nth-child(1),
+.recipe-detail-content {
+	margin-top: 50px;
+}
+
+.recipe-detail-content {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 50px;
+}
+
+.recipe-detail-content > img {
+	margin-bottom: 30px;
+}
+
+.recipe-detail-content > span {
+	display: flex;
+	text-align: center;
+	flex-direction: row;
+	align-items: center;
+}
+
+.recipe-detail-content > span > div {
+	background-color: #8BC96E;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    margin-right: 10px;
+    line-height: 30px;
+    color: white;
+    font-weight: 600;
+}
+
+/* 디테일 페이지 컨텐츠 영역 끝 */
+
+.btn-box {
+	width: 600px;
+	display: flex;
+	justify-content: flex-end;
+	margin: 0 auto 50px auto;
+}

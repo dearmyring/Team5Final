@@ -24,4 +24,9 @@ public class RecipeImgDaoImpl implements RecipeImgDao{
 		return sqlSession.selectList("recipeImg.find", recipeNo);
 	}
 
+	@Override
+	public void adminDelete(int recipeNo) {
+		sqlSession.delete("recipeImg.adminDelete", recipeNo);
+	}
+
 }

@@ -20,27 +20,38 @@
     </div><!-- 푸터 영역 끝 -->
   	<script>
  		$(function(){
- 			
+ 			// 검색창 토글
  			$(".complex").click(function(){
                 $(".search-box").slideToggle(600);
             });
  			
- 			var searchList = [];
+ 			// 검색창 기능 시작
  			
- 			$(".search-input").on("input", function(){
+ 			$(".search-input").keyup(function(){
  				var keyword = $(this).val();
+	 			var isEmpty = $(".search-list").empty();
+ 				if(keyword == "") {
+		 			$(".search-list").css("display", "none");
+ 				}
+ 				isEmpty;
 		  		$.ajax({
 					url:"http://localhost:8888/rest/search/"+keyword,
 					method:"get",
 					success: function(resp) {
-						searchList = resp;
-						for(var i = 0; i < searchList.length; i++) {
-							console.log(searchList[i]);
+						$(".search-list").css("display", "block");
+						$(".search-list").empty();
+						if(resp.length == 0) {
+							$(".search-list").append("<div class='mt-30 not-in-keyword'>검색 결과가 없습니다 😥</div>");
+						}
+						else {
+							for(var i = 0; i < resp.length; i++) {
+									$(".search-list").append("<div class='left result-keyword'><i class='fa-solid fa-square-plus'></i><span class='result-keyword'>" + resp[i].ingredientName + "</span></div>");
+							}
 						}
 					}
 				}); // ajax 종료
  			})
- 			
+ 			// 검색창 기능 종료
  		});
  	</script>
 </body>

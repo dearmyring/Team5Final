@@ -212,16 +212,16 @@
 			font-size:15px;
 		}
 		
+		.swiper-button-next::after,
+		.swiper-button-prev::after {
+		  display: none;
+		}
+		
 		.hashtag-box-scroll {
 			margin-top: 3px;
 			margin-right: 10px;
 			height: 90px;
 			overflow: auto;
-		}
-		
-		.swiper-button-next::after,
-		.swiper-button-prev::after {
-		  display: none;
 		}
 		
 		.hashtag-box-scroll::-webkit-scrollbar {
@@ -255,7 +255,7 @@
 							<span class="view-count">조회수 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeClick}" pattern="#,###"/></span>
 							<span class="like-count">좋아요 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeLike}" pattern="#,###"/></span>
 							<div class="recipe-title mt-20">${mainRecipe.mainRecipeListTop5VO.recipeInfo}</div>
-							<div class="how-long mt-10 me-5">
+							<div class="how-long mt-5 me-5">
 								<i class="fa-regular fa-clock"></i>
 								${mainRecipe.mainRecipeListTop5VO.recipeTime}분 이내
 							</div>

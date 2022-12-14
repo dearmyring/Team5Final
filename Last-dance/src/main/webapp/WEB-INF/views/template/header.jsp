@@ -46,7 +46,7 @@
 	                <ul class="menu-list">
 	                    <li><a href="#">전체보기</a></li>
 	                    <li><span class="complex">통합검색</span></li>
-	                    <li><a href="#">커뮤니티</a></li>
+	                    <li><a href="/board/list">커뮤니티</a></li>
 	                </ul>
 	           </div>
 	           <div class="sign-tab">
@@ -81,11 +81,9 @@
           		placeholder="냉장고 속 재료를 입력해보세요." autocomplete="off">
           	 <!-- <img class="search-img" src="/images/search-image-character.png">  -->
         	
-        	<div class="center container-500">
-	        	<div class="ingredient-input-box w-80">
-	        	
-	        	</div>
-        	</div>
+       	    <ul class="search-list">
+		        
+		    </ul>
         </div>
 	    
     </header>
