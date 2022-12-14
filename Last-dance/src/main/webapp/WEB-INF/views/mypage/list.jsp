@@ -95,8 +95,8 @@
                     </ul>
                 </div>
                 <div>
-                    <c:forEach var="recipeImg" items="${viewList.recipeImgList}">
-                        <img class="thumbnailImage" src = "http://localhost:8888/rest/download/${recipeImg.recipeAttachmentNo}">
+                    <c:forEach var="recipeImg" begin="0" end="0" step="1" items="${viewList.recipeImgList}">
+                        <img class="thumbnailImage" src = "${pageContext.request.contextPath}/rest/download/${recipeImg.recipeAttachmentNo}">
                     </c:forEach>
                 </div>
                 </a>
@@ -135,7 +135,7 @@
                 </div>
                 <div>
                     <c:forEach var="recipeImg" items="${likeList.recipeImgList}">
-                        <img class="thumbnailImage" src = "http://localhost:8888/rest/download/${recipeImg.recipeAttachmentNo}">
+                        <img class="thumbnailImage" src = "${pageContext.request.contextPath}/rest/download/${recipeImg.recipeAttachmentNo}">
                     </c:forEach>
                 </div>
                 </a>
