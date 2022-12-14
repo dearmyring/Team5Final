@@ -259,6 +259,7 @@
 								<i class="fa-regular fa-clock"></i>
 								${mainRecipe.mainRecipeListTop5VO.recipeTime}분 이내
 							</div>
+							
 							<div class="cooking-level">${mainRecipe.mainRecipeListTop5VO.recipeDifficulty}</div>
 							<div class="hashtag-box-scroll">
 							<c:forEach var="mainRecipeIngredient" items="${mainRecipe.recipeIngredientList}">
