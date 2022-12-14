@@ -56,10 +56,10 @@
 	 from recipe R inner join recipe_ingredient RI on R.recipe_no=RI.recipe_no 
    </select>
 	
-	<!--  단일 조회 -->
-	<select id = "one" parameterType="int" resultType="RecipeCountVO">
-		select * from recipe  where recipe_no = #{recipeNo}
-	</select>
+<!-- 단일 조회 --> 
+<!-- 	<select id = "one" parameterType="int" resultType="RecipeCountVO"> -->
+<!-- 		select * from recipe  where recipe_no = #{recipeNo} -->
+<!-- 	</select> -->
 	
 	<!-- 수정 -->
 	<update id = "edit" parameterType = "RecipeDto">
