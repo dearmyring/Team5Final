@@ -180,5 +180,8 @@
 		</collection>
    </resultMap>
 
-   
+	<!-- 관리자 레시피 등록 시 기존 레시피 검사 -->
+	<select id="adminRecipeFind" parameterType="String" resultType="RecipeDto">
+		select * from recipe where recipe_title=#{recipeTitle}
+	</select>
 </mapper>

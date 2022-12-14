@@ -57,6 +57,7 @@ public interface RecipeDao {
 	//내가 본 레시피 시간 업데이트
 	boolean updateRecipeViewTime(RecipeViewDto recipeViewDto);
 	
-	
+	//관리자 레시피 등록 시 기존 레시피 검사용
+	RecipeDto adminRecipeFind(String recipeTitle);
 
 }

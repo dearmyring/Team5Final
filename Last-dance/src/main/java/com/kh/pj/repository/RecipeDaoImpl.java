@@ -169,4 +169,9 @@ public class RecipeDaoImpl implements RecipeDao {
 		sqlSession.update("recipe.adminUpdate", recipeDto);
 	}
 
+	@Override
+	public RecipeDto adminRecipeFind(String recipeTitle) {
+		return sqlSession.selectOne("recipe.adminRecipeFind", recipeTitle);
+	}
+
 }
