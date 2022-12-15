@@ -75,7 +75,16 @@
 		</div>
 		<div>
 			<div class="recipe-detail-write-info">
-				<span>작성일: ${recipe.recipeDto.recipeWritetime}</span>
+				<span>작성일: 
+				<c:choose>
+					<c:when test="${recipe.recipeDto.recipeEdittime == null}">
+						${recipe.recipeDto.recipeWritetime}
+					</c:when>
+					<c:otherwise>
+						${recipe.recipeDto.recipeEdittime} (수정됨)
+					</c:otherwise>
+				</c:choose>
+				</span>
 				<span>요리사: ${recipe.recipeDto.recipeNick}</span>
 			</div>
 		</div>
