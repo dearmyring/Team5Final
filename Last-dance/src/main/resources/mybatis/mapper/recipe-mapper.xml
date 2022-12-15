@@ -27,12 +27,6 @@
       select * from recipe_ingredient where recipe_no = #{recipeNo}
    </select>
    
-
-   	<!-- 썸네일 출력 -->
-   <select id="recipeImgList" resultType="RecipeImgDto" parameterType="int">
-      select * from recipe_img where recipe_no = #{recipeNo}
-   </select>
-   
    <!-- 레시피 리스트 계층형 조회 구문 -->
    <resultMap type="RecipeListVO" id="recipeList">
       <association property="recipeDto">
