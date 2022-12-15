@@ -2,17 +2,27 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
+<div class="mt-5">&nbsp;</div>
+
+<div class="text-end">
+	<a class="main-page-link"></a> > 유저 게시판
+</div>
+
 <div class="container-fluid mt-5">
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 	<select name="sort" class="sort-click">
 		<option value="board_no desc">최근 등록 순</option>
 		<option value="board_click desc">조회수 높은 순</option>
 	</select>
-	<div class="row mt-5">
+	</div>
+</div>
+	<div class="row mt-3">
 		<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-			<table class="table">
+			<table class="table table-sm table-link">
 				<thead>
-					<tr>
-						<th><input type="checkbox" class="check-all"></th>
+					<tr class="text-center">
+						<th><i class="fa-regular fa-square icon-check-all"></i></th>
 						<th>제목</th>
 						<th>작성자</th>
 						<th>조회수</th>
@@ -23,10 +33,13 @@
 				</thead>
 				<tbody class="board-list">
 					<c:forEach var="boardDto" items="${boardList}">
-						<tr>
-							<td><input type="checkbox" class="check-item" name="boardNo" value="${boardDto.boardNo}"></td>
+						<tr class="text-center">
 							<td>
-								<a href="detail/${boardDto.boardNo}">${boardDto.boardTitle}</a>
+								<i class="fa-regular fa-square icon-check-item"></i>
+								<input type="hidden" class="check-item" name="boardNo" value="${boardDto.boardNo}">
+							</td>
+							<td class="text-start">
+								<a class="text-decoration-none link-dark" href="detail/${boardDto.boardNo}">${boardDto.boardTitle}</a>
 							</td>
 							<td>${boardDto.memberNick}</td>
 							<td>${boardDto.boardClick}</td>
@@ -34,7 +47,7 @@
 <%-- 							<td>${boardDto.}</td> --%>
 							<td>
 								<c:if test="${boardDto.boardBlind == 'Y'}">
-									<i class="fa-solid fa-square"></i>
+									<i class="fa-solid fa-y"></i>
 								</c:if>
 							</td>
 						</tr>
@@ -61,14 +74,22 @@
 				success: function(resp){
 					$(".board-list").find("tr").remove();
 					for(var i=0; i<resp.length; i++){
-						var tr = $("<tr>");
-						var check = $("<input>").addClass("check-item").attr("name", "boardNo").val(resp[i].recipeNo).attr("type", "checkbox");
+						var tr = $("<tr>").addClass("position-relative text-center");
+						var check = $("<input>").addClass("check-item").attr("name", "boardNo")
+							.val(resp[i].recipeNo).attr("type", "checkbox");
 						var tdCheck = $("<td>").append(check);
-						var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].boardNo).text(resp[i].boardTitle));
+						var link = $("<a>").attr("href", "detail/"+resp[i].boardNo)
+							.text(resp[i].boardTitle).addClass("stretched-link text-decoration-none link-dark");
+						var tdTitle = $("<td>").addClass("text-start").append(link);
 						var tdNick = $("<td>").text(resp[i].memberNick);
 						var tdClick = $("<td>").text(resp[i].boardClick);
 						var tdTime = $("<td>").text(resp[i].boardWriteTime);
-						tr.append(tdCheck).append(tdTitle).append(tdNick).append(tdClick).append(tdTime);
+						var icon = $("<i>").addClass("fa-solid fa-square");
+						var tdBlind = $("<td>")
+						if(resp[i].boardBlind == "Y"){
+							tdBlind.append(icon);
+						}
+						tr.append(tdCheck).append(tdTitle).append(tdNick).append(tdClick).append(tdTime).append(tdBlind);
 						$(".board-list").append(tr);
 					}
 				}

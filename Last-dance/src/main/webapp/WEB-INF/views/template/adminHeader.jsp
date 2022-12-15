@@ -6,6 +6,9 @@
 <meta charset="utf-8">
 
 	<title>냉장고를 부탁해</title>
+	
+	<!-- 폰트 noto-sans -->
+	<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
     <!-- 폰트어썸 -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
@@ -15,19 +18,8 @@
     
     <!-- js 파일 -->
     <script src="${pageContext.request.contextPath}/js/header.js"></script>
-    <script src="${pageContext.request.contextPath}/js/checkbox.js"></script>
+    <script src="${pageContext.request.contextPath}/js/check-icon.js"></script>
     
-    <script type="text/javascript">
-    	$(function(){
-    		$(".logout-btn").click(function(e){
-    			var choice = confirm("로그아웃 하시겠습니까?");
-    			if(!choice){
-    				e.preventDefault();
-    			}
-    		});
-    	});
-    </script>
-
     <!-- Required meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -37,6 +29,19 @@
     <!-- Bootswatch CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.0.2/litera/bootstrap.min.css" integrity="sha512-WC/IImFzoPRFTlJQpUSqaM1QOKsIWIfrmhkkXRXoDeB9hlArdsUAWOURes+oFcDRPUUZhuc2QdyfaZEGXjd6kg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
+    <style>
+		*{ font-family: 'Noto Sans KR', sans-serif; }
+
+		.table-link tbody tr { background-color:white; }
+		.table-link tbody tr:hover { background-color:#ececec; transition: 0.3s }
+		
+		.yellow-btn { 
+			background-color:#ECBE42;
+			color:white;
+		}
+		
+		
+    </style>
 </head>
 <body>
 
@@ -49,7 +54,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid">
                 <!-- brand : 로고 이미지와 대표 상호를 적는 공간 -->
-                <a class="col-lg-3 col-md-4 navbar-brand" href="${pageContext.request.contextPath}/admin/">
+                <a class="col-2 navbar-brand" href="${pageContext.request.contextPath}/admin/">
                     <img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -97,8 +102,6 @@
                     </ul>
                 </div>
             </div>
-        </nav>
-    </div>
+		</nav>
+	</div>
 </div>
-
-<div class="mt-5">&nbsp;</div>

@@ -11,7 +11,10 @@
 </c:set>
 
 <div class="mt-5">&nbsp;</div>
-<h3>공지사항 상세</h3>
+
+<div class="text-end">
+	<a class="main-page-link"></a> > <a class="text-decoration-none text-dark" href="../list">공지사항</a> > 상세보기
+</div>
 
 <table class="table">
 	<tbody>

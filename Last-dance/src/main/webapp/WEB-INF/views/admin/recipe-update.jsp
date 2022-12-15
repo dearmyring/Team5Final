@@ -260,10 +260,10 @@
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
 			<div class="col-6 text-end">
-				<button class="col-5 btn btn-md text-lg btn-warning recipe-insert-btn" type="submit">레시피 수정하기</button>
+				<button class="col-5 btn btn-md text-lg yellow-btn recipe-insert-btn" type="submit">레시피 수정하기</button>
 			</div>
 			<div class="col-6">
-				<button class="col-5 btn btn-md text-lg btn-warning recipe-return-btn" type="button">돌아가기</button>
+				<button class="col-5 btn btn-md text-lg yellow-btn recipe-return-btn" type="button">돌아가기</button>
 			</div>
 		</div>
 	</div>
@@ -696,25 +696,24 @@
                     success: function(resp){
                     	that.next().attr("src", resp);
                     	var attachmentNo = parseInt((resp.split("download/"))[1]);
-//                     	여기부터
-//                     	if(that.prev().hasClass("img-no")){
-// 	                    	if(that.parent().hasClass("thumb-page")){
-// 		                    	var changeNo = $("<input>").attr("type", "hidden").addClass("change-img-no").attr("name", "recipeAttachmentNo").val(attachmentNo);
-// 								that.parent().find(".preview-disabled").first().removeClass("preview-disabled");
-// 	                    	}
-// 	                    	if(that.parents(".content-page").hasClass("content-page")){
-// 		                    	var changeNo = $("<input>").attr("type", "hidden").addClass("change-img-no").attr("name", "recipeContentAttachmentNo").val(attachmentNo);
-// 	                    	}
-// 	                    	if(that.prev().prev().hasClass("change-img-no")){
-// 	                    		that.prev().prev().val(changeNo);
-// 	                    	}
-// 	                    	else{
-// 	                    		that.before().before(changeNo);
-// 	                    	}
-//                     	}
-//                     	else{
-// 							that.before(imgNo);
-//                     	}
+                    	if(that.prev().hasClass("img-no")){
+	                    	if(that.parent().hasClass("thumb-page")){
+		                    	var changeNo = $("<input>").attr("type", "hidden").addClass("change-img-no").attr("name", "recipeAttachmentNo").val(attachmentNo);
+								that.parent().find(".preview-disabled").first().removeClass("preview-disabled");
+	                    	}
+	                    	if(that.parents(".content-page").hasClass("content-page")){
+		                    	var changeNo = $("<input>").attr("type", "hidden").addClass("change-img-no").attr("name", "recipeContentAttachmentNo").val(attachmentNo);
+	                    	}
+	                    	if(that.prev().prev().hasClass("change-img-no")){
+	                    		that.prev().prev().val(changeNo);
+	                    	}
+	                    	else{
+	                    		that.before().before(changeNo);
+	                    	}
+                    	}
+                    	else{
+							that.before(imgNo);
+                    	}
                     }
                 });
             }
