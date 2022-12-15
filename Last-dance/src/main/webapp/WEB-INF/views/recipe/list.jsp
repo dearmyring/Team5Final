@@ -271,7 +271,14 @@ width: 100px;
 </html>
 
 <script type="text/javascript">
-    $(function(){ 	 	
+    $(function(){
+    	/* 레시피 검색창에서 엔터치면 검색 */
+    	$(".input-keyword").keydown(function(e){
+    		if(e.keyCode == 13) {
+    			$(".recipe-search-btn").click();
+    		}
+   		});
+   	 	
     	/* 레시피 리스트 정렬 */
 		$(".sort-click").on("input", function(){
 			var sort = $(this).val();
@@ -285,7 +292,7 @@ width: 100px;
 				success: function(resp){
 					$(".list").find("item").remove();
 					for(var i=0; i<resp.length; i++){
-						var item = $("<item>");
+						var tr = $("<item>");
 						var check = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
 						var tdCheck = $("<td>").append(check);
 						var tdNo = $("<td>").text(resp[i].recipeNo);
@@ -299,6 +306,9 @@ width: 100px;
 			});
 		});    	
 </script>
+
+
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 
