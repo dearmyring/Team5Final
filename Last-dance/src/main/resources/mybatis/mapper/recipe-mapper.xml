@@ -142,11 +142,6 @@
    <select id="recipeDetailIngredientList" parameterType="int" resultType="RecipeIngredientDto">
 		select * from recipe_ingredient where recipe_no = #{recipeNo}
    </select>
-   
-   <!-- 썸네일 이미지 출력 -->
-	<select id="recipeImgList" parameterType="int" resultType="RecipeImgDto">
-		select * from recipe_img where recipe_no = #{recipeNo}
-	</select>
 	
 	<!-- 레시피 컨텐츠 출력  -->
 	<select id="recipeContentList" parameterType="int" resultType="RecipeContentDto">

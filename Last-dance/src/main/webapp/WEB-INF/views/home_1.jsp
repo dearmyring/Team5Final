@@ -254,7 +254,7 @@
 						<div class="swiper-slide">
 							<span class="view-count">조회수 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeClick}" pattern="#,###"/></span>
 							<span class="like-count">좋아요 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeLike}" pattern="#,###"/></span>
-							<div class="recipe-title mt-20">${mainRecipe.mainRecipeListTop5VO.recipeInfo}</div>
+							<div class="recipe-title mt-20"><a href="/recipe/detail?recipeNo=${mainRecipe.mainRecipeListTop5VO.recipeNo}">${mainRecipe.mainRecipeListTop5VO.recipeInfo}</a></div>
 							<div class="how-long mt-5 me-5">
 								<i class="fa-regular fa-clock"></i>
 								${mainRecipe.mainRecipeListTop5VO.recipeTime}분 이내

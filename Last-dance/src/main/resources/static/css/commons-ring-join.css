@@ -786,5 +786,20 @@ ul.pagination.pagination-small {
 	font-size: 25px;
 }
 
+.result-keyword {
+	cursor: pointer;
+}
+
+.get-ingredient {
+	display: inline-block;
+	border: none;
+	background-color: #EDEDED;
+	text-align: center;
+	padding: 0.5em 1em 0.5em 1em;
+	border-radius: 10px;
+	color: #757575;
+	font-size:18px;
+}
+
 
 
