@@ -40,7 +40,10 @@
 			color:white;
 		}
 		
-		
+		.icon-check-all,
+		.icon-check-item{
+			cursor: pointer;
+		}
     </style>
 </head>
 <body>

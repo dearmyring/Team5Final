@@ -176,7 +176,13 @@
     	
 		/* 체크박스 선택 삭제 시 비동기 처리 */
 		$(".recipe-async-delete").click(function(){
-			var param = $(".recipeNo-form input:checked").serialize();
+			var checkboxes = $(".icon-check-item");
+			for(var i=0; i<checkboxes.length; i++){
+				if(checkboxes.eq(i).hasClass("fa-square")){
+					checkboxes.eq(i).next().remove();
+				}
+			}
+			var param = $(".recipeNo-form .check-item").serialize();
 			
 			if(!param){
 				alert("삭제할 레시피를 선택하세요.");
