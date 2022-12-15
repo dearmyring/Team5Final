@@ -9,12 +9,11 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
 	rel="stylesheet" />
 
-<link rel="stylesheet" type="text/css" href="reset.css" />
-<link rel="stylesheet" type="text/css" href="commons.css" />
+<link rel="stylesheet" type="text/css" href="/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="/css/commons.css" />
+<link rel="stylesheet" type="text/css" href="/css/recipeList.css" />
 
-<link rel="stylesheet" type="text/css"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="test.css" />
+<link rel="stylesheet" type="text/css" 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="레시피 리스트" name="title" />
@@ -202,13 +201,7 @@ padding: 10px;
 width: 100px;
 }
 
-.w-80 {
-    width:80%;
-}
 
-.w-20 {
-    width:20%;
-}
 
 </style>
 </head>
