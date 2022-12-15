@@ -73,6 +73,11 @@
 		select * from board_img where board_no = #{boardNo}
 	</select>
 	
+	<!-- 댓글 수 카운트 -->
+	<select id="replyCount" parameterType="int" resultType="ReplyCountVO">
+		select count(*) COUNT from reply where reply_board_no = #{boardNo}
+	</select>
+	
 	<!-- 게시판 리스트 계층형 조회 구문 -->
 	<resultMap type="BoardListAddImgVO" id="boardList">
 		<association property="boardDto">
@@ -90,6 +95,10 @@
 		<collection property="boardImgList" javaType="java.util.List" ofType="BoardImgDto" select="boardImg" column="board_no">
 			<result column="board_attachment_no" property="boardAttachmentNo"/>
 			<result column="board_no" property="boardNo"/>
+		</collection>
+		
+		<collection property="replyCountVO" ofType="ReplyCountVO" select="replyCount" column="board_no">
+			<result column="count" property="count"/>
 		</collection>
 		
 	</resultMap>

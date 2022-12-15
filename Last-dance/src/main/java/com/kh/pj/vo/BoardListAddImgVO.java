@@ -15,5 +15,6 @@ public class BoardListAddImgVO {
 	
 	private BoardDto boardDto;
 	private List<BoardImgDto> boardImgList;
+	private ReplyCountVO replyCountVO;
 
 }

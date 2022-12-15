@@ -193,7 +193,7 @@
                                 <ul>
                                     <li>좋아요 수: ${writeList.boardDto.boardLike}</li>
                                     <li>조회 수: ${writeList.boardDto.boardClick}</li>
-                                    <li>댓글 수: 8546</li>
+                                    <li>댓글 수: ${writeList.replyCountVO.count}</li>
                                     <li>작성 시간: ${writeList.boardDto.boardWriteTime}</li>
                                 </ul>
                             </li>
