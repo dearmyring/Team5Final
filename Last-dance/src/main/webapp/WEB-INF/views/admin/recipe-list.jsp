@@ -123,12 +123,13 @@
 					$(".recipe-list").find("tr").remove();
 					for(var i=0; i<resp.length; i++){
 						var tr = $("<tr>").addClass("text-center");
-						var check = $("<input>").addClass("check-item")
-							.attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
-						var tdCheck = $("<td>").append(check);
+						var check = $("<input>").addClass("check-item").attr("name", "recipeNo")
+							.val(resp[i].recipeNo).attr("type", "hidden");
+						var checkIcon = $("<i>").addClass("fa-regular fa-square icon-check-item");
+						var tdCheck = $("<td>").append(checkIcon).append(check);
 						var tdNo = $("<td>").text(resp[i].recipeNo);
-						var link = $("<a>").attr("href", "detail/"+resp[i].recipeNo)
-							.addClass("text-decoration-none link-dark").text(resp[i].recipeTitle);
+						var link = $("<a>").addClass("text-decoration-none link-dark")
+							.attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle);
 						var tdTitle = $("<td>").addClass("text-start").append(link);
 						var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 						var tdNick = $("<td>").text(resp[i].recipeNick);
@@ -138,6 +139,10 @@
 				}
 			});
 			
+		});
+		
+		$(".icon-check-item").click(function(){
+			console.log($(this));
 		});
     	
     	/* 레시피 리스트 정렬 */
@@ -158,12 +163,13 @@
 					$(".recipe-list").find("tr").remove();
 					for(var i=0; i<resp.length; i++){
 						var tr = $("<tr>").addClass("text-center");
-						var check = $("<input>").addClass("check-item")
-							.attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
-						var tdCheck = $("<td>").append(check);
+						var check = $("<input>").addClass("check-item").attr("name", "recipeNo")
+							.val(resp[i].recipeNo).attr("type", "hidden");
+						var checkIcon = $("<i>").addClass("fa-regular fa-square icon-check-item");
+						var tdCheck = $("<td>").append(checkIcon).append(check);
 						var tdNo = $("<td>").text(resp[i].recipeNo);
-						var link = $("<a>").attr("href", "detail/"+resp[i].recipeNo)
-							.addClass("text-decoration-none link-dark").text(resp[i].recipeTitle);
+						var link = $("<a>").addClass("text-decoration-none link-dark")
+							.attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle);
 						var tdTitle = $("<td>").addClass("text-start").append(link);
 						var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 						var tdNick = $("<td>").text(resp[i].recipeNick);
@@ -210,11 +216,15 @@
 								success: function(resp){
 									$(".recipe-list").find("tr").remove();
 									for(var i=0; i<resp.length; i++){
-										var tr = $("<tr>");
-										var check = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
-										var tdCheck = $("<td>").append(check);
+										var tr = $("<tr>").addClass("text-center");
+										var check = $("<input>").addClass("check-item").attr("name", "recipeNo")
+											.val(resp[i].recipeNo).attr("type", "hidden");
+										var checkIcon = $("<i>").addClass("fa-regular fa-square icon-check-item");
+										var tdCheck = $("<td>").append(checkIcon).append(check);
 										var tdNo = $("<td>").text(resp[i].recipeNo);
-										var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle));
+										var link = $("<a>").addClass("text-decoration-none link-dark")
+											.attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle);
+										var tdTitle = $("<td>").addClass("text-start").append(link);
 										var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 										var tdNick = $("<td>").text(resp[i].recipeNick);
 										tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
