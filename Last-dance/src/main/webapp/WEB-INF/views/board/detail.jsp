@@ -167,29 +167,20 @@
 
 
 <div class="container-800 mt-40 mb-40">
+
 	<div class="row center">
-		<h1>게시글 보기</h1>
-	</div>
-	
-	<div class="row center">
-		<table class="table table-border">
+		<table class="table">
 			<tbody>
-				<tr>
-					<th width="25%">번호</th>
-					<td>${boardDto.boardNo}</td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td>
+				<tr>			
+					<td class="">
 						${boardDto.boardTitle}						
 					</td>
 				</tr>
-				<tr>
-					<th>작성자</th>
+				<tr>					
 					<td>${boardDto.memberNick}</td>
 				</tr>
 				<tr height="200" valign="top">
-					<th>내용</th>
+				
 					<td>
 						<!-- pre 태그는 엔터, 띄어쓰기, 탭키 등을 있는 그대로 표시하는 영역 -->
 						<pre>${boardDto.boardContent}</pre>
@@ -197,11 +188,11 @@
 					</td>
 				</tr>
 				<tr>
-					<th>조회수</th>
+					
 					<td>${boardDto.boardClick}</td>
 				</tr>
 				<tr>
-					<th>작성일</th>
+					
 					<td>
 						<fmt:formatDate value="${boardDto.boardWriteTime}" pattern="y년 M월 d일 E요일 a h시 m분 s초"/>
 					</td>
@@ -209,7 +200,7 @@
 		
 				<c:if test="${boardDto.boardEditTime != null}">
 				<tr>
-					<th>수정일</th>
+					
 					<td>
 						<fmt:formatDate value="${boardDto.boardEditTime}" pattern="y년 M월 d일 E요일 a h시 m분 s초"/>
 					</td>

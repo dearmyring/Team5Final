@@ -30,8 +30,8 @@
 }
 
 .thumnail{
-   width: 70%;
-   height:70%;
+   width: 100%;
+   height:100%;
    
 }
 .btn {
@@ -64,7 +64,7 @@
 .board-list-content{
 	margin : 40px;
    font-size:15px;
-   margin-left :40px;
+   margin-left :7px;
    height: 50px;
    font-weight: 500;
    
@@ -113,12 +113,25 @@ input {
 width: 20%;
 }
 
+.container-901 {
+    width: 900px;
+    margin: 0 auto;
+    height: 170px;
+}
+.float-container1 {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+
+
 
 </style>
 
-<div class="container-900 mt-5 float-center">
+<div class="container-901 mt-5 float-center ">
 
-   <h1 class="mt-30" align="center">나만의 레시피를 공유 해보세요!!</h1>
+   <h1 align="center">나만의 레시피를 공유 해보세요!!</h1>
    <h3 class="mt-20" align="center">레시피를 작성/댓글 작성으로 참여도를 올려서 귀여운 뱃지를
       착용해보세요 :)</h3>
    <div class="center search mt-10">
@@ -133,6 +146,8 @@ width: 20%;
    </div>
 </div>
 
+
+
 <thead>
    <tr>
       <th colspan="12"><select class="sort-click float-left input">
@@ -145,13 +160,15 @@ width: 20%;
       </select> <a class="btn btn-positive float-right mt-10" href="write">글쓰기</a></th>
 </thead>
 
+
+
 <table class="table">
 
    <tbody class="board-list center mt-50">
          <c:forEach var="boardDto" items="${boardList}">
          <tr class="board-bottom">
             <%-- <td>${boardDto.boardNo}</td> --%>
-            <td><div class="float-container">
+            <td><div class="float-container1">
                <div class="float-left w-80">
                   <div class="board-list-title left">
                      <a href="detail?boardNo=${boardDto.boardNo}">
@@ -176,7 +193,7 @@ width: 20%;
                <div class="all-thumbnail-box w-20">
                   <%-- <img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}"> --%>
                   <div class="thumbnail-box">
-                     <img class="thumnail" src="${pageContext.request.contextPath}/images/badge-1.png">
+                     <img class="thumnail" src="${pageContext.request.contextPath}/images/image 3.png">
                   </div>
                </div>                  
             </div></td>
@@ -237,20 +254,14 @@ width: 20%;
                                        .remove();
                                  for (var i = 0; i < resp.length; i++) {
                                     var tr = $("<tr>");
-                                    /* var tdNo = $("<td>").text(
-                                          resp[i].boardNo); */
+                                  
                                     var tdTitle = $("<td>")
                                           .append(
-                                                $("<a>")
-                                                      .attr(
-                                                            "href",
-                                                            "detail?boardNo="
-                                                                  + resp[i].boardNo)
-                                                      .text(resp[i].boardTitle));
+                                                $("<a>").attr( "href","detail?boardNo="+ resp[i].boardNo)
+                                                        .text(resp[i].boardTitle));
                                           
                                     var tdContent = $("<td>").addClass("board-content")
-                                                      .attr("align", "left")
-                                                      
+                                                      .attr("align", "left")                                                      
                                                       .html(resp[i].boardContent);
                                     
                                     var url = "";
@@ -310,15 +321,13 @@ width: 20%;
                      $(".board-list").find("tr").remove();
                      for (var i = 0; i < resp.length; i++) {
                         var tr = $("<tr>");
-                        /* var tdNo = $("<td>").text(
-                              resp[i].boardNo); */
+                        
                         var tdTitle = $("<td>").append(
                               $("<a>").attr("href","detail?boardNo="+ resp[i].boardNo)
                                     .text(resp[i].boardTitle));
                         var tdContent = $("<td>")
                               .addClass("board-content")
-                              .attr("align", "left")
-                              .attr("width", "30%")
+                              
                               .html(resp[i].boardContent);
 
                         var url = "";
@@ -329,7 +338,7 @@ width: 20%;
                         var badge = $("<img>").attr("src", url)
                               .addClass("badge");
                         var tdNick = $("<td>").text(resp[i].memberNick)
-                              .attr("width", "15%").append(badge);
+                             		.append(badge);
 
                         var tdWriteTime = $("<td>").text(
                               resp[i].boardWriteTime);
