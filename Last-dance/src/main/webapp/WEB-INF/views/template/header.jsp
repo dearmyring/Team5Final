@@ -44,7 +44,7 @@
 	           </div>
 	           <div class="menu-list-box">
 	                <ul class="menu-list">
-	                    <li><a href="#">전체보기</a></li>
+	                    <li><a href="/recipe/list">전체보기</a></li>
 	                    <li><span class="complex">통합검색</span></li>
 	                    <li><a href="/board/list">커뮤니티</a></li>
 	                </ul>
@@ -89,4 +89,9 @@
     </header>
     <!-- 컨텐츠 영역 시작 -->
     <div class="content-area">
+<<<<<<< HEAD
   		
+=======
+    </div>
+  
+>>>>>>> refs/heads/Jenn

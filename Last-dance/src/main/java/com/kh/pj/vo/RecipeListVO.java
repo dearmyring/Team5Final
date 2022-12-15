@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class RecipeListVO {
 
-
 	private RecipeDto recipeDto;
 	private List<RecipeIngredientDto> recipeIngredientList;
 	private List<RecipeImgDto> recipeImgList;
