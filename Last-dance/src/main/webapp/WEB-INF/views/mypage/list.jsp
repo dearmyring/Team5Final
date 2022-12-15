@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="login" value="${loginId != null}"></c:set>
 <!-- css 불러옴  -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mypage.css">
@@ -12,7 +13,7 @@
 </jsp:include>
 
 <!-- js 불러옴 -->
-<script src="/js/mypage.js"></script>
+<script src="${pageContext.request.contextPath}/js/mypage.js"></script>
 
 <!-- 유저 정보 카드 -->
         <div class="user-card">
@@ -34,7 +35,42 @@
                         <div class="edit-info-btn" href="#">정보변경</div>
                 </div>
                 <div>
-                    <span>10%</span>
+                    <span class="exp">
+<%--                     	<c:set var="one" value="100"></c:set> --%>
+                    	<c:choose>
+                    		<c:when test="${myInfo.memberPoint<=100}">
+                    			<fmt:formatNumber type="number" maxFractionDigits="1" value="${myInfo.memberPoint*100/100}"></fmt:formatNumber>
+                    		</c:when>
+                    		<c:when test="${myInfo.memberPoint<=300}">
+                    			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-100)*100/200}"></fmt:formatNumber>
+                    		</c:when>
+                    		<c:when test="${myInfo.memberPoint<=550}">
+                    			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-300)*100/250}"></fmt:formatNumber>
+                    		</c:when>
+                    		<c:when test="${myInfo.memberPoint<=850}">
+                    			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-550)*100/300}"></fmt:formatNumber>
+                    		</c:when>
+                    		<c:when test="${myInfo.memberPoint<=1200}">
+                    			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-850)*100/350}"></fmt:formatNumber>
+                    		</c:when>
+                    		<c:when test="${myInfo.memberPoint<=1600}">
+                    			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-1200)*100/400}"></fmt:formatNumber>
+                    		</c:when>
+                    		<c:when test="${myInfo.memberPoint<=2050}">
+                    			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-1600)*100/450}"></fmt:formatNumber>
+                    		</c:when>
+                    		<c:when test="${myInfo.memberPoint<=2500}">
+                    			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-2050)*100/450}"></fmt:formatNumber>
+                    		</c:when>
+                    		<c:when test="${myInfo.memberPoint<3000}">
+                    			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-2500)*100/500}"></fmt:formatNumber>
+                    		</c:when>
+                    		<c:when test="${myInfo.memberPoint==3000}">
+                    			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-2999)*100/1}"></fmt:formatNumber>
+                    		</c:when>
+                    	</c:choose>
+                    	<span>%</span>
+                    </span>
                     <div class="progressbar">
                         <div class="inner"></div>
                     </div>
@@ -134,7 +170,7 @@
                     </ul>
                 </div>
                 <div>
-                    <c:forEach var="recipeImg" items="${likeList.recipeImgList}">
+                    <c:forEach var="recipeImg" begin="0" end="0" step="1" items="${likeList.recipeImgList}">
                         <img class="thumbnailImage" src = "${pageContext.request.contextPath}/rest/download/${recipeImg.recipeAttachmentNo}">
                     </c:forEach>
                 </div>
@@ -150,22 +186,24 @@
             </div>
             <c:forEach var="writeList" items="${writeList}">
             <div class="board-item-box">
-                <a class="recipe-item" href="/board/detail?=${writeList.boardNo}">
+                <a class="recipe-item" href="/board/detail?boardNo=${writeList.boardDto.boardNo}">
                     <div>
                         <ul>
                             <li>
                                 <ul>
-                                    <li>좋아요 수: ${writeList.boardLike}</li>
-                                    <li>조회 수: ${writeList.boardClick}</li>
-                                    <li>댓글 수: 8546</li>
-                                    <li>작성 시간: ${writeList.boardWriteTime}</li>
+                                    <li>좋아요 수: ${writeList.boardDto.boardLike}</li>
+                                    <li>조회 수: ${writeList.boardDto.boardClick}</li>
+                                    <li>댓글 수: ${writeList.replyCountVO.count}</li>
+                                    <li>작성 시간: ${writeList.boardDto.boardWriteTime}</li>
                                 </ul>
                             </li>
-                            <li>내가 쓴 글 제목: ${writeList.boardTitle}</li>
+                            <li>내가 쓴 글 제목: ${writeList.boardDto.boardTitle}</li>
                         </ul>
                     </div>
                     <div>
-                        <img src="/images/logo.png" />
+                    	<c:forEach var="boardImg" items="${writeList.boardImgList}">
+                        	<img class="thumbnailImage" src = "${pageContext.request.contextPath}/rest/download/${boardImg.boardAttachmentNo}">
+                    	</c:forEach>
                     </div>
                 </a>
             </div>

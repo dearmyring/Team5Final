@@ -134,50 +134,50 @@
    
    <!-- 레시피별 재료 출력 -->
    <select id="recipeDetailIngredientList" parameterType="int" resultType="RecipeIngredientDto">
-		select * from recipe_ingredient where recipe_no = #{recipeNo}
+      select * from recipe_ingredient where recipe_no = #{recipeNo}
    </select>
    
    <!-- 썸네일 이미지 출력 -->
-	<select id="recipeImgList" parameterType="int" resultType="RecipeImgDto">
-		select * from recipe_img where recipe_no = #{recipeNo}
-	</select>
-	
-	<!-- 레시피 컨텐츠 출력  -->
-	<select id="recipeContentList" parameterType="int" resultType="RecipeContentDto">
-		select * from recipe_content where recipe_no = #{recipeNo}
-	</select>
+   <select id="recipeImgList" parameterType="int" resultType="RecipeImgDto">
+      select * from recipe_img where recipe_no = #{recipeNo}
+   </select>
+   
+   <!-- 레시피 컨텐츠 출력  -->
+   <select id="recipeContentList" parameterType="int" resultType="RecipeContentDto">
+      select * from recipe_content where recipe_no = #{recipeNo}
+   </select>
    
    <resultMap type="RecipeDetailVO" id="recipeDetail">
-		<association property="recipeDto">
-			<result column="recipe_no" property="recipeNo"/>
-			<result column="recipe_nick" property="recipeNick"/>
-			<result column="recipe_title" property="recipeTitle"/>
-			<result column="recipe_info" property="recipeInfo"/>
-			<result column="recipe_time" property="recipeTime"/>
-			<result column="recipe_click" property="recipeClick"/>
-			<result column="recipe_like" property="recipeLike"/>
-			<result column="recipe_hashtag" property="recipeHashtag"/>
-			<result column="recipe_writetime" property="recipeWritetime" javaType="java.sql.Date"/>
-			<result column="recipe_edittime" property="recipeEdittime" javaType="java.sql.Date"/>
-			<result column="recipe_diffculty" property="recipeDiffculty"/>
-		</association>
-		
-		<collection property="recipeDetailIngredientList" javaType="java.util.List" ofType="RecipeIngredientDto" select="recipeDetailIngredientList" column="recipe_no">
-			<result column="recipe_ingredient_name" property="recipeIngredientName"/>
-			<result column="recipe_no" property="recipeNo"/>
-		</collection>
-		
-		<collection property="recipeImages" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImgList" column="recipe_no">
-			<result column="recipe_attachment_no" property="recipeAttachmentNo"/>
-			<result column="recipe_no" property="recipeNo"/>
-		</collection>
-		
-		<collection property="recipeContentList" javaType="java.util.List" ofType="RecipeContentDto" select="recipeContentList" column="recipe_no">
-			<result column="recipe_content_no" property="recipeContentNo"/>
-			<result column="recipe_no" property="recipeNo"/>
-			<result column="recipe_content_text" property="recipeContentText"/>
-			<result column="recipe_content_attachment_no" property="recipeContentAttachmentNo"/>
-		</collection>
+      <association property="recipeDto">
+         <result column="recipe_no" property="recipeNo"/>
+         <result column="recipe_nick" property="recipeNick"/>
+         <result column="recipe_title" property="recipeTitle"/>
+         <result column="recipe_info" property="recipeInfo"/>
+         <result column="recipe_time" property="recipeTime"/>
+         <result column="recipe_click" property="recipeClick"/>
+         <result column="recipe_like" property="recipeLike"/>
+         <result column="recipe_hashtag" property="recipeHashtag"/>
+         <result column="recipe_writetime" property="recipeWritetime" javaType="java.sql.Date"/>
+         <result column="recipe_edittime" property="recipeEdittime" javaType="java.sql.Date"/>
+         <result column="recipe_diffculty" property="recipeDiffculty"/>
+      </association>
+      
+      <collection property="recipeDetailIngredientList" javaType="java.util.List" ofType="RecipeIngredientDto" select="recipeDetailIngredientList" column="recipe_no">
+         <result column="recipe_ingredient_name" property="recipeIngredientName"/>
+         <result column="recipe_no" property="recipeNo"/>
+      </collection>
+      
+      <collection property="recipeImages" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImgList" column="recipe_no">
+         <result column="recipe_attachment_no" property="recipeAttachmentNo"/>
+         <result column="recipe_no" property="recipeNo"/>
+      </collection>
+      
+      <collection property="recipeContentList" javaType="java.util.List" ofType="RecipeContentDto" select="recipeContentList" column="recipe_no">
+         <result column="recipe_content_no" property="recipeContentNo"/>
+         <result column="recipe_no" property="recipeNo"/>
+         <result column="recipe_content_text" property="recipeContentText"/>
+         <result column="recipe_content_attachment_no" property="recipeContentAttachmentNo"/>
+      </collection>
    </resultMap>
 
    

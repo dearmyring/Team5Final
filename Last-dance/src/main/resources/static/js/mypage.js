@@ -18,13 +18,14 @@ $(function(){
                             $(".profileImage").attr("src", resp);
                             
                             var attachmentNo = (resp.split("download/")[1]);
-
+                            
                             $.ajax({
-                                url: "http://localhost:8888/profileImg?attachmentNo="+attachmentNo,
+                                url: "http://localhost:8888/rest/profileImg?attachmentNo="+attachmentNo,
                                 method: "post",
                                 contentType: "application/json",
                                 data: JSON.stringify({attachmentNo:attachmentNo}),
                                 success: function(resp) {
+	
                                 }
                             });//inner ajax end
                             
@@ -92,8 +93,12 @@ $(function(){
 				$(".pw-confirm-form").find("div").find("div").removeClass("vibration");
 	});
     
-
-
+	
+	//프로그래스 바 조절
+	var expText = $(".exp").text();
+	var exp = parseInt(expText.split("%")[0]);
+	
+	$(".progressbar > .inner").css("width", exp+"%");
 
 
 
