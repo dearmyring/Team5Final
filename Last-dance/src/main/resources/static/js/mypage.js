@@ -18,13 +18,14 @@ $(function(){
                             $(".profileImage").attr("src", resp);
                             
                             var attachmentNo = (resp.split("download/")[1]);
-
+                            
                             $.ajax({
-                                url: "http://localhost:8888/profileImg?attachmentNo="+attachmentNo,
+                                url: "http://localhost:8888/rest/profileImg?attachmentNo="+attachmentNo,
                                 method: "post",
                                 contentType: "application/json",
                                 data: JSON.stringify({attachmentNo:attachmentNo}),
                                 success: function(resp) {
+	
                                 }
                             });//inner ajax end
                             

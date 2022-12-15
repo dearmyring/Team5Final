@@ -12,7 +12,7 @@
 </jsp:include>
 
 <!-- js 불러옴 -->
-<script src="/js/mypage.js"></script>
+<script src="${pageContext.request.contextPath}/js/mypage.js"></script>
 
 <!-- 유저 정보 카드 -->
         <div class="user-card">
