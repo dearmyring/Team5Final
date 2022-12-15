@@ -9,8 +9,19 @@
 
 
 <style>
+.board-list-item{
+	display:flex;
+	font-size:12px;
+	
+}
+.board-list-content{
+	display:flex;
+	font-size:30px;
+	margin-left :8px;
+	
+}
 .badge {
-	width: 10%;
+	width: 15%;
 }
 
 .search {
@@ -41,6 +52,11 @@ input {
 .board-search-btn {
 	display: none;
 }
+
+.board-bottom{
+	border-bottom : 1px solid gray;
+}
+
 </style>
 
 <div class="container-900 mt-5 float-center">
@@ -72,43 +88,40 @@ input {
 		</select> <a class="btn btn-positive float-right mt-10" href="write">글쓰기</a></th>
 </thead>
 
-<table class="table table-hover">
-	<tr class="table">
-		<th>제목</th>
-		<th width="30%">내용</th>
-		<th width="15%">작성자</th>
-		<th>작성일</th>
-		<th>마지막 수정일</th>
-		<th>추천</th>
-		<th>조회수</th>
-		<th>댓글</th>
-		
-	</tr>
+<table class="table">
 
 	<tbody class="board-list center mt-50">
 		<c:forEach var="boardDto" items="${boardList}">
-			<tr>
+			<tr class="board-bottom">
 				<%-- <td>${boardDto.boardNo}</td> --%>
-				<td><a href="detail?boardNo=${boardDto.boardNo}">
-						${boardDto.boardTitle} </a></td>
+				<td><div class="float-container">
+					<div class="float-left w-80">
+						<div class="left">
+							<a href="detail?boardNo=${boardDto.boardNo}">
+								${boardDto.boardTitle}</a>
+						</div>
+						<div class="board-list-content left">
+							<a href="detail?boardNo=${boardDto.boardNo}">
+								${boardDto.boardContent}</a>			
+						</div>
+						<div class="board-list-item float-container left">
+							<div class="float-left w-5">${boardDto.memberNick}
+							<c:if test="${boardDto.memberBadge == 1 }">
+								<img class="badge" src="/images/badge-1.png">
+							</c:if>
+							</div>			
+							<div class="float-left">${boardDto.boardWriteTime}</div>
+							<div class="float-left">추천 :${boardDto.boardLike}</div>
+							<div class="float-left">조회수 : ${boardDto.boardClick}</div>
+							<div class="float-left">댓글 : ${boardDto.replyCnt}</div>
+						</div>
+					</div>
+					<div class="float-right w-20">
+						<img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}">
+					</div>						
+				</div></td>
 						
 										
-						
-				<td class="board-content" align="left">${boardDto.boardContent}</td>			
-			
-			
-			
-				<td>
-					${boardDto.memberNick} 
-					<c:if test="${boardDto.memberBadge == 1 }">
-						<img class="badge" src="/images/badge-1.png">
-					</c:if>
-				</td>
-				<td>${boardDto.boardWriteTime}</td>
-				<td>${boardDto.boardEditTime}</td>
-				<td>${boardDto.boardLike}</td>
-				<td>${boardDto.boardClick}</td>
-				<td>${boardDto.replyCnt }</td>
 			</tr>
 		</c:forEach>
 	</tbody>
@@ -123,7 +136,6 @@ input {
 </ul>
 <br>
 
-</div>
 
 <script type="text/javascript">
 	$(function() {
@@ -178,7 +190,7 @@ input {
 														
 												var tdContent = $("<td>").addClass("board-content")
 																		.attr("align", "left")
-																		.attr("width", "30%")
+																		
 																		.html(resp[i].boardContent);
 												
 												var url = "";
@@ -186,25 +198,18 @@ input {
 													url = "/images/badge-1.png";
 												}
 
-												var badge = $("<img>").attr(
-														"src", url).addClass(
-														"badge");
-												var tdNick = $("<td>").attr(
-														"width", "15%").text(
-														resp[i].memberNick)
-														.append(badge);
+												var badge = $("<img>").attr("src", url)
+												.addClass("badge");
+												var tdNick = $("<td>")
+												.text(resp[i].memberNick)
+												.append(badge);
 												var tdWriteTime = $("<td>")
-														.text(
-																resp[i].boardWriteTime);
+														.text(resp[i].boardWriteTime);
 												var tdEditTime = $("<td>")
-														.text(
-																resp[i].boardEditTime);
-												var tdLike = $("<td>").text(
-														resp[i].boardLike);
-												var tdClick = $("<td>").text(
-														resp[i].boardClick);
-												var tdReply = $("<td>").text(
-														resp[i].replyCnt);
+														.text(resp[i].boardEditTime);
+												var tdLike = $("<td>").text(resp[i].boardLike);
+												var tdClick = $("<td>").text(resp[i].boardClick);
+												var tdReply = $("<td>").text(resp[i].replyCnt);
 												tr.append(tdTitle).append(
 														tdContent).append(
 														tdNick).append(
@@ -293,7 +298,7 @@ input {
 				});
 	});
 </script>
-<jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 
 

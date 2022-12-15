@@ -58,6 +58,15 @@
 .w-20 {
     width:20%;
 }
+.w-80{
+	width:80%;
+}
+.w-10{
+	width:10%;
+}
+.w-5{
+	width:5%;
+}
 
 /*
     어짜피 정렬은 left, center, right밖에 없다
