@@ -186,22 +186,24 @@
             </div>
             <c:forEach var="writeList" items="${writeList}">
             <div class="board-item-box">
-                <a class="recipe-item" href="/board/detail?boardNo=${writeList.boardNo}">
+                <a class="recipe-item" href="/board/detail?boardNo=${writeList.boardDto.boardNo}">
                     <div>
                         <ul>
                             <li>
                                 <ul>
-                                    <li>좋아요 수: ${writeList.boardLike}</li>
-                                    <li>조회 수: ${writeList.boardClick}</li>
+                                    <li>좋아요 수: ${writeList.boardDto.boardLike}</li>
+                                    <li>조회 수: ${writeList.boardDto.boardClick}</li>
                                     <li>댓글 수: 8546</li>
-                                    <li>작성 시간: ${writeList.boardWriteTime}</li>
+                                    <li>작성 시간: ${writeList.boardDto.boardWriteTime}</li>
                                 </ul>
                             </li>
-                            <li>내가 쓴 글 제목: ${writeList.boardTitle}</li>
+                            <li>내가 쓴 글 제목: ${writeList.boardDto.boardTitle}</li>
                         </ul>
                     </div>
                     <div>
-                        <img src="/images/logo.png" />
+                    	<c:forEach var="boardImg" items="${writeList.boardImgList}">
+                        	<img class="thumbnailImage" src = "${pageContext.request.contextPath}/rest/download/${boardImg.boardAttachmentNo}">
+                    	</c:forEach>
                     </div>
                 </a>
             </div>
