@@ -22,15 +22,18 @@
     justify-content: space-between;
 }
 
-.recipe-item-box > a {
+.recipe-item-box > a,
+.board-item-box > a {
     border-top: 1px solid #CBCACA;
 }
 
-.recipe-item-box > a:hover {
+.recipe-item-box > a:hover,
+.board-item-box > a:hover {
     background-color: #F7F7F7;
 }
 
-.recipe-item-box > a:last-child {
+.recipe-item-box > a:last-child,
+.board-item-box > a:last-child {
     border-bottom: 1px solid #CBCACA;
 }
 
@@ -56,7 +59,8 @@
 .view-recipe-list > div,
 .like-recipe-list > div,
 .write-board-list > div,
-.recipe-item-box {
+.recipe-item-box,
+.board-item-box {
     /* background-color: red; */
     display: flex;
     justify-content: flex-end;

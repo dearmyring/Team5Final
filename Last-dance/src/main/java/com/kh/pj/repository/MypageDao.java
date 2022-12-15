@@ -7,6 +7,7 @@ import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.ProfileImageDto;
 import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.vo.BoardListAddImgVO;
 import com.kh.pj.vo.RecipeListVO;
 
 public interface MypageDao {
@@ -38,7 +39,7 @@ public interface MypageDao {
 	//List<RecipeDto> likeRecipeList(String memberId);
 	List<RecipeListVO> likeRecipeList(String memberId);
 	//내가 쓴 글 리스트
-	List<BoardDto> writeList(String memberId);
+	List<BoardListAddImgVO> writeList(String memberId);
 	
 	//내가 좋아요 한 글 카운트
 	int myLikeListCount(String memberId);
