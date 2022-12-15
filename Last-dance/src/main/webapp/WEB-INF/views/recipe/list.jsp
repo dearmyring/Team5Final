@@ -52,19 +52,20 @@ article {
 	flex-wrap: wrap;
 	flex-direction: row;
 	gap: 1em;
-	background-color: #f0f0f0;
+	/*background-color: #f0f0f0;*/
 	justify-content: center;
 }
 
 .recipe-recommend{
     display: flex;
     flex-direction: row;
-    height: 60px;
+    height: 70px;
 }
 
 .recipe-recommend-text{
 	font-size: 30px;
 	font-weight: 600;
+	margin: 0 50px;
 }
 
 .recipe-box-shadow {
@@ -193,12 +194,12 @@ margin 0 20px;
 padding: 10px;
 }
 
-.w-85 {
-    width:85%;
+.w-80 {
+    width:80%;
 }
 
-.w-15 {
-    width:15%;
+.w-20 {
+    width:20%;
 }
 
 </style>
@@ -207,8 +208,8 @@ padding: 10px;
 	<div class="layout">
 		<article>
 			<div class="recipe-recommend">			
-				<div class="recipe-recommend-text w-85">애플망고님이 당장 할 수 있는 요리를 추천해드릴게요.</div>
-				<div class= "sort-select w-15">
+				<div class="recipe-recommend-text w-80">${loginNick}님이 당장 할 수 있는 요리를 추천해드릴게요.</div>
+				<div class= "sort-select w-20">
 					<select class="sort-click">
 						<option value="recipe_no desc">최근 작성일 순</option>
 						<option value="recipe_click desc">조회수 높은 순</option>
