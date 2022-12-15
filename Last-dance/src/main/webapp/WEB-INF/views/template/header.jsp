@@ -44,7 +44,7 @@
 	           </div>
 	           <div class="menu-list-box">
 	                <ul class="menu-list">
-	                    <li><a href="#">전체보기</a></li>
+	                    <li><a href="/recipe/list">전체보기</a></li>
 	                    <li><span class="complex">통합검색</span></li>
 	                    <li><a href="/board/list">커뮤니티</a></li>
 	                </ul>
@@ -76,17 +76,20 @@
 		<!-- 헤더 영역 끝-->
 	    </div>
 	    <div class="center container-700 search-box">
-	    	<i class="fa-solid fa-magnifying-glass search-icon"></i>
-        	<input class="search-input w-100" name="ingredientName" type="text" 
-          		placeholder="냉장고 속 재료를 입력해보세요." autocomplete="off">
-          	 <!-- <img class="search-img" src="/images/search-image-character.png">  -->
-        	
-       	    <ul class="search-list">
-		        
-		    </ul>
+		    <form class="search-form">
+		    	<i class="fa-solid fa-magnifying-glass search-icon"></i>
+	        	<input class="search-input w-100" name="ingredientName" type="text" placeholder="냉장고 속 재료를 입력해보세요." autocomplete="off">
+	       	    <ul class="search-list">
+			       	<!-- 검색 제시어가 나올 영역 -->
+	       	    </ul>
+			    <div class="search-list-select left ms-50 me-50">
+			    	<!-- 검색할 재료를 선택하면 추가될 영역 -->
+			    </div>
+		    </form>
         </div>
 	    
     </header>
     <!-- 컨텐츠 영역 시작 -->
     <div class="content-area">
-  		
+
+ 
