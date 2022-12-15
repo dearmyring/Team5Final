@@ -35,11 +35,9 @@
  			$(".search-input").keyup(function(key){
  				var keyword = $(this).val();
 	 			var isEmpty = $(".search-list").empty();
-	 			
  				if(keyword == "") {
 		 			$(".search-list").css("display", "none");
- 				}
- 				isEmpty;
+ 				} isEmpty;
  				
 		  		$.ajax({
 					url:"http://localhost:8888/rest/search/" + keyword,
@@ -47,6 +45,7 @@
 					success: function(resp) {
 						$(".search-list").css("display", "block");
 						$(".search-list").empty();
+						
 						if(resp.length == 0) {
 							$(".search-list-select").css("display", "none");
 							$(".search-list").append("<div class='mt-30 not-in-keyword'>검색 결과가 없습니다 😥</div>");
