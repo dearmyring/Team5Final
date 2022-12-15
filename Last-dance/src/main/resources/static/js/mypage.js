@@ -93,8 +93,12 @@ $(function(){
 				$(".pw-confirm-form").find("div").find("div").removeClass("vibration");
 	});
     
-
-
+	
+	//프로그래스 바 조절
+	var expText = $(".exp").text();
+	var exp = parseInt(expText.split("%")[0]);
+	
+	$(".progressbar > .inner").css("width", exp+"%");
 
 
 
