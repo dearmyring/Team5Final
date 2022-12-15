@@ -12,6 +12,7 @@ import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.ProfileImageDto;
 import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.vo.BoardListAddImgVO;
 import com.kh.pj.vo.RecipeListVO;
 
 @Repository
@@ -95,7 +96,7 @@ public class MypageDaoImpl implements MypageDao {
 	
 	//내가 쓴 글 리스트
 	@Override
-	public List<BoardDto> writeList(String memberId) {
+	public List<BoardListAddImgVO> writeList(String memberId) {
 		
 		return sqlSession.selectList("mypage.myRrite", memberId);
 	}

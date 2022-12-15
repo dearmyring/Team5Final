@@ -3,6 +3,7 @@ package com.kh.pj.repository;
 import java.util.List;
 
 import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeDetailVO;
@@ -57,6 +58,23 @@ public interface RecipeDao {
 	//내가 본 레시피 시간 업데이트
 	boolean updateRecipeViewTime(RecipeViewDto recipeViewDto);
 	
+	//레시피 좋아요 확인
+	RecipeLikeDto recipeLikeOne(RecipeLikeDto dto);
+	
+	//좋아요 업
+	boolean likeUp(int recipeNo);
+	
+	//좋아요 다운
+	boolean likeDown(int recipeNo);
+	
+	//레시피 라이크 테이블 등록
+	void addLike(RecipeLikeDto dto);
+	
+	//레시피 라이크 테이블 삭제
+	boolean removeLike(RecipeLikeDto dto);
+	
+	//레시피 개수 출력
+	int countLike(int recipeNo);
 	
 
 }
