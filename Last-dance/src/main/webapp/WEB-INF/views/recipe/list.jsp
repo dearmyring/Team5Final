@@ -87,7 +87,7 @@ article {
 
 .img-thumnail {
 	width: 320px;
-    height: 230px;
+    height: 240px;
     object-fit: cover;
 }
 
@@ -190,8 +190,16 @@ margin 0 20px;
     margin-left: 50px;
 }
 
+.sort-click{
+ font-size: 15px;
+ font-weight: 600;
+ height: 30;
+ color: #373A3C;
+}
+
 .sort-select{
 padding: 10px;
+width: 100px;
 }
 
 .w-80 {
@@ -223,6 +231,7 @@ padding: 10px;
 			<div class="flexbox">
 				<div class="item float-container">
 					<c:forEach var="recipeListVO" items="${recipeList}">
+					<a href="/recipe/detail?recipeNo=${recipeListVO.recipeDto.recipeNo}">
 						<div 	class="add-recipe-box recipe-box-shadow main-1 container-320 float-margin-left">
 						
 							<div class="img-box">
@@ -252,7 +261,7 @@ padding: 10px;
 								</c:forEach>
 							</div>
 							</div>							
-						</div>
+						</div></a>
 					</c:forEach>
 				</div>
 			</div>
@@ -262,14 +271,7 @@ padding: 10px;
 </html>
 
 <script type="text/javascript">
-    $(function(){
-    	/* 레시피 검색창에서 엔터치면 검색 */
-    	$(".input-keyword").keydown(function(e){
-    		if(e.keyCode == 13) {
-    			$(".recipe-search-btn").click();
-    		}
-   		});
-   	 	
+    $(function(){ 	 	
     	/* 레시피 리스트 정렬 */
 		$(".sort-click").on("input", function(){
 			var sort = $(this).val();
@@ -281,9 +283,9 @@ padding: 10px;
 					sort: sort
 				}),
 				success: function(resp){
-					$(".recipe-list").find("tr").remove();
+					$(".list").find("item").remove();
 					for(var i=0; i<resp.length; i++){
-						var tr = $("<tr>");
+						var item = $("<item>");
 						var check = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
 						var tdCheck = $("<td>").append(check);
 						var tdNo = $("<td>").text(resp[i].recipeNo);
@@ -291,15 +293,12 @@ padding: 10px;
 						var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 						var tdNick = $("<td>").text(resp[i].recipeNick);
 						tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
-						$(".recipe-list").append(tr);
+						$(".list").append(item);
 					}
 				}
 			});
 		});    	
 </script>
-
-
-
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 
