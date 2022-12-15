@@ -268,6 +268,45 @@ input::placeholder {
     background-position-y: center;
 }
 
+.search-box {
+	height: 300px;
+	display: none;
+}
+
+.search-input {
+	color: white;
+	font-weight: bold;
+    font-size: 20px;
+    height: 80px;
+    padding: 1em;
+    padding-left: 80px;
+    outline: none;
+    border:1px solid #CBCACA;
+    border-radius: 25px;
+    background-color: #333333;
+}
+
+.search-input::placeholder {
+	color: white;
+	font-weight: bold;
+    font-size: 20px;
+}
+
+.search-icon {
+	position: relative;
+	left: -300px;
+	top: 50px;
+	color: white;
+    font-size: 20px;
+}
+
+.search-img {
+	position: relative;
+	left: 430px;
+	top: -120px;
+	width: 200px;
+}
+
 /*
     textarea는 기본적으로 폭 조절이 가능하여 디자인에 어려움이 많다
     - 높이만 조절되게 하던가
@@ -633,20 +672,20 @@ ul.pagination.pagination-small {
 }
 
 /*
-            float 설정
-            - float를 설정하면 현재 영역에서 left 혹은 right 방향에 붙는다(cf : 자석)
-            - (문제점) 
-                - float와 float가 아닌 요소들을 섞어서 배치할 때 문제가 발생
-                - float가 float 아닌 영역에 포함되지 않는다
-            - (해결책)
-                - float를 제거하는 속성인 clear를 float가 끝나는 시점에 사용한다
-                - clear 등장 이후부터는 float의 영향을 받지 않는다
-                
-            - (최종 형태)
-                - float는 필요하고, 다른 요소랑 어울리긴 힘드니 별도의 영역을 준비
-                - 해당 영역(.float-container) 종료 시 자동으로 clear 되도록 처리
-                - 가상 선택자(virtual selector)가 필요하다
-        */
+    float 설정
+    - float를 설정하면 현재 영역에서 left 혹은 right 방향에 붙는다(cf : 자석)
+    - (문제점) 
+        - float와 float가 아닌 요소들을 섞어서 배치할 때 문제가 발생
+        - float가 float 아닌 영역에 포함되지 않는다
+    - (해결책)
+        - float를 제거하는 속성인 clear를 float가 끝나는 시점에 사용한다
+        - clear 등장 이후부터는 float의 영향을 받지 않는다
+        
+    - (최종 형태)
+        - float는 필요하고, 다른 요소랑 어울리긴 힘드니 별도의 영역을 준비
+        - 해당 영역(.float-container) 종료 시 자동으로 clear 되도록 처리
+        - 가상 선택자(virtual selector)가 필요하다
+*/
 .float-container {}
 .float-container::after {
     content:"";
@@ -695,3 +734,57 @@ ul.pagination.pagination-small {
 .first > div {
     flex-grow: 1;
 }
+
+.complex {
+	cursor: pointer;
+}
+
+.search-list {
+	display: none;
+	border: none;
+	height: 250px;
+	overflow: auto;
+	font-size: 17px;
+	color: #373A3C;
+	
+}
+
+.search-list::-webkit-scrollbar {
+	width: 12px;
+}
+
+.search-list::-webkit-scrollbar-track {
+	  border-radius: 10px;
+	  border: 1px solid #D1D7E5;
+}
+
+.search-list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: 1px solid #D1D7E5;
+}
+
+.result-keyword {
+	padding: 15px;
+}
+
+.result-keyword:hover {
+	background: #F9FAFB;
+	border-radius: 10px;
+}
+
+.ingredient-input-box {
+	border: 1px solid black;
+	height: 250px;
+}
+.fa-square-plus {
+	color: #D1D7E5;
+}
+
+.not-in-keyword {
+	font-weight: 900;
+	color: #373A3C;
+	font-size: 25px;
+}
+
+
+
