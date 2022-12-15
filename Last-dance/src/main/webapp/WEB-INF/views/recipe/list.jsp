@@ -19,6 +19,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="레시피 리스트" name="title" />
 </jsp:include>
+
 <style>
 /*
                   Flextbox 특징
@@ -40,7 +41,6 @@
 	display: flex;
 	flex-wrap: wrap gap: 1em;
 }
-
 article {
 	flex-basis: 1100px;
 	flex-grow: 1;
@@ -200,6 +200,7 @@ padding: 10px;
 .w-15 {
     width:15%;
 }
+
 </style>
 </head>
 <body>
@@ -249,8 +250,7 @@ padding: 10px;
 									<div class="hashtag-box mt-10"> ${ingredient.recipeIngredientName}</div>
 								</c:forEach>
 							</div>
-							</div>
-							
+							</div>							
 						</div>
 					</c:forEach>
 				</div>
@@ -298,5 +298,7 @@ padding: 10px;
 </script>
 
 
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
 

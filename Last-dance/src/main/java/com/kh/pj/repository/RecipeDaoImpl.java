@@ -169,4 +169,6 @@ public class RecipeDaoImpl implements RecipeDao {
 		sqlSession.update("recipe.adminUpdate", recipeDto);
 	}
 
+
+
 }
