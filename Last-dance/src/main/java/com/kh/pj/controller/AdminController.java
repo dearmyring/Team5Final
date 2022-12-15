@@ -128,6 +128,7 @@ public class AdminController {
 			HttpSession session) {
 		//레시피 번호 뽑아서 넣기
 		int recipeNo = recipeDao.recipeSequence();
+		recipeDto.setRecipeTitle(recipeDto.getRecipeTitle().replace(" ", ""));
 		recipeDto.setRecipeNo(recipeNo);
 		//로그인 닉네임 뽑아서 넣기
 		String loginNick = (String)session.getAttribute(SessionConstant.NICK);

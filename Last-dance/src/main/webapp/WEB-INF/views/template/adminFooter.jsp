@@ -2,9 +2,19 @@
     pageEncoding="UTF-8"%>
 
 <script type="text/javascript">
-	/* 모든 돌아가기 + 모달창 구현 예정 */
-	$(".return-btn").click(function(){
-		history.back();
+	$(function(){
+		$(".main-page-link").addClass("text-dark").attr("href", "${pageContext.request.contextPath}/admin/").text("메인 페이지");
+		/* 모든 돌아가기 + 모달창 구현 예정 */
+		$(".return-btn").click(function(){
+			history.back();
+		});
+		
+		$(".logout-btn").click(function(e){
+			var choice = confirm("로그아웃 하시겠습니까?");
+			if(!choice){
+				e.preventDefault();
+			}
+		});
 	});
 </script>
 
