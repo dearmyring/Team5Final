@@ -44,7 +44,7 @@
 	           </div>
 	           <div class="menu-list-box">
 	                <ul class="menu-list">
-	                    <li><a href="#">전체보기</a></li>
+	                    <li><a href="/recipe/list">전체보기</a></li>
 	                    <li><a href="#">통합검색</a></li>
 	                    <li><a href="/board/list">커뮤니티</a></li>
 	                </ul>

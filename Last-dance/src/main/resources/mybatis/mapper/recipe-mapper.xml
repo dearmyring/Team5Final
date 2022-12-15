@@ -27,6 +27,8 @@
       select * from recipe_ingredient where recipe_no = #{recipeNo}
    </select>
    
+   
+   
    <!-- 레시피 리스트 계층형 조회 구문 -->
    <resultMap type="RecipeListVO" id="recipeList">
       <association property="recipeDto">
@@ -47,13 +49,18 @@
          <result column="recipe_ingredient_name" property="recipeIngredientName"/>      
          <result column="recipe_no" property="recipeNo"/>      
       </collection>
+      
+		
+		<collection property="recipeImgList" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImgList" column="recipe_no">
+			<result column="recipe_attachment_no" property="recipeAttachmentNo"/>
+			<result column="recipe_no" property="recipeNo"/>
+		</collection>
    </resultMap>
    
    
       <!--  레시피 전체조회(통합)  -->
    <select id="recipeList" resultMap="recipeList" >
-   select R.* ,RI.recipe_ingredient_name
-    from recipe R inner join recipe_ingredient RI on R.recipe_no=RI.recipe_no 
+   select * from recipe
    </select>
 
    
