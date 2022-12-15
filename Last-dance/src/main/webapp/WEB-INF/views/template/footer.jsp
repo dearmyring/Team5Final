@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-</div>
+	</div>
     <!-- 컨텐츠 영역 끝 -->
 
     <!-- 푸터 영역 시작 -->
@@ -22,6 +22,7 @@
  		$(function(){
  			// 검색창 토글
  			$(".complex").click(function(){
+ 				$("html, body").animate({scrollTop : 0}, 400);
                 $(".search-box").slideToggle(600);
             });
  			
@@ -57,10 +58,15 @@
 							}
 						}
 						if(key.keyCode == 13){
-			 				$(".search-list-select").append("<div class='get-ingredient ms-10 mt-10'>" + $(".search-input").val() + "</div>");
-							$(".search-list").css("display", "none");
-							$(".search-input").val("");
-							$(".search-list-select").css("display", "");
+							if(resp.length > 0) {
+				 				$(".search-list-select").append("<div class='get-ingredient ms-10 mt-10'>" + $(".search-input").val() + "</div>");
+								$(".search-list").css("display", "none");
+								$(".search-input").val("");
+								$(".search-list-select").css("display", "");
+							}
+							else {
+								alert("추가 불가, 임시 alert창임");
+							}
 		 				}
 						$(".get-keyword").click(function(e){
 							e.stopPropagation()
