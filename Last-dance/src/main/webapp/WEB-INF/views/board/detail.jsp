@@ -20,7 +20,7 @@
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script>
+<script type="text/javascript">
 	$(function(){
 		//목표 : 
 		//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
@@ -148,11 +148,10 @@
 				<tr class="view">
 					<td width="90%">
 						<!-- 작성자 -->
+						<pre>{{replyContent}}</pre>
+						<br>
 						({{memberBadge}}) 
 						{{memberNick}}			
-						<br>
-						<br>
-						<pre>{{replyContent}}</pre>
 						<br><br>
 						{{replyWriteTime}}
 						
@@ -182,13 +181,12 @@
 				<tr>
 					<th>제목</th>
 					<td>
-						${boardDto.boardTitle}
-						
+						${boardDto.boardTitle}						
 					</td>
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td>${boardDto.boardId}</td>
+					<td>${boardDto.memberNick}</td>
 				</tr>
 				<tr height="200" valign="top">
 					<th>내용</th>
@@ -243,9 +241,11 @@
 					<td colspan="2" align="right">
 						
 						<c:if test="${loginId != null}">
+							<a class="heart"></a>
+						
+						</c:if>
 						<!-- 좋아요 하트 -->
 						<c:if test="${isLike == null}">
-							<a class="heart">♥</a>
 						</c:if>
 						<c:if test="${isLike == true}">
 							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♥</a>
@@ -253,23 +253,32 @@
 						<c:if test="${isLike == false}">
 							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♡</a>
 						</c:if>
-						${likeCount}, ${boardDto.boardLike}	
+						추천:${likeCount} ${boardDto.boardLike}	
 						
+						<c:if test="">
 						<a class="btn btn-positive" href="write">글쓰기</a>	
 						</c:if>
 						
 						<%--
 							관리자는 삭제만, 회원은 자신의 글만 수정/삭제 가능하도록 처리
 						 --%>
-						<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
+						 
 						
-						<a class="btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정하기</a>	
-						<a class="btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>	
+					<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
+						
+					<c:if test="${owner}">
+						<a class="btn btn-positive" href="write">글쓰기</a>	
+						<a class="edit-btn btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정하기</a>	
+						<a class="board-delete btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>	
+					</c:if>
 						<a class="btn btn-neutral" href="list">목록으로</a>
+					
+					
 					</td>
 				</tr>
 			</tfoot>
 		</table>	
+		
 	</div>
 	
 	<div class="row center">
@@ -289,11 +298,11 @@
 				<tr class="view">
 					<td width="90%">
 						<!-- 작성자 -->
+						${replyDto.memberNick}(${replyDto.replyId})
 						(${replyDto.memberBadge}) 
-						${replyDto.memberNick}
-						(${replyDto.replyId})
+						<br>
 						<c:if test="${boardDto.boardId ==  replyDto.replyId}">
-						(작성자)
+						
 						</c:if>
 						
 						<br>
@@ -343,7 +352,7 @@
 														value="${replyDto.replyNo}">
 							<input type="hidden" name="replyBoardNo"
 														value="${replyDto.replyBoardNo}">
-							<textarea name="replyContent" rows="5" cols="50" 
+							<textarea class="input" name="replyContent" rows="5" cols="50" 
 									required>${replyDto.replyContent}</textarea>
 							<button type="submit">변경</button>
 							<a class="cancel-btn">취소</a>
@@ -397,6 +406,38 @@
 		</c:choose>
 	</div>
 </div>
+<script>
+
+$(function(){
+ 	$(".board-delete").click(function(e){
+ 		
+ 		var choice = confirm("정말 삭제하시겠습니까?");
+ 		if(!choice){
+ 			e.preventDefault();
+ 		}
+ 	});
+ });
+
+  $(function(){
+ 	$(".edit-btn1").click(function(e){
+ 		
+ 		var choice = confirm("수정 페이지로 이동합니다.");
+ 		if(!choice){
+ 			e.preventDefault();
+ 		}
+ 	});
+ });
+ $(function(){
+	 	$(".list-btn").click(function(e){
+	 		
+	 		var choice = confirm("목록으로 이동하시겠습니까?");
+	 		if(!choice){
+	 			e.preventDefault();
+	 		}
+	 	});
+	 });
+ 
+</script>
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

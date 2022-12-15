@@ -35,7 +35,7 @@
 				<h1>답글 작성</h1>
 			</c:when>
 			<c:otherwise>
-				<h1>게시글 작성</h1>
+				<h1>게시글 수정</h1>
 			</c:otherwise>
 		</c:choose>
 	</div>
