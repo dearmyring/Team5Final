@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,6 +44,11 @@ public class RecipeRestController {
 		return recipeDao.adminList(null);
 	}
 	
+	@GetMapping("/recipe")
+	public RecipeDto adminRecipeFind(@RequestParam String recipeTitle) {
+		return recipeDao.adminRecipeFind(recipeTitle.replace(" ", ""));
+	}
+
 	//레시피 좋아요
 	@GetMapping("/recipe_like/{recipeNo}")
 	public int likeUpdate(@PathVariable int recipeNo, HttpSession session) {

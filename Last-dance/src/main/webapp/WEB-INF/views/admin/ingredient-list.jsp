@@ -30,42 +30,85 @@
 </div>
 
 <div class="mt-5">&nbsp;</div>
-<h3>재료 리스트</h3>
-<select class="sort-click">
-	<option value="asc">재료명 오름차순</option>
-	<option value="desc">재료명 내림차순</option>
-</select>
+
+<div class="text-end">
+	<a class="main-page-link"></a> > 재료 리스트
+</div>
+
+<div class="container-fluid">
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<select class="sort-click">
+			<option value="asc">재료명 오름차순</option>
+			<option value="desc">재료명 내림차순</option>
+		</select>
+	</div>
+</div>
+
 <form class="ingredientName-form">
-<table class="table table-hover">
-	<thead>
-		<tr>
-			<th><input class="check-all" type="checkbox"></th>
-			<th>카테고리</th>
-			<th>재료명</th>
-		</tr>
-	</thead>
-	<tbody class="ingredient-list">
-		<c:forEach var="ingredientDto" items="${ingredientList}">
-			<tr>
-				<td><input class="check-item" name="ingredientName" value="${ingredientDto.ingredientName}" type="checkbox"></td>
-				<td>${ingredientDto.ingredientCategory}</td>
-				<td>${ingredientDto.ingredientName}</td>
-			</tr>
-		</c:forEach>
-	</tbody>
-</table>
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<table class="table">
+			<thead>
+				<tr>
+					<th><i class="fa-regular fa-square icon-check-all"></i></th>
+					<th>카테고리</th>
+					<th>재료명</th>
+				</tr>
+			</thead>
+			<tbody class="ingredient-list">
+				<c:forEach var="ingredientDto" items="${ingredientList}">
+					<tr>
+						<td>
+							<i class="fa-regular fa-square icon-check-item"></i>
+							<input class="check-item" name="ingredientName" value="${ingredientDto.ingredientName}" type="hidden">
+						</td>
+						<td>${ingredientDto.ingredientCategory}</td>
+						<td>${ingredientDto.ingredientName}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+</div>
 </form>
 
-<button type="button" class="ingredient-async-delete">삭제하기</button>
-<button type="button" class="ingredinet-async-insert">추가하기</button>
-<br>
+<div class="row mt-3">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="col-6 text-end">
+				<button type="button" class="ingredient-async-delete btn btn-light btn-md">삭제하기</button>
+			</div>
+			<div class="col-6">
+				<button type="button" class="ingredinet-async-insert btn yellow-btn btn-md">추가하기</button>
+			</div>
+		</div>
+	</div>
+</div>
 
-<select class="input-type">
-	<option value="ingredient_name">재료명</option>
-	<option value="ingredient_category">카테고리</option>
-</select>
-<input type="text" class="input-keyword">
-<button type="button" class="ingredient-search-btn">검색</button>
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+	<ul class="pagination" style="justify-content: center;">
+        <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+        <c:forEach var="no" begin="1" end="${voPagination.pageCnt}">
+	        <li class="page-item"><a class="page-link" href="#">${no}</a></li>
+        </c:forEach>
+        <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+    </ul>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 text-center">
+		<select class="input-type">
+			<option value="ingredient_name">재료명</option>
+			<option value="ingredient_category">카테고리</option>
+		</select>
+		<input type="text" class="input-keyword">
+		<button type="button" class="ingredient-search-btn">검색</button>
+	</div>
+</div>
+</div>	
 
 <script type="text/javascript">
 	$(function(){
