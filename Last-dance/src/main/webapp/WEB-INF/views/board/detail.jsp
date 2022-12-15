@@ -181,8 +181,7 @@
 				<tr>
 					<th>제목</th>
 					<td>
-						${boardDto.boardTitle}
-						
+						${boardDto.boardTitle}						
 					</td>
 				</tr>
 				<tr>

@@ -9,19 +9,54 @@
 
 
 <style>
+ .float-container {
+ 	width : 80%;
+ }
+.all-thumbnail-box {
+	position:relative;
+}
+
+.thumbnail-box {
+	position:absolute;
+}
+
+.thumnail{
+	width: 100%;
+	height:100%;
+	object-fit:cover;
+	
+	
+}
+.btn {
+    border: none;
+    font-size: 15px;
+    padding: 0.75em;/*글자 크기의 0.75배*/
+    cursor: pointer;
+    /* a 태그를 버튼으로 만들기 위해 추가 */
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.btn.btn-positive {
+    background-color: #35C5F0;
+    color: white;
+    font-weight: bold;
+}
 .board-list-item{
 	display:flex;
-	font-size:12px;
-	
+	font-size:15px;
+
 }
 .board-list-content{
 	display:flex;
 	font-size:30px;
 	margin-left :8px;
+	display : flex;
 	
 }
 .badge {
-	width: 15%;
+	width: 20%;
 }
 
 .search {
@@ -54,7 +89,9 @@ input {
 }
 
 .board-bottom{
+	width:700px;
 	border-bottom : 1px solid gray;
+	background-color:lightgray;
 }
 
 </style>
@@ -91,7 +128,7 @@ input {
 <table class="table">
 
 	<tbody class="board-list center mt-50">
-		<c:forEach var="boardDto" items="${boardList}">
+			<c:forEach var="boardDto" items="${boardList}">
 			<tr class="board-bottom">
 				<%-- <td>${boardDto.boardNo}</td> --%>
 				<td><div class="float-container">
@@ -116,8 +153,11 @@ input {
 							<div class="float-left">댓글 : ${boardDto.replyCnt}</div>
 						</div>
 					</div>
-					<div class="float-right w-20">
-						<img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}">
+					<div class="all-thumbnail-box w-20">
+						<%-- <img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}"> --%>
+						<div class="thumbnail-box">
+							<img class="thumnail" src="${pageContext.request.contextPath}/images/badge-1.png">
+						</div>
 					</div>						
 				</div></td>
 						

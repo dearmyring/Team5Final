@@ -20,7 +20,7 @@
 	$(function(){
 		$("[name=boardContent]").summernote({
 			height:300,
-			minHeight:300,
+			minHeight:700,
 		});
 	});
 </script>
