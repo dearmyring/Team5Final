@@ -122,13 +122,13 @@
 				success: function(resp){
 					$(".recipe-list").find("tr").remove();
 					for(var i=0; i<resp.length; i++){
-						var tr = $("<tr>").addClass("position-relative text-center");
+						var tr = $("<tr>").addClass("text-center");
 						var check = $("<input>").addClass("check-item")
 							.attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
 						var tdCheck = $("<td>").append(check);
 						var tdNo = $("<td>").text(resp[i].recipeNo);
 						var link = $("<a>").attr("href", "detail/"+resp[i].recipeNo)
-							.addClass("stretched-link text-decoration-none link-dark").text(resp[i].recipeTitle);
+							.addClass("text-decoration-none link-dark").text(resp[i].recipeTitle);
 						var tdTitle = $("<td>").addClass("text-start").append(link);
 						var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 						var tdNick = $("<td>").text(resp[i].recipeNick);
@@ -157,13 +157,13 @@
 				success: function(resp){
 					$(".recipe-list").find("tr").remove();
 					for(var i=0; i<resp.length; i++){
-						var tr = $("<tr>").addClass("position-relative text-center");
+						var tr = $("<tr>").addClass("text-center");
 						var check = $("<input>").addClass("check-item")
 							.attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
 						var tdCheck = $("<td>").append(check);
 						var tdNo = $("<td>").text(resp[i].recipeNo);
 						var link = $("<a>").attr("href", "detail/"+resp[i].recipeNo)
-							.addClass("stretched-link text-decoration-none link-dark").text(resp[i].recipeTitle);
+							.addClass("text-decoration-none link-dark").text(resp[i].recipeTitle);
 						var tdTitle = $("<td>").addClass("text-start").append(link);
 						var tdTime = $("<td>").text(resp[i].recipeTime+'분');
 						var tdNick = $("<td>").text(resp[i].recipeNick);

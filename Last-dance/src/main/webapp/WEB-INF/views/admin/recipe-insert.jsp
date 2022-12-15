@@ -637,25 +637,25 @@
                     success: function(resp){
                     	that.next().attr("src", resp);
                     	var attachmentNo = parseInt((resp.split("download/"))[1]);
-//                     	여기부터
-//                     	if(that.parent().hasClass("thumb-page")){
-// 	                    	var imgNo = $("<input>").attr("type", "hidden").addClass("img-no").attr("name", "recipeAttachmentNo").val(attachmentNo);
-// 							that.parent().find(".preview-disabled").first().removeClass("preview-disabled");
-//                     	}
-//                     	if(that.parents(".content-page").hasClass("content-page")){
-// 	                    	var imgNo = $("<input>").attr("type", "hidden").addClass("img-no").attr("name", "recipeContentAttachmentNo").val(attachmentNo);
-//                     	}
-//                     	if(that.prev().hasClass("img-no")){
-//                     		that.prev().val(attachmentNo);
-//                     	}
-//                     	else{
-// 							that.before(imgNo);
-//                     	}
+                    	if(that.parent().hasClass("thumb-page")){
+	                    	var imgNo = $("<input>").attr("type", "hidden").addClass("img-no").attr("name", "recipeAttachmentNo").val(attachmentNo);
+							that.parent().find(".preview-disabled").first().removeClass("preview-disabled");
+                    	}
+                    	if(that.parents(".content-page").hasClass("content-page")){
+	                    	var imgNo = $("<input>").attr("type", "hidden").addClass("img-no").attr("name", "recipeContentAttachmentNo").val(attachmentNo);
+                    	}
+                    	if(that.prev().hasClass("img-no")){
+                    		that.prev().val(attachmentNo);
+                    	}
+                    	else{
+							that.before(imgNo);
+                    	}
                     }
                 });
             }
             else{
                 that.next().attr("src", "${pageContext.request.contextPath}/images/img_plus.png");
+				that.prev().remove();
             }
         });
     });

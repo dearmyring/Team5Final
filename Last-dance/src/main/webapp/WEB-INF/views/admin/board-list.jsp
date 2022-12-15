@@ -74,12 +74,12 @@
 				success: function(resp){
 					$(".board-list").find("tr").remove();
 					for(var i=0; i<resp.length; i++){
-						var tr = $("<tr>").addClass("position-relative text-center");
+						var tr = $("<tr>").addClass("text-center");
 						var check = $("<input>").addClass("check-item").attr("name", "boardNo")
 							.val(resp[i].recipeNo).attr("type", "checkbox");
 						var tdCheck = $("<td>").append(check);
 						var link = $("<a>").attr("href", "detail/"+resp[i].boardNo)
-							.text(resp[i].boardTitle).addClass("stretched-link text-decoration-none link-dark");
+							.text(resp[i].boardTitle).addClass("text-decoration-none link-dark");
 						var tdTitle = $("<td>").addClass("text-start").append(link);
 						var tdNick = $("<td>").text(resp[i].memberNick);
 						var tdClick = $("<td>").text(resp[i].boardClick);
