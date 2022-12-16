@@ -203,16 +203,7 @@
     				contentType: "application/json",
     				data: JSON.stringify(ingredientList),
     				success: function(resp){
-                        $(".ingredient-insert-modal").modal("hide");
-						for(var i=0; i<resp.length; i++){
-							var tr = $("<tr>");
-							var check = $("<input>").addClass("check-item").attr("name", "ingredientName").val(resp[i].ingredientName).attr("type", "checkbox");
-							var tdCheck = $("<td>").append(check);
-							var tdCate = $("<td>").text(resp[i].ingredientCategory);
-							var tdName = $("<td>").text(resp[i].ingredientName);
-							tr.append(tdCheck).append(tdCate).append(tdName);
-							$(".ingredient-list").append(tr);
-						}
+    					list(resp);
     				}
     			});
     		}
@@ -233,16 +224,7 @@
 						method: "delete",
 						contentType: "application/json",
 						success: function(resp){
-							$(".ingredient-list").find("tr").remove();
-							for(var i=0; i<resp.length; i++){
-								var tr = $("<tr>");
-								var check = $("<input>").addClass("check-item").attr("name", "ingredientName").val(resp[i].ingredientName).attr("type", "checkbox");
-								var tdCheck = $("<td>").append(check);
-								var tdCate = $("<td>").text(resp[i].ingredientCategory);
-								var tdName = $("<td>").text(resp[i].ingredientName);
-								tr.append(tdCheck).append(tdCate).append(tdName);
-								$(".ingredient-list").append(tr);
-							}
+							list(resp);
 						}
 					});
 				}
@@ -275,16 +257,7 @@
 				method: "get",
 				contentType: "application/json",
 				success: function(resp){
-					$(".ingredient-list").find("tr").remove();
-					for(var i=0; i<resp.length; i++){
-						var tr = $("<tr>");
-						var check = $("<input>").addClass("check-item").attr("name", "ingredientName").val(resp[i].ingredientName).attr("type", "checkbox");
-						var tdCheck = $("<td>").append(check);
-						var tdName = $("<td>").text(resp[i].ingredientName);
-						var tdCate = $("<td>").text(resp[i].ingredientCategory);
-						tr.append(tdCheck).append(tdCate).append(tdName);
-						$(".ingredient-list").append(tr);
-					}
+					list(resp);
 				}
 			});
 			
@@ -305,24 +278,27 @@
 				method: "get",
 				contentType: "application/json",
 				success: function(resp){
-					$(".ingredient-list").find("tr").remove();
-					for(var i=0; i<resp.length; i++){
-						var tr = $("<tr>");
-						var check = $("<input>").addClass("check-item").attr("name", "ingredientName").val(resp[i].ingredientName).attr("type", "checkbox");
-						var tdCheck = $("<td>").append(check);
-						var tdName = $("<td>").text(resp[i].ingredientName);
-						var tdCate = $("<td>").text(resp[i].ingredientCategory);
-						tr.append(tdCheck).append(tdCate).append(tdName);
-						$(".ingredient-list").append(tr);
-					}
+					list(resp);
 				}
 			});
 		});
     	
-    	/* 추가하기 버튼 클릭 시 모달 추가창 구현 예정 */
-    	$(".ingredinet-async-insert").click(function(){
-    		
-    	});
+		function list(resp) {
+			$(".ingredient-list").empty();
+			for(var i=0; i<resp.length; i++){
+				var tr = $("<tr>");
+				var check = $("<input>").addClass("check-item").attr("name", "recipeNo")
+					.val(resp[i].recipeNo).attr("type", "hidden");
+				var checkIcon = $("<i>").addClass("fa-regular fa-square icon-check-item");
+				var tdCheck = $("<td>").append(checkIcon).append(check);
+				var tdCate = $("<td>").text(resp[i].ingredientCategory);
+				var tdName = $("<td>").text(resp[i].ingredientName);
+				tr.append(tdCheck).append(tdCate).append(tdName);
+				$(".ingredient-list").append(tr);
+			}
+			$(".icon-check-all").removeClass("fa-regular fa-square-check")
+			.addClass("fa-regular fa-square");
+		}
 	});
 </script>
 <jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeLikeDto;
+import com.kh.pj.repository.AdminDao;
 import com.kh.pj.repository.RecipeDao;
-import com.kh.pj.vo.RecipeListSearchVO;
+import com.kh.pj.vo.ListSearchVO;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RequestMapping("/rest")
@@ -27,10 +28,16 @@ public class RecipeRestController {
 	
 	@Autowired
 	private RecipeDao recipeDao;
+	@Autowired
+	private AdminDao adminDao;
 	
 	@PostMapping("/recipe")
 	public List<RecipeDto> adminList(
-			@RequestBody RecipeListSearchVO vo){
+			@RequestBody ListSearchVO vo){
+		vo.setTable("recipe");
+		vo.setCount(adminDao.adminPostCount(vo));
+		vo.setStartPost(vo.startRow());
+		vo.setEndPost(vo.endRow());
 		return recipeDao.adminList(vo); 
 	}
 	
@@ -41,7 +48,9 @@ public class RecipeRestController {
 		for(String no : recipeNo) {
 			recipeDao.delete(Integer.parseInt(no));
 		}
-		return recipeDao.adminList(null);
+		ListSearchVO vo = ListSearchVO.builder().table("recipe").build();
+		vo.setCount(adminDao.adminPostCount(vo));
+		return recipeDao.adminList(vo);
 	}
 	
 	@GetMapping("/recipe")

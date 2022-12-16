@@ -46,7 +46,7 @@
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
 			<div class="col-6 text-end">
-				<button class="btn btn-md btn-light" type="button" class="notice-async-delete">삭제하기</button>
+				<button class="btn btn-md btn-light notice-async-delete" type="button">삭제하기</button>
 			</div>
 			<div class="col-6">
 				<a class="btn btn-md yellow-btn" href="write">작성하기</a>
@@ -61,8 +61,15 @@
 	$(function(){
 		/* 체크박스 선택 삭제 시 비동기 처리 */
 		$(".notice-async-delete").click(function(){
+			console.log(this);
+			var checkboxes = $(".icon-check-item");
+			for(var i=0; i<checkboxes.length; i++){
+				if(checkboxes.eq(i).hasClass("fa-square")){
+					checkboxes.eq(i).next().remove();
+				}
+			}
+			var param = $(".noticeNo-form .check-item").serialize();
 			
-			var param = $(".noticeNo-form input:checked").serialize();
 			if(!param){
 				alert("삭제할 공지글을 선택하세요.");
 				return;
@@ -74,17 +81,23 @@
 						method: "delete",
 						contentType: "application/json",
 						success: function(resp){
-							$(".notice-list").find("tr").remove();
+							$(".notice-list").empty();
 							for(var i=0; i<resp.length; i++){
-								var tr = $("<tr>");
-								var check = $("<input>").addClass("check-item").attr("name", "noticeNo").val(resp[i].noticeNo).attr("type", "checkbox");
-								var tdCheck = $("<td>").append(check);
+								var tr = $("<tr>").addClass("text-center");
+								var check = $("<input>").addClass("check-item").attr("name", "boardNo")
+									.val(resp[i].recipeNo).attr("type", "hidden");
+								var checkIcon = $("<i>").addClass("fa-regular fa-square icon-check-item");
+								var tdCheck = $("<td>").append(checkIcon).append(check);
 								var tdNo = $("<td>").text(resp[i].noticeNo);
-								var tdTitle = $("<td>").append($("<a>").attr("href", "detail/"+resp[i].noticeNo).text(resp[i].noticeTitle));
+								var link = $("<a>").attr("href", "detail/"+resp[i].noticeNo)
+									.addClass("text-decoration-none link-dark").text(resp[i].noticeTitle);
+								var tdTitle = $("<td>").addClass("text-start").append(link);
 								var tdNick = $("<td>").text(resp[i].noticeNick);
 								tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdNick);
 								$(".notice-list").append(tr);
 							}
+							$(".icon-check-all").removeClass("fa-regular fa-square-check")
+							.addClass("fa-regular fa-square");
 						}
 					});
 				}

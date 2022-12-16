@@ -3,36 +3,69 @@
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
 <div class="mt-5">&nbsp;</div>
-<h3>공지사항 작성</h3>
+
+<div class="text-end">
+	<a class="main-page-link"></a> > 
+	<a href="list" class="text-dark">공지사항</a> > 작성
+</div>
+
+<div class="container-fluid mt-5">
+
 <form class="notice-insert-form" action="write" method="post" autocomplete="off">
-<input type="text" name="noticeTitle">
-<textarea name="noticeContent" placeholder="내용을 입력하세요."></textarea>
-<button class="notice-insert-btn" type="submit">등록하기</button>
-<button class="return-btn" type="button">돌아가기</button>
+
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="col-2">
+				제목
+			</div>
+			<div class="col-10">
+				<input class="w-100" type="text" name="noticeTitle">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="col-2">
+				내용
+			</div>
+			<div class="col-10">
+				<textarea class="w-100" name="noticeContent" placeholder="내용을 입력하세요."></textarea>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row">
+			<div class="col-6 text-end">
+				<button class="return-btn btn btn-md btn-light" type="button">돌아가기</button>
+			</div>
+			<div class="col-6">
+				<button class="notice-insert-btn btn btn-md yellow-btn" type="submit">등록하기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 </form>
+
+</div>
 
 <script type="text/javascript">
 	$(function(){
-		/* 상태객체 */
-		var validChecker = {
-			titleValid : false,
-			contentValid : false,
-			isAllValid : function(){
-				return this.titleVlid && this.contentValid;
-			}
-		};
-		
 		/* 빈칸 제출 방지 */
 		$(".notice-insert-form").submit(function(e){
 			var noticeTitle = $("[name=noticeTitle]").val();
 			var noticeContent = $("[name=noticeContent]").val();
 			if(noticeTitle && noticeContent){
 				var choice = confirm("등록하시겠습니까?");
-				if(choice){
-					$(".notice-insert-form").submit;
-				}
-				else{
-					return false;
+				if(!choice){
+					e.preventDefault();
 				}
 			}
 			else{

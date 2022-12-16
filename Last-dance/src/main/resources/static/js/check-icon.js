@@ -4,8 +4,7 @@
  */
 
 $(function(){
-
-    $(".icon-check-item").click(function(){
+	$(document).on("click",".icon-check-item",(function(){
         if(!$(this).hasClass("fa-square-check")){
             $(this).removeClass("fa-regular fa-square")
             $(this).addClass("fa-regular fa-square-check");
@@ -28,7 +27,7 @@ $(function(){
                 $(".icon-check-all").removeClass("fa-regular fa-square-check").addClass("fa-regular fa-square");
             }
         }
-    });
+    }));
     
     $(".icon-check-all").click(function(){
         if(!$(this).hasClass("fa-square-check")){

@@ -15,7 +15,7 @@ import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeDetailVO;
-import com.kh.pj.vo.RecipeListSearchVO;
+import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.RecipeListVO;
 
 @Repository
@@ -88,7 +88,7 @@ public class RecipeDaoImpl implements RecipeDao {
 	}
 
 	@Override
-	public List<RecipeDto> adminList(RecipeListSearchVO vo) {
+	public List<RecipeDto> adminList(ListSearchVO vo) {
 		return sqlSession.selectList("recipe.adminList", vo);
 	}
 

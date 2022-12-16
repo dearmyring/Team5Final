@@ -7,7 +7,7 @@ import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeDetailVO;
-import com.kh.pj.vo.RecipeListSearchVO;
+import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.RecipeListVO;
 
 public interface RecipeDao {
@@ -31,7 +31,7 @@ public interface RecipeDao {
 	public boolean updateClickCount(int noticeNo);
 	
 	//관리자 레시피 조회
-	public List<RecipeDto> adminList(RecipeListSearchVO vo);
+	public List<RecipeDto> adminList(ListSearchVO vo);
 	public RecipeDto adminDetail(int recipeNo);
 	public void adminUpdate(RecipeDto recipeDto);
 	

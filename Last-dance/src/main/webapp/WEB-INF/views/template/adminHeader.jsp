@@ -30,15 +30,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.0.2/litera/bootstrap.min.css" integrity="sha512-WC/IImFzoPRFTlJQpUSqaM1QOKsIWIfrmhkkXRXoDeB9hlArdsUAWOURes+oFcDRPUUZhuc2QdyfaZEGXjd6kg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
+    	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 		*{ font-family: 'Noto Sans KR', sans-serif; }
 
 		.table-link tbody tr { background-color:white; }
-		.table-link tbody tr:hover { background-color:#ececec; transition: 0.3s }
+		.table-link tbody tr:hover { background-color:#ececec; transition: 0.3s; }
 		
-		.yellow-btn { 
-			background-color:#ECBE42;
-			color:white;
-		}
+		.yellow-btn { background-color:#ECBE42;	color:white; }
+		.btn-light:hover { background-color:#e9ecef; transition: 0.3s; }
+		
+		.pagination { cursor:pointer; }
+		.pagination .disabled { cursor:default; }
 		
 		.icon-check-all,
 		.icon-check-item{

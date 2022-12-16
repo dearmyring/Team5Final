@@ -107,7 +107,7 @@
 	</div>
 	<!-- 디테일 컨텐츠 영역 끝 -->
 	<div class="btn-box">
-		<a href="#" class="btn btn-positive">다른 요리 보러가기</a>
+		<a href="list" class="btn btn-positive">다른 요리 보러가기</a>
 	</div>
 	
 </div>
