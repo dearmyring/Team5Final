@@ -46,6 +46,7 @@
 		.icon-check-item{
 			cursor: pointer;
 		}
+		
     </style>
 </head>
 <body>
@@ -56,7 +57,7 @@
         <!-- navbar : 드롭다운 메뉴를 제공하는 상단 메뉴바 -->
         <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top d-lg-flex flex-column align-items-lg-center">
             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid">
                 <!-- brand : 로고 이미지와 대표 상호를 적는 공간 -->
                 <a class="col-2 navbar-brand" href="${pageContext.request.contextPath}/admin/">
@@ -106,6 +107,15 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+            <div>
+            	<ul class="d-lg-flex list-unstyled">
+            		<a href="#"><li>여기가 거기</li></a>
+            		<span>&nbsp;&gt;&nbsp;</span>
+            		<a href="#"><li>여기가 거기</li></a>
+            		<span>&nbsp;&gt;&nbsp;</span>
+            		<a href="#"><li>여기가 거기</li></a>
+            	</ul>
             </div>
 		</nav>
 	</div>
