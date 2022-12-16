@@ -13,4 +13,8 @@
 	<select id="find" parameterType="int" resultType="int">
 		select recipe_attachment_no from recipe_img where recipe_no=${recipeNo} order by recipe_attachment_no asc
 	</select>
+	
+	<delete id="adminDelete" parameterType="int">
+		delete recipe_img where recipe_no=${recipeNo}
+	</delete>
 </mapper>

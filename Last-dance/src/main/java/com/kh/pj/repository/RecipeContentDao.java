@@ -20,4 +20,6 @@ public interface RecipeContentDao {
 	//레시피 내용 삭제
 	public boolean delete(int recipeContentNo);
 
+	//레시피 내용 한 번에 삭제
+	public void adminDelete(int recipeNo);
 }

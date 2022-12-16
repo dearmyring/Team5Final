@@ -17,6 +17,14 @@
 
     <!-- font awesome CDN-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+    
+    <style>
+		.yellow-btn { 
+			background-color:#ECBE42;
+			color:white;
+		}
+    </style>
+    
   </head>
   <body>
 
@@ -51,7 +59,7 @@
         <div class="row mt-4">
             <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
                 <div class="form-floating">
-                    <button class="login-btn btn btn-lg w-100 rounded btn-warning admin-login-btn" type="submit">로그인</button>
+                    <button class="login-btn btn btn-lg w-100 rounded yellow-btn admin-login-btn" type="submit">로그인</button>
                 </div>
             </div>
         </div>
@@ -102,13 +110,12 @@
                             adminPw : adminPw
                         }),
                         success: function(resp){
+                        	console.log(resp);
                             if(resp == 'fail'){
                                 $("[name=adminId]").addClass("is-invalid");
                                 $("[name=adminPw]").addClass("is-invalid");
                             }
                             else{
-                            	var adminNick = $("<input>").attr("name", "adminNick").val(resp);
-                            	$(".admin-login-form").append(adminNick);
 								$(".admin-login-form").submit();
                             }
                         }

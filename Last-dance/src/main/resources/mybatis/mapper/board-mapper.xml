@@ -5,43 +5,96 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 
-	<select id="list" resultType="BoardListVO">
-		select 
-  			  B.*,
-  			  M.member_nick,
-  			  M.member_badge
-		from board B inner join member M on B.board_id = M.member_id
+	<select id="list" parameterType="BoardListSearchVO" resultType="BoardListVO">
+	select
+	  		  B.*,
+  	 		 M.member_nick,
+   			 M.member_badge
+		from (
+	select 
+    		board.*, 
+   			NVL(reply_cnt, 0) reply_cnt
+		from (
+    SELECT
+        reply_board_no, 
+        count(reply_no) reply_cnt 
+    FROM reply
+   	 GROUP BY reply_board_no
+		) reply right outer join board on reply.reply_board_no=board.board_no
+		) B inner join member M on B.board_id = M.member_id
+		<where>
+			<if test="type != null and keyword !=''">
+				and instr(${type},#{keyword})>0
+			</if>
+		</where>
+		<if test = "sort != null">
+				order by ${sort}
+		</if>
 	</select>
-
+	
 
 	<insert id="insert" parameterType="BoardDto">
 		insert into board(
 		board_no,
+		board_id,
 		board_title,
 		board_content)
-		values(
-		board_seq.nextval,
+		values(${boardNo},
+		#{boardId},
 		#{boardTitle},
 		#{boardContent}
 		)
 	</insert>
 
 	<delete id="delete" parameterType="int">
-		delete board where board_no=#{boardNo}
+		delete board where
+		board_no=#{boardNo}
 	</delete>
-	
-	
-	<update id="edit" parameterType = "BoardDto">
+
+
+	<update id="edit" parameterType="BoardDto">
 		update board
-			set
-				board_title=#{boardTitle},
-				board_content=#{boardContent},
-				board_edittime=sysdate
+		set
+		board_title=#{boardTitle},
+		board_content=#{boardContent},
+		board_edittime=sysdate
+		where
+		board_no = #{boardNo}
 	</update>
-	
-	<select id="get" parameterType="int" resultType="BoardDto">
-		select * from board where no = #{no}
+
+<!-- 게시글 작성하면 포인트 업데이트 -->
+	<update id="updatePoint"  parameterType="MemberDto">
+		update member set member_point = member_point + #{memberPoint}
+		where member_id = #{memberId}
+  </update>  
+  
+  <!-- 게시글 삭제하면 포인트 down -->
+  <update id="deletePoint"  parameterType="MemberDto">
+		update member set member_point = member_point - #{memberPoint}
+		where member_id = #{memberId}
+  </update>  
+  
+  <!-- 오늘 하루 게시글 insert 카운트  -->
+  	<select id="boardCNT" parameterType="MemberDto" resultType="int">
+ 	 	select count(*) from board where board_id=#{memberId} and to_date(board_writetime, 'yy/mm/dd')=to_date(sysdate, 'yy/mm/dd')
+  	</select>
+
+<!--오늘 하루 댓글 수 카운트 -->
+	<select id="replyCNT" parameterType="MemberDto" resultType="int">
+		select count(*) from reply where reply_id=#{memberId} and to_date(reply_writetime, 'yy/mm/dd')=to_date(sysdate, 'yy/mm/dd')
 	</select>
 	
+	<select id="detail" parameterType="int" resultType="BoardListVO">
+		select board.*,member_nick,member_badge 
+		from board left outer join member on board_id=member_id 
+		where board_no=#{boardNo}
+	</select>
+
+	<!-- 조회수 증가 처리 -->
+	<update id="plusReadCount">
+		update board set board_click=board_click+1
+		where board_no=#{boardNo}
+	</update>
+
 
 </mapper>

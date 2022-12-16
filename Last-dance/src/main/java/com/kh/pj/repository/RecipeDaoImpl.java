@@ -11,7 +11,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.RecipeDto;
+import com.kh.pj.entity.RecipeLikeDto;
+import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
+import com.kh.pj.vo.RecipeDetailVO;
 import com.kh.pj.vo.RecipeListSearchVO;
 import com.kh.pj.vo.RecipeListVO;
 
@@ -126,9 +129,94 @@ public class RecipeDaoImpl implements RecipeDao {
 						+"on R.recipe_no=RI.recipe_no where recipe_ingredient_name=?";
 		return jdbcTemplate.query(sql,  countMapper);
 	}
+	
+	
+	
+	
+	
+	
+	//여기부터 레시피 디테일
+	
+	//레시피 상세페이지 출력
+	@Override
+	public RecipeDetailVO selectDetail(int recipeNo) {
+		
+		return sqlSession.selectOne("recipe.detail", recipeNo);
+	}
+	
+	//내가 본 레시피 조회
+	@Override
+	public RecipeViewDto myViewRecipe(RecipeViewDto recipeViewDto) {
+		
+		return sqlSession.selectOne("recipe.myViewRecipe", recipeViewDto);
+	}
+	
+	//내가 본 레시피 등록
+	@Override
+	public void insertRecipeView(RecipeViewDto recipeViewDto) {
+		sqlSession.insert("recipe.insertViewRecipe", recipeViewDto);
+		
+	}
+	
+	//내가 본 레시피 시간 업데이트
+	@Override
+	public boolean updateRecipeViewTime(RecipeViewDto recipeViewDto) {
+		int result = sqlSession.update("recipe.updateRecipeViewTime", recipeViewDto);
+		return result > 0;
+	}
 
+	@Override
+	public void adminUpdate(RecipeDto recipeDto) {
+		sqlSession.update("recipe.adminUpdate", recipeDto);
+	}
+	
+	//레시피 좋아요 확인
+	@Override
+	public RecipeLikeDto recipeLikeOne(RecipeLikeDto dto) {
+			
+		return sqlSession.selectOne("recipe.selectRecipeLike", dto);
+	}
+	
+	//좋아요 업
+	@Override
+	public boolean likeUp(int recipeNo) {
+		int result = sqlSession.update("recipe.likeUp", recipeNo);
+		return result > 0;
+	}
+	
+	//좋아요 다운
+	@Override
+	public boolean likeDown(int recipeNo) {
+		int result = sqlSession.update("recipe.likeDown", recipeNo);
+		return result > 0;
+	}
 
+	//레시피 라이크 테이블 등록
+	@Override
+	public void addLike(RecipeLikeDto dto) {
+		sqlSession.insert("recipe.addRecipeLike", dto);
+		
+	}
+	
+	//레시피 라이크 테이블 삭제
+	@Override
+	public boolean removeLike(RecipeLikeDto dto) {
+		int result = sqlSession.delete("recipe.removeRecipeLike", dto);
+		return result > 0;
+	}
+	
+	//레시피 개수 출력
+	@Override
+	public int countLike(int recipeNo) {
+		
+		return sqlSession.selectOne("recipe.countLike", recipeNo);
+	}
+	
+	
+
+	@Override
+	public RecipeDto adminRecipeFind(String recipeTitle) {
+		return sqlSession.selectOne("recipe.adminRecipeFind", recipeTitle);
+	}
 
 }
-
-

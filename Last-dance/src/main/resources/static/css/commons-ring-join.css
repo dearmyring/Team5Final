@@ -6,12 +6,6 @@
     - css에서는 계산식이 모든 브라우저에서 작동하지 않는다
     - 미리 예상 가능한 크기를 준비해두면 편하게 쓸 수 있지 않을까?
 */
-<!-- 글꼴 Noto Sans Korean -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-
-
 
 .container-100 { width:100px; margin:0 auto; }
 .container-150 { width:150px; margin:0 auto; }
@@ -75,6 +69,7 @@
 .center {text-align: center;}
 .right {text-align: right;}
 
+
 /*
     margin은 간격을 벌리기 위해서 사용한다
     어떨때는 12px, 어떨때는 17px과 같이 부여하면 일관성이 떨어진다
@@ -105,6 +100,7 @@
 .ms-60 { margin-left: 60px;}
 
 .me-0 { margin-right: 0px;}
+.me-5 { margin-right: 5px;}
 .me-10 { margin-right: 10px;}
 .me-20 { margin-right: 20px;}
 .me-30 { margin-right: 30px;}
@@ -270,6 +266,45 @@ input::placeholder {
     background-repeat: no-repeat;
     background-position-x: 0.75em;
     background-position-y: center;
+}
+
+.search-box {
+	height: 300px;
+	display: none;
+}
+
+.search-input {
+	color: white;
+	font-weight: bold;
+    font-size: 20px;
+    height: 80px;
+    padding: 1em;
+    padding-left: 80px;
+    outline: none;
+    border:1px solid #CBCACA;
+    border-radius: 25px;
+    background-color: #333333;
+}
+
+.search-input::placeholder {
+	color: white;
+	font-weight: bold;
+    font-size: 20px;
+}
+
+.search-icon {
+	position: relative;
+	left: -300px;
+	top: 50px;
+	color: white;
+    font-size: 20px;
+}
+
+.search-img {
+	position: relative;
+	left: 430px;
+	top: -120px;
+	width: 200px;
 }
 
 /*
@@ -513,14 +548,12 @@ ul.pagination.pagination-small {
 /*
     드롭다운(drop down) 메뉴 만들기
     - HTML 구조는 ul로 구현한다
-
     (1) 1차 메뉴와 2차 메뉴, 모든 메뉴에 대한 선택자가 다르다
         - 1차 메뉴 : .dropdown-menu > li
         - 2차 메뉴 : .dropdown-menu > li > ul > li
         - 3차 메뉴 : .dropdown-menu > li > ul > li > ul > li
         - 모든 메뉴 : .dropdown-menu li
         - 2차 이상 메뉴 : .dropdown-menu ul > li
-
     (2) 모든 메뉴 태그의 여백과 표시방식을 변경
     (3) 1차 메뉴의 표시방식(display)을 inline-block으로 변경
     (4) 
@@ -533,10 +566,8 @@ ul.pagination.pagination-small {
     
     (+추가)
     (9) 우측에 붙는 메뉴를 구현
-
     (+추가)
     (10) 3차메뉴부터는 하단이 아닌 옆에 나오도록 처리
-
     (+추가)
     (11) 확장 스타일을 부여하면 메뉴를 상단에 고정하도록 변경
 */
@@ -641,20 +672,20 @@ ul.pagination.pagination-small {
 }
 
 /*
-            float 설정
-            - float를 설정하면 현재 영역에서 left 혹은 right 방향에 붙는다(cf : 자석)
-            - (문제점) 
-                - float와 float가 아닌 요소들을 섞어서 배치할 때 문제가 발생
-                - float가 float 아닌 영역에 포함되지 않는다
-            - (해결책)
-                - float를 제거하는 속성인 clear를 float가 끝나는 시점에 사용한다
-                - clear 등장 이후부터는 float의 영향을 받지 않는다
-                
-            - (최종 형태)
-                - float는 필요하고, 다른 요소랑 어울리긴 힘드니 별도의 영역을 준비
-                - 해당 영역(.float-container) 종료 시 자동으로 clear 되도록 처리
-                - 가상 선택자(virtual selector)가 필요하다
-        */
+    float 설정
+    - float를 설정하면 현재 영역에서 left 혹은 right 방향에 붙는다(cf : 자석)
+    - (문제점) 
+        - float와 float가 아닌 요소들을 섞어서 배치할 때 문제가 발생
+        - float가 float 아닌 영역에 포함되지 않는다
+    - (해결책)
+        - float를 제거하는 속성인 clear를 float가 끝나는 시점에 사용한다
+        - clear 등장 이후부터는 float의 영향을 받지 않는다
+        
+    - (최종 형태)
+        - float는 필요하고, 다른 요소랑 어울리긴 힘드니 별도의 영역을 준비
+        - 해당 영역(.float-container) 종료 시 자동으로 clear 되도록 처리
+        - 가상 선택자(virtual selector)가 필요하다
+*/
 .float-container {}
 .float-container::after {
     content:"";
@@ -703,3 +734,72 @@ ul.pagination.pagination-small {
 .first > div {
     flex-grow: 1;
 }
+
+.complex {
+	cursor: pointer;
+}
+
+.search-list {
+	display: none;
+	border: none;
+	height: 250px;
+	overflow: auto;
+	font-size: 17px;
+	color: #373A3C;
+	
+}
+
+.search-list::-webkit-scrollbar {
+	width: 12px;
+}
+
+.search-list::-webkit-scrollbar-track {
+	  border-radius: 10px;
+	  border: 1px solid #D1D7E5;
+}
+
+.search-list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: 1px solid #D1D7E5;
+}
+
+.result-keyword {
+	padding: 15px;
+}
+
+.result-keyword:hover {
+	background: #F9FAFB;
+	border-radius: 10px;
+}
+
+.ingredient-input-box {
+	border: 1px solid black;
+	height: 250px;
+}
+.fa-square-plus {
+	color: #D1D7E5;
+}
+
+.not-in-keyword {
+	font-weight: 900;
+	color: #373A3C;
+	font-size: 25px;
+}
+
+.result-keyword {
+	cursor: pointer;
+}
+
+.get-ingredient {
+	display: inline-block;
+	border: none;
+	background-color: #EDEDED;
+	text-align: center;
+	padding: 0.5em 1em 0.5em 1em;
+	border-radius: 10px;
+	color: #757575;
+	font-size:18px;
+}
+
+
+

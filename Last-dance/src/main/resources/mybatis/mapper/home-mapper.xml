@@ -7,4 +7,87 @@
 	<select id="totalCount" resultType="RecipeTotalCountVO">
 		select count(*) cnt from recipe
 	</select>
+	
+	<select id="todayAddCount" resultType="RecipeTotalCountVO">
+		<![CDATA[
+			select count(*) cnt 
+			from recipe where to_char(recipe_writetime, 'YYYY-MM-DD hh24:mi:ss') > to_char(trunc(sysdate),'YYYY-MM-DD hh24:mi:ss')
+		]]>
+	</select>
+	
+	<select id="todayMemberRanking" resultType="TodayMemberRankingVO">
+		<![CDATA[
+			select * from (
+			    select TMP.*, rownum rn from (
+			        select member_nick, member_badge from member order by member_point
+			    )TMP
+			) where rn = 1
+		]]>
+	</select>
+	
+	<select id="pushRecipeForMain" resultType="PushRecipeListVO">
+		<![CDATA[
+			select 
+				R.recipe_attachment_no,
+				T.*
+			from
+				recipe_img R right outer join 
+				(select * from(
+				    select TMP.*, rownum rn from(
+				        select recipe_no, recipe_title, recipe_info, ((recipe_click + (recipe_like*2))/2.5) cal from recipe order by cal desc, recipe_time asc    
+    			)TMP) where rn between 1 and 10) T 
+    		on R.recipe_no = T.recipe_no order by rn asc
+		]]>
+	</select>
+	
+	<select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
+	      select * from recipe_ingredient where recipe_no = #{recipeNo}
+	</select>
+	
+	<select id="recipeImg" parameterType="int" resultType="RecipeImgDto">
+		select * from recipe_img where recipe_no = #{recipeNo}
+	</select>
+
+   <resultMap type="MainRecipeTop5MergingVO" id="mainRecipeList">
+   		<association property="mainRecipeListTop5VO">
+   			<result column="recipe_no" property="recipeNo"/>
+   			<result column="recipe_click" property="recipeClick"/>
+   			<result column="recipe_like" property="recipeLike"/>
+   			<result column="recipe_time" property="recipeTime"/>
+   			<result column="cal" property="cal"/>
+   			<result column="rn" property="rn"/>
+   			<result column="recipe_info" property="recipeInfo"/>
+   			<result column="recipe_hashtag" property="recipeHashtag"/>
+   			<result column="recipe_difficulty" property="recipeDifficulty"/>
+   		</association>
+   		
+   		<collection property="recipeIngredientList" javaType="java.util.List" 
+   		ofType="RecipeIngredientDto" column="recipe_no" select="recipeIngredientList">
+   			<result column="recipe_ingredient_name" property="recipeIngredientName"/>
+   			<result column="recipe_no" property="recipeNo"/>
+   		</collection>
+   		
+  		<collection property="recipeImgList" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImg" column="recipe_no">
+			<result column="recipe_attachment_no" property="recipeAttachmentNo"/>
+			<result column="recipe_no" property="recipeNo"/>
+		</collection>
+   </resultMap>
+   
+   <select id="mainRecipeTop5" resultMap="mainRecipeList">
+   		select * from (
+		    select TMP.*, dense_rank() over(order by cal desc) rn from (
+		        select 
+		            recipe_no,
+		            recipe_info,
+		            recipe_click,
+		            recipe_like,
+		            recipe_time,
+		            recipe_hashtag,
+		            recipe_difficulty,
+		            ((recipe_click + (recipe_like*2))/2.5 - recipe_time) cal
+		        from recipe
+		        )TMP
+		) where rn between 1 and 5
+   </select>
+   
 </mapper>

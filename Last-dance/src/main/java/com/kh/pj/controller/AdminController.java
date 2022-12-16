@@ -22,12 +22,18 @@ import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
+import com.kh.pj.repository.AdminDao;
+import com.kh.pj.repository.BoardDao;
+import com.kh.pj.repository.CategoryDao;
 import com.kh.pj.repository.HashtagDao;
+import com.kh.pj.repository.IngredientDao;
+import com.kh.pj.repository.MemberDao;
 import com.kh.pj.repository.NoticeDao;
 import com.kh.pj.repository.RecipeContentDao;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
+import com.kh.pj.vo.IngredientListSearchVO;
 import com.kh.pj.vo.RecipeListSearchVO;
 
 @Controller
@@ -52,6 +58,21 @@ public class AdminController {
 	@Autowired
 	private NoticeDao noticeDao;
 	
+	@Autowired
+	private IngredientDao ingredientDao;
+	
+	@Autowired
+	private CategoryDao categoryDao;
+	
+	@Autowired
+	private BoardDao boardDao;
+	
+	@Autowired
+	private MemberDao memberDao;
+	
+	@Autowired
+	private AdminDao adminDao;
+	
 	@GetMapping("/")
 	public String main() {
 		return "admin/main";
@@ -67,7 +88,7 @@ public class AdminController {
 			@ModelAttribute AdminDto adminDto,
 			HttpSession session) {
 		session.setAttribute(SessionConstant.ID, adminDto.getAdminId());
-		session.setAttribute(SessionConstant.NICK, adminDto.getAdminNick());
+		session.setAttribute(SessionConstant.NICK, adminDao.login(adminDto.getAdminId()).getAdminNick());
 		
 		return "redirect:/admin/";
 	}
@@ -80,7 +101,8 @@ public class AdminController {
 		return "redirect:/admin/login";
 	}
 	
-	@GetMapping("/list")
+	//관리자 레시피 컨트롤러
+	@GetMapping("/recipe/list")
 	public String list(
 			@ModelAttribute(name="voPagination") RecipeListSearchVO vo, 
 			Model model) {
@@ -88,13 +110,14 @@ public class AdminController {
 		return "admin/recipe-list";
 	}
 	
-	@GetMapping("/write")
+	@GetMapping("/recipe/write")
 	public String write(Model model) {
 		model.addAttribute("hashtagList", hashtagDao.list());
+		model.addAttribute("categoryList", categoryDao.adminList());
 		return "admin/recipe-insert";
 	}
 	
-	@PostMapping("/write")
+	@PostMapping("/recipe/write")
 	public String write(
 			@ModelAttribute RecipeDto recipeDto, 
 			@RequestParam List<String> recipeContentText,
@@ -105,6 +128,7 @@ public class AdminController {
 			HttpSession session) {
 		//레시피 번호 뽑아서 넣기
 		int recipeNo = recipeDao.recipeSequence();
+		recipeDto.setRecipeTitle(recipeDto.getRecipeTitle().replace(" ", ""));
 		recipeDto.setRecipeNo(recipeNo);
 		//로그인 닉네임 뽑아서 넣기
 		String loginNick = (String)session.getAttribute(SessionConstant.NICK);
@@ -145,10 +169,10 @@ public class AdminController {
 		//레시피 등록완료 페이지에 파라미터 넘겨주기
 		attr.addAttribute("recipeNo", recipeNo);
 		
-		return "redirect:/admin/write-success";
+		return "redirect:write-success";
 	}
 	
-	@GetMapping("/write-success")
+	@GetMapping("/recipe/write-success")
 	public String writeSuccess(
 			@RequestParam int recipeNo,
 			Model model) {
@@ -156,7 +180,7 @@ public class AdminController {
 		return "admin/recipe-success";
 	}
 	
-	@GetMapping("/detail/{recipeNo}")
+	@GetMapping("/recipe/detail/{recipeNo}")
 	public String detail(
 			@PathVariable int recipeNo, 
 			Model model) {
@@ -171,23 +195,75 @@ public class AdminController {
 		return "admin/recipe-detail";
 	}
 	
-	@GetMapping("/update")
-	public String update() {
+	@GetMapping("/recipe/update")
+	public String update(
+			Model model,
+			@RequestParam int recipeNo) {
+		//레시피 정보
+		model.addAttribute("recipeDto", recipeDao.adminDetail(recipeNo));
+		//레시피 내용 정보
+		model.addAttribute("recipeContentList", recipeContentDao.find(recipeNo));
+		//레시피 재료 정보
+		model.addAttribute("recipeIngredientList", recipeIngredientDao.find(recipeNo));
+		//레시피 썸네일 사진 정보
+		model.addAttribute("recipeImgList", recipeImgDao.find(recipeNo));
+		//레시피 해시태그 정보
+		model.addAttribute("hashtagList", hashtagDao.list());
 		return "admin/recipe-update";
 	}
 	
-	@PostMapping("/update")
+	@PostMapping("/recipe/update")
 	public String update(
 			@ModelAttribute RecipeDto recipeDto, 
 			@RequestParam List<String> recipeContentText,
 			@RequestParam List<Integer> recipeContentAttachmentNo,
 			@RequestParam List<String> recipeIngredientName,
 			@RequestParam List<Integer> recipeAttachmentNo,
-			RedirectAttributes attr,
 			HttpSession session) {
+		//recipe 업데이트
+		String loginNick = (String)session.getAttribute(SessionConstant.NICK);
+		recipeDto.setRecipeNick(loginNick);
+		recipeDao.adminUpdate(recipeDto);
 		
-		attr.addAttribute("recipeNo", recipeDto.getRecipeNo());
-		return "redirect:detail";
+		int recipeNo = recipeDto.getRecipeNo();
+		
+		//recipeContent 다 지우고 다시 넣기
+		recipeContentDao.adminDelete(recipeNo);
+		//레시피 내용 개수만큼 반복해서 레시피 내용 시퀀스 뽑고 넣기
+		for(int i=0; i<recipeContentText.size(); i++){
+			int recipeContentNo = recipeContentDao.sequence();
+			RecipeContentDto contentDto = RecipeContentDto.builder()
+						.recipeContentNo(recipeContentNo)
+						.recipeNo(recipeNo)
+						.recipeContentAttachmentNo(recipeContentAttachmentNo.get(i))
+						.recipeContentText(recipeContentText.get(i))
+					.build();
+			recipeContentDao.insert(contentDto);
+		}
+		
+		//recipeImg 다 지우고 다시 넣기
+		recipeImgDao.adminDelete(recipeNo);
+		//레시피 썸네일 개수만큼 반복해서 사진 첨부
+		for(int attachmentNo : recipeAttachmentNo) {
+			RecipeImgDto imgDto = RecipeImgDto.builder()
+						.recipeAttachmentNo(attachmentNo)
+						.recipeNo(recipeNo)
+					.build();
+			recipeImgDao.insert(imgDto);
+		}
+		
+		//recipeIngredient 다 지우고 다시 넣기
+		recipeIngredientDao.adminDelete(recipeNo);
+		//레시피 재료 개수만큼 첨부
+		for(String ingredient : recipeIngredientName) {
+			RecipeIngredientDto ingredientDto = RecipeIngredientDto.builder()
+					.recipeIngredientName(ingredient)
+					.recipeNo(recipeNo)
+			.build();
+			recipeIngredientDao.insert(ingredientDto);
+		}
+		
+		return "redirect:detail/"+recipeNo;
 	}
 	
 	@GetMapping("/delete/{recipeNo}")
@@ -196,6 +272,7 @@ public class AdminController {
 		return "redirect:../list";
 	}
 	
+	//관리자 공지사항 컨트롤러
 	@GetMapping("/notice/write")
 	public String write() {
 		return "admin/notice-insert";
@@ -261,4 +338,28 @@ public class AdminController {
 		noticeDao.delete(noticeNo);
 		return "redirect:../list";
 	}
+	
+	//관리자 재료 컨트롤러
+	@GetMapping("/ingredient/list")
+	public String ingredientList(Model model) {
+		IngredientListSearchVO vo = IngredientListSearchVO.builder().build();
+		model.addAttribute("ingredientList", ingredientDao.adminList(vo));
+		model.addAttribute("categoryList", categoryDao.adminList());
+		return "admin/ingredient-list";
+	}
+	
+	//관리자 사용자 컨트롤러
+	@GetMapping("/member/list")
+	public String memberList(Model model) {
+		model.addAttribute("memberList", memberDao.adminList());
+		return "admin/member-list";
+	}
+	
+	//관리자 게시판 컨트롤러
+	@GetMapping("/board/list")
+	public String boardList(Model model) {
+		model.addAttribute("boardList", boardDao.boardList(null));
+		return "admin/board-list";
+	}
+	
 }
