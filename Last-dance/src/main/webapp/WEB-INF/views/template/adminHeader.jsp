@@ -58,57 +58,59 @@
         <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top d-lg-flex flex-column align-items-lg-center">
-            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid">
-                <!-- brand : 로고 이미지와 대표 상호를 적는 공간 -->
-                <a class="col-2 navbar-brand" href="${pageContext.request.contextPath}/admin/">
-                    <img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarColor03" 
-                    aria-controls="navbarColor03" 
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- 메뉴 영역 -->
-                <div class="collapse navbar-collapse" id="navbarColor03">
-                    <ul class="navbar-nav me-auto">
-                        <!-- 드롭다운 메뉴 -->
-                        <!-- 레시피 -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                                aria-haspopup="true" aria-expanded="false">레시피</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/recipe/list">레시피 목록</a>
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/recipe/write">레시피 등록</a>
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/ingredient/list">재료 목록</a>
-                            </div>
-                        </li>
-                        <!-- 유저 관리 -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                                aria-haspopup="true" aria-expanded="false">매니지먼트</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/member/list">사용자 관리</a>
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/board/list">유저 게시판</a>
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/list">고객센터</a>
-                            </div>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/">회원 페이지</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link logout-btn" href="${pageContext.request.contextPath}/admin/logout">logout</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">${loginNick}님</a>
-                        </li>
-                    </ul>
+            <div class="container-fluid border-bottom">
+            	<div class="col-lg-8 offset-lg-2 d-lg-flex flex-row align-items-center">
+	                <!-- brand : 로고 이미지와 대표 상호를 적는 공간 -->
+	                <a class="col-2 navbar-brand" href="${pageContext.request.contextPath}/admin/">
+	                    <img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
+	                </a>
+	                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+	                    data-bs-target="#navbarColor03" 
+	                    aria-controls="navbarColor03" 
+	                    aria-expanded="false"
+	                    aria-label="Toggle navigation">
+	                    <span class="navbar-toggler-icon"></span>
+	                </button>
+	
+	                <!-- 메뉴 영역 -->
+	                <div class="collapse navbar-collapse h-100" id="navbarColor03">
+	                    <ul class="navbar-nav me-auto">
+	                        <!-- 드롭다운 메뉴 -->
+	                        <!-- 레시피 -->
+	                        <li class="nav-item dropdown">
+	                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+	                                aria-haspopup="true" aria-expanded="false">레시피</a>
+	                            <div class="dropdown-menu">
+	                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/recipe/list">레시피 목록</a>
+	                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/recipe/write">레시피 등록</a>
+	                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/ingredient/list">재료 목록</a>
+	                            </div>
+	                        </li>
+	                        <!-- 유저 관리 -->
+	                        <li class="nav-item dropdown">
+	                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+	                                aria-haspopup="true" aria-expanded="false">매니지먼트</a>
+	                            <div class="dropdown-menu">
+	                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/member/list">사용자 관리</a>
+	                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/board/list">유저 게시판</a>
+	                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/list">고객센터</a>
+	                            </div>
+	                        </li>
+	
+	                        <li class="nav-item">
+	                            <a class="nav-link" href="${pageContext.request.contextPath}/">회원 페이지</a>
+	                        </li>
+	                        <li class="nav-item">
+	                            <a class="nav-link logout-btn" href="${pageContext.request.contextPath}/admin/logout">logout</a>
+	                        </li>
+	                        <li class="nav-item">
+	                            <a class="nav-link" href="#">${loginNick}님</a>
+	                        </li>
+	                    </ul>
+                   	</div>	
                 </div>
             </div>
-            <div>
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid d-lg-flex flex-row align-items-center">
             	<ul class="d-lg-flex list-unstyled">
             		<a href="#"><li>여기가 거기</li></a>
             		<span>&nbsp;&gt;&nbsp;</span>
