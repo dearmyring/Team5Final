@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.MemberDto;
+import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
 
@@ -12,6 +13,7 @@ public interface BoardDao {
 	int sequence();//시퀀스 발행 메소드
 	
 	public List<BoardListVO> boardList(BoardListSearchVO vo);
+	public List<NoticeDto>noticeList(NoticeDto noticeDto);
 	
 	public void write(BoardDto boardDto);
 	boolean edit(BoardDto boardDto);

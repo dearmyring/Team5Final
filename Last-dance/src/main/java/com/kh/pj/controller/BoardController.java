@@ -23,6 +23,7 @@ import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.BoardImgDto;
 import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.entity.MemberDto;
+import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.entity.ReplyDto;
 import com.kh.pj.repository.AttachmentDao;
 import com.kh.pj.repository.BoardDao;
@@ -31,7 +32,6 @@ import com.kh.pj.repository.BoardLikeDao;
 import com.kh.pj.repository.ReplyDao;
 import com.kh.pj.service.BoardService;
 import com.kh.pj.vo.BoardListSearchVO;
-import com.kh.pj.vo.BoardListVO;
 
 @Controller
 @RequestMapping("/board")
@@ -49,6 +49,7 @@ public class BoardController {
 	private BoardImgDao boardImgDao;
 	@Autowired
 	private ReplyDao replyDao;
+	
 	
 	private final File directory = new File("D:/upload/kh10J");
 	@PostConstruct
@@ -100,9 +101,11 @@ public class BoardController {
 	
 	@RequestMapping("/list")
 	public String list(Model model,HttpSession session,
-						@ModelAttribute(name="boardListSearchVo")BoardListSearchVO vo) {
-		
+						@ModelAttribute(name="boardListSearchVo")BoardListSearchVO vo,
+						@ModelAttribute NoticeDto noticeDto) {
+						
 		model.addAttribute("boardList",boardDao.boardList(vo));
+		model.addAttribute("noticeList",boardDao.noticeList(noticeDto));
 		return "board/list";
 	}
 	

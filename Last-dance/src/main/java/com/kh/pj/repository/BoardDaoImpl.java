@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.MemberDto;
+import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.error.TargetNotFoundException;
 import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
@@ -124,6 +125,11 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int replyCNT(MemberDto memberDto) {
 		return sqlSession.selectOne("board.replyCNT",memberDto);
+	}
+
+	@Override
+	public List<NoticeDto> noticeList(NoticeDto noticeDto) {
+		return sqlSession.selectList("board.noticelist",noticeDto);
 	}
 	
 

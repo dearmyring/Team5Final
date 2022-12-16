@@ -10,10 +10,10 @@
 
 <style>
 .item-bold{
-	font-weight: bold;
+   font-weight: bold;
 }
 .item-color{
-	color :gray;
+   color :gray;
 }
  .float-container {
     width : 80%;
@@ -29,7 +29,7 @@
     left: 200px;
 }
 
-.thumnail{
+.thumbnail{
    width: 100%;
    height:100%;
    
@@ -51,18 +51,18 @@
     font-weight: bold;
 }
 .board-list-title{
-	font-size : 30px;
-	font-weight: 900;
+   font-size : 30px;
+   font-weight: 900;
 }
 .board-list-item{
-	position : relative;
+   position : relative;
    display: flex;
     font-size: 15px;
     height: 30px;
     margin: 10px;
 }
 .board-list-content{
-	margin : 40px;
+   margin : 40px;
    font-size:15px;
    margin-left :7px;
    height: 50px;
@@ -109,6 +109,11 @@ input {
    border-bottom : 1px solid gray;
    
 }
+.notice-bottom{
+   width:700px;
+   border-bottom : 1px solid gray;
+   
+}
 .f{
 width: 20%;
 }
@@ -123,6 +128,16 @@ width: 20%;
     display: flex;
     flex-direction: row;
     margin-top: 30px;
+}
+.board-table {
+    border-collapse: collapse;
+    width: 85%;
+    font-size: 16px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.notice-badge{
+   width : 5%;
 }
 
 
@@ -147,6 +162,7 @@ width: 20%;
 </div>
 
 
+<table class="board-table">
 
 <thead>
    <tr>
@@ -158,60 +174,70 @@ width: 20%;
             <option value="reply_cnt desc">댓글 많은 순</option>
             
       </select> <a class="btn btn-positive float-right mt-10" href="write">글쓰기</a></th>
+  </tr>
 </thead>
 
-
-
-<table class="table">
-
+   
+  <c:forEach var="noticeDto" items="${noticeList}">
+         
+   <tr class="notice-bottom">
+               <td>
+               	<div class="left">
+                  <img class="notice-badge" src="/images/notice.png">
+                  <a href="detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}</a>
+               	</div>
+               </td>
+   </tr>
+  </c:forEach>
+         
    <tbody class="board-list center mt-50">
          <c:forEach var="boardDto" items="${boardList}">
-         <tr class="board-bottom">
-            <%-- <td>${boardDto.boardNo}</td> --%>
-            <td><div class="float-container1">
-               <div class="float-left w-80">
-                  <div class="board-list-title left">
-                     <a href="detail?boardNo=${boardDto.boardNo}">
-                        ${boardDto.boardTitle}</a>
-                  </div>
-                  <div class="board-list-content left">
-                     <a href="detail?boardNo=${boardDto.boardNo}">
-                        ${boardDto.boardContent}</a>         
-                  </div>
-                  <div class="board-list-item float-container left">
-                     <div class="w-20 item-bold">${boardDto.memberNick}
-                     <c:if test="${boardDto.memberBadge == 1 }">
-                        <img class="badge" src="/images/badge-1.png">
-                     </c:if>
-                     </div>         
-                     <div class="f">${boardDto.boardWriteTime}</div>
-                     <div class="f item-color">추천 :${boardDto.boardLike}</div>
-                     <div class="f item-color">조회수 : ${boardDto.boardClick}</div>
-                     <div class="f item-color">댓글 : ${boardDto.replyCnt}</div>
-                  </div>
-               </div>
-               <div class="all-thumbnail-box w-20">
-                  <%-- <img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}"> --%>
-                  <div class="thumbnail-box">
-                     <img class="thumnail" src="${pageContext.request.contextPath}/images/image 3.png">
-                  </div>
-               </div>                  
-            </div></td>
-                  
-                              
-         </tr>
+<tr class="board-bottom">
+	<%-- <td>${boardDto.boardNo}</td> --%>
+	<td>
+		<div class="float-container1">
+			<div class="float-left w-80">
+				<div class="board-list-title left">
+					<a href="detail?boardNo=${boardDto.boardNo}">
+					${boardDto.boardTitle}</a>
+				</div>
+				<div class="board-content board-list-content left">
+					<a href="detail?boardNo=${boardDto.boardNo}">
+					${boardDto.boardContent}</a>         
+				</div>
+				<div class="board-list-item float-container left">
+					<div class="w-20 item-bold">${boardDto.memberNick}
+						<c:if test="${boardDto.memberBadge == 1 }">
+						<img class="badge" src="/images/badge-1.png">
+						</c:if>
+					</div>         
+					<div class="f">${boardDto.boardWriteTime}</div>
+					<div class="f item-color">추천 :${boardDto.boardLike}</div>
+					<div class="f item-color">조회수 : ${boardDto.boardClick}</div>
+					<div class="f item-color">댓글 : ${boardDto.replyCnt}</div>
+				</div>
+			</div>
+			<div class="all-thumbnail-box w-20">
+				<%-- <img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}"> --%>
+				<div class="thumbnail-box">
+					<img class="thumbnail" src="${pageContext.request.contextPath}/images/image 3.png">
+				</div>
+			</div>                  
+		</div>
+	</td>
+</tr>
       </c:forEach>
    </tbody>
 </table>
 <br>
-<ul class="pagination">
+<%-- <ul class="pagination">
    <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
    <c:forEach var="no" begin="1" end="${boardListSearchVo.pageCnt}">
       <li class="page-item"><a class="page-link" href="#">${no}</a></li>
    </c:forEach>
    <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
 </ul>
-<br>
+<br> --%>
 
 
 <script type="text/javascript">
@@ -229,9 +255,7 @@ width: 20%;
       });
 
       /* 레시피 리스트 검색 */
-      $(".board-search-btn")
-            .click(
-                  function() {
+      $(".board-search-btn").click(function() {
                      var sort = $(".sort-click").val();
                      var type = $(".input-type").val();
                      var keyword = $(".input-keyword").val();
@@ -239,8 +263,7 @@ width: 20%;
                         alert("검색어는 필수 입력입니다.");
                         return;
                      }
-                     $
-                           .ajax({
+                     $.ajax({
                               url : "http://localhost:8888/rest/board",
                               method : "post",
                               contentType : "application/json",
@@ -250,44 +273,57 @@ width: 20%;
                                  sort : sort
                               }),
                               success : function(resp) {
-                                 $(".board-list").find("tr")
-                                       .remove();
+                                 $(".board-list").empty();
                                  for (var i = 0; i < resp.length; i++) {
-                                    var tr = $("<tr>");
-                                  
-                                    var tdTitle = $("<td>")
-                                          .append(
-                                                $("<a>").attr( "href","detail?boardNo="+ resp[i].boardNo)
-                                                        .text(resp[i].boardTitle));
-                                          
-                                    var tdContent = $("<td>").addClass("board-content")
-                                                      .attr("align", "left")                                                      
-                                                      .html(resp[i].boardContent);
+                                
+                                	
+                                	var divSecond1 = $("<div>").addClass("float-left w-80")
+                                	
+                                	var title = $("<a>").attr("href","detail?boardNo="+ resp[i].boardNo).text(resp[i].boardTitle);
+                                    var divTitle = $("<div>").addClass("board-list-title left").append(title);
+                                     
+                                    var content = $("<a>").attr("href","detail?boardNo="+ resp[i].boardNo)
+                                    	.html(resp[i].boardContent);
+                                    var divContent = $("<div>").addClass("board-content board-list-content left").append(content);
                                     
                                     var url = "";
                                     if (resp[i].memberBadge == 1) {
                                        url = "/images/badge-1.png";
                                     }
-
                                     var badge = $("<img>").attr("src", url)
                                     .addClass("badge");
-                                    var tdNick = $("<td>")
+                                    
+                                    var nick = $("<div>").addClass("w-20 item-bold")
                                     .text(resp[i].memberNick)
                                     .append(badge);
-                                    var tdWriteTime = $("<td>")
-                                          .text(resp[i].boardWriteTime);
-                                    var tdEditTime = $("<td>")
-                                          .text(resp[i].boardEditTime);
-                                    var tdLike = $("<td>").text(resp[i].boardLike);
-                                    var tdClick = $("<td>").text(resp[i].boardClick);
-                                    var tdReply = $("<td>").text(resp[i].replyCnt);
-                                    tr.append(tdTitle).append(
-                                          tdContent).append(
-                                          tdNick).append(
-                                          tdWriteTime).append(
-                                          tdEditTime).append(
-                                          tdLike).append(tdClick)
-                                          .append(tdReply);
+                                    
+                                    
+                                    var tdWriteTime = $("<div>").addClass("f").text(resp[i].boardWriteTime);
+                                                                                                        
+                                    var Like = $("<div>").addClass("f item-color").text(resp[i].boardLike);
+                                    
+                                    var Click = $("<div>").addClass("f item-color").text(resp[i].boardClick);
+                                    
+                                    var Reply = $("<div>").addClass("f item-color").text(resp[i].replyCnt);
+                                    
+                                    
+                                    var divNick =  $("<div>").addClass("board-list-item float-container left")
+                                          .append(nick).append(tdWriteTime)
+                                          .append(Like).append(Click).append(Reply);
+                     
+                     
+                     				divSecond1.append(divTitle).append(divContent).append(divNick);
+                                          
+
+//                                     var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo);
+                                    var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
+                                    var thumbnail = $("<div>").addClass("thumbnail-box").append(thumbnailImg);
+                                    var divSecond2 = $("<div>").addClass("all-thumbnail-box w-20").append(thumbnail);
+                                    
+                                	var divFirst1 = $("<div>").addClass("float-container1").append(divSecond1).append(divSecond2);
+                                	var td = $("<td>").append(divFirst1);
+                                	var tr = $("<tr>").addClass("board-bottom").append(td);
+                                	
                                     $(".board-list").append(tr);
                                     $(".board-content").find("img").remove();
                                     var contentCnt = $(".board-content");
@@ -297,9 +333,7 @@ width: 20%;
                                  }
                               }
                            });
-
                   });
-
       /* 레시피 리스트 정렬 */
       $(".sort-click").on(
             "input",
@@ -317,58 +351,73 @@ width: 20%;
                      sort : sort
                   }),
                   success : function(resp) {
-                     console.log(resp);
-                     $(".board-list").find("tr").remove();
-                     for (var i = 0; i < resp.length; i++) {
-                        var tr = $("<tr>");
-                        
-                        var tdTitle = $("<td>").append(
-                              $("<a>").attr("href","detail?boardNo="+ resp[i].boardNo)
-                                    .text(resp[i].boardTitle));
-                        var tdContent = $("<td>")
-                              .addClass("board-content")
-                              
-                              .html(resp[i].boardContent);
+                	  $(".board-list").empty();
+                      for (var i = 0; i < resp.length; i++) {
+                     
+                     	
+                     	var divSecond1 = $("<div>").addClass("float-left w-80")
+                     	
+                     	var title = $("<a>").attr("href","detail?boardNo="+ resp[i].boardNo).text(resp[i].boardTitle);
+                         var divTitle = $("<div>").addClass("board-list-title left").append(title);
+                          
+                         var content = $("<a>").attr("href","detail?boardNo="+ resp[i].boardNo)
+                         	.html(resp[i].boardContent);
+                         var divContent = $("<div>").addClass("board-content board-list-content left").append(content);
+                         
+                         var url = "";
+                         if (resp[i].memberBadge == 1) {
+                            url = "/images/badge-1.png";
+                         }
+                         var badge = $("<img>").attr("src", url)
+                         .addClass("badge");
+                         
+                         var nick = $("<div>").addClass("w-20 item-bold")
+                         .text(resp[i].memberNick)
+                         .append(badge);
+                         
+                         
+                         var tdWriteTime = $("<div>").addClass("f").text(resp[i].boardWriteTime);
+                                                                                             
+                         var Like = $("<div>").addClass("f item-color").text("추천 :"+resp[i].boardLike);
+                         
+                         var Click = $("<div>").addClass("f item-color").text("조회수 : "+resp[i].boardClick);
+                         
+                         var Reply = $("<div>").addClass("f item-color").text("댓글 : " +resp[i].replyCnt);
+                         
+                         
+                         var divNick =  $("<div>").addClass("board-list-item float-container left")
+                               .append(nick)
+                               .append(tdWriteTime)   
+                               
+                               .append(Like)
+                               .append(Click)
+                               .append(Reply);
+          
+          
+          				divSecond1.append(divTitle).append(divContent).append(divNick);
+                               
 
-                        var url = "";
-                        if (resp[i].memberBadge == 1) {
-                           url = "/images/badge-1.png";
-                        }
-
-                        var badge = $("<img>").attr("src", url)
-                              .addClass("badge");
-                        var tdNick = $("<td>").text(resp[i].memberNick)
-                             		.append(badge);
-
-                        var tdWriteTime = $("<td>").text(
-                              resp[i].boardWriteTime);
-                        var tdEditTime = $("<td>").text(
-                              resp[i].boardEditTime);
-                        var tdLike = $("<td>").text(resp[i].boardLike);
-                        var tdClick = $("<td>")
-                              .text(resp[i].boardClick);
-                        var tdReply = $("<td>").text(
-                              resp[i].replyCnt);
-                        tr.append(tdTitle).append(tdContent).append(
-                              tdNick)
-
-                        .append(tdWriteTime).append(tdEditTime).append(
-                              tdLike).append(tdClick)
-                              .append(tdReply);
-                        $(".board-list").append(tr);
-                        $(".board-content").find("img").remove();
-                        var contentCnt = $(".board-content");
-                        for(var i=0; i<contentCnt.length; i++){
-                           $(".board-content").eq(i).text($(".board-content").eq(i).text());
-                        }
-                     }
+//                          var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo);
+                         var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
+                         var thumbnail = $("<div>").addClass("thumbnail-box").append(thumbnailImg);
+                         var divSecond2 = $("<div>").addClass("all-thumbnail-box w-20").append(thumbnail);
+                         
+                     	var divFirst1 = $("<div>").addClass("float-container1").append(divSecond1).append(divSecond2);
+                     	var td = $("<td>").append(divFirst1);
+                     	var tr = $("<tr>").addClass("board-bottom").append(td);
+                     	
+                         $(".board-list").append(tr);
+                         $(".board-content").find("img").remove();
+                         var contentCnt = $(".board-content");
+                         for(var i=0; i<contentCnt.length; i++){
+                            $(".board-content").eq(i).text($(".board-content").eq(i).text());
+                         }
+                      }
                   }
                });
             });
    });
 </script>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
-
 
 
