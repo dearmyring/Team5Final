@@ -18,9 +18,11 @@
             </div>
         </div>
     </div><!-- 푸터 영역 끝 -->
+    
+    <!-- 헤더 검색 -->
   	<script>
  		$(function(){
- 			// 검색창 토글
+ 			// 검색창 토글 이벤트
  			$(".complex").click(function(){
  				$("html, body").animate({scrollTop : 0}, 400);
                 $(".search-box").slideToggle(600);
@@ -31,58 +33,79 @@
  				e.preventDefault();
  			});
  			
- 			// 검색창 기능 시작
- 			$(".search-input").keyup(function(key){
- 				var keyword = $(this).val();
-	 			var isEmpty = $(".search-list").empty();
- 				if(keyword == "") {
-		 			$(".search-list").css("display", "none");
- 				} isEmpty;
+ 			// 목록 조회 결과를 전역 변수 배열에 넣기
+ 			const searchRepository = [];
+ 			
+ 			// 키워드 조회 비동기
+ 			$(".search-input").on("input", function(e){
+ 				e.preventDefault;
+ 				const keyword = $(this).val();
+ 				const noneList = $("<div>").addClass("not-in-keyword mt-20").text("검색 결과가 없습니다 😥");
  				
+				if(keyword == "") {
+					$(".search-list").css("display", "none");
+					$(".search-list-select").css("display", "block");
+				} 	
+				
 		  		$.ajax({
 					url:"http://localhost:8888/rest/search/" + keyword,
 					method:"get",
+					async:false,
 					success: function(resp) {
 						$(".search-list").css("display", "block");
+						$(".search-list-select").css("display", "none");
 						$(".search-list").empty();
-						
 						if(resp.length == 0) {
-							$(".search-list-select").css("display", "none");
-							$(".search-list").append("<div class='mt-30 not-in-keyword'>검색 결과가 없습니다 😥</div>");
+							$(".search-list").append(noneList);
 						}
 						else {
 							for(var i = 0; i < resp.length; i++) {
-								$(".search-list-select").css("display", "none");
-								$(".search-list").append("<div class='left result-keyword'><i class='fa-solid fa-square-plus'></i><span class='result-keyword'>" + resp[i].ingredientName + "</span></div>");
+								const getList = $("<div>").addClass("left result-keyword").html("<i class='fa-solid fa-square-plus'></i><span class='ms-10 get-keyword'>" + resp[i].ingredientName + "</span>");
+								$(".search-list").append(getList);
+								searchRepository.push(resp[i].ingredientName);
 							}
 						}
-						if(key.keyCode == 13){
-							if(resp.length > 0) {
-				 				$(".search-list-select").append("<div class='get-ingredient ms-10 mt-10'>" + $(".search-input").val() + "</div>");
-								$(".search-list").css("display", "none");
-								$(".search-input").val("");
-								$(".search-list-select").css("display", "");
-							}
-							else {
-								alert("추가 불가, 임시 alert창임");
-							}
-		 				}
-						$(".get-keyword").click(function(e){
-							e.stopPropagation()
-			 				$(".search-input").val($(this).val());
-			 				$(".search-list-select").append($(".search-input").val());
-			 				$(".search-list").css("display", "none");
-			 				$(".search-input").val("");
-						});
 					}
-				});
- 			})
+ 				})
+ 			});
  			
-	  		//검색창 바깥 영역 클릭시 목록 숨기기
-	        $(document).click(function(){
-	        	$(".search-list").css("display", "none");
-	       	});
- 		});
+ 			// 사용자가 엔터키를 누를시 입력된 데이터 추가 이벤트
+ 			$(".search-input").keypress(function(key) {
+ 				const keyword = $(this).val();
+ 				const addList = $("<div>").addClass("get-ingredient ms-10 mt-10").text(keyword);
+				if(key.keyCode == 13){
+					if(!$(this).val() == "") {
+						$(".search-list-select").append(addList);
+						$(".search-list").css("display", "none");
+						$(".search-list-select").css("display", "block");
+						$(".search-input").val("");
+						console.log(searchRepository);
+					}
+					else {
+						alert("검색어 입력하고 엔터 누르길 요망");
+					}
+				} 
+ 			});
+ 			
+ 			// 사용자가 검색 유사어를 클릭할 시 클릭된 데이터 추가 이벤트
+ 			$(document).on("click", ".result-keyword", function(){
+ 				$(".search-input").val($(this).text());
+ 				const keyword = $(".search-input").val();
+ 				const addList = $("<div>").addClass("get-ingredient ms-10 mt-10").text(keyword);
+ 				$(".search-list-select").append(addList);
+ 				$(".search-list").css("display", "none");
+ 				$(".search-list-select").css("display", "block");
+				$(".search-input").val("");
+				$(".search-input").focus();
+ 			});
+ 			
+ 			// 추가된 데이터를 삭제하는 이벤트
+ 			$(document).on("click", ".get-ingredient", function(){
+ 				$(".get-ingredient").remove();
+ 			});
+ 			
+ 		}); // jQuery 종료
  	</script>
+ 	<!-- 헤더 검색 끝 -->
 </body>
 </html>
