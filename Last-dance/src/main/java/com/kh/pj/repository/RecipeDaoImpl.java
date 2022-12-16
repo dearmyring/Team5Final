@@ -127,6 +127,8 @@ public class RecipeDaoImpl implements RecipeDao {
 		return jdbcTemplate.query(sql,  countMapper);
 	}
 
+
+
 }
 
 
