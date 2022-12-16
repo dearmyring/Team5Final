@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.pj.entity.AdminDto;
 import com.kh.pj.repository.AdminDao;
+import com.kh.pj.repository.RecipeDao;
+import com.kh.pj.vo.ListSearchVO;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RequestMapping("/rest")
@@ -32,4 +34,15 @@ public class AdminRestController {
 		}
 		return "fail";
 	}
+	
+	@PostMapping("/admin-count")
+	public ListSearchVO adminCount(@RequestBody ListSearchVO vo) {
+		vo.setCount(adminDao.adminPostCount(vo));
+		vo.setFirstBlock(vo.startBlock());
+		vo.setLastBlock(vo.endBlock());
+		vo.setHavePrev(vo.hasPrev());
+		vo.setHaveNext(vo.hasNext());
+		return vo;
+	}
 }
+

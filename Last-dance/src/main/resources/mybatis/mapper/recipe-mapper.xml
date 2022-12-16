@@ -81,19 +81,23 @@
       delete recipe where recipe_no = #{recipeNo}
    </delete>
    
-   <select id="adminList" parameterType="RecipeListSearchVO" resultType="RecipeDto">
-      select * from recipe
-      <!-- 검색 -->
-      <where>
-         <!-- 이름, 관리자 유사 대상 검색 -->
-         <if test="type != null and keyword != ''">
-            and instr(${type}, #{keyword}) > 0
-         </if>
-      </where>
-       <!-- 정렬 -->
-       <if test="sort != null">
-          order by ${sort}
-       </if>
+   <select id="adminList" parameterType="ListSearchVO" resultType="RecipeDto">
+	  select * from (
+		  select tmp.*, rownum rn from(
+		      select * from recipe
+		      <!-- 검색 -->
+		      <where>
+		         <!-- 이름, 관리자 유사 대상 검색 -->
+		         <if test="type != null and keyword != ''">
+		            instr(${type}, #{keyword}) > 0
+		         </if>
+		      </where>
+		       <!-- 정렬 -->
+		       <if test="sort != null">
+		          order by ${sort}
+		       </if>
+			  ) tmp
+		) where rn between ${startPost} and ${endPost}
    </select>
    
    <select id="adminDetail" parameterType="int" resultType="RecipeDto">

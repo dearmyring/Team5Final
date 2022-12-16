@@ -7,4 +7,20 @@
 	<select id="get" resultType="AdminDto" parameterType="String">
 		select * from admin where admin_id=#{adminId}
 	</select>
+	
+   <!-- 총 게시물 개수 세기용 -->
+   <select id="adminPostCount" parameterType="ListSearchVO" resultType="int">
+		select count(*) from 
+			<choose>
+				<!-- 검색 -->
+				<when test="type != null and keyword != ''">
+					(select * from ${table} 
+					where instr(${type}, #{keyword}) > 0)
+				</when>
+				<!-- 검색 아닐 때 -->
+				<otherwise>
+					${table}
+				</otherwise>
+			</choose>
+   </select>
 </mapper>
