@@ -1,7 +1,6 @@
 package com.kh.pj.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +22,7 @@ import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.BoardImgDto;
 import com.kh.pj.entity.BoardLikeDto;
+import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.ReplyDto;
 import com.kh.pj.repository.AttachmentDao;
 import com.kh.pj.repository.BoardDao;
@@ -31,6 +31,7 @@ import com.kh.pj.repository.BoardLikeDao;
 import com.kh.pj.repository.ReplyDao;
 import com.kh.pj.service.BoardService;
 import com.kh.pj.vo.BoardListSearchVO;
+import com.kh.pj.vo.BoardListVO;
 
 @Controller
 @RequestMapping("/board")
@@ -61,10 +62,10 @@ public class BoardController {
 		return "board/write";
 	}
 	@PostMapping("/write") 
-	public String write(@ModelAttribute BoardDto boardDto,
+	public String write(@ModelAttribute BoardDto boardDto, MemberDto memberDto,
 						@RequestParam List<Integer> boardAttachmentNo,
 //						@RequestParam List<MultipartFile> attachment,
-						HttpSession session, RedirectAttributes attr) throws IllegalStateException, IOException {
+						HttpSession session, RedirectAttributes attr) throws Exception {
 //		session에 있는 회원 아이디를 작성자로 추가한 뒤 등록해야함
 		String boardId = (String)session.getAttribute(SessionConstant.ID);
 		boardDto.setBoardId(boardId);
@@ -73,13 +74,18 @@ public class BoardController {
 		boardDao.write(boardDto);
 		
 		
-		
 		for(int attachmentNo : boardAttachmentNo) {
 			BoardImgDto imgDto = BoardImgDto.builder()
 				.boardAttachmentNo(attachmentNo)
 				.boardNo(boardNo)
 			.build();
 			boardImgDao.insert(imgDto);
+			
+		}
+		memberDto.setMemberId(boardId);
+		if(boardDao.boardCNT(memberDto)<=3) {
+			memberDto.setMemberPoint(5);
+			boardDao.updatePoint(memberDto);			
 		}
 		
 //		int boardNo = boardService.write(boardDto, attachment);
@@ -95,6 +101,7 @@ public class BoardController {
 	@RequestMapping("/list")
 	public String list(Model model,HttpSession session,
 						@ModelAttribute(name="boardListSearchVo")BoardListSearchVO vo) {
+		
 		model.addAttribute("boardList",boardDao.boardList(vo));
 		return "board/list";
 	}
@@ -107,10 +114,22 @@ public class BoardController {
 	}
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute BoardDto boardDto,
+						@RequestParam List<Integer> boardAttachmentNo,
 						RedirectAttributes attr) {
+		
 		boolean result = boardDao.edit(boardDto);
+		int boardNo = boardDto.getBoardNo();
+		
 		if(result) {
+			for(int attachmentNo : boardAttachmentNo) {
+				BoardImgDto imgDto = BoardImgDto.builder()
+					.boardAttachmentNo(attachmentNo)
+					.boardNo(boardNo)
+				.build();
+				boardImgDao.insert(imgDto);		
+			}
 			attr.addAttribute("boardNo",boardDto.getBoardNo());
+			
 			return "redirect:detail";
 		}
 		else {
@@ -127,6 +146,7 @@ public class BoardController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int boardNo,Model model,HttpSession session) {	
 		model.addAttribute("boardImgDto", boardImgDao.find(boardNo));
+		System.out.println(boardImgDao.find(boardNo));
 		@SuppressWarnings("unchecked")
 		Set<Integer> history = (Set<Integer>)session.getAttribute("history");
 		if(history == null) {//history 가 없다면 신규 생성

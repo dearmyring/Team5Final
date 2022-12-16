@@ -9,12 +9,11 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
 	rel="stylesheet" />
 
-<link rel="stylesheet" type="text/css" href="reset.css" />
-<link rel="stylesheet" type="text/css" href="commons.css" />
+<link rel="stylesheet" type="text/css" href="/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="/css/commons.css" />
+<link rel="stylesheet" type="text/css" href="/css/recipeList.css" />
 
-<link rel="stylesheet" type="text/css"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="test.css" />
+<link rel="stylesheet" type="text/css" 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="레시피 리스트" name="title" />
@@ -57,15 +56,15 @@ article {
 }
 
 .recipe-recommend{
-    display: flex;
+	display: flex;
     flex-direction: row;
-    height: 70px;
+    height: 130px;
 }
 
 .recipe-recommend-text{
 	font-size: 30px;
-	font-weight: 600;
-	margin: 0 50px;
+    font-weight: 600;
+    margin: 30px 50px 30px 50px;
 }
 
 .recipe-box-shadow {
@@ -158,7 +157,7 @@ article {
 	color: #373A3C;
 	font-size: 23px;
 	font-weight: bold;
-	/*	height: 60px; */
+	height: 60px;
 	padding: 10px;
 }
 
@@ -191,10 +190,11 @@ margin 0 20px;
 }
 
 .sort-click{
- font-size: 15px;
- font-weight: 600;
- height: 30;
- color: #373A3C;
+	font-size: 15px;
+    font-weight: 600;
+    height: 40;
+    color: #373A3C;
+    margin: 20px 43px 30px 30px
 }
 
 .sort-select{
@@ -202,13 +202,7 @@ padding: 10px;
 width: 100px;
 }
 
-.w-80 {
-    width:80%;
-}
 
-.w-20 {
-    width:20%;
-}
 
 </style>
 </head>
@@ -216,9 +210,9 @@ width: 100px;
 	<div class="layout">
 		<article>
 			<div class="recipe-recommend">			
-				<div class="recipe-recommend-text w-80">${loginNick}님이 당장 할 수 있는 요리를 추천해드릴게요.</div>
-				<div class= "sort-select w-20">
-					<select class="sort-click">
+				<div class="recipe-recommend-text w-70">${loginNick}님이 당장 할 수 있는 요리를 추천해드릴게요.</div>
+				<div class= "sort-select w-30">
+					<select class="input sort-click">
 						<option value="recipe_no desc">최근 작성일 순</option>
 						<option value="recipe_click desc">조회수 높은 순</option>
 						<option value="recipe_like desc">좋아요 많은 순</option>
