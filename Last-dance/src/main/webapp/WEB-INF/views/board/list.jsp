@@ -139,6 +139,9 @@ width: 20%;
 .notice-badge{
    width : 5%;
 }
+.notice{
+	
+}
 
 
 
@@ -183,8 +186,8 @@ width: 20%;
    <tr class="notice-bottom">
                <td>
                	<div class="left">
-                  <img class="notice-badge" src="/images/notice.png">
-                  <a href="detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}</a>
+                  <img class="notice-badge" src="/images/notice.png">	
+                  <a class="notice" href="detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}</a>
                	</div>
                </td>
    </tr>
