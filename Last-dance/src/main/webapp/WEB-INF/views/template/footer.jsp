@@ -101,7 +101,7 @@
  			
  			// 추가된 데이터를 삭제하는 이벤트
  			$(document).on("click", ".get-ingredient", function(){
- 				$(".get-ingredient").remove();
+ 				$(this).remove();
  			});
  			
  		}); // jQuery 종료
