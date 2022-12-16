@@ -54,6 +54,7 @@ public class RecipeDaoImpl implements RecipeDao {
 //		return sqlSession.selectList("recipe.list");
 //
 //	}
+	
 	//레시피 삭제(DELETE)
 	@Override
 	public boolean delete(int recipeNo) {
