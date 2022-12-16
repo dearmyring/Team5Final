@@ -4,11 +4,34 @@
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 <div class="mt-5">&nbsp;</div>
 
-<h1>레시피 디테일</h1>
+<div class="text-end">
+	<a class="main-page-link"></a> > <a class="text-decoration-none text-dark" href="../list">레시피</a> > 상세보기
+</div>
 
-${recipeDto.recipeTitle}<br>
-${recipeDto.recipeNick}<br>
-${recipeDto.recipeInfo}<br>
+<div class="container-fluid mt-5">
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		${recipeDto.recipeTitle}
+	</div>
+</div>
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<c:forEach var="recipeImg" items="${recipeImgList}">
+			<img src="${pageContext.request.contextPath}/rest/download/${recipeImg}" width="200">
+		</c:forEach>
+	</div>
+</div>
+
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		${recipeDto.recipeInfo}
+	</div>
+</div>
+<div class="row mt-5">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		${recipeDto.recipeNick}
+	</div>
+</div>
 <c:choose>
 	<c:when test="${recipeDto.recipeTime != 120}">
 		${recipeDto.recipeTime}분
@@ -17,28 +40,22 @@ ${recipeDto.recipeInfo}<br>
 		${recipeDto.recipeTime}분 이상
 	</c:otherwise>
 </c:choose>
-<br>
-${recipeDto.recipeDifficulty}<br>
-${recipeDto.recipeHashtag}<br>
+${recipeDto.recipeDifficulty}
+${recipeDto.recipeHashtag}
 
 <c:forEach var="recipeContentDto" items="${recipeContentList}">
 ${recipeContentDto.recipeContentText}
 <img src="${pageContext.request.contextPath}/rest/download/${recipeContentDto.recipeContentAttachmentNo}" width="200" height="200">
-<br>
 </c:forEach>
 
 <c:forEach var="recipeIngredientDto" items="${recipeIngredientList}">
 	${recipeIngredientDto}
 </c:forEach>
-<br>
-
-<c:forEach var="recipeImg" items="${recipeImgList}">
-<img src="${pageContext.request.contextPath}/rest/download/${recipeImg}" width="200" height="200">
-</c:forEach>
-<br>
 
 <a href="../update?recipeNo=${recipeDto.recipeNo}">수정</a>
 <a class="delete-btn" href="../delete/${recipeDto.recipeNo}">삭제</a>
+
+</div>
 
 <script type="text/javascript">
     $(function(){
