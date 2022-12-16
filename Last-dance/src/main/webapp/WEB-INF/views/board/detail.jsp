@@ -17,6 +17,58 @@
 		padding:0;
 		list-style:none;
 	}
+	
+	.contaniner {
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.title {
+		text-align: center;
+		padding-bottom: 20px;
+	}
+	
+	.info {
+		margin-bottom: 30px;
+	}
+	
+	.other-info {
+		display: flex;
+	}
+	
+	.other-info > li:not(:first-child) {
+		margin-left: 20px;
+	}
+	
+	.main {
+		margin-top: 50px;
+		margin-bottom: 50px;
+		text-align: center;
+	}
+	
+	.main > p {
+		margin-top: 20px;
+	}
+	
+	.reply-box {
+		display: flex;
+		justfy-content: center;
+	}
+	
+	.reply-author: {
+		width: 30%;
+	}
+	
+	.reply-main {
+		width: 40%;
+		margin-left: 60px;
+	}
+	
+	.reply-date {
+		width: 30%;
+		margin-left: 60px;
+	}
+	
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
@@ -146,7 +198,7 @@
 
 <script type="text/template" id="reply-list-item">
 				<tr class="view">
-					<td width="90%">
+					<td>
 						<!-- 작성자 -->
 						<pre>{{replyContent}}</pre>
 						<br>
@@ -167,18 +219,54 @@
 
 
 <div class="container-800 mt-40 mb-40">
-
-	<div class="row center">
+	<div class="container">
+		<div class="title">
+			<h1>제목제목제목제목제목제목제목제목제목제목제목제목제목</h1>
+		</div>
+		<div class="info">
+			<ul class="author">
+				<p>여의도꿀주먹</p>
+			</ul>
+			<ul class="other-info" >
+				<li>2022-12-24 20:30</li>
+				<li>조회수: 200</li>
+				<li>댓글: 0</li>
+			</ul>
+		</div>
+		<hr>
+		<div class="main">
+			<img src="1.jpg">
+			<p>
+				국제사회가 평가하는 한국의 기후위기 대응 수준은 주요국 중에서 최하위권이다. 
+				경제 규모 세계 10위권인 한국이 위상에 걸맞은 기후위기 대응 노력을 하지 않는다는 의미다. 
+				기후위기 대응은 국제사회의 약속이다. 국내 사정에 따라 늦춰서도 안 되고 그럴 여유도 없다. 
+				자칫 탄소중립 실현 과정에서 국제사회의 거센 비판과 압력에 직면하고, 통상 장벽에 가로막혀 엄청난 비용 청구서를 받아들 수 있다.
+								국제사회가 평가하는 한국의 기후위기 대응 수준은 주요국 중에서 최하위권이다. 
+				경제 규모 세계 10위권인 한국이 위상에 걸맞은 기후위기 대응 노력을 하지 않는다는 의미다. 
+				기후위기 대응은 국제사회의 약속이다. 국내 사정에 따라 늦춰서도 안 되고 그럴 여유도 없다. 
+				자칫 탄소중립 실현 과정에서 국제사회의 거센 비판과 압력에 직면하고, 통상 장벽에 가로막혀 엄청난 비용 청구서를 받아들 수 있다.
+								국제사회가 평가하는 한국의 기후위기 대응 수준은 주요국 중에서 최하위권이다. 
+				경제 규모 세계 10위권인 한국이 위상에 걸맞은 기후위기 대응 노력을 하지 않는다는 의미다. 
+				기후위기 대응은 국제사회의 약속이다. 국내 사정에 따라 늦춰서도 안 되고 그럴 여유도 없다. 
+				자칫 탄소중립 실현 과정에서 국제사회의 거센 비판과 압력에 직면하고, 통상 장벽에 가로막혀 엄청난 비용 청구서를 받아들 수 있다.
+			</p>
+		</div>
+	</div>
+	
+<%-- <div class="row center">
 		<table class="table">
 			<tbody>
 				<tr>			
-					<td class="">
+					<td class="title">
 						${boardDto.boardTitle}						
 					</td>
 				</tr>
-				<tr>					
-					<td>${boardDto.memberNick}</td>
-				</tr>
+					<tr class="author">					
+						<td>${boardDto.memberNick}</td>
+						<td>2022-12-17 20:31</td>
+						<td>조회수: 200</td>
+						<td>댓글: 0</td>
+					</tr>
 				<tr height="200" valign="top">
 				
 					<td>
@@ -250,9 +338,9 @@
 						<a class="btn btn-positive" href="write">글쓰기</a>	
 						</c:if>
 						
-						<%--
+						
 							관리자는 삭제만, 회원은 자신의 글만 수정/삭제 가능하도록 처리
-						 --%>
+						
 						 
 						
 					<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
@@ -270,7 +358,7 @@
 			</tfoot>
 		</table>	
 		
-	</div>
+	</div> --%>
 	
 	<div class="row center">
 		<table class="table table-slit table-hover table-reply-list">
@@ -289,8 +377,22 @@
 				<tr class="view">
 					<td width="90%">
 						<!-- 작성자 -->
-						${replyDto.memberNick}(${replyDto.replyId})
-						(${replyDto.memberBadge}) 
+						<ul class="reply-box">
+							<li class="reply-author">
+								<p>(${replyDto.memberBadge})${replyDto.memberNick}</p>
+							</li>
+							<li class="reply-main">
+								<p>댓글 본문ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ오ㅗㅗㅗㅗㅗ</p>
+							</li>
+							<li class="reply-date">
+								<p class="date">2022-12-23</p>
+								<c:if test="${loginId == replyDto.replyId}">
+									<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
+									<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/images/delete.png" width="20" height="20"></a>
+								</c:if>
+							</li>
+						</ul>
+ 
 						<br>
 						<c:if test="${boardDto.boardId ==  replyDto.replyId}">
 						
@@ -308,16 +410,17 @@
 							</c:otherwise>
 						</c:choose>
 						
-						<br><br>
+<%-- 						<br><br>
 						<fmt:formatDate value="${replyDto.replyWriteTime}" 
-													pattern="yyyy-MM-dd HH:mm"/>
+													pattern="yyyy-MM-dd HH:mm"/> --%>
 					</td>
 					<th>
 						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
-						<c:if test="${loginId == replyDto.replyId}">
+						
+<%-- 						<c:if test="${loginId == replyDto.replyId}">
 							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
 							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/images/delete.png" width="20" height="20"></a>
-						</c:if>
+						</c:if> --%>
 						
 						<c:if test="${loginNick.contains('관리자')}">
 							<!-- 블라인드 여부에 따라 다르게 표시 -->

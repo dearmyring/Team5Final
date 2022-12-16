@@ -104,16 +104,19 @@ input {
    display: none;
 }
 
-.board-bottom{
+.board-bottom {
    width:700px;
    border-bottom : 1px solid gray;
    
 }
-.notice-bottom{
+
+.notice-bottom {
    width:700px;
    border-bottom : 1px solid gray;
    
 }
+
+
 .f{
 width: 20%;
 }
@@ -136,11 +139,28 @@ width: 20%;
     margin-left: auto;
     margin-right: auto;
 }
+
+.notice-box {
+	display: flex;
+}
+
+.notice-title {
+	border: 1px solid blue;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-radius: 15px;
+	background-color: #ececec;
+	color: blue;
+}
+
 .notice-badge{
    width : 5%;
 }
 .notice{
-	
+	margin-left: 20px;
+	margin-top: 23px;
 }
 
 
@@ -180,17 +200,17 @@ width: 20%;
   </tr>
 </thead>
 
-   
   <c:forEach var="noticeDto" items="${noticeList}">
          
    <tr class="notice-bottom">
                <td>
-               	<div class="left">
-                  <img class="notice-badge" src="/images/notice.png">	
+               	<div class="notice-box">
+                  <p class="notice-title">공지</p>
                   <a class="notice" href="detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}</a>
                	</div>
                </td>
    </tr>
+   
   </c:forEach>
          
    <tbody class="board-list center mt-50">
