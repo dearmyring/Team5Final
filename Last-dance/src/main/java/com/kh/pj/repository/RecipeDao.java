@@ -41,6 +41,9 @@ public interface RecipeDao {
 	//재료별 레시피 갯수 출력
 	public List<RecipeCountVO> selectRecipeList();
 	
+	//관리자 레시피 등록 시 기존 레시피 검사용
+	public RecipeDto adminRecipeFind(String recipeTitle);
+	
 	
 	
 	
@@ -57,7 +60,7 @@ public interface RecipeDao {
 	
 	//내가 본 레시피 시간 업데이트
 	boolean updateRecipeViewTime(RecipeViewDto recipeViewDto);
-	
+
 	//레시피 좋아요 확인
 	RecipeLikeDto recipeLikeOne(RecipeLikeDto dto);
 	

@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.BoardDto;
+import com.kh.pj.entity.MemberDto;
 import com.kh.pj.error.TargetNotFoundException;
 import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
@@ -72,45 +73,12 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	
-private ResultSetExtractor<BoardListVO> detailExtractor = new ResultSetExtractor<BoardListVO>() {
-		
-		@Override
-		public BoardListVO extractData(ResultSet rs) throws SQLException, DataAccessException {
-			if(rs.next()) {
-				return BoardListVO.builder()
-						.boardNo(rs.getInt("board_no"))
-						.memberNick(rs.getString("member_nick"))
-						.boardId(rs.getString("board_id"))
-						.boardTitle(rs.getString("board_title"))
-						.boardContent(rs.getString("board_content"))
-						.boardClick(rs.getInt("board_click"))
-						.boardLike(rs.getInt("board_like"))
-						.boardWriteTime(rs.getDate("board_writetime"))
-						.boardEditTime(rs.getDate("board_edittime"))
-						.boardBlind(rs.getString("board_blind"))
-						.memberBadge(rs.getString("member_badge"))
-//						.replyNo(rs.getInt("reply_no"))
-//						.profileAttachmentNo(rs.getInt("profile_attachment_no"))
-//						.attachment_no(rs.getInt("attachment_no"))
-						.build();
-			}
-			else {
-				return null;
-			}
-		}
-	};
-	
-	
-	
 	@Override
 	public BoardListVO selectOne(int boardNo) {
-		String sql="select"
-				+ " board.*,member_nick,member_badge"
-				+ " from board left outer join member on board_id=member_id where board_no=?";
-		Object[]param = {boardNo};
-		return jdbcTemplate.query(sql, detailExtractor,param);
-		}
+		return sqlSession.selectOne("board.detail",boardNo);
+	}
 
+	
 	@Override
 	public List<BoardListVO> boardList(BoardListSearchVO vo) {
 		return sqlSession.selectList("board.list", vo);
@@ -137,6 +105,30 @@ private ResultSetExtractor<BoardListVO> detailExtractor = new ResultSetExtractor
 		Object[] param = {boardNo, boardAttachmentNo};
 		jdbcTemplate.update(sql, param);
 	}
+
+	@Override
+	public void updatePoint(MemberDto memberDto) {
+		sqlSession.update("board.updatePoint",memberDto);	
+	}
+	
+	@Override
+	public void deletePoint(MemberDto memberDto) {
+		sqlSession.update("board.deletePoint",memberDto);
+	}
+
+	@Override
+	public int boardCNT(MemberDto memberDto) {
+		return sqlSession.selectOne("board.boardCNT",memberDto);
+	}
+	
+	@Override
+	public int replyCNT(MemberDto memberDto) {
+		return sqlSession.selectOne("board.replyCNT",memberDto);
+	}
+	
+
+
+	
 
 
 

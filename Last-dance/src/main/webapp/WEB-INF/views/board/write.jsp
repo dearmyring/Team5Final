@@ -20,7 +20,7 @@
 	$(function(){
 		$("[name=boardContent]").summernote({
 			height:300,
-			minHeight:300,
+			minHeight:700,
 		});
 	});
 </script>
@@ -82,7 +82,7 @@
                             that.next().attr("src", resp);
                             var attachmentNo = parseInt((resp.split("download/"))[1]);
                             that.parent().find(".img-no").val(attachmentNo);
-                            var img = $("<img>").attr("src", resp);
+                            var img = $("<img>").attr("src",resp);
                             $(".note-editable").append(img);
                         }
                     });
