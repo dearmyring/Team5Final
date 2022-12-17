@@ -14,7 +14,7 @@
 	$(function(){
 		$("[name=boardContent]").summernote({
 			height:300,
-			minHeight:300,
+			minHeight:700,
 		});
 	});
 </script>
@@ -47,7 +47,7 @@
 	
 	<div class="row left">
 		<label>내용</label>
-		<textarea name="boardContent" required value="${boardDto.boardContent}" required></textarea>
+		<textarea name="boardContent" required value="${boardDto.boardContent}"></textarea>
 	</div>
 	
 	<div class="row left">

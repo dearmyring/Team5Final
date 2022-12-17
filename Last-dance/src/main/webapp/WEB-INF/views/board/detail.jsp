@@ -8,6 +8,25 @@
 </jsp:include>
 
 <style>
+.heart-color {
+    color: red;
+}
+.btn.btn-positive {
+    background-color: #35C5F0;
+    color: white;
+    font-weight: bold;
+}
+.btn.btn-positive:hover {
+    background-color: #1E90FF;
+}
+.badge{
+width : 3%;
+}
+.author {
+    font-size: 16px;
+    font-weight: bold;
+}
+
 	.heart {
 		text-decoration: none;
 		color:red;
@@ -24,17 +43,22 @@
 	}
 	
 	.title {
-		text-align: center;
-		padding-bottom: 20px;
-	}
+    font-size: 20px;
+    text-align: left;
+    padding-bottom: 5px;
+}
 	
 	.info {
-		margin-bottom: 30px;
-	}
+    margin-bottom: 21px;
+    width: 100%;
+    margin-top: 16px;
+}
 	
 	.other-info {
-		display: flex;
-	}
+    display: flex;
+    color: #757575;
+    margin-top: 15px;
+}
 	
 	.other-info > li:not(:first-child) {
 		margin-left: 20px;
@@ -43,7 +67,7 @@
 	.main {
 		margin-top: 50px;
 		margin-bottom: 50px;
-		text-align: center;
+		text-align: left;
 	}
 	
 	.main > p {
@@ -56,7 +80,7 @@
 	}
 	
 	.reply-author: {
-		width: 30%;
+		width: 20%;
 	}
 	
 	.reply-main {
@@ -73,6 +97,31 @@
 
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
+$(function(){
+
+    $(".like-btn").click(function(){
+
+        $(this).toggleClass("fa-solid fa-regular heart-color");
+        var url = location.href;
+        var boardNo = (url.slice(url.indexOf('=') + 1, url.length));
+
+        var that = $(this);
+        $.ajax({
+            url: "http://localhost:8888/rest/board_like/"+boardNo,
+            method: "get",
+            success: function(resp) {
+             that.next().html(resp);
+            }
+
+        });
+        // ajax end
+    });
+    
+    
+});
+
+
+
 	$(function(){
 		//목표 : 
 		//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
@@ -221,84 +270,59 @@
 <div class="container-800 mt-40 mb-40">
 	<div class="container">
 		<div class="title">
-			<h1>제목제목제목제목제목제목제목제목제목제목제목제목제목</h1>
+			<h1>${boardDto.boardTitle}	</h1>
 		</div>
+		
 		<div class="info">
 			<ul class="author">
-				<p>여의도꿀주먹</p>
+				<li><c:if test="${boardDto.memberBadge == 1 }">
+						<img class="badge" src="/images/badge-1.png">
+					</c:if>${boardDto.memberNick}</li>
 			</ul>
 			<ul class="other-info" >
-				<li>2022-12-24 20:30</li>
-				<li>조회수: 200</li>
-				<li>댓글: 0</li>
+				<li>작성일: ${boardDto.boardWriteTime}</li>
+				<li>조회수: ${boardDto.boardClick}</li>
+				<li>댓글: ${boardDto.replyCnt}</li>
 			</ul>
+			<span>
+			<c:choose>
+				<c:when test="${like==null}">
+					<i class="fa-regular fa-heart like-btn"></i> 
+				</c:when>
+				<c:otherwise>
+					<i class="fa-solid fa-heart like-btn heart-color"></i> 
+				</c:otherwise>
+			</c:choose>
+			
+			<span>추천: ${boardDto.boardLike}</span>
+			</span>
+				
 		</div>
 		<hr>
 		<div class="main">
-			<img src="1.jpg">
 			<p>
-				국제사회가 평가하는 한국의 기후위기 대응 수준은 주요국 중에서 최하위권이다. 
-				경제 규모 세계 10위권인 한국이 위상에 걸맞은 기후위기 대응 노력을 하지 않는다는 의미다. 
-				기후위기 대응은 국제사회의 약속이다. 국내 사정에 따라 늦춰서도 안 되고 그럴 여유도 없다. 
-				자칫 탄소중립 실현 과정에서 국제사회의 거센 비판과 압력에 직면하고, 통상 장벽에 가로막혀 엄청난 비용 청구서를 받아들 수 있다.
-								국제사회가 평가하는 한국의 기후위기 대응 수준은 주요국 중에서 최하위권이다. 
-				경제 규모 세계 10위권인 한국이 위상에 걸맞은 기후위기 대응 노력을 하지 않는다는 의미다. 
-				기후위기 대응은 국제사회의 약속이다. 국내 사정에 따라 늦춰서도 안 되고 그럴 여유도 없다. 
-				자칫 탄소중립 실현 과정에서 국제사회의 거센 비판과 압력에 직면하고, 통상 장벽에 가로막혀 엄청난 비용 청구서를 받아들 수 있다.
-								국제사회가 평가하는 한국의 기후위기 대응 수준은 주요국 중에서 최하위권이다. 
-				경제 규모 세계 10위권인 한국이 위상에 걸맞은 기후위기 대응 노력을 하지 않는다는 의미다. 
-				기후위기 대응은 국제사회의 약속이다. 국내 사정에 따라 늦춰서도 안 되고 그럴 여유도 없다. 
-				자칫 탄소중립 실현 과정에서 국제사회의 거센 비판과 압력에 직면하고, 통상 장벽에 가로막혀 엄청난 비용 청구서를 받아들 수 있다.
+				${boardDto.boardContent}
 			</p>
-		</div>
-	</div>
-	
-<%-- <div class="row center">
-		<table class="table">
-			<tbody>
-				<tr>			
-					<td class="title">
-						${boardDto.boardTitle}						
-					</td>
-				</tr>
-					<tr class="author">					
-						<td>${boardDto.memberNick}</td>
-						<td>2022-12-17 20:31</td>
-						<td>조회수: 200</td>
-						<td>댓글: 0</td>
-					</tr>
-				<tr height="200" valign="top">
-				
-					<td>
-						<!-- pre 태그는 엔터, 띄어쓰기, 탭키 등을 있는 그대로 표시하는 영역 -->
-						<pre>${boardDto.boardContent}</pre>
-						<img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}">
-					</td>
-				</tr>
-				<tr>
-					
-					<td>${boardDto.boardClick}</td>
-				</tr>
-				<tr>
-					
-					<td>
-						<fmt:formatDate value="${boardDto.boardWriteTime}" pattern="y년 M월 d일 E요일 a h시 m분 s초"/>
-					</td>
-				</tr>
-		
-				<c:if test="${boardDto.boardEditTime != null}">
-				<tr>
-					
-					<td>
-						<fmt:formatDate value="${boardDto.boardEditTime}" pattern="y년 M월 d일 E요일 a h시 m분 s초"/>
-					</td>
-				</tr>
+			<div class="right">
+				<c:if test="">
+						<a class="btn btn-positive" href="write">글쓰기</a>	
 				</c:if>
 				
+					<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
+						
+					<c:if test="${owner}">
+						<a class="btn btn-positive" href="write">글쓰기</a>	
+						<a class="edit-btn btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정하기</a>	
+						<a class="board-delete btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>	
+					</c:if>
+						<a class="btn btn-neutral" href="list">목록으로</a>
+			</div>
+			<hr>
+		</div>
+	</div>	
+			<%-- <div class="row container-400">
+				
 				<c:if test="${attachmentList != null}">
-				<tr>
-					<th>첨부파일</th>
-					<td>
 						<ul class="attachment-list">
 							<c:forEach var="attachmentDto" items="${attachmentList}">
 							<li>
@@ -310,55 +334,8 @@
 							</li>
 							</c:forEach>
 						</ul>
-					</td>
-				</tr>
 				</c:if>
-			</tbody>
-			<tfoot>
-				<tr>
-					
-					<td colspan="2" align="right">
-						
-						<c:if test="${loginId != null}">
-							<a class="heart"></a>
-						
-						</c:if>
-						<!-- 좋아요 하트 -->
-						<c:if test="${isLike == null}">
-						</c:if>
-						<c:if test="${isLike == true}">
-							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♥</a>
-						</c:if>
-						<c:if test="${isLike == false}">
-							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♡</a>
-						</c:if>
-						추천:${likeCount} ${boardDto.boardLike}	
-						
-						<c:if test="">
-						<a class="btn btn-positive" href="write">글쓰기</a>	
-						</c:if>
-						
-						
-							관리자는 삭제만, 회원은 자신의 글만 수정/삭제 가능하도록 처리
-						
-						 
-						
-					<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
-						
-					<c:if test="${owner}">
-						<a class="btn btn-positive" href="write">글쓰기</a>	
-						<a class="edit-btn btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정하기</a>	
-						<a class="board-delete btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>	
-					</c:if>
-						<a class="btn btn-neutral" href="list">목록으로</a>
-					
-					
-					</td>
-				</tr>
-			</tfoot>
-		</table>	
-		
-	</div> --%>
+			</div> --%>
 	
 	<div class="row center">
 		<table class="table table-slit table-hover table-reply-list">
@@ -379,48 +356,37 @@
 						<!-- 작성자 -->
 						<ul class="reply-box">
 							<li class="reply-author">
-								<p>(${replyDto.memberBadge})${replyDto.memberNick}</p>
+								<p><c:if test="${boardDto.memberBadge == 1 }">
+						<img class="badge" src="/images/badge-1.png">
+						</c:if>${replyDto.memberNick}</p>
 							</li>
 							<li class="reply-main">
-								<p>댓글 본문ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ오ㅗㅗㅗㅗㅗ</p>
+								<p>
+									<c:choose>
+										<c:when test="${replyDto.replyBlind}">
+										<pre>블라인드 처리된 게시물입니다</pre>
+									</c:when>
+									<c:otherwise>
+										<pre>${replyDto.replyContent}</pre>
+									</c:otherwise>
+									</c:choose>	
+								</p>
 							</li>
 							<li class="reply-date">
-								<p class="date">2022-12-23</p>
-								<c:if test="${loginId == replyDto.replyId}">
-									<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
-									<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/images/delete.png" width="20" height="20"></a>
-								</c:if>
+								<p class="date"><fmt:formatDate value="${replyDto.replyWriteTime}" 
+													pattern="yyyy-MM-dd HH:mm"/></p>
 							</li>
 						</ul>
  
-						<br>
-						<c:if test="${boardDto.boardId ==  replyDto.replyId}">
-						
-						</c:if>
-						
-						<br>
-						
-						<!-- 블라인드 여부에 따라 다르게 표시 -->
-						<c:choose>
-							<c:when test="${replyDto.replyBlind}">
-								<pre>블라인드 처리된 게시물입니다</pre>
-							</c:when>
-							<c:otherwise>
-								<pre>${replyDto.replyContent}</pre>
-							</c:otherwise>
-						</c:choose>
-						
-<%-- 						<br><br>
-						<fmt:formatDate value="${replyDto.replyWriteTime}" 
-													pattern="yyyy-MM-dd HH:mm"/> --%>
+						<br>											
+						<br>			
 					</td>
 					<th>
-						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
-						
-<%-- 						<c:if test="${loginId == replyDto.replyId}">
+						<c:if test="${loginId == replyDto.replyId}">
 							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
 							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/images/delete.png" width="20" height="20"></a>
-						</c:if> --%>
+						</c:if>
+						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->				
 						
 						<c:if test="${loginNick.contains('관리자')}">
 							<!-- 블라인드 여부에 따라 다르게 표시 -->
@@ -531,6 +497,11 @@ $(function(){
 	 	});
 	 });
  
+
+
+
+
+
 </script>
 
 

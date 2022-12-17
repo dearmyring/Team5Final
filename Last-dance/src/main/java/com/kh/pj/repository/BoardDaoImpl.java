@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.BoardDto;
+import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.error.TargetNotFoundException;
@@ -130,6 +131,42 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public List<NoticeDto> noticeList(NoticeDto noticeDto) {
 		return sqlSession.selectList("board.noticelist",noticeDto);
+	}
+
+	
+	@Override
+	public BoardLikeDto boardLikeOne(BoardLikeDto dto) {
+		
+		return sqlSession.selectOne("board.selectBoardLike",dto);
+	}
+
+	@Override
+	public boolean likeUp(int boardNo) {
+		int result = sqlSession.update("board.likeUp", boardNo);
+		return result > 0;
+	}
+
+	@Override
+	public boolean likeDown(int boardNo) {
+		int result = sqlSession.update("board.likeDown", boardNo);
+		return result > 0;
+	}
+
+	@Override
+	public void addLike(BoardLikeDto dto) {
+		sqlSession.insert("board.addBoardLike", dto);
+		
+	}
+
+	@Override
+	public boolean removeLike(BoardLikeDto dto) {
+		int result = sqlSession.delete("board.removeBoardLike", dto);
+		return result > 0;
+	}
+
+	@Override
+	public int countLike(int boardNo) {
+		return sqlSession.selectOne("board.countLike", boardNo);
 	}
 	
 

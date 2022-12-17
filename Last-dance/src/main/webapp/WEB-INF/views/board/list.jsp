@@ -50,6 +50,9 @@
     color: white;
     font-weight: bold;
 }
+.btn.btn-positive:hover {
+    background-color: #1E90FF;
+}
 .board-list-title{
    font-size : 30px;
    font-weight: 900;
@@ -112,7 +115,7 @@ input {
 
 .notice-bottom {
    width:700px;
-   border-bottom : 1px solid gray;
+   border-bottom : 0.5px solid gray;
    
 }
 
@@ -145,14 +148,14 @@ width: 20%;
 }
 
 .notice-title {
-	border: 1px solid blue;
+	border: 1px solid none;
 	padding-left: 7px;
 	padding-right: 7px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	border-radius: 15px;
-	background-color: #ececec;
-	color: blue;
+	background-color: #EFFBFF;
+	color: #3BC5F0;
 }
 
 .notice-badge{
@@ -161,6 +164,7 @@ width: 20%;
 .notice{
 	margin-left: 20px;
 	margin-top: 23px;
+	font-weight: 900;
 }
 
 
@@ -206,7 +210,7 @@ width: 20%;
                <td>
                	<div class="notice-box">
                   <p class="notice-title">공지</p>
-                  <a class="notice" href="detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}</a>
+                  <a class="notice" href="/admin/notice/detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}✌</a>
                	</div>
                </td>
    </tr>
@@ -241,7 +245,7 @@ width: 20%;
 				</div>
 			</div>
 			<div class="all-thumbnail-box w-20">
-				<%-- <img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}"> --%>
+			<%-- 	 <img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}">  --%>
 				<div class="thumbnail-box">
 					<img class="thumbnail" src="${pageContext.request.contextPath}/images/image 3.png">
 				</div>
