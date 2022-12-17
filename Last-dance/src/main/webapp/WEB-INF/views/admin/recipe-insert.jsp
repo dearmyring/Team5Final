@@ -251,7 +251,7 @@
     		var param = $.param(data);
     		var that = $(this);
     		$.ajax({
-    			url: "http://localhost:8888/rest/recipe?"+param,
+    			url: "http://localhost:8888/rest/recipe_find?"+param,
     			method: "get",
     			success: function(resp){
     				if(resp){

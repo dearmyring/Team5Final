@@ -14,8 +14,8 @@
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-6">
-				<select class="sort-click form-select w-50" id="exampleSelect1">
+			<div class="col-4">
+				<select class="sort-click form-select w-100 pe-0" id="exampleSelect1">
 					<option value="recipe_no desc">최근 작성일 순</option>
 					<option value="recipe_click desc">조회수 높은 순</option>
 					<option value="recipe_like desc">좋아요 많은 순</option>
@@ -23,7 +23,7 @@
 					<option value="recipe_time desc">조리시간 긴 순</option>
 				</select>
 			</div>
-			<div class="col-6 text-end">
+			<div class="col-8 text-end">
 				<a href="write" class="btn yellow-btn btn-md h-100 p-auto"><span class="align-middle">등록하기</span></a>
 			</div>
 		</div>
