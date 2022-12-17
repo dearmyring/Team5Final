@@ -32,7 +32,6 @@
     <style>
     	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 		*{ font-family: 'Noto Sans KR', sans-serif; }
-
 		.table-link tbody tr { background-color:white; }
 		.table-link tbody tr:hover { background-color:#ececec; transition: 0.3s; }
 		

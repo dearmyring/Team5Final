@@ -55,7 +55,6 @@ public class RecipeRestController {
 	
 	@GetMapping("/recipe_find")
 	public RecipeDto adminRecipeFind(@RequestParam String recipeTitle) {
-		System.out.println(recipeTitle);
 		return recipeDao.adminRecipeFind(recipeTitle.replace(" ", ""));
 	}
 

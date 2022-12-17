@@ -147,7 +147,7 @@
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">
+			<div class="col-2 d-flex align-items-center">
 				Step<fmt:formatNumber value="${no+1}" minIntegerDigits="2"/> 
 			</div>
 			<div class="col-7">
@@ -214,10 +214,10 @@
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
 			<div class="col-6 text-end">
-				<button class="col-4 btn btn-md text-lg yellow-btn recipe-insert-btn" type="submit">레시피 등록하기</button>
+				<button class="col-4 btn btn-md text-lg yellow-btn recipe-return-btn" type="button">돌아가기</button>
 			</div>
 			<div class="col-6">
-				<button class="col-4 btn btn-md text-lg yellow-btn recipe-return-btn" type="button">돌아가기</button>
+				<button class="col-4 btn btn-md text-lg yellow-btn recipe-insert-btn" type="submit">레시피 등록하기</button>
 			</div>
 		</div>
 	</div>

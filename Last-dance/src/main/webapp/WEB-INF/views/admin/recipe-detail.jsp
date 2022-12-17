@@ -82,10 +82,10 @@
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
 			<div class="col-6 text-end">
-				<a class="delete-btn btn btn-md btn-light" href="../delete/${recipeDto.recipeNo}">삭제</a>
+				<a class="delete-btn btn btn-md btn-light" href="../delete/${recipeDto.recipeNo}">삭제하기</a>
 			</div>
 			<div class="col-6">
-				<a class="btn btn-md yellow-btn" href="../update?recipeNo=${recipeDto.recipeNo}">수정</a>
+				<a class="btn btn-md yellow-btn" href="../update?recipeNo=${recipeDto.recipeNo}">수정하기</a>
 			</div>
 		</div>
 	</div>
