@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid d-lg-flex flex-row align-items-center">
-            	<ul class="d-lg-flex list-unstyled">
+            	<ul class="before-address d-lg-flex list-unstyled">
             		<a href="#"><li>여기가 거기</li></a>
             		<span>&nbsp;&gt;&nbsp;</span>
             		<a href="#"><li>여기가 거기</li></a>
