@@ -784,9 +784,11 @@ ul.pagination.pagination-small {
 	font-weight: 900;
 	color: #373A3C;
 	font-size: 25px;
+	text-align: center;
 }
 
-.result-keyword {
+.result-keyword,
+.get-ingredient {
 	cursor: pointer;
 }
 
@@ -801,5 +803,7 @@ ul.pagination.pagination-small {
 	font-size:18px;
 }
 
-
+.dropdown-nav a {
+	font-size: 15px;
+}
 

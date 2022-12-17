@@ -72,15 +72,16 @@
 					sort: sort
 				}),
 				success: function(resp){
-					$(".board-list").find("tr").remove();
+					$(".board-list").empty();
 					for(var i=0; i<resp.length; i++){
 						var tr = $("<tr>").addClass("text-center");
 						var check = $("<input>").addClass("check-item").attr("name", "boardNo")
-							.val(resp[i].recipeNo).attr("type", "checkbox");
-						var tdCheck = $("<td>").append(check);
+							.val(resp[i].recipeNo).attr("type", "hidden");
+						var checkIcon = $("<i>").addClass("fa-regular fa-square icon-check-item");
+						var tdCheck = $("<td>").append(checkIcon).append(check);
 						var link = $("<a>").attr("href", "detail/"+resp[i].boardNo)
-							.text(resp[i].boardTitle).addClass("text-decoration-none link-dark");
-						var tdTitle = $("<td>").addClass("text-start").append(link);
+							.text(resp[i].boardTitle).addClass("stretched-link text-decoration-none link-dark");
+						var tdTitle = $("<td>").addClass("position-relative text-start").append(link);
 						var tdNick = $("<td>").text(resp[i].memberNick);
 						var tdClick = $("<td>").text(resp[i].boardClick);
 						var tdTime = $("<td>").text(resp[i].boardWriteTime);
@@ -92,6 +93,8 @@
 						tr.append(tdCheck).append(tdTitle).append(tdNick).append(tdClick).append(tdTime).append(tdBlind);
 						$(".board-list").append(tr);
 					}
+					$(".icon-check-all").removeClass("fa-regular fa-square-check")
+					.addClass("fa-regular fa-square");
 				}
 			});
 		});

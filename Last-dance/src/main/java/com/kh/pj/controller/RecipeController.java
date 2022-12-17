@@ -42,6 +42,7 @@ public class RecipeController {
 	@GetMapping("/detail")
 	public String recipeDetail(Model model, @RequestParam int recipeNo, HttpSession session) {
 		
+		if(session.getAttribute("loginId") != null) {
 		//본적이 있는 글인지 확인
 		RecipeViewDto recipeViewDto = RecipeViewDto.builder()
 					.recipeViewId((String)session.getAttribute("loginId"))
@@ -69,9 +70,9 @@ public class RecipeController {
 		recipeDao.recipeLikeOne(recipeLikeDto);
 		
 		
-		model.addAttribute("recipe", recipeDao.selectDetail(recipeNo));
 		model.addAttribute("like", recipeDao.recipeLikeOne(recipeLikeDto));
-		
+		}
+		model.addAttribute("recipe", recipeDao.selectDetail(recipeNo));
 		return "recipe/detail";
 	}
 	
