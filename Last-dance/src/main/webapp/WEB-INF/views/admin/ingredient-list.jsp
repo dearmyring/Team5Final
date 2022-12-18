@@ -57,7 +57,7 @@
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<table class="table table-sm">
 			<thead>
-				<tr>
+				<tr class="text-center">
 					<th><i class="fa-regular fa-square icon-check-all"></i></th>
 					<th>카테고리</th>
 					<th>재료명</th>
@@ -65,13 +65,13 @@
 			</thead>
 			<tbody class="ingredient-list">
 				<c:forEach var="ingredientDto" items="${ingredientList}">
-					<tr>
-						<td>
+					<tr class="text-center">
+						<td class="col-1">
 							<i class="fa-regular fa-square icon-check-item"></i>
 							<input class="check-item" name="ingredientName" value="${ingredientDto.ingredientName}" type="hidden">
 						</td>
-						<td>${ingredientDto.ingredientCategory}</td>
-						<td>${ingredientDto.ingredientName}</td>
+						<td class="col-5">${ingredientDto.ingredientCategory}</td>
+						<td class="col-6">${ingredientDto.ingredientName}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -352,6 +352,8 @@ public class AdminController {
 			vo.setSort("ingredient_name asc");
 		}
 		vo.setCount(adminDao.adminPostCount(vo));
+		vo.setStartPost(vo.startRow());
+		vo.setEndPost(vo.endRow());
 		model.addAttribute("ingredientList", ingredientDao.adminList(vo));
 		model.addAttribute("categoryList", categoryDao.adminList());
 		return "admin/ingredient-list";
