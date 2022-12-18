@@ -5,7 +5,7 @@
 <div class="mt-5">&nbsp;</div>
 
 <div class="text-end">
-	<a class="main-page-link"></a> > <a class="text-decoration-none text-dark" href="../list">레시피</a> > 상세보기
+	<a class="main-page-link"></a> > <a class="text-dark" href="../list">레시피</a> > 상세보기
 </div>
 
 <div class="container-fluid mt-5">

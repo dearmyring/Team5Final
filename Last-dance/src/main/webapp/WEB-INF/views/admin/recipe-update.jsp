@@ -211,7 +211,7 @@
 		<div class="row">
 			<div class="col-2">
 				요리 완성사진 
-				<button type="button">사진 한 번에 넣기</button>
+<!-- 				<button type="button">사진 한 번에 넣기</button> -->
 				<button class="thumb-all-clear" type="button">사진 모두 지우기</button>
 			</div>
 			<div class="thumb-page col-10">

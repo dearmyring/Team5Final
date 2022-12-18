@@ -81,7 +81,7 @@
 	        <li class="page-item"><a class="page-link" data-no="${no}">${no}</a></li>
         </c:forEach>
         
-        <li class="page-item">
+        <li class="page-item disabled">
         	<a class="page-link" data-no="${voPagination.nextBlock()}">
         		<i class="fa-solid fa-chevron-right"></i>
        		</a>
@@ -113,6 +113,11 @@
 
 <script type="text/javascript">
     $(function(){
+    	var pageCnt = $(".page-item");
+    	if(pageCnt.lenght == 7){
+	    	pageCnt.last().removeClass("disabled");
+    	}
+    	
     	/* 페이지 번호 누르면 비동기 리스트 */
     	$(document).on("click",".page-link", (function(e){
     		var sort = $(".sort-click").val();
