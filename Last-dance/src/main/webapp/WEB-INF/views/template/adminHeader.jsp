@@ -47,6 +47,10 @@
 			cursor: pointer;
 		}
 		
+		.admin-nick {
+			cursor: default;
+		}
+		
     </style>
 </head>
 <body>
@@ -104,19 +108,19 @@
 	                            <a class="nav-link logout-btn" href="${pageContext.request.contextPath}/admin/logout">logout</a>
 	                        </li>
 	                        <li class="nav-item">
-	                            <a class="nav-link" href="#">${loginNick}님</a>
+	                            <span class="nav-link admin-nick">${loginNick}님</span>
 	                        </li>
 	                    </ul>
                    	</div>	
                 </div>
             </div>
             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid d-lg-flex flex-row align-items-center">
-            	<ul class="before-address d-lg-flex list-unstyled">
-            		<a href="#"><li>여기가 거기</li></a>
-            		<span>&nbsp;&gt;&nbsp;</span>
-            		<a href="#"><li>여기가 거기</li></a>
-            		<span>&nbsp;&gt;&nbsp;</span>
-            		<a href="#"><li>여기가 거기</li></a>
+            	<ul class="before-address d-lg-flex list-unstyled nav nav-link text-muted">
+            		<li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
+            		
+            		<li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
+            		
+            		<li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a></li>
             	</ul>
             </div>
 		</nav>
