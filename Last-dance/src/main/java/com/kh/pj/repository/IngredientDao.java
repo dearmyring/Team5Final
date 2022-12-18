@@ -3,7 +3,7 @@ package com.kh.pj.repository;
 import java.util.List;
 
 import com.kh.pj.entity.IngredientDto;
-import com.kh.pj.vo.IngredientListSearchVO;
+import com.kh.pj.vo.ListSearchVO;
 
 public interface IngredientDao {
 	//재료 추가
@@ -22,7 +22,7 @@ public interface IngredientDao {
 	public boolean delete(String IngredientName);
 
 	//재료 전체 조회 - 관리자 레시피 등록 시 출력용
-	List<IngredientDto> adminList(IngredientListSearchVO vo);
+	List<IngredientDto> adminList(ListSearchVO vo);
 	List<String> cate();
 	String adminSelect(String ingredientName);
 	

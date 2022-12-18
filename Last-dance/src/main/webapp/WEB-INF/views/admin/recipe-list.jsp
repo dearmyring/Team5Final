@@ -70,7 +70,7 @@
 </form>
 
 <div class="row mt-3">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 ">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 	<ul class="pagination border-none-pagination" style="justify-content: center;">
         <li class="page-item disabled">
         	<a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
@@ -100,11 +100,8 @@
 			<!-- 		<option value="">재료</option> -->
 				</select>
 			</div>
-			<div class="col-7">
+			<div class="col-9">
 				<input class="input-keyword w-100 form-control" type="text">
-			</div>
-			<div class="col-2">
-				<button class="btn btn-md yellow-btn recipe-search-btn w-100 h-100" type="button">검색</button>
 			</div>
 		</div>
 	</div>
@@ -210,31 +207,26 @@
 			});
     	}
     	
-    	/* 레시피 검색창에서 엔터치면 검색 */
+    	/* 레시피 검색창에서 엔터치면 리스트 검색 */
     	$(".input-keyword").keydown(function(e){
     		if(e.keyCode == 13) {
-    			$(".recipe-search-btn").click();
+				var sort = $(".sort-click").val();
+				var type = $(".input-type").val();
+				var keyword = $(".input-keyword").val();
+				if(type == "" || keyword == "") {
+					alert("검색어는 필수 입력입니다.");
+					return;
+				}
+				var data = {
+						type: type,
+						keyword: keyword,
+						sort: sort,
+						p: 1,
+						table: "recipe"
+				};
+				async(data);
     		}
    		});
-   	
-		/* 레시피 리스트 검색 */
-		$(".recipe-search-btn").click(function(){
-			var sort = $(".sort-click").val();
-			var type = $(".input-type").val();
-			var keyword = $(".input-keyword").val();
-			if(type == "" || keyword == "") {
-				alert("검색어는 필수 입력입니다.");
-				return;
-			}
-			var data = {
-					type: type,
-					keyword: keyword,
-					sort: sort,
-					p: 1,
-					table: "recipe"
-			};
-			async(data);
-		});
 		
     	/* 레시피 리스트 정렬 */
 		$(".sort-click").on("input", function(){

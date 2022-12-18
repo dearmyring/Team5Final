@@ -107,6 +107,7 @@ public class AdminController {
 			@ModelAttribute(name="voPagination") ListSearchVO vo, 
 			Model model) {
 		vo.setTable("recipe");
+		vo.setSort("recipe_no desc");
 		vo.setCount(adminDao.adminPostCount(vo));
 		model.addAttribute("recipeList", recipeDao.adminList(vo));
 		return "admin/recipe-list";
@@ -343,8 +344,14 @@ public class AdminController {
 	
 	//관리자 재료 컨트롤러
 	@GetMapping("/ingredient/list")
-	public String ingredientList(Model model) {
-		IngredientListSearchVO vo = IngredientListSearchVO.builder().build();
+	public String ingredientList(
+			@ModelAttribute(name="voPagination") ListSearchVO vo,
+			Model model) {
+		vo.setTable("ingredient");
+		if(vo.getSort() == null) {
+			vo.setSort("ingredient_name asc");
+		}
+		vo.setCount(adminDao.adminPostCount(vo));
 		model.addAttribute("ingredientList", ingredientDao.adminList(vo));
 		model.addAttribute("categoryList", categoryDao.adminList());
 		return "admin/ingredient-list";

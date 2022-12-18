@@ -37,6 +37,7 @@
       .table-link tbody tr:hover { background-color:#ececec; transition: 0.3s; }
       
       .yellow-btn { background-color:#ECBE42;   color:white; }
+      .type-btn { border:1px solid #E5E5E5; background-color:#E5E5E5; }
       .btn-light:hover { background-color:#e9ecef; transition: 0.3s; }
       
       .pagination { cursor:pointer; }
@@ -49,6 +50,16 @@
       
       .admin-nick {
          cursor: default;
+      }
+      
+      /* 여기부터 */
+      .input-keyword{
+		padding-right: 2.5em;
+		background-image: url("${pageContext.request.contextPath}/images/search-admin.png");
+		background-size: 1.5em;
+		background-repeat: no-repeat;
+ 		background-position-x: 16.5em;
+ 		background-position-y: center;
       }
       
     </style>

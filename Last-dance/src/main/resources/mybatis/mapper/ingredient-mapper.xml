@@ -6,14 +6,28 @@
   
 <mapper namespace="ingredient">
 
-	<select id="adminList" parameterType="IngredientListSearchVO" resultType="IngredientDto">
-		select * from ingredient 
-		<where>
-			<if test="type != null and keyword != ''">
-				instr(${type}, #{keyword}) > 0 
-			</if>
-		</where>
-		order by ingredient_name ${sort}
+	<select id="adminList" parameterType="ListSearchVO" resultType="IngredientDto">
+		select * from (
+			select tmp.*, rownum rn from(
+				select * from ingredient 
+				<where>
+					<if test="type != null and keyword != ''">
+						instr(${type}, #{keyword}) > 0 
+					</if>
+				</where>
+				<if test="sort != null">
+					order by ${sort}
+				</if>
+			  ) tmp
+		) where rn 
+		<choose>
+			<when test="endPost != null">
+				between ${startPost} and ${endPost}
+			</when>
+			<otherwise>
+				> 0
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="cate" resultType="String">

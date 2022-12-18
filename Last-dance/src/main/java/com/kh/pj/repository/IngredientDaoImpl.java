@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.IngredientDto;
-import com.kh.pj.vo.IngredientListSearchVO;
+import com.kh.pj.vo.ListSearchVO;
 
 @Repository
 public class IngredientDaoImpl implements IngredientDao {
@@ -63,7 +63,7 @@ public class IngredientDaoImpl implements IngredientDao {
 	}
 
 	@Override
-	public List<IngredientDto> adminList(IngredientListSearchVO vo) {
+	public List<IngredientDto> adminList(ListSearchVO vo) {
 		return sqlSession.selectList("ingredient.adminList", vo);
 	}
 

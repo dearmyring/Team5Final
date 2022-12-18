@@ -38,17 +38,24 @@
 <div class="container-fluid">
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<select class="sort-click">
-			<option value="asc">재료명 오름차순</option>
-			<option value="desc">재료명 내림차순</option>
-		</select>
+		<div class="row">
+			<div class="col-6">
+				<select class="sort-click">
+					<option value="ingredient_name asc">재료명 오름차순</option>
+					<option value="ingredient_name desc">재료명 내림차순</option>
+				</select>
+			</div>
+			<div class="col-6 text-end">
+				<button type="button" class="ingredinet-async-insert btn yellow-btn btn-md">추가하기</button>
+			</div>
+		</div>
 	</div>
 </div>
 
 <form class="ingredientName-form">
-<div class="row mt-5">
+<div class="row mt-3">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<table class="table">
+		<table class="table table-sm">
 			<thead>
 				<tr>
 					<th><i class="fa-regular fa-square icon-check-all"></i></th>
@@ -75,43 +82,102 @@
 
 <div class="row mt-3">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="row">
-			<div class="col-6 text-end">
-				<button type="button" class="ingredient-async-delete btn btn-light btn-md">삭제하기</button>
-			</div>
-			<div class="col-6">
-				<button type="button" class="ingredinet-async-insert btn yellow-btn btn-md">추가하기</button>
-			</div>
+		<div class="text-end">
+			<button type="button" class="ingredient-async-delete btn btn-light btn-md">삭제하기</button>
 		</div>
 	</div>
 </div>
 
-<div class="row mt-5">
+<div class="row mt-3">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-	<ul class="pagination" style="justify-content: center;">
-        <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
-        <c:forEach var="no" begin="1" end="${voPagination.pageCnt}">
-	        <li class="page-item"><a class="page-link" href="#">${no}</a></li>
-        </c:forEach>
-        <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-    </ul>
-    </div>
+		<ul class="pagination border-none-pagination" style="justify-content: center;">
+		
+			<c:choose>
+				<c:when test="${voPagination.hasPrev()}">
+					<li class="page-item">
+						<a class="page-link prev-page" href="#">
+							<i class="fa-solid fa-chevron-left"></i>
+						</a>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled">
+						<a class="page-link" href="#"><i class="fa-solid fa-chevron-left"></i></a>
+				</c:otherwise>
+			</c:choose>
+			</li>
+			
+			<c:forEach var="i" begin="${voPagination.startBlock()}" end="${voPagination.endBlock()}" step="1">
+				<c:choose>
+					<c:when test="${voPagination.p != i}">
+						<li class="page-item">
+					</c:when>
+					<c:otherwise>
+						<li class="page-item active">
+					</c:otherwise>
+				</c:choose>
+					<a class="page-link" href="#">${i}</a>
+				</li>
+			</c:forEach>
+			
+			<c:choose>
+				<c:when test="${voPagination.hasNext()}">
+					<li class="page-item">
+						<a class="page-link next-page" href="#">
+							<i class="fa-solid fa-chevron-right"></i>
+						</a>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled">
+						<a class="page-link" href="#"><i class="fa-solid fa-chevron-right"></i></a>
+				</c:otherwise>
+			</c:choose>
+			</li>
+			
+		</ul>
+	</div>
 </div>
 
-<div class="row">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 text-center">
-		<select class="input-type">
-			<option value="ingredient_name">재료명</option>
-			<option value="ingredient_category">카테고리</option>
-		</select>
-		<input type="text" class="input-keyword">
-		<button type="button" class="ingredient-search-btn">검색</button>
+<div class="row mt-5">
+	<div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 text-center">
+		<div class="row">
+			<div class="col-3">
+				<select class="input-type form-select w-100 pe-3" id="exampleSelect1">
+					<option value="ingredient_name">재료명</option>
+					<option value="ingredient_category">카테고리</option>
+				</select>
+			</div>
+			<div class="col-9">
+				<input class="input-keyword w-100 form-control" type="text">
+			</div>
+		</div>
 	</div>
 </div>
 </div>	
 
 <script type="text/javascript">
 	$(function(){
+		/* 페이지네이션 */
+		$(".page-link").click(function(){
+			var p = "";
+			if($(this).hasClass("next-page")){
+				p = Number($(this).parent().prev().find(".page-link").text())+1;
+			}
+			else if($(this).hasClass("prev-page")){
+				p = Number($(this).parent().next().find(".page-link").text())-1;
+			}
+			else{
+				p = $(this).text();
+			}
+			var pInput = $("<input>").attr("type", "hidden").attr("name", "p").val(p);
+			$(".sort-click").attr("name", "sort");
+			var keyword = $(".input-keyword").val();
+			var type = $(".input-type").val();
+			var keywordInput = $("<input>").attr("type", "hidden").attr("name", "keyword").val(keyword);
+			var typeInput = $("<input>").attr("type", "hidden").attr("name", "type").val(type);
+			$("form").append(pInput).append(keywordInput).append(typeInput);
+			$("form").attr("action", "list").attr("method", "get").submit();
+		});
+		
 		/* 돌아가기 클릭 시 모달 값 삭제 */
 		$(".ingredient-insert-cancel").click(function(){
 			var modal = new bootstrap.Modal($(".ingredient-insert-modal"), {});
@@ -231,37 +297,31 @@
 			}
 		});
 		
-    	/* 레시피 검색창에서 엔터치면 검색 */
+    	/* 레시피 검색창에서 엔터치면 리스트 검색 */
     	$(".input-keyword").keydown(function(e){
     		if(e.keyCode == 13) {
-    			$(".ingredient-search-btn").click();
+				var sort = $(".sort-click").val();
+				var type = $(".input-type").val();
+				var keyword = $(".input-keyword").val();
+				if(type == "" || keyword == "") {
+					alert("검색어는 필수 입력입니다.");
+					return;
+				}
+				var param = new String();
+				param.sort = sort;
+				param.type = type;
+				param.keyword = keyword;
+				var search = $.param(param)
+				$.ajax({
+					url: "http://localhost:8888/rest/ingredient?"+search,
+					method: "get",
+					contentType: "application/json",
+					success: function(resp){
+						list(resp);
+					}
+				});
     		}
    		});
-   	
-		/* 레시피 리스트 검색 */
-		$(".ingredient-search-btn").click(function(){
-			var sort = $(".sort-click").val();
-			var type = $(".input-type").val();
-			var keyword = $(".input-keyword").val();
-			if(type == "" || keyword == "") {
-				alert("검색어는 필수 입력입니다.");
-				return;
-			}
-			var param = new String();
-			param.sort = sort;
-			param.type = type;
-			param.keyword = keyword;
-			var search = $.param(param)
-			$.ajax({
-				url: "http://localhost:8888/rest/ingredient?"+search,
-				method: "get",
-				contentType: "application/json",
-				success: function(resp){
-					list(resp);
-				}
-			});
-			
-		});
     	
     	/* 레시피 리스트 정렬 */
 		$(".sort-click").on("input", function(){
