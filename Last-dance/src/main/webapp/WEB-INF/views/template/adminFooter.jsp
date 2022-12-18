@@ -2,50 +2,51 @@
     pageEncoding="UTF-8"%>
 
 <script type="text/javascript">
-   $(function(){
-      $(".main-page-link").addClass("text-dark").attr("href", "${pageContext.request.contextPath}/admin/").text("메인 페이지");
-      /* 모든 돌아가기 + 모달창 구현 예정 */
-      $(".return-btn").click(function(){
-         history.back();
-      });
-      
-      $(".logout-btn").click(function(e){
-         var choice = confirm("로그아웃 하시겠습니까?");
-         if(!choice){
-            e.preventDefault();
-         }
-      });
-      
-      //페이지 이전 주소를 가져와서 저장
-      var referrer = document.referrer;
-//       console.log(referrer);
-      
-      //li 클릭해서 이동시 뒤에 있는 태그들을 모두 삭제
-      $(".before-address > li").click(function() {
-         //history.back(); 뒤로가기
-         //$(this).next().remove(); 자신의 뒤에 있는 요소들을 지움
-         $(".before-address").append("<li>"+"성공"+"</li>");
-      });
-      
-      //페이지 이동
-      $(document).ready(function(){
-         $(".before-address").each(function(){
-            $(this).append("<li>"+referrer+"</li>");   
-         console.log(referrer);
-         });
-         
-      });
-      
-      
-      
-//       $(window).on("beforeunload", function(){
-//          $(".before-address").append("<li>"+"성공"+"</li>");
-//          alert("성공"+referrer);
-//          console.log("성공");
-//          <a href="#"><li>여기가 거기</li></a>
-//       });
-       
-   });
+	$(function(){
+		$(".main-page-link").addClass("text-dark").attr("href", "${pageContext.request.contextPath}/admin/").text("메인 페이지");
+		/* 모든 돌아가기 + 모달창 구현 예정 */
+		$(".return-btn").click(function(){
+			history.back();
+		});
+		
+		$(".logout-btn").click(function(e){
+			var choice = confirm("로그아웃 하시겠습니까?");
+			if(!choice){
+				e.preventDefault();
+			}
+		});
+		
+		//페이지 이전 주소를 가져와서 저장
+		var referrer = document.referrer;
+// 		console.log(referrer);
+		
+		//li 클릭해서 이동시 뒤에 있는 태그들을 모두 삭제
+		$(".before-address > li").click(function() {
+			//history.back(); 뒤로가기
+			//$(this).next().remove(); 자신의 뒤에 있는 요소들을 지움
+			$(".before-address").append("<li>"+"성공"+"</li>");
+		});
+		
+		//페이지 이동
+		$(document).ready(function(){
+			$(".before-address").each(function(){
+				$(this).append("<li>"+referrer+"</li>");	
+			console.log(referrer);
+			});
+			
+		});
+		
+		
+		
+// 		$(window).on("beforeunload", function(){
+// 			$(".before-address").append("<li>"+"성공"+"</li>");
+// 			alert("성공"+referrer);
+// 			console.log("성공");
+// 			<a href="#"><li>여기가 거기</li></a>
+// 		});
+		 
+	});
+
 </script>
 
 
