@@ -14,8 +14,8 @@
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-6">
-				<select class="sort-click form-select w-50" id="exampleSelect1">
+			<div class="col-4">
+				<select class="sort-click form-select w-100 pe-0" id="exampleSelect1">
 					<option value="recipe_no desc">최근 작성일 순</option>
 					<option value="recipe_click desc">조회수 높은 순</option>
 					<option value="recipe_like desc">좋아요 많은 순</option>
@@ -23,8 +23,8 @@
 					<option value="recipe_time desc">조리시간 긴 순</option>
 				</select>
 			</div>
-			<div class="col-6 text-end">
-				<a href="write" class="btn yellow-btn btn-md">등록하기</a>
+			<div class="col-8 text-end">
+				<a href="write" class="btn yellow-btn btn-md h-100 p-auto"><span class="align-middle">등록하기</span></a>
 			</div>
 		</div>
 	</div>
@@ -34,11 +34,11 @@
 	<table class="table table-sm table-link">
 	    <thead>
 	    	<tr class="text-center">
-	        	<th><i class="fa-regular fa-square icon-check-all"></i></th>
-	            <th>번호</th>
-	            <th>제목</th>
-	            <th>조리시간</th>
-	            <th>작성자</th>
+	        	<th class="col-1"><i class="fa-regular fa-square icon-check-all"></i></th>
+	            <th class="col-1">번호</th>
+	            <th class="col-6">제목</th>
+	            <th class="col-2">조리시간</th>
+	            <th class="col-2">작성자</th>
 	        </tr>
 	    </thead>
 	    <tbody class="recipe-list">
@@ -71,17 +71,17 @@
 
 <div class="row mt-3">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 ">
-	<ul class="pagination" style="justify-content: center;">
+	<ul class="pagination border-none-pagination" style="justify-content: center;">
         <li class="page-item disabled">
         	<a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
        	</li>
        	
-        <li class="page-item active"><a class="page-link">1</a></li>
+        <li class="page-item active"><a class="page-link" data-no="1">1</a></li>
         <c:forEach var="no" begin="2" end="${voPagination.endBlock()}">
 	        <li class="page-item"><a class="page-link" data-no="${no}">${no}</a></li>
         </c:forEach>
         
-        <li class="page-item">
+        <li class="page-item disabled">
         	<a class="page-link" data-no="${voPagination.nextBlock()}">
         		<i class="fa-solid fa-chevron-right"></i>
        		</a>
@@ -94,7 +94,7 @@
 	<div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 text-center">
 		<div class="row">
 			<div class="col-3">
-				<select class="input-type form-select w-100" id="exampleSelect1">
+				<select class="input-type form-select w-100 pe-3" id="exampleSelect1">
 					<option value="recipe_title">제목</option>
 					<option value="recipe_nick">작성자</option>
 			<!-- 		<option value="">재료</option> -->
@@ -104,7 +104,7 @@
 				<input class="input-keyword w-100 form-control" type="text">
 			</div>
 			<div class="col-2">
-				<button class="btn btn-md yellow-btn recipe-search-btn w-100" type="button">검색</button>
+				<button class="btn btn-md yellow-btn recipe-search-btn w-100 h-100" type="button">검색</button>
 			</div>
 		</div>
 	</div>
@@ -113,6 +113,11 @@
 
 <script type="text/javascript">
     $(function(){
+    	var pageCnt = $(".page-item");
+    	if(pageCnt.lenght == 7){
+	    	pageCnt.last().removeClass("disabled");
+    	}
+    	
     	/* 페이지 번호 누르면 비동기 리스트 */
     	$(document).on("click",".page-link", (function(e){
     		var sort = $(".sort-click").val();

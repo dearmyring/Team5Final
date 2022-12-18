@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8">
 
-	<title>냉장고를 부탁해</title>
-	
-	<!-- 폰트 noto-sans -->
-	<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+   <title>냉장고를 부탁해</title>
+   
+   <!-- 폰트 noto-sans -->
+   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
     <!-- 폰트어썸 -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
@@ -30,8 +30,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.0.2/litera/bootstrap.min.css" integrity="sha512-WC/IImFzoPRFTlJQpUSqaM1QOKsIWIfrmhkkXRXoDeB9hlArdsUAWOURes+oFcDRPUUZhuc2QdyfaZEGXjd6kg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
-    	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-		*{ font-family: 'Noto Sans KR', sans-serif; }
+       @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+      *{ font-family: 'Noto Sans KR', sans-serif; }
 
 		.table-link tbody tr { background-color:white; }
 		.table-link tbody tr:hover { background-color:#ececec; transition: 0.3s; }
@@ -50,7 +50,6 @@
 		.admin-nick {
 			cursor: default;
 		}
-		
     </style>
 </head>
 <body>
@@ -111,18 +110,18 @@
 	                            <span class="nav-link admin-nick">${loginNick}님</span>
 	                        </li>
 	                    </ul>
-                   	</div>	
+                   	</div>
                 </div>
             </div>
             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid d-lg-flex flex-row align-items-center">
-            	<ul class="before-address d-lg-flex list-unstyled nav nav-link text-muted">
-            		<li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
-            		
-            		<li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
-            		
-            		<li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a></li>
-            	</ul>
+               <ul class="before-address d-lg-flex list-unstyled nav nav-link text-muted">
+                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
+                  
+                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
+                  
+                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a></li>
+               </ul>
             </div>
-		</nav>
-	</div>
+      </nav>
+   </div>
 </div>

@@ -28,11 +28,13 @@
   </div>
 </div>
 
-<div class="container-fluid mt-5">
-<div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<h3>레시피등록</h3>
-	</div>
+
+<div class="mt-5">&nbsp;</div>
+
+<div class="text-end">
+	<a class="main-page-link"></a> >
+	<a href="list" class="text-dark">레시피</a> > 
+	 레시피 등록하기
 </div>
 
 <form action="write" method="post" class="recipe-insert-form" autocomplete="off" enctype="multipart/form-data">
@@ -40,9 +42,9 @@
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">레시피 제목</div>
+			<div class="col-2 fw-bolder">레시피 제목</div>
 			<div class="col-10">
-				<input type="text" name="recipeTitle" class="w-100" placeholder="예) 치즈라볶이">
+				<input type="text" name="recipeTitle" class="w-100 h-100 rounded pt-1 pb-1" placeholder="예) 소고기미역국">
 				<div class="invalid-feedback">이미 존재하는 레시피 제목입니다.</div>
 			</div>
 		</div>
@@ -52,10 +54,10 @@
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">레시피 소개</div>
+			<div class="col-2 fw-bolder">레시피 소개</div>
 			<div class="col-10">
-				<input type="text" name="recipeInfo" class="w-100" 
-				placeholder="예) 생일에 빼놓을 수 없는 소고기를 넣어 더욱 깊은 맛으로 즐겨보세요.">
+				<textarea name="recipeInfo" class="w-100 rounded" style="resize: none; overflow: hidden;" 
+					placeholder="예) 생일에 빼놓을 수 없는 미역국 소고기를 넣어 더욱 깊은 맛으로 즐겨보세요."></textarea>
 			</div>
 		</div>
 	</div>
@@ -64,10 +66,10 @@
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">레시피 정보</div>
-			<div class="col-2">시간</div>
-			<div class="col-2">
-				<select name="recipeTime">
+			<div class="col-2 fw-bolder">레시피 정보</div>
+			<div class="col-1 me-4">시간</div>
+			<div class="col-2 me-1">
+				<select name="recipeTime" class="rounded">
 					<option value="">시간</option>
 					<c:forEach var="i" begin="5" step="5" end="115">
 						<option value="${i}">${i}분</option>
@@ -75,9 +77,9 @@
 					<option value="120">120분 이상</option>
 				</select>
 			</div>
-			<div class="col-2">난이도</div>
-			<div class="col-2">
-				<select name="recipeDifficulty">
+			<div class="col-2 pe-0">난이도</div>
+			<div class="col-2 ps-0">
+				<select name="recipeDifficulty" class="rounded">
 				    <option value="">난이도</option>
 				    <option value="쉬워요">쉬워요</option>
 				    <option value="보통이에요">보통이에요</option>
@@ -91,17 +93,13 @@
 
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="row">
-			<div class="col-4">
-				<label>
-					<i class="fa-regular fa-lightbulb"></i>음식의 재료를 입력해주세요.
-					<input type="text" class="input-ingredient" placeholder="재료">
-				</label>
-			</div>
-			<div class="col-2">
-				<button type="button" class="ingredient-all-clear w-100">모두 지우기</button>	
-			</div>
-		</div>
+		<i class="fa-regular fa-lightbulb"></i>음식의 재료를 입력해주세요.
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<input type="text" class="input-ingredient align-middle me-3 rounded" placeholder="재료">
+		<button type="button" class="ingredient-all-clear btn btn-md yellow-btn">모두 지우기</button>	
 	</div>
 </div>
 
@@ -120,25 +118,25 @@
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">요리 순서</div>
+			<div class="col-3 fw-bolder">요리 순서</div>
 		</div>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="row">
-			<div class="col-12">
-				<label>
-					<i class="fa-regular fa-lightbulb"></i>요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.
-					<textarea readonly rows="4" cols="100">
-					예) 10분간 익혀주세요       10분간 약한불로 익혀주세요.
-					      마늘편은 익혀주세요        마늘편은 충분히 익혀주셔야 매운 맛이 사라집니다.
-					      꿀을 조금 넣어주세요         꿀이 없는 경우, 설탕 1스푼으로 대체 가능합니다.
-					</textarea> 
-				</label>
-			</div>
-		</div>
+		<p class="fw-light mb-0" style="font-family: 'Noto Sans KR', sans-serif;">
+			<i class="fa-regular fa-lightbulb"></i>요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.
+		</p>
+		<p class="fw-light mb-0" style="font-family: 'Noto Sans KR', sans-serif;">
+			예) 10분간 익혀주세요       10분간 약한불로 익혀주세요.
+		</p> 
+		<p class="fw-lighter mb-0" style="font-family: 'Noto Sans KR', sans-serif;">
+			 마늘편은 익혀주세요        마늘편은 충분히 익혀주셔야 매운 맛이 사라집니다.
+		</p> 
+		<p class="fw-lighter mb-0" style="font-family: 'Noto Sans KR', sans-serif;">
+  					 꿀을 조금 넣어주세요         꿀이 없는 경우, 설탕 1스푼으로 대체 가능합니다.
+		</p> 
 	</div>
 </div>
 
@@ -147,11 +145,11 @@
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">
+			<div class="col-2 d-flex align-items-center fs-4">
 				Step<fmt:formatNumber value="${no+1}" minIntegerDigits="2"/> 
 			</div>
 			<div class="col-7">
-				<textarea name="recipeContentText" class="w-100 h-100"></textarea>
+				<textarea name="recipeContentText" style="resize:none;" class="w-100 h-100 rounded"></textarea>
 			</div>
 			<div class="col-3">
 				<input type="file" class="file-input" accept=".jpg, .png, .gif">
@@ -162,8 +160,12 @@
 </div>
 <div class="row mt-2">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 text-center">
-		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
-		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
+		<label class="step-plus-btn"><button class="green-btn btn btn-md" type="button">
+			<i class="fa-solid fa-plus"></i></button> 순서 추가
+		</label>
+		<label class="step-minus-btn"><button class="green-btn btn btn-md" type="button">
+			<i class="fa-solid fa-minus"></i></button> 순서 삭제
+		</label>
 	</div>
 </div>
 </div>
@@ -172,10 +174,10 @@
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">
-				요리 완성사진
-				<button type="button">사진 한 번에 넣기</button>
-				<button class="thumb-all-clear" type="button">사진 모두 지우기</button>
+			<div class="col-2 pe-0">
+				<span class="fw-bolder">요리 완성사진</span>
+<!-- 				<button type="button">사진 한 번에 넣기</button> -->
+				<button class="thumb-all-clear btn btn-sm btn-light mt-3" type="button">사진 모두 지우기</button>
 			</div>
 			<div class="thumb-page col-10">
 				<c:forEach var="no" begin="0" end="3">
@@ -196,8 +198,8 @@
 
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="row">
-			<div class="col-2">요리 해시태그</div>
+		<div class="row pe-0">
+			<div class="col-2 pe-0 fw-bolder">요리 해시태그</div>
 			<div class="col-2">
 				<select name="recipeHashtag">
 					<option value="">해시태그</option>
@@ -214,10 +216,10 @@
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
 			<div class="col-6 text-end">
-				<button class="col-4 btn btn-md text-lg yellow-btn recipe-insert-btn" type="submit">레시피 등록하기</button>
+				<button class="col-6 btn btn-md text-lg btn-light recipe-return-btn" type="button">돌아가기</button>
 			</div>
 			<div class="col-6">
-				<button class="col-4 btn btn-md text-lg yellow-btn recipe-return-btn" type="button">돌아가기</button>
+				<button class="col-6 btn btn-md text-lg yellow-btn recipe-insert-btn" type="submit">레시피 등록하기</button>
 			</div>
 		</div>
 	</div>
@@ -241,6 +243,17 @@
 	.thumb-page{
 		display: inline;
 	}
+	input,
+	textarea,
+	select{
+		padding-left : 0.5em;
+		border : 1px solid #C2C2C2;
+		outline-color : #C4C4C4;
+	}
+	.green-btn{
+		background-color : #99C779;
+		color : white;
+	}
 </style>
 
 <script type="text/javascript">
@@ -251,7 +264,7 @@
     		var param = $.param(data);
     		var that = $(this);
     		$.ajax({
-    			url: "http://localhost:8888/rest/recipe?"+param,
+    			url: "http://localhost:8888/rest/recipe_find?"+param,
     			method: "get",
     			success: function(resp){
     				if(resp){

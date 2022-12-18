@@ -46,6 +46,7 @@
 // 		});
 		 
 	});
+
 </script>
 
 
@@ -58,7 +59,7 @@
     <section class="mb-4">
 
       <a class="col-2 btn btn-floating btn-md text-dark" href="${pageContext.request.contextPath}/admin/">
-      	<img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
+         <img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
       </a>
 
       <a class="col-2 btn btn-floating btn-md text-dark" href="#">이용약관</a>
