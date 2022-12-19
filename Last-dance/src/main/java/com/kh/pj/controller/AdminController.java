@@ -361,8 +361,17 @@ public class AdminController {
 	
 	//관리자 사용자 컨트롤러
 	@GetMapping("/member/list")
-	public String memberList(Model model) {
-		model.addAttribute("memberList", memberDao.adminList());
+	public String memberList(
+			Model model, 
+			@ModelAttribute(name="voPagination") ListSearchVO vo) {
+		vo.setTable("member");
+		if(vo.getSort() == null) {
+			vo.setSort("ingredient_name asc");
+		}
+		vo.setCount(adminDao.adminPostCount(vo));
+		vo.setStartPost(vo.startRow());
+		vo.setEndPost(vo.endRow());
+		model.addAttribute("memberList", memberDao.adminList(vo));
 		return "admin/member-list";
 	}
 	

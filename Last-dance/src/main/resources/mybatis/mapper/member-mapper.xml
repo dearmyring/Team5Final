@@ -43,7 +43,20 @@
 	</update>
 	
 	<!-- 관리자 회원 목록 조회 -->
-	<select id="adminList" resultType="MemberDto">
-		select * from member order by member_join desc
+	<select id="adminList" parameterType="ListSearchVO" resultType="MemberDto">
+		select * from (
+			select tmp.*, rownum rn from(
+				select * from member 
+				<where>
+					<if test="type != null and keyword != ''">
+						instr(${type}, #{keyword}) > 0 
+					</if>
+				</where>
+				<if test="sort != null">
+					order by ${sort}
+				</if>
+			  ) tmp
+		) where rn between ${startPost} and ${endPost}
 	</select>
+	
 </mapper>

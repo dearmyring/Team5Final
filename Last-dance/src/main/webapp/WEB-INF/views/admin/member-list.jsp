@@ -11,6 +11,8 @@
 	<a class="main-page-link"></a> > 회원 리스트
 </div>
 
+<form action="list" method="get">
+
 <div class="container-fluid mt-5">
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
@@ -63,6 +65,84 @@
 		</table>
 	</div>
 </div>
-
+<div class="row mt-3">
+	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<ul class="pagination border-none-pagination" style="justify-content: center;">
+		
+			<c:choose>
+				<c:when test="${voPagination.hasPrev()}">
+					<li class="page-item">
+						<a class="page-link prev-page">
+							<i class="fa-solid fa-chevron-left"></i>
+						</a>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled">
+						<a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
+				</c:otherwise>
+			</c:choose>
+			</li>
+			
+			<c:forEach var="i" begin="${voPagination.startBlock()}" end="${voPagination.endBlock()}" step="1">
+				<c:choose>
+					<c:when test="${voPagination.p != i}">
+						<li class="page-item">
+					</c:when>
+					<c:otherwise>
+						<li class="page-item active">
+					</c:otherwise>
+				</c:choose>
+					<a class="page-link">${i}</a>
+				</li>
+			</c:forEach>
+			
+			<c:choose>
+				<c:when test="${voPagination.hasNext()}">
+					<li class="page-item">
+						<a class="page-link next-page">
+							<i class="fa-solid fa-chevron-right"></i>
+						</a>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled">
+						<a class="page-link"><i class="fa-solid fa-chevron-right"></i></a>
+				</c:otherwise>
+			</c:choose>
+			</li>
+			
+		</ul>
+	</div>
 </div>
+
+<div class="row mt-5">
+	<div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 text-center">
+		<div class="row">
+			<div class="col-3">
+				<select name="type" class="input-type form-select w-100 pe-3" id="exampleSelect1">
+					<option value="member_id">아이디</option>
+					<option value="member_nick">닉네임</option>
+				</select>
+			</div>
+			<div class="col-9">
+				<div class="input-group rounded">
+					<input aria-describedby="button-addon2" name="keyword" 
+					class="input-keyword form-control" type="text" value="${voPagination.keyword}">
+					<button class="btn-search" type="button" id="button-addon2">
+						<img width="25px" src="${pageContext.request.contextPath}/images/search-admin.png">
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</form>
+
+<script type="text/javascript">
+	$(function(){
+		$("[name=sort]").on("input", function(){
+		});
+	});
+</script>
+
 <jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

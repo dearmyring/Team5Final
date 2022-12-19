@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.MemberDto;
+import com.kh.pj.vo.ListSearchVO;
 
 @Repository
 public class MemberDaoImpl implements MemberDao{
@@ -55,7 +56,7 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public List<MemberDto> adminList() {
+	public List<MemberDto> adminList(ListSearchVO vo) {
 		return sqlSession.selectList("member.adminList");
 	}
 }

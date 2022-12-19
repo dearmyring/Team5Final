@@ -45,13 +45,20 @@
 			<div class="col-4">
 				<select class="sort-click form-select">
 					<c:choose>
-						<c:when test="${voPagination.sort == 'ingredient_name asc'}">
-							<option selected value="ingredient_name asc">재료명 오름차순</option>
-							<option value="ingredient_name desc">재료명 내림차순</option>
-						</c:when>
-						<c:otherwise>
+						<c:when test="${voPagination.sort == 'ingredient_name desc'}">
 							<option value="ingredient_name asc">재료명 오름차순</option>
 							<option selected value="ingredient_name desc">재료명 내림차순</option>
+							<option value="ingredient_category asc">카테고리 오름차순</option>
+						</c:when>
+						<c:when test="${voPagination.sort == 'ingredient_category asc'}">
+							<option value="ingredient_name asc">재료명 오름차순</option>
+							<option value="ingredient_name desc">재료명 내림차순</option>
+							<option selected value="ingredient_category asc">카테고리 오름차순</option>
+						</c:when>
+						<c:otherwise>
+							<option selected value="ingredient_name asc">재료명 오름차순</option>
+							<option value="ingredient_name desc">재료명 내림차순</option>
+							<option value="ingredient_category asc">카테고리 오름차순</option>
 						</c:otherwise>
 					</c:choose>
 				</select>
@@ -155,8 +162,16 @@
 		<div class="row">
 			<div class="col-3">
 				<select class="input-type form-select w-100 pe-3" id="exampleSelect1">
-					<option value="ingredient_name">재료명</option>
-					<option value="ingredient_category" value="${voPagination.type}">카테고리</option>
+					<c:choose>
+						<c:when test="${voPagination.type == 'ingredient_category'}">
+							<option value="ingredient_name">재료명</option>
+							<option value="ingredient_category" selected>카테고리</option>
+						</c:when>
+						<c:otherwise>
+							<option value="ingredient_name" selected>재료명</option>
+							<option value="ingredient_category">카테고리</option>
+						</c:otherwise>
+					</c:choose>
 				</select>
 			</div>
 			<div class="col-9">
