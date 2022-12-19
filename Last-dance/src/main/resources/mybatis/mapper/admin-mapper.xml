@@ -29,5 +29,14 @@
 		select (select count(*) from member) ALLCOUNT, (select count(*) from member where  to_char(member_join, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd')) TODAYCOUNT from dual
    </select>
    
+   <!-- 오늘의 인기 검색어 1~10위 -->
+   <select id="trendingSearches" resultType="TrendingSearchesVO">
+		select * from (
+		    select TMP.*, rownum rn from (
+		        select search_ingredient, count(search_ingredient) CNT from search where to_char(search_time, 'yyyy-MM-dd') = '2022-12-19' group by search_ingredient order by CNT desc
+		    )TMP
+		) where rn between 1 and 10
+   </select>
+   
    
 </mapper>

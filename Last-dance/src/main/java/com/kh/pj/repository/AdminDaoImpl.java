@@ -1,5 +1,7 @@
 package com.kh.pj.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.pj.entity.AdminDto;
 import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.MemberCountVO;
+import com.kh.pj.vo.TrendingSearchesVO;
 
 @Repository
 public class AdminDaoImpl implements AdminDao{
@@ -30,6 +33,13 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public MemberCountVO memberCount() {
 		return sqlSession.selectOne("admin.memberCount");
+	}
+	
+	//오늘의 인기검색어 1~10위
+	@Override
+	public List<TrendingSearchesVO> trendingSearches() {
+		
+		return sqlSession.selectList("admin.trendingSearches");
 	}
 	
 	

@@ -15,6 +15,7 @@ import com.kh.pj.repository.AdminDao;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.MemberCountVO;
+import com.kh.pj.vo.TrendingSearchesVO;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RequestMapping("/rest")
@@ -49,12 +50,19 @@ public class AdminRestController {
 		return vo;
 	}
 	
-	
-	@GetMapping("memberCount")
+	//전체 회원수, 오늘 가입자 수
+	@GetMapping("member-count")
 	public MemberCountVO memberCount() {
-		
 		return  adminDao.memberCount();
 	}
+	
+	//오늘의 인기 검색어 1~10위
+	@GetMapping("trending-searches")
+	public List<TrendingSearchesVO> trendingSearches() {
+		
+		return adminDao.trendingSearches();
+	}
+	
 	
 	
 }
