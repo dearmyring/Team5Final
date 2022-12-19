@@ -6,7 +6,7 @@
     - css에서는 계산식이 모든 브라우저에서 작동하지 않는다
     - 미리 예상 가능한 크기를 준비해두면 편하게 쓸 수 있지 않을까?
 */
-.container-320 { width:320px; margin:0 auto; }
+.container-340 { width:340px; margin:0 auto; }
 
 
 /*

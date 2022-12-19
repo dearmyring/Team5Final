@@ -37,9 +37,9 @@ public interface RecipeDao {
 	
 	//레시피 리스트 출력
 	public List<RecipeListVO> recipeList();
-	
-	//재료별 레시피 갯수 출력
-	public List<RecipeCountVO> selectRecipeList();
+//	
+//	//재료별 레시피 갯수 출력
+//	public int searchCount(String keyword)throws Exception;
 	
 	
 	

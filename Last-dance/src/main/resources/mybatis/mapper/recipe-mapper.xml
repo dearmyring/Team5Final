@@ -179,6 +179,11 @@
          <result column="recipe_content_attachment_no" property="recipeContentAttachmentNo"/>
       </collection>
    </resultMap>
+   
+      	<!--  레시피 총 갯수 + 검색 적용  -->	
+	<select id="searchCount" parameterType="hashMap" resultType="int">
+		select count(recipe_no) from recipe		
+	</select>
 
    
 </mapper>

@@ -11,20 +11,21 @@
 <style>
  .float-container {
  	width : 80%;
+    display: flex;
+    flex-direction: row;
  }
 .all-thumbnail-box {
 	position:relative;
 }
 
 .thumbnail-box {
-	position:absolute;
+	position: relative;
+    left: 200px;
 }
 
 .thumnail{
-	width: 100%;
-	height:100%;
-	object-fit:cover;
-	
+	width: 70%;
+	height:70%;
 	
 }
 .btn {
@@ -44,19 +45,19 @@
     font-weight: bold;
 }
 .board-list-item{
-	display:flex;
-	font-size:15px;
-
+	display: flex;
+    font-size: 15px;
+    height: 30px;
+    margin: 10px;
 }
 .board-list-content{
-	display:flex;
 	font-size:30px;
 	margin-left :8px;
-	display : flex;
+	height: 50px;
 	
 }
 .badge {
-	width: 20%;
+	width: 15px;
 }
 
 .search {
@@ -92,6 +93,9 @@ input {
 	width:700px;
 	border-bottom : 1px solid gray;
 	background-color:lightgray;
+}
+.f{
+width: 20%;
 }
 
 </style>
@@ -142,15 +146,15 @@ input {
 								${boardDto.boardContent}</a>			
 						</div>
 						<div class="board-list-item float-container left">
-							<div class="float-left w-5">${boardDto.memberNick}
+							<div class="w-20">${boardDto.memberNick}
 							<c:if test="${boardDto.memberBadge == 1 }">
 								<img class="badge" src="/images/badge-1.png">
 							</c:if>
 							</div>			
-							<div class="float-left">${boardDto.boardWriteTime}</div>
-							<div class="float-left">추천 :${boardDto.boardLike}</div>
-							<div class="float-left">조회수 : ${boardDto.boardClick}</div>
-							<div class="float-left">댓글 : ${boardDto.replyCnt}</div>
+							<div class="f">${boardDto.boardWriteTime}</div>
+							<div class="f">추천 :${boardDto.boardLike}</div>
+							<div class="f">조회수 : ${boardDto.boardClick}</div>
+							<div class="f">댓글 : ${boardDto.replyCnt}</div>
 						</div>
 					</div>
 					<div class="all-thumbnail-box w-20">

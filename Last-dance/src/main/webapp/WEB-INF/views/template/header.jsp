@@ -3,6 +3,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="login" value="${loginId != null}"></c:set>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,19 +55,28 @@
                  <nav>
                       <ul class="dropdown-nav">
                          <c:choose>
+                            <c:when test="${loginNick.contains('관리자')}">
+                                <li class="right-menu header-text">
+                                	${loginNick}
+                                  	<ul>
+                                   		<li><a href="/admin/">관리페이지</a></li>
+                               		 	<li><a href="/member/logout">로그아웃</a></li>
+                                   	</ul>
+                                </li>
+                            </c:when>
                             <c:when test="${login}">
                                 <li class="right-menu">
                                    ${loginNick}
                                    <ul>
-                                     <li><a href="/mypage/list">마이페이지</a></li>
-                                 <li><a href="/member/logout">로그아웃</a></li>
+                                     	<li><a href="/mypage/list">마이페이지</a></li>
+                                 		<li><a href="/member/logout">로그아웃</a></li>
                                    </ul>
                                 </li>
                             </c:when>
                             <c:otherwise>
-                             <li><a href="/member/login">로그인</a></li>
-                                <li><a href="/member/join">회원가입</a></li>
-                            </c:otherwise>
+	                             <li><a href="/member/login">로그인</a></li>
+	                             <li><a href="/member/join">회원가입</a></li>
+	                        </c:otherwise>
                          </c:choose>
                       </ul>
                  </nav>
@@ -79,16 +90,16 @@
           <form class="search-form">
              <i class="fa-solid fa-magnifying-glass search-icon"></i>
               <input class="search-input w-100" name="ingredientName" type="text" placeholder="냉장고 속 재료를 입력해보세요." autocomplete="off">
-                 <ul class="search-list">
+                 <div class="search-list">
                    <!-- 검색 제시어가 나올 영역 -->
-                 </ul>
+                 </div>
              <div class="search-list-select left ms-50 me-50">
                 <!-- 검색할 재료를 선택하면 추가될 영역 -->
              </div>
+             <button class="btn btn-positive btn-list-submit" type="button">검색</button>
           </form>
         </div>
        
     </header>
     <!-- 컨텐츠 영역 시작 -->
     <div class="content-area">
-
