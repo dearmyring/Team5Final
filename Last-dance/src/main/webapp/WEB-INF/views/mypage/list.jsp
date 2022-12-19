@@ -6,7 +6,6 @@
 <!-- css 불러옴  -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mypage.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/user-card.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons-ring-join.css">
 
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param name="title" value="마이페이지"/>
@@ -14,6 +13,16 @@
 
 <!-- js 불러옴 -->
 <script src="${pageContext.request.contextPath}/js/mypage.js"></script>
+
+<style>
+	.user-badge {
+		width: 30px;
+		height: 30px;
+		position: absolute;
+	    top: 10px;
+	    right: 10px;
+	}
+</style>
 
 <!-- 유저 정보 카드 -->
         <div class="user-card">
@@ -23,7 +32,7 @@
 		                <img class="profileImage" src = "${pageContext.request.contextPath}/rest/download/${profileImg.attachmentNo}">
             		</c:when>
             		<c:otherwise>
-	            		<img class="profileImage" src="${pageContext.request.contextPath}/img/basicProfileImage.png">
+	            		<img class="profileImage" src="${pageContext.request.contextPath}/images/basicProfileImage.png">
             		</c:otherwise>
             	</c:choose>
                 <input type="file" class="file-input" accept=".jpg, .png, .gif"/>
@@ -32,7 +41,7 @@
             <div class="user-card-detail">
                 <div>
                     <h2>${myInfo.memberNick}</h2>
-                        <div class="edit-info-btn" href="#">정보변경</div>
+                    <div class="edit-info-btn" href="#">정보변경</div>
                 </div>
                 <div>
                     <span class="exp">
@@ -40,33 +49,43 @@
                     	<c:choose>
                     		<c:when test="${myInfo.memberPoint<=100}">
                     			<fmt:formatNumber type="number" maxFractionDigits="1" value="${myInfo.memberPoint*100/100}"></fmt:formatNumber>
+                    			<img class="user-badge" src="${pageContext.request.contextPath}/images/lev1.png"/>
                     		</c:when>
                     		<c:when test="${myInfo.memberPoint<=300}">
                     			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-100)*100/200}"></fmt:formatNumber>
+                    			<img class="user-badge" src="${pageContext.request.contextPath}/images/lev2.png"/>
                     		</c:when>
                     		<c:when test="${myInfo.memberPoint<=550}">
                     			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-300)*100/250}"></fmt:formatNumber>
+                    			<img class="user-badge" src="${pageContext.request.contextPath}/images/lev3.png"/>
                     		</c:when>
                     		<c:when test="${myInfo.memberPoint<=850}">
                     			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-550)*100/300}"></fmt:formatNumber>
+                    			<img class="user-badge" src="${pageContext.request.contextPath}/images/lev4.png"/>
                     		</c:when>
                     		<c:when test="${myInfo.memberPoint<=1200}">
                     			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-850)*100/350}"></fmt:formatNumber>
+                    			<img class="user-badge" src="${pageContext.request.contextPath}/images/lev5.png"/>
                     		</c:when>
                     		<c:when test="${myInfo.memberPoint<=1600}">
                     			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-1200)*100/400}"></fmt:formatNumber>
+                    			<img class="user-badge" src="${pageContext.request.contextPath}/images/lev6.png"/>
                     		</c:when>
                     		<c:when test="${myInfo.memberPoint<=2050}">
                     			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-1600)*100/450}"></fmt:formatNumber>
+                    			<img class="user-badge" src="${pageContext.request.contextPath}/images/lev7.png"/>
                     		</c:when>
                     		<c:when test="${myInfo.memberPoint<=2500}">
                     			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-2050)*100/450}"></fmt:formatNumber>
+                    			<img class="user-badge" src="${pageContext.request.contextPath}/images/lev8.png"/>
                     		</c:when>
                     		<c:when test="${myInfo.memberPoint<3000}">
                     			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-2500)*100/500}"></fmt:formatNumber>
+                    			<img class="user-badge" src="${pageContext.request.contextPath}/images/lev9.png"/>
                     		</c:when>
                     		<c:when test="${myInfo.memberPoint==3000}">
                     			<fmt:formatNumber type="number" maxFractionDigits="1" value="${(myInfo.memberPoint-2999)*100/1}"></fmt:formatNumber>
+                    			<img class="user-badge" src="${pageContext.request.contextPath}/images/lev10.png"/>
                     		</c:when>
                     	</c:choose>
                     	<span>%</span>
