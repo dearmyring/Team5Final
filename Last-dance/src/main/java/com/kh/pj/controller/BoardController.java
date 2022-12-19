@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.constant.SessionConstant;
@@ -69,7 +70,7 @@ public class BoardController {
 	@PostMapping("/write") 
 	public String write(@ModelAttribute BoardDto boardDto, MemberDto memberDto,
 						@RequestParam List<Integer> boardAttachmentNo,
-//						@RequestParam List<MultipartFile> attachment,
+						@RequestParam List<MultipartFile> attachment,
 						HttpSession session, RedirectAttributes attr) throws Exception {
 //		session에 있는 회원 아이디를 작성자로 추가한 뒤 등록해야함
 		String boardId = (String)session.getAttribute(SessionConstant.ID);
@@ -116,8 +117,9 @@ public class BoardController {
 	
 	@GetMapping("/edit")
 	public String edit(Model model, @RequestParam int boardNo) {
-		BoardListVO boardListVO = boardDao.selectOne(boardNo);
+		
 		model.addAttribute("boardDto",boardDao.selectOne(boardNo));
+		model.addAttribute("boardImgDto", boardImgDao.find(boardNo));
 		return "board/edit";
 	}
 	@PostMapping("/edit")
@@ -193,24 +195,6 @@ public class BoardController {
 		return "board/detail";
 	}
 		
-	
-	/*
-	 * // 좋아요
-	 * 
-	 * @GetMapping("/like") public String boardLike(
-	 * 
-	 * @RequestParam int boardNo, HttpSession session, RedirectAttributes
-	 * attr,BoardDto boardDto ) { String boardId =
-	 * (String)session.getAttribute(SessionConstant.ID); BoardLikeDto dto = new
-	 * BoardLikeDto(); dto.setBoardLikeId(boardId); dto.setBoardLikeNo(boardNo);
-	 * 
-	 * if(boardLikeDao.check(dto)) {//좋아요를 한 상태면 boardLikeDao.delete(dto);//지우세요 }
-	 * else {//좋아요를 한 적이 없는 상태면 boardLikeDao.insert(dto);//추가하세요 }
-	 * 
-	 * boardLikeDao.refresh(boardNo);//조회수 갱신
-	 * 
-	 * attr.addAttribute("boardNo", boardNo); return "redirect:/board/detail"; }
-	 */
 	
 	@PostMapping("/reply/write")
 	public String replyWrite(@ModelAttribute ReplyDto replyDto,
