@@ -366,11 +366,12 @@ public class AdminController {
 			@ModelAttribute(name="voPagination") ListSearchVO vo) {
 		vo.setTable("member");
 		if(vo.getSort() == null) {
-			vo.setSort("ingredient_name asc");
+			vo.setSort("member_id asc");
 		}
 		vo.setCount(adminDao.adminPostCount(vo));
 		vo.setStartPost(vo.startRow());
 		vo.setEndPost(vo.endRow());
+		System.out.println(vo);
 		model.addAttribute("memberList", memberDao.adminList(vo));
 		return "admin/member-list";
 	}
