@@ -23,4 +23,11 @@
 				</otherwise>
 			</choose>
    </select>
+   
+   <!-- 전체 회원, 오늘 가입자 카운트 -->
+   <select id="memberCount" resultType="MemberCountVO">
+		select (select count(*) from member) ALLCOUNT, (select count(*) from member where  to_char(member_join, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd')) TODAYCOUNT from dual
+   </select>
+   
+   
 </mapper>
