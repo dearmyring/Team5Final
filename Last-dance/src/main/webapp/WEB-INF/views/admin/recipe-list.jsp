@@ -71,7 +71,7 @@
 
 <div class="row mt-3">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-	<ul class="pagination custom-pagination border-none-pagination" style="justify-content: center;">
+	<ul class="pagination border-none-pagination" style="justify-content: center;">
         <li class="page-item disabled">
         	<a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
        	</li>

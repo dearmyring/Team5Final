@@ -57,6 +57,6 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public List<MemberDto> adminList(ListSearchVO vo) {
-		return sqlSession.selectList("member.adminList", vo);
+		return sqlSession.selectList("member.adminList");
 	}
 }

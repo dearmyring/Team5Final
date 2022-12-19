@@ -110,7 +110,7 @@
 
 <div class="row mt-3">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<ul class="pagination custom-pagination border-none-pagination" style="justify-content: center;">
+		<ul class="pagination border-none-pagination" style="justify-content: center;">
 		
 			<c:choose>
 				<c:when test="${voPagination.hasPrev()}">
