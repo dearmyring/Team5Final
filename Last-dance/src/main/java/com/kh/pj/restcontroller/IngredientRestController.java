@@ -1,6 +1,8 @@
 	package com.kh.pj.restcontroller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +68,23 @@ public class IngredientRestController {
 		ListSearchVO vo = ListSearchVO.builder()
 								.sort("ingredient_name asc")
 							.build();
+		return ingredientDao.adminList(vo);
+	}
+	
+	@PutMapping("/ingredient")
+	public List<IngredientDto> ingredient(
+//			@RequestBody(required = false) ListSearchVO vo,
+			@RequestBody IngredientDto ingredientDto,
+			@RequestBody String originName){
+		Map<String, String> data = new HashMap<>();
+		data.put("ingredientName", ingredientDto.getIngredientName());
+		data.put("ingredientCategory", ingredientDto.getIngredientCategory());
+		data.put("originName", originName);
+		System.out.println(data);
+		ingredientDao.update(data);
+		
+		ListSearchVO vo = new ListSearchVO();
+		
 		return ingredientDao.adminList(vo);
 	}
 }

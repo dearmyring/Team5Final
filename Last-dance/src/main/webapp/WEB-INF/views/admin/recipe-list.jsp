@@ -101,7 +101,12 @@
 				</select>
 			</div>
 			<div class="col-9">
-				<input class="input-keyword w-100 form-control" type="text">
+				<div class="input-group rounded">
+					<input class="input-keyword form-control" type="text" aria-describedby="button-addon2">
+					<button class="btn-search" type="button" id="button-addon2">
+						<img width="25px" src="${pageContext.request.contextPath}/images/search-admin.png">
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -146,23 +151,32 @@
     	
     	function list(resp){
 			$(".recipe-list").empty();
-			for(var i=0; i<resp.length; i++){
-				var tr = $("<tr>").addClass("text-center");
-				var check = $("<input>").addClass("check-item").attr("name", "recipeNo")
-					.val(resp[i].recipeNo).attr("type", "hidden");
-				var checkIcon = $("<i>").addClass("fa-regular fa-square icon-check-item");
-				var tdCheck = $("<td>").append(checkIcon).append(check);
-				var tdNo = $("<td>").text(resp[i].recipeNo);
-				var link = $("<a>").addClass("stretched-link text-decoration-none link-dark")
-					.attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle);
-				var tdTitle = $("<td>").addClass("position-relative text-start").append(link);
-				var tdTime = $("<td>").text(resp[i].recipeTime+'분');
-				var tdNick = $("<td>").text(resp[i].recipeNick);
-				tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
+			if(resp.length==0){
+				var tr = $("<tr>").addClass("text-center").append(
+					$("<td>").attr("colspan","5").css("background-color", "white")
+					.text("["+$(".input-keyword").val()+"]의 검색 결과가 없습니다.")
+				);
 				$(".recipe-list").append(tr);
 			}
-			$(".icon-check-all").removeClass("fa-regular fa-square-check")
-			.addClass("fa-regular fa-square");
+			else{
+				for(var i=0; i<resp.length; i++){
+					var tr = $("<tr>").addClass("text-center");
+					var check = $("<input>").addClass("check-item").attr("name", "recipeNo")
+						.val(resp[i].recipeNo).attr("type", "hidden");
+					var checkIcon = $("<i>").addClass("fa-regular fa-square icon-check-item");
+					var tdCheck = $("<td>").append(checkIcon).append(check);
+					var tdNo = $("<td>").text(resp[i].recipeNo);
+					var link = $("<a>").addClass("stretched-link text-decoration-none link-dark")
+						.attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle);
+					var tdTitle = $("<td>").addClass("position-relative text-start").append(link);
+					var tdTime = $("<td>").text(resp[i].recipeTime+'분');
+					var tdNick = $("<td>").text(resp[i].recipeNick);
+					tr.append(tdCheck).append(tdNo).append(tdTitle).append(tdTime).append(tdNick);
+					$(".recipe-list").append(tr);
+				}
+				$(".icon-check-all").removeClass("fa-regular fa-square-check")
+				.addClass("fa-regular fa-square");
+			}
     	}
     	
     	function page(data){
@@ -207,27 +221,32 @@
 			});
     	}
     	
-    	/* 레시피 검색창에서 엔터치면 리스트 검색 */
+    	/* 레시피 검색창에서 엔터치면 버튼 클릭 */
     	$(".input-keyword").keydown(function(e){
     		if(e.keyCode == 13) {
-				var sort = $(".sort-click").val();
-				var type = $(".input-type").val();
-				var keyword = $(".input-keyword").val();
-				if(type == "" || keyword == "") {
-					alert("검색어는 필수 입력입니다.");
-					return;
-				}
-				var data = {
-						type: type,
-						keyword: keyword,
-						sort: sort,
-						p: 1,
-						table: "recipe"
-				};
-				async(data);
+    			$(".btn-search").click();
     		}
    		});
 		
+    	/* 레시피 리스트 검색 */
+    	$(".btn-search").click(function(){
+			var sort = $(".sort-click").val();
+			var type = $(".input-type").val();
+			var keyword = $(".input-keyword").val();
+			if(type == "" || keyword == "") {
+				alert("검색어는 필수 입력입니다.");
+				return;
+			}
+			var data = {
+					type: type,
+					keyword: keyword,
+					sort: sort,
+					p: 1,
+					table: "recipe"
+			};
+			async(data);
+    	});
+				
     	/* 레시피 리스트 정렬 */
 		$(".sort-click").on("input", function(){
 			var sort = $(this).val();
@@ -245,19 +264,20 @@
     	
 		/* 체크박스 선택 삭제 시 비동기 처리 */
 		$(".recipe-async-delete").click(function(){
-			var checkboxes = $(".icon-check-item");
-			for(var i=0; i<checkboxes.length; i++){
-				if(checkboxes.eq(i).hasClass("fa-square")){
-					checkboxes.eq(i).next().remove();
-				}
-			}
-			var param = $(".recipeNo-form .check-item").serialize();
-			
-			if(!param){
+			var checkicons = $(".fa-square-check");
+			if(checkicons.length == 0){
 				alert("삭제할 레시피를 선택하세요.");
 				return;
 			}
 			else{
+				var checkboxes = $(".icon-check-item");
+				for(var i=0; i<checkboxes.length; i++){
+					if(checkboxes.eq(i).hasClass("fa-square")){
+						checkboxes.eq(i).next().remove();
+					}
+				}
+				var param = $(".recipeNo-form .check-item").serialize();
+			
 				if(confirm("정말 삭제하시겠습니까?")){
 					$.ajax({
 						url: "http://localhost:8888/rest/recipe?"+param,

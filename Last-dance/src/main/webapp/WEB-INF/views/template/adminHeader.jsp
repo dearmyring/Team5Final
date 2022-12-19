@@ -51,15 +51,21 @@
 			cursor: default;
 		}
 
-      /* 여기부터 */
-      .input-keyword{
-		padding-right: 2.5em;
-		background-image: url("${pageContext.request.contextPath}/images/search-admin.png");
-		background-size: 1.5em;
-		background-repeat: no-repeat;
- 		background-position-x: 16.5em;
- 		background-position-y: center;
-      }
+		/* 여기부터 */
+		.btn-search {
+			background-color: white;
+			border: 1px solid rgba(0,0,0,.1);
+			border-top-right-radius: 10%;
+			border-bottom-right-radius: 10%;
+			border-left: none;
+			padding: 0 0.5em 0.2em 0.5em;
+		}
+		.input-keyword{
+			border-right: none;
+		}
+		.edit-btn{ color: white; cursor: pointer; }
+		.edit-btn:hover{ color: black; }
+
     </style>
 </head>
 <body>
@@ -123,15 +129,15 @@
                    	</div>
                 </div>
             </div>
-            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid d-lg-flex flex-row align-items-center">
-               <ul class="before-address d-lg-flex list-unstyled nav nav-link text-muted">
-                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
+<!--             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid d-lg-flex flex-row align-items-center"> -->
+<!--                <ul class="before-address d-lg-flex list-unstyled nav nav-link text-muted"> -->
+<!--                   <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li> -->
                   
-                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
+<!--                   <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li> -->
                   
-                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a></li>
-               </ul>
-            </div>
+<!--                   <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a></li> -->
+<!--                </ul> -->
+<!--             </div> -->
       </nav>
    </div>
 </div>

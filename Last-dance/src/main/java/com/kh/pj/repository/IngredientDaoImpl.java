@@ -1,6 +1,7 @@
 package com.kh.pj.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +41,8 @@ public class IngredientDaoImpl implements IngredientDao {
   
 	//재료 수정
 	@Override
-	public boolean update(IngredientDto ingredientDto) {
-		String sql = "update Ingredient set ingredient_name=?";
-		Object[] param = {ingredientDto.getIngredientName()};
-		return jdbcTemplate.update(sql, param) > 0;
+	public void update(Map<String, String> data) {
+		sqlSession.update("ingredient.adminUpdate", data);
 	}
 	
 	//재료 조회

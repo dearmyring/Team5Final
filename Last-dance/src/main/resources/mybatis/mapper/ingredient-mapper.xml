@@ -44,6 +44,11 @@
 		select ingredient_name from ingredient where ingredient_name=#{ingredient_name}
 	</select>
 
+	<update id="adminUpdate" parameterType="map">
+		update ingredient set 
+			ingredient_name = #{ingredientName}, ingredient_category = #{ingredientCategory} 
+		where ingredient_name = #{originName}
+	</update>
 </mapper>
 
 

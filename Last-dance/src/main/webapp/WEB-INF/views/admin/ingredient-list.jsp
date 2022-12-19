@@ -3,26 +3,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
+<!-- 재료 등록 모달창 -->
 <div class="modal ingredient-insert-modal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">재료 등록</h5>
       </div>
-      <div class="modal-body">
-       	<select class="insert-ingredientCategory">
-       		<option value="">카테고리 선택</option>
+      <div class="modal-body row">
+       	<select class="insert-ingredientCategory col-3">
+       		<option value="">카테고리</option>
        		<c:forEach var="category" items="${categoryList}">
 	       		<option>${category}</option>
        		</c:forEach>
        	</select>
-       	<input class="insert-ingredientName" type="text" placeholder="재료명">
-		<button class="insert-ingredient-btn" type="button">추가</button>
+       	<input class="insert-ingredientName col-7" type="text" placeholder="재료명">
+       	<input type="hidden" class="origin-ingredientName">
+		<button class="insert-ingredient-btn btn btn-light col-2" type="button">추가</button>
 		<div class="invalid-feedback">이미 존재하는 재료입니다.</div>
       </div>
       <div class="modal-footer">
 		<div class="add-ingredient-list"></div>
         <button type="button" class="btn btn-primary ingredient-insert-btn">등록하기</button>
+        <button type="button" class="btn btn-primary ingredient-update-btn">수정하기</button>
         <button type="button" class="btn btn-secondary ingredient-insert-cancel" data-bs-dismiss="modal">돌아가기</button>
       </div>
     </div>
@@ -39,13 +42,13 @@
 <div class="row mt-5">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-6">
-				<select class="sort-click">
+			<div class="col-4">
+				<select class="sort-click form-select">
 					<option value="ingredient_name asc">재료명 오름차순</option>
 					<option value="ingredient_name desc">재료명 내림차순</option>
 				</select>
 			</div>
-			<div class="col-6 text-end">
+			<div class="col-8 text-end">
 				<button type="button" class="ingredinet-async-insert btn yellow-btn btn-md">추가하기</button>
 			</div>
 		</div>
@@ -61,6 +64,7 @@
 					<th><i class="fa-regular fa-square icon-check-all"></i></th>
 					<th>카테고리</th>
 					<th>재료명</th>
+					<th>수정</th>
 				</tr>
 			</thead>
 			<tbody class="ingredient-list">
@@ -71,7 +75,8 @@
 							<input class="check-item" name="ingredientName" value="${ingredientDto.ingredientName}" type="hidden">
 						</td>
 						<td class="col-5">${ingredientDto.ingredientCategory}</td>
-						<td class="col-6">${ingredientDto.ingredientName}</td>
+						<td class="col-5">${ingredientDto.ingredientName}</td>
+						<td class="col-1 edit-btn"><i class="fa-solid fa-pen"></i>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -147,7 +152,12 @@
 				</select>
 			</div>
 			<div class="col-9">
-				<input class="input-keyword w-100 form-control" type="text">
+				<div class="input-group rounded">
+					<input aria-describedby="button-addon2" class="input-keyword form-control" type="text">
+					<button class="btn-search" type="button" id="button-addon2">
+						<img width="25px" src="${pageContext.request.contextPath}/images/search-admin.png">
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -156,6 +166,43 @@
 
 <script type="text/javascript">
 	$(function(){
+		var modal = new bootstrap.Modal($(".ingredient-insert-modal"), {});
+		$(".ingredient-update-btn").hide();
+		
+		/* 수정하기 */
+		$(".ingredient-update-btn").click(function(){
+			var ingredientCategory = $(".insert-ingredientCategory").val();
+			var ingredientName = $(".insert-ingredientName").val();
+			var originName = $(".origin-ingredientName").val();
+			var ingredientDto = {
+				ingredientCategory : ingredientCategory,
+				ingredientName : ingredientName,
+				originName : originName
+			};
+			$.ajax({
+				url: "http://localhost:8888/rest/ingredient",
+				method: "put",
+				contentType: "application/json",
+				data: JSON.stringify(ingredientDto),
+				success: function(resp){
+					list(resp);
+				}
+			});
+		});
+		
+		/* 연필 누르면 수정 모달창 */
+		$(".edit-btn").click(function(){
+			var ingredient = $(this).prev().text();
+			var category = $(this).prev().prev().text();
+			$(".insert-ingredientCategory").val(category);
+			$(".origin-ingredientName").val(ingredient);
+			$(".insert-ingredientName").removeClass("is-invalid").val(ingredient);
+			$(".insert-ingredient-btn").hide();
+			$(".ingredient-insert-btn").hide();
+			$(".ingredient-update-btn").show();
+			modal.show();
+		});
+		
 		/* 페이지네이션 */
 		$(".page-link").click(function(){
 			var p = "";
@@ -180,7 +227,6 @@
 		
 		/* 돌아가기 클릭 시 모달 값 삭제 */
 		$(".ingredient-insert-cancel").click(function(){
-			var modal = new bootstrap.Modal($(".ingredient-insert-modal"), {});
 
 			var insertIngredientName = $(".add-ingredient-list").find("[name=ingredientName]").val();
 			var insertIngredientCategory = $(".add-ingredient-list").find("[name=ingredientCategory]").val();
@@ -243,7 +289,10 @@
 		
 		/* 재료 등록 모달창 띄우기 */
 		$(".ingredinet-async-insert").click(function(){
-            var modal = new bootstrap.Modal($(".ingredient-insert-modal"), {});
+			$(".ingredient-insert-btn").show();
+			$(".insert-ingredient-btn").show();
+			$(".ingredient-update-btn").hide();
+			$(".insert-ingredientName").removeClass("is-invalid");
             modal.show();
 		});
 		
@@ -277,13 +326,19 @@
 		
 		/* 체크박스 선택 삭제 시 비동기 처리 */
 		$(".ingredient-async-delete").click(function(){
-			
-			var param = $(".ingredientName-form input:checked").serialize();
-			if(!param){
-				alert("삭제할 재료를 선택하세요.");
-				return;
+			var checkicons = $(".fa-square-check");
+			if(checkicons.length == 0){
+				alert("삭제할 레시피를 선택하세요.");
 			}
 			else{
+				var checkboxes = $(".icon-check-item");
+				for(var i=0; i<checkboxes.length; i++){
+					if(checkboxes.eq(i).hasClass("fa-square")){
+						checkboxes.eq(i).next().remove();
+					}
+				}
+			
+				var param = $(".ingredientName-form .check-item").serialize();
 				if(confirm("정말 삭제하시겠습니까?")){
 					$.ajax({
 						url: "http://localhost:8888/rest/ingredient?"+param,
@@ -297,31 +352,36 @@
 			}
 		});
 		
-    	/* 레시피 검색창에서 엔터치면 리스트 검색 */
+    	/* 레시피 검색창에서 엔터치면 버튼 클릭 */
     	$(".input-keyword").keydown(function(e){
     		if(e.keyCode == 13) {
-				var sort = $(".sort-click").val();
-				var type = $(".input-type").val();
-				var keyword = $(".input-keyword").val();
-				if(type == "" || keyword == "") {
-					alert("검색어는 필수 입력입니다.");
-					return;
-				}
-				var param = new String();
-				param.sort = sort;
-				param.type = type;
-				param.keyword = keyword;
-				var search = $.param(param)
-				$.ajax({
-					url: "http://localhost:8888/rest/ingredient?"+search,
-					method: "get",
-					contentType: "application/json",
-					success: function(resp){
-						list(resp);
-					}
-				});
+    			$(".btn-search").click();
     		}
    		});
+    	
+    	/* 레시피 리스트 검색 */
+		$(".btn-search").click(function(){
+			var sort = $(".sort-click").val();
+			var type = $(".input-type").val();
+			var keyword = $(".input-keyword").val();
+			if(type == "" || keyword == "") {
+				alert("검색어는 필수 입력입니다.");
+				return;
+			}
+			var param = new String();
+			param.sort = sort;
+			param.type = type;
+			param.keyword = keyword;
+			var search = $.param(param)
+			$.ajax({
+				url: "http://localhost:8888/rest/ingredient?"+search,
+				method: "get",
+				contentType: "application/json",
+				success: function(resp){
+					list(resp);
+				}
+			});
+		});
     	
     	/* 레시피 리스트 정렬 */
 		$(".sort-click").on("input", function(){
