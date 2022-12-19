@@ -171,8 +171,18 @@
 		
 		/* 수정하기 */
 		$(".ingredient-update-btn").click(function(){
-			var ingredientCategory = $(".insert-ingredientCategory").val();
 			var ingredientName = $(".insert-ingredientName").val();
+			$.ajax({
+				url: "http://localhost:8888/rest/ingredient/"+ingredientName,
+				method: "get",
+				success: function(resp){
+					if(resp){
+						$(".insert-ingredient-btn").addClass("is-invalid");
+						return;
+					}
+				}
+			});
+			var ingredientCategory = $(".insert-ingredientCategory").val();
 			var originName = $(".origin-ingredientName").val();
 			var data = 
 				{
@@ -254,6 +264,9 @@
 			if(e.keyCode == 13){
 				if(!$(".ingredient-insert-btn").hasClass("hidden-btn")){
 					$(".insert-ingredient-btn").click();
+				}
+				else{
+					$(".ingredient-update-btn").click();
 				}
 			}
 		});
