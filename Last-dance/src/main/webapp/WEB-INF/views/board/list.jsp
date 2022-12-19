@@ -23,7 +23,6 @@
 .all-thumbnail-box {
    position:relative;
 }
-
 .thumbnail-box {
    position: relative;
     left: 200px;
@@ -32,7 +31,7 @@
 .thumbnail{
    width: 100%;
    height:100%;
-   
+  
 }
 .btn {
     border: none;
@@ -49,6 +48,9 @@
     background-color: #35C5F0;
     color: white;
     font-weight: bold;
+}
+.btn.btn-positive:hover {
+    background-color: #1E90FF;
 }
 .board-list-title{
    font-size : 30px;
@@ -73,16 +75,13 @@
    position : absolute;
    width: 20px;
 }
-
 .search {
    position: relative;
 }
-
 h3 {
    font-size: 14px;
    font-weight: 100;
 }
-
 input {
    width: 50%;
    border: 2px solid #bbb;
@@ -90,7 +89,6 @@ input {
    padding: 10px 12px;
    font-size: 14px;
 }
-
 .input.input-seach {
    padding-right: 2.5em;
    background-image: url("/images/search.png");
@@ -99,12 +97,12 @@ input {
    background-position-x: 27.75em;
    background-position-y: center;
 }
-
 .board-search-btn {
    display: none;
 }
 
-.board-bottom {
+
+.board-bottom{
    width:700px;
    border-bottom : 1px solid gray;
    
@@ -112,7 +110,7 @@ input {
 
 .notice-bottom {
    width:700px;
-   border-bottom : 1px solid gray;
+   border-bottom : 0.5px solid gray;
    
 }
 
@@ -145,14 +143,14 @@ width: 20%;
 }
 
 .notice-title {
-	border: 1px solid blue;
+	border: 1px solid none;
 	padding-left: 7px;
 	padding-right: 7px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	border-radius: 15px;
-	background-color: #ececec;
-	color: blue;
+	background-color: #EFFBFF;
+	color: #3BC5F0;
 }
 
 .notice-badge{
@@ -161,8 +159,8 @@ width: 20%;
 .notice{
 	margin-left: 20px;
 	margin-top: 23px;
+	font-weight: 900;
 }
-
 
 
 </style>
@@ -174,10 +172,10 @@ width: 20%;
       착용해보세요 :)</h3>
    <div class="center search mt-10">
       <select class="input-type input">
+         
          <option value="board_title">제목</option>
          <option value="member_nick">작성자</option>
          <option value="board_content">내용</option>
-         <option value="">제목</option>
       </select> <input class="input input-keyword input-seach" type="text"
          placeholder="검색어를 입력하세요">
       <button class="board-search-btn" type="button"></button>
@@ -191,7 +189,7 @@ width: 20%;
    <tr>
       <th colspan="12"><select class="sort-click float-left input">
             <option value="">정렬</option>
-            <option value="board_no desc">최근 작성일 순</option>
+            <option value="board_writetime desc">최근 작성일 순</option>
             <option value="board_click desc">조회수 높은 순</option>
             <option value="board_like desc">추천 많은 순</option>
             <option value="reply_cnt desc">댓글 많은 순</option>
@@ -206,7 +204,7 @@ width: 20%;
                <td>
                	<div class="notice-box">
                   <p class="notice-title">공지</p>
-                  <a class="notice" href="detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}</a>
+                  <a class="notice" href="/admin/notice/detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}✌</a>
                	</div>
                </td>
    </tr>
@@ -241,9 +239,8 @@ width: 20%;
 				</div>
 			</div>
 			<div class="all-thumbnail-box w-20">
-				<%-- <img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}"> --%>
 				<div class="thumbnail-box">
-					<img class="thumbnail" src="${pageContext.request.contextPath}/images/image 3.png">
+					 <img class="thumbnail" src="${pageContext.request.contextPath}/rest/download/${boardDto.boardAttachmentNo}" onerror="this.style.display='none';">			
 				</div>
 			</div>                  
 		</div>
@@ -276,7 +273,6 @@ width: 20%;
             $(".board-search-btn").click();
          }
       });
-
       /* 레시피 리스트 검색 */
       $(".board-search-btn").click(function() {
                      var sort = $(".sort-click").val();
@@ -338,8 +334,8 @@ width: 20%;
                      				divSecond1.append(divTitle).append(divContent).append(divNick);
                                           
 
-//                                     var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo);
-                                    var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
+                                    var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
+                                   // var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
                                     var thumbnail = $("<div>").addClass("thumbnail-box").append(thumbnailImg);
                                     var divSecond2 = $("<div>").addClass("all-thumbnail-box w-20").append(thumbnail);
                                     
@@ -374,6 +370,7 @@ width: 20%;
                      sort : sort
                   }),
                   success : function(resp) {
+
                 	  $(".board-list").empty();
                       for (var i = 0; i < resp.length; i++) {
                      
@@ -420,8 +417,8 @@ width: 20%;
           				divSecond1.append(divTitle).append(divContent).append(divNick);
                                
 
-//                          var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo);
-                         var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
+                       var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
+                      //   var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
                          var thumbnail = $("<div>").addClass("thumbnail-box").append(thumbnailImg);
                          var divSecond2 = $("<div>").addClass("all-thumbnail-box w-20").append(thumbnail);
                          
@@ -436,11 +433,12 @@ width: 20%;
                             $(".board-content").eq(i).text($(".board-content").eq(i).text());
                          }
                       }
+
                   }
                });
             });
    });
 </script>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
