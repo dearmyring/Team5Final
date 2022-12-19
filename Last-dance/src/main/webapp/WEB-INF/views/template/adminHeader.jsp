@@ -65,6 +65,28 @@
 		}
 		.edit-btn{ color: white; cursor: pointer; }
 		.edit-btn:hover{ color: black; }
+		
+		.only-disabled{ background-color: grey; color: white; }
+		.only-disabled:hover{
+			background-color: #EAECEF !important;
+			color: black !important;
+			transition: 0.3s !important;
+		}
+		
+		.disabled-list:hover{ background-color: grey; color: white; }
+		
+		.custom-patination.pagination > .page-item > .page-link{
+			color: grey !important;
+		}
+		.custom-pagination.pagination > .active > a:hover{
+			background: #a2cc85;
+			border-color: #a2cc85;
+		}
+		.custom-pagination.pagination > .active > a, 
+		.custom-pagination.pagination > .active > a:focus{
+			background: #98C778;
+			border-color: #98C778;
+		}
 
     </style>
 </head>
