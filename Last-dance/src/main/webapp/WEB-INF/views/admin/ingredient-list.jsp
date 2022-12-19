@@ -204,19 +204,23 @@
 				data: JSON.stringify(data),
 				success: function(resp){
 					list(resp);
-					var data = {
-						sort: "ingredient_name asc",
-						table: "ingredient"
-					};
-					page(data);
-					$(".sort-click").val("ingredient_name asc");
-   					$(".input-type").val("ingredient_name");
-   					$(".input-keyword").val("");
+					reset();
 					modal.hide();
 				}
 			});
 			$(".ingredient-insert-btn").removeClass(".hidden-btn");
 		});
+		
+		function reset(){
+			var data = {
+				sort: "ingredient_name asc",
+				table: "ingredient"
+			};
+			page(data);
+			$(".sort-click").val("ingredient_name asc");
+			$(".input-type").val("ingredient_name");
+			$(".input-keyword").val("");
+		}
 		
 		/* 연필 누르면 수정 모달창 */
 		$(document).on("click", ".edit-btn", (function(){
@@ -360,14 +364,7 @@
     				data: JSON.stringify(ingredientList),
     				success: function(resp){
     					list(resp);
-						var data = {
-							sort: "ingredient_name asc",
-							table: "ingredient"
-						};
-						page(data);
-						$(".sort-click").val("ingredient_name asc");
-    					$(".input-type").val("ingredient_name");
-    					$(".input-keyword").val("");
+						reset();
     					$(".add-ingredient-list").empty();
     					modal.hide();
     				}
@@ -397,14 +394,7 @@
 						contentType: "application/json",
 						success: function(resp){
 							list(resp);
-							var data = {
-								sort: "ingredient_name asc",
-								table: "ingredient"
-							};
-							page(data);
-							$(".sort-click").val("ingredient_name asc");
-	    					$(".input-type").val("ingredient_name");
-	    					$(".input-keyword").val("");
+							reset();
 						}
 					});
 				}
