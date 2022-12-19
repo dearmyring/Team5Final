@@ -80,12 +80,17 @@
 						$(".search-list-select").css("display", "block");
 						$(".search-input").val("");
 						console.log(searchRepository);
+						// 클릭 이벤트가 끝나기 직전에 배열 추가
+						submitList.push(keyword);
 					}
 					else {
 						alert("검색어 입력하고 엔터 누르길 요망");
 					}
 				} 
  			});
+ 			
+ 			//보낼 배열
+ 			const submitList = [];
  			
  			// 사용자가 검색 유사어를 클릭할 시 클릭된 데이터 추가 이벤트
  			$(document).on("click", ".result-keyword", function(){
@@ -97,7 +102,31 @@
  				$(".search-list-select").css("display", "block");
 				$(".search-input").val("");
 				$(".search-input").focus();
+				// 클릭 이벤트가 끝나기 직전에 배열 추가
+				submitList.push(keyword);
  			});
+ 			
+ 			//보내기 버튼을 누르면 배열에 들어있는 원소를 확인+
+ 			$(".btn-list-submit").on("click", function(){
+//  				console.log(submitList);
+ 				
+ 	 			//배열 값 보내기
+ 	 			$.ajax({
+ 					  url :'/recipe/searchList',
+ 					  type : 'post',
+ 					  dataType : 'json',
+ 					  data : {
+ 					  	"submitList" : submitList
+ 					  },
+//  					  success: function(data){
+//  					  	console.log("성공");
+
+ 					  
+//  					  }
+ 					});
+				  	window.location = ("/recipe/searchList");
+ 			})
+
  			
  			// 추가된 데이터를 삭제하는 이벤트
  			$(document).on("click", ".get-ingredient", function(){
