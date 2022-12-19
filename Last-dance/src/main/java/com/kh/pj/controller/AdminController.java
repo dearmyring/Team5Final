@@ -351,6 +351,7 @@ public class AdminController {
 		if(vo.getSort() == null) {
 			vo.setSort("ingredient_name asc");
 		}
+		System.out.println(vo);
 		vo.setCount(adminDao.adminPostCount(vo));
 		vo.setStartPost(vo.startRow());
 		vo.setEndPost(vo.endRow());

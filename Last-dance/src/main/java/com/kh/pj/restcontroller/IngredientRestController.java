@@ -1,6 +1,5 @@
 	package com.kh.pj.restcontroller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -51,7 +49,6 @@ public class IngredientRestController {
 	
 	@PostMapping("/ingredient")
 	public List<IngredientDto> ingredient(
-//			@RequestBody(required = false) ListSearchVO vo,
 			@RequestBody List<IngredientDto> ingredientList){
 		for(IngredientDto ingredient : ingredientList) {
 			ingredientDao.insert(ingredient);
@@ -75,7 +72,6 @@ public class IngredientRestController {
 	
 	@PutMapping("/ingredient")
 	public List<IngredientDto> ingredient(
-//			@RequestBody(required = false) ListSearchVO vo,
 			@RequestBody Map<String, String> data){
 		ingredientDao.update(data);
 

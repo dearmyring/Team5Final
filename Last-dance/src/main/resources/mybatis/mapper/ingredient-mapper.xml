@@ -19,13 +19,13 @@
 					order by ${sort}
 				</if>
 			  ) tmp
-		) where rn 
+		) where rn between 
 		<choose>
-			<when test="endPost != null">
-				between ${startPost} and ${endPost}
+			<when test="endPost == 0">
+				1 and 10
 			</when>
 			<otherwise>
-				> 0
+				${startPost} and ${endPost}
 			</otherwise>
 		</choose>
 	</select>

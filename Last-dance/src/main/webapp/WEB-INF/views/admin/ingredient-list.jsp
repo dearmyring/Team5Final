@@ -44,8 +44,16 @@
 		<div class="row">
 			<div class="col-4">
 				<select class="sort-click form-select">
-					<option value="ingredient_name asc">재료명 오름차순</option>
-					<option value="ingredient_name desc">재료명 내림차순</option>
+					<c:choose>
+						<c:when test="${voPagination.sort == 'ingredient_name asc'}">
+							<option selected value="ingredient_name asc">재료명 오름차순</option>
+							<option value="ingredient_name desc">재료명 내림차순</option>
+						</c:when>
+						<c:otherwise>
+							<option value="ingredient_name asc">재료명 오름차순</option>
+							<option selected value="ingredient_name desc">재료명 내림차순</option>
+						</c:otherwise>
+					</c:choose>
 				</select>
 			</div>
 			<div class="col-8 text-end">
@@ -100,13 +108,13 @@
 			<c:choose>
 				<c:when test="${voPagination.hasPrev()}">
 					<li class="page-item">
-						<a class="page-link prev-page" href="#">
+						<a class="page-link prev-page">
 							<i class="fa-solid fa-chevron-left"></i>
 						</a>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item disabled">
-						<a class="page-link" href="#"><i class="fa-solid fa-chevron-left"></i></a>
+						<a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
 				</c:otherwise>
 			</c:choose>
 			</li>
@@ -120,20 +128,20 @@
 						<li class="page-item active">
 					</c:otherwise>
 				</c:choose>
-					<a class="page-link" href="#">${i}</a>
+					<a class="page-link">${i}</a>
 				</li>
 			</c:forEach>
 			
 			<c:choose>
 				<c:when test="${voPagination.hasNext()}">
 					<li class="page-item">
-						<a class="page-link next-page" href="#">
+						<a class="page-link next-page">
 							<i class="fa-solid fa-chevron-right"></i>
 						</a>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item disabled">
-						<a class="page-link" href="#"><i class="fa-solid fa-chevron-right"></i></a>
+						<a class="page-link"><i class="fa-solid fa-chevron-right"></i></a>
 				</c:otherwise>
 			</c:choose>
 			</li>
@@ -148,12 +156,12 @@
 			<div class="col-3">
 				<select class="input-type form-select w-100 pe-3" id="exampleSelect1">
 					<option value="ingredient_name">재료명</option>
-					<option value="ingredient_category">카테고리</option>
+					<option value="ingredient_category" value="${voPagination.type}">카테고리</option>
 				</select>
 			</div>
 			<div class="col-9">
 				<div class="input-group rounded">
-					<input aria-describedby="button-addon2" class="input-keyword form-control" type="text">
+					<input aria-describedby="button-addon2" class="input-keyword form-control" type="text" value="${voPagination.keyword}">
 					<button class="btn-search" type="button" id="button-addon2">
 						<img width="25px" src="${pageContext.request.contextPath}/images/search-admin.png">
 					</button>
@@ -167,7 +175,6 @@
 <script type="text/javascript">
 	$(function(){
 		var modal = new bootstrap.Modal($(".ingredient-insert-modal"), {});
-		$(".ingredient-update-btn").hide();
 		
 		/* 수정하기 */
 		$(".ingredient-update-btn").click(function(){
@@ -219,7 +226,7 @@
 		}));
 		
 		/* 페이지네이션 */
-		$(".page-link").click(function(){
+		$(document).on("click", ".page-link", (function(){
 			var p = "";
 			if($(this).hasClass("next-page")){
 				p = Number($(this).parent().prev().find(".page-link").text())+1;
@@ -231,14 +238,15 @@
 				p = $(this).text();
 			}
 			var pInput = $("<input>").attr("type", "hidden").attr("name", "p").val(p);
-			$(".sort-click").attr("name", "sort");
+			var sort = $(".sort-click").val();
 			var keyword = $(".input-keyword").val();
 			var type = $(".input-type").val();
+			var sortInput = $("<input>").attr("type", "hidden").attr("name", "sort").val(sort);
 			var keywordInput = $("<input>").attr("type", "hidden").attr("name", "keyword").val(keyword);
 			var typeInput = $("<input>").attr("type", "hidden").attr("name", "type").val(type);
-			$("form").append(pInput).append(keywordInput).append(typeInput);
+			$("form").append(sortInput).append(pInput).append(keywordInput).append(typeInput);
 			$("form").attr("action", "list").attr("method", "get").submit();
-		});
+		}));
 		
 		/* 돌아가기 클릭 시 모달 값 삭제 */
 		$(".ingredient-insert-cancel").click(function(){
@@ -262,9 +270,11 @@
 		/* 엔터치면 추가 */
 		$(".insert-ingredientName").keydown(function(e){
 			if(e.keyCode == 13){
+				//등록할 때 엔터용
 				if(!$(".ingredient-insert-btn").hasClass("hidden-btn")){
 					$(".insert-ingredient-btn").click();
 				}
+				//수정할 때 엔터용
 				else{
 					$(".ingredient-update-btn").click();
 				}
@@ -342,6 +352,12 @@
     				data: JSON.stringify(ingredientList),
     				success: function(resp){
     					list(resp);
+						var data = {
+							sort: "ingredient_name asc",
+							table: "ingredient"
+						};
+						page(data);
+    					$(".add-ingredient-list").empty();
     					modal.hide();
     				}
     			});
@@ -370,6 +386,11 @@
 						contentType: "application/json",
 						success: function(resp){
 							list(resp);
+							var data = {
+								sort: "ingredient_name asc",
+								table: "ingredient"
+							};
+							page(data);
 						}
 					});
 				}
@@ -388,10 +409,6 @@
 			var sort = $(".sort-click").val();
 			var type = $(".input-type").val();
 			var keyword = $(".input-keyword").val();
-			if(type == "" || keyword == "") {
-				alert("검색어는 필수 입력입니다.");
-				return;
-			}
 			var param = new String();
 			param.sort = sort;
 			param.type = type;
@@ -403,6 +420,14 @@
 				contentType: "application/json",
 				success: function(resp){
 					list(resp);
+					var data = {
+							type: type,
+							keyword: keyword,
+							sort: sort,
+							p: 1,
+							table: "ingredient"
+					};
+					page(data);
 				}
 			});
 		});
@@ -423,9 +448,58 @@
 				contentType: "application/json",
 				success: function(resp){
 					list(resp);
+					var data = {
+							type: type,
+							keyword: keyword,
+							sort: sort,
+							p: 1,
+							table: "ingredient"
+					};
+					page(data);
 				}
 			});
 		});
+    	
+    	function page(data){
+    		$.ajax({
+				url: "http://localhost:8888/rest/admin-count",
+				method: "post",
+				contentType: "application/json",
+				data: JSON.stringify(data),
+				success: function(resp){
+		    		$(".pagination").empty();
+		    		
+		    		var prev = $("<i>").addClass("fa-solid fa-chevron-left");
+		    		var linkPrev = $("<a>").addClass("page-link");
+		    		var liPrev = $("<li>").addClass("page-item");
+					if(!resp.havePrev){
+						liPrev.addClass("disabled");
+					}
+					linkPrev.append(prev);
+					liPrev.append(linkPrev);
+					$(".pagination").append(liPrev);
+
+					for(var i=resp.firstBlock; i<=resp.lastBlock; i++){
+			    		var link = $("<a>").addClass("page-link").text(i);
+			    		var li = $("<li>").addClass("page-item").append(link);
+						if(resp.p==i){
+							li.addClass("active");
+						}
+						$(".pagination").append(li);
+					}
+					
+					var next = $("<i>").addClass("fa-solid fa-chevron-right");
+		    		var linkNext = $("<a>").addClass("page-link");
+		    		var liNext = $("<li>").addClass("page-item");
+					if(!resp.haveNext){
+						liNext.addClass("disabled");
+					}
+					linkNext.append(next);
+					liNext.append(linkNext);
+					$(".pagination").append(liNext);
+				}
+			});
+    	}
     	
 		function list(resp) {
 			$(".ingredient-list").empty();

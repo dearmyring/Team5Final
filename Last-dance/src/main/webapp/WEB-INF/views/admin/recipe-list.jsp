@@ -186,7 +186,6 @@
 				contentType: "application/json",
 				data: JSON.stringify(data),
 				success: function(resp){
-					$(".page-item").removeClass("disabled").removeClass("active");
 		    		$(".pagination").empty();
 		    		
 		    		var prev = $("<i>").addClass("fa-solid fa-chevron-left");
