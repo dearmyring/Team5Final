@@ -204,6 +204,14 @@
 				data: JSON.stringify(data),
 				success: function(resp){
 					list(resp);
+					var data = {
+						sort: "ingredient_name asc",
+						table: "ingredient"
+					};
+					page(data);
+					$(".sort-click").val("ingredient_name asc");
+   					$(".input-type").val("ingredient_name");
+   					$(".input-keyword").val("");
 					modal.hide();
 				}
 			});
@@ -357,6 +365,9 @@
 							table: "ingredient"
 						};
 						page(data);
+						$(".sort-click").val("ingredient_name asc");
+    					$(".input-type").val("ingredient_name");
+    					$(".input-keyword").val("");
     					$(".add-ingredient-list").empty();
     					modal.hide();
     				}
@@ -391,6 +402,9 @@
 								table: "ingredient"
 							};
 							page(data);
+							$(".sort-click").val("ingredient_name asc");
+	    					$(".input-type").val("ingredient_name");
+	    					$(".input-keyword").val("");
 						}
 					});
 				}
