@@ -121,7 +121,7 @@
     	}
     	
     	/* 페이지 번호 누르면 비동기 리스트 */
-    	$(document).on("click",".page-link", (function(e){
+    	$(document).on("click", ".page-link", (function(e){
     		var sort = $(".sort-click").val();
 			var type = $(".input-type").val();
 			var keyword = $(".input-keyword").val();

@@ -61,22 +61,22 @@
 		<table class="table table-sm">
 			<thead>
 				<tr class="text-center">
-					<th><i class="fa-regular fa-square icon-check-all"></i></th>
-					<th>카테고리</th>
-					<th>재료명</th>
-					<th>수정</th>
+					<th class="col-1"><i class="fa-regular fa-square icon-check-all"></i></th>
+					<th class="col-5">카테고리</th>
+					<th class="col-5">재료명</th>
+					<th class="col-1">수정</th>
 				</tr>
 			</thead>
 			<tbody class="ingredient-list">
 				<c:forEach var="ingredientDto" items="${ingredientList}">
 					<tr class="text-center">
-						<td class="col-1">
+						<td>
 							<i class="fa-regular fa-square icon-check-item"></i>
 							<input class="check-item" name="ingredientName" value="${ingredientDto.ingredientName}" type="hidden">
 						</td>
-						<td class="col-5">${ingredientDto.ingredientCategory}</td>
-						<td class="col-5">${ingredientDto.ingredientName}</td>
-						<td class="col-1 edit-btn"><i class="fa-solid fa-pen"></i>
+						<td>${ingredientDto.ingredientCategory}</td>
+						<td>${ingredientDto.ingredientName}</td>
+						<td class="edit-btn"><i class="fa-solid fa-pen"></i>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -174,34 +174,39 @@
 			var ingredientCategory = $(".insert-ingredientCategory").val();
 			var ingredientName = $(".insert-ingredientName").val();
 			var originName = $(".origin-ingredientName").val();
-			var ingredientDto = {
-				ingredientCategory : ingredientCategory,
-				ingredientName : ingredientName,
-				originName : originName
-			};
+			var data = 
+				{
+					"ingredientCategory" : ingredientCategory,
+					"ingredientName" : ingredientName,
+					"originName" : originName
+				};
 			$.ajax({
 				url: "http://localhost:8888/rest/ingredient",
 				method: "put",
 				contentType: "application/json",
-				data: JSON.stringify(ingredientDto),
+				data: JSON.stringify(data),
 				success: function(resp){
 					list(resp);
+					modal.hide();
 				}
 			});
+			$(".ingredient-insert-btn").removeClass(".hidden-btn");
 		});
 		
 		/* 연필 누르면 수정 모달창 */
-		$(".edit-btn").click(function(){
+		$(document).on("click", ".edit-btn", (function(){
 			var ingredient = $(this).prev().text();
 			var category = $(this).prev().prev().text();
+			$(".modal-title").text("재료 수정");
 			$(".insert-ingredientCategory").val(category);
 			$(".origin-ingredientName").val(ingredient);
 			$(".insert-ingredientName").removeClass("is-invalid").val(ingredient);
 			$(".insert-ingredient-btn").hide();
-			$(".ingredient-insert-btn").hide();
+			$(".ingredient-insert-btn").addClass("hidden-btn").hide();
 			$(".ingredient-update-btn").show();
+			$(".add-ingredient-list").empty();
 			modal.show();
-		});
+		}));
 		
 		/* 페이지네이션 */
 		$(".page-link").click(function(){
@@ -247,7 +252,9 @@
 		/* 엔터치면 추가 */
 		$(".insert-ingredientName").keydown(function(e){
 			if(e.keyCode == 13){
-				$(".insert-ingredient-btn").click();
+				if(!$(".ingredient-insert-btn").hasClass("hidden-btn")){
+					$(".insert-ingredient-btn").click();
+				}
 			}
 		});
 		
@@ -267,9 +274,11 @@
 						$(".insert-ingredientName").addClass("is-invalid");
 					}
 					else{
-						var ingredientNameInput = $("<input>").attr("type", "text").attr("name", "ingredientName").val(ingredientName);
-						var ingredientCateInput = $("<input>").attr("type", "text").attr("name", "ingredientCategory").val(ingredientCategory.val());
-						var xmark = $("<i>").addClass("fa-solid fa-xmark");
+						var ingredientNameInput = $("<input>").attr("type", "text")
+							.attr("name", "ingredientName").val(ingredientName).addClass("col-5");
+						var ingredientCateInput = $("<input>").attr("type", "text").addClass("col-6")
+							.attr("name", "ingredientCategory").val(ingredientCategory.val());
+						var xmark = $("<i>").addClass("fa-solid fa-xmark col-1");
 						xmark.click(function(){
 							$(this).parent().remove();
 						});
@@ -288,13 +297,14 @@
 		});
 		
 		/* 재료 등록 모달창 띄우기 */
-		$(".ingredinet-async-insert").click(function(){
+		$(document).on("click", ".ingredinet-async-insert", (function(){
+			$(".modal-title").text("재료 등록");
 			$(".ingredient-insert-btn").show();
-			$(".insert-ingredient-btn").show();
+			$(".insert-ingredient-btn").removeClass("hidden-btn").show();
 			$(".ingredient-update-btn").hide();
 			$(".insert-ingredientName").removeClass("is-invalid");
             modal.show();
-		});
+		}));
 		
 		/* 재료 한 번에 등록 */
     	$(".ingredient-insert-btn").click(function(e){
@@ -319,6 +329,7 @@
     				data: JSON.stringify(ingredientList),
     				success: function(resp){
     					list(resp);
+    					modal.hide();
     				}
     			});
     		}
@@ -331,6 +342,7 @@
 				alert("삭제할 레시피를 선택하세요.");
 			}
 			else{
+				if(confirm("정말 삭제하시겠습니까?")){
 				var checkboxes = $(".icon-check-item");
 				for(var i=0; i<checkboxes.length; i++){
 					if(checkboxes.eq(i).hasClass("fa-square")){
@@ -339,9 +351,8 @@
 				}
 			
 				var param = $(".ingredientName-form .check-item").serialize();
-				if(confirm("정말 삭제하시겠습니까?")){
 					$.ajax({
-						url: "http://localhost:8888/rest/ingredient?"+param,
+						url: "http://localhost:8888/rest/ingredient_delete?"+param,
 						method: "delete",
 						contentType: "application/json",
 						success: function(resp){
@@ -406,14 +417,16 @@
 		function list(resp) {
 			$(".ingredient-list").empty();
 			for(var i=0; i<resp.length; i++){
-				var tr = $("<tr>");
-				var check = $("<input>").addClass("check-item").attr("name", "recipeNo")
-					.val(resp[i].recipeNo).attr("type", "hidden");
+				var tr = $("<tr>").addClass("text-center");
+				var check = $("<input>").addClass("check-item").attr("name", "ingredientName")
+					.val(resp[i].ingredientName).attr("type", "hidden");
 				var checkIcon = $("<i>").addClass("fa-regular fa-square icon-check-item");
 				var tdCheck = $("<td>").append(checkIcon).append(check);
 				var tdCate = $("<td>").text(resp[i].ingredientCategory);
 				var tdName = $("<td>").text(resp[i].ingredientName);
-				tr.append(tdCheck).append(tdCate).append(tdName);
+				var tdEdit = $("<td>").addClass("edit-btn")
+					.append($("<i>").addClass("fa-solid fa-pen"));
+				tr.append(tdCheck).append(tdCate).append(tdName).append(tdEdit);
 				$(".ingredient-list").append(tr);
 			}
 			$(".icon-check-all").removeClass("fa-regular fa-square-check")

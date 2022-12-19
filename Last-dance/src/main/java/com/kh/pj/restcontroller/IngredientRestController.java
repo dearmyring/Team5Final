@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -50,18 +51,19 @@ public class IngredientRestController {
 	
 	@PostMapping("/ingredient")
 	public List<IngredientDto> ingredient(
-			@RequestBody List<IngredientDto> ingredientList,
-			@RequestBody(required = false) ListSearchVO vo){
+//			@RequestBody(required = false) ListSearchVO vo,
+			@RequestBody List<IngredientDto> ingredientList){
 		for(IngredientDto ingredient : ingredientList) {
 			ingredientDao.insert(ingredient);
 		}
+		ListSearchVO vo = new ListSearchVO();
 		vo.setSort("ingredient_name asc");
 		return ingredientDao.adminList(vo);
 	}
 	
 	//검색 & 정렬 있을 시 삭제할 때 처리 추가하기
-	@DeleteMapping("/ingredient")
-	public List<IngredientDto> ingredient(@RequestParam List<String> ingredientName) {
+	@DeleteMapping("/ingredient_delete")
+	public List<IngredientDto> ingredientDelete(@RequestParam List<String> ingredientName) {
 		for(String ingredient : ingredientName) {
 			ingredientDao.delete(ingredient);
 		}
@@ -74,17 +76,11 @@ public class IngredientRestController {
 	@PutMapping("/ingredient")
 	public List<IngredientDto> ingredient(
 //			@RequestBody(required = false) ListSearchVO vo,
-			@RequestBody IngredientDto ingredientDto,
-			@RequestBody String originName){
-		Map<String, String> data = new HashMap<>();
-		data.put("ingredientName", ingredientDto.getIngredientName());
-		data.put("ingredientCategory", ingredientDto.getIngredientCategory());
-		data.put("originName", originName);
-		System.out.println(data);
+			@RequestBody Map<String, String> data){
 		ingredientDao.update(data);
-		
+
 		ListSearchVO vo = new ListSearchVO();
-		
+		vo.setSort("ingredient_name asc");
 		return ingredientDao.adminList(vo);
 	}
 }

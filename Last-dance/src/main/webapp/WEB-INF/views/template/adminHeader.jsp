@@ -112,7 +112,7 @@
 	                            <div class="dropdown-menu">
 	                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/member/list">사용자 관리</a>
 	                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/board/list">유저 게시판</a>
-	                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/list">고객센터</a>
+	                                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/list">공지사항</a>
 	                            </div>
 	                        </li>
 	
@@ -129,15 +129,15 @@
                    	</div>
                 </div>
             </div>
-<!--             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid d-lg-flex flex-row align-items-center"> -->
-<!--                <ul class="before-address d-lg-flex list-unstyled nav nav-link text-muted"> -->
-<!--                   <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li> -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid d-lg-flex flex-row align-items-center">
+               <ul class="before-address d-lg-flex list-unstyled nav nav-link text-muted">
+                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
                   
-<!--                   <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li> -->
+                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
                   
-<!--                   <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a></li> -->
-<!--                </ul> -->
-<!--             </div> -->
+                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a></li>
+               </ul>
+            </div>
       </nav>
    </div>
 </div>
