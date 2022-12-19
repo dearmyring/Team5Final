@@ -23,12 +23,10 @@
 .all-thumbnail-box {
    position:relative;
 }
-
 .thumbnail-box {
    position: relative;
     left: 200px;
 }
-
 .thumnail{
    width: 70%;
    height:70%;
@@ -73,16 +71,13 @@
    position : absolute;
    width: 20px;
 }
-
 .search {
    position: relative;
 }
-
 h3 {
    font-size: 14px;
    font-weight: 100;
 }
-
 input {
    width: 50%;
    border: 2px solid #bbb;
@@ -90,7 +85,6 @@ input {
    padding: 10px 12px;
    font-size: 14px;
 }
-
 .input.input-seach {
    padding-right: 2.5em;
    background-image: url("/images/search.png");
@@ -99,11 +93,9 @@ input {
    background-position-x: 27.75em;
    background-position-y: center;
 }
-
 .board-search-btn {
    display: none;
 }
-
 .board-bottom{
    width:700px;
    border-bottom : 1px solid gray;
@@ -112,8 +104,6 @@ input {
 .f{
 width: 20%;
 }
-
-
 </style>
 
 <div class="container-900 mt-5 float-center">
@@ -210,7 +200,6 @@ width: 20%;
             $(".board-search-btn").click();
          }
       });
-
       /* 레시피 리스트 검색 */
       $(".board-search-btn")
             .click(
@@ -257,7 +246,6 @@ width: 20%;
                                     if (resp[i].memberBadge == 1) {
                                        url = "/images/badge-1.png";
                                     }
-
                                     var badge = $("<img>").attr("src", url)
                                     .addClass("badge");
                                     var tdNick = $("<td>")
@@ -286,9 +274,7 @@ width: 20%;
                                  }
                               }
                            });
-
                   });
-
       /* 레시피 리스트 정렬 */
       $(".sort-click").on(
             "input",
@@ -320,17 +306,14 @@ width: 20%;
                               .attr("align", "left")
                               .attr("width", "30%")
                               .html(resp[i].boardContent);
-
                         var url = "";
                         if (resp[i].memberBadge == 1) {
                            url = "/images/badge-1.png";
                         }
-
                         var badge = $("<img>").attr("src", url)
                               .addClass("badge");
                         var tdNick = $("<td>").text(resp[i].memberNick)
                               .attr("width", "15%").append(badge);
-
                         var tdWriteTime = $("<td>").text(
                               resp[i].boardWriteTime);
                         var tdEditTime = $("<td>").text(
@@ -342,7 +325,6 @@ width: 20%;
                               resp[i].replyCnt);
                         tr.append(tdTitle).append(tdContent).append(
                               tdNick)
-
                         .append(tdWriteTime).append(tdEditTime).append(
                               tdLike).append(tdClick)
                               .append(tdReply);
@@ -359,7 +341,3 @@ width: 20%;
    });
 </script>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
-
-
-

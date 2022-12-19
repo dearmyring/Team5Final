@@ -9,7 +9,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.IngredientDto;
+import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.entity.SearchDto;
+import com.kh.pj.vo.RecipeKeywordListSearchVO;
 @Repository
 public class SearchDaoImpl implements SearchDao {
 	
@@ -21,8 +23,8 @@ public class SearchDaoImpl implements SearchDao {
 	
 	//검색어 추가(INSERT)
 	@Override
-	public void add(SearchDto searchDto) {
-		sqlSession.insert("search.add",searchDto);
+	public void add(String SearchIngredient) {
+		sqlSession.insert("search.add",SearchIngredient);
 		
 	}
 	
@@ -45,4 +47,8 @@ public class SearchDaoImpl implements SearchDao {
 	public List<IngredientDto> searchForIngredients(String ingredientName) {
 		return sqlSession.selectList("search.searchForIngredient", ingredientName);
 	}
+	
+
+	
+
 }
