@@ -6,6 +6,19 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="자유 게시판" name="title"/>
 </jsp:include>
+<style>
+.input {
+    font-size: 15px;
+    padding: 0.75em;
+    outline: none;
+    border:1px solid #CBCACA;
+    border-radius: 5px;
+}
+.input:focus {
+    border-color: #3bc5f0;
+    opacity: 70%;
+}
+</style>
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -94,11 +107,11 @@ $(function(){
                     processData: false,
                     contentType: false,
                     success: function(resp){
-                        that.next().attr("src", resp);
-                        var attachmentNo = parseInt((resp.split("download/"))[1]);
-                        that.parent().find(".img-no").val(attachmentNo);
-                         var img = $("<img>").attr("src", resp);
-                        $(".note-editable").append(img);
+                    	var img = $("<img>").attr("src",resp);
+                        var icon = $("<i>").addClass("item fa-square fa-regular");
+                        var div = $("<div>").append(img).append(icon);
+                       	 $(".note-editable").append(div); 
+                       	 
                     }
                 });
             }
@@ -106,6 +119,22 @@ $(function(){
                 $(".preview").attr("src", "https:/via.placeholder.com/240x180");
             }
     });
+
+ 
+	$(document).on("click",".item",(function(){
+		var url = $(this).prev().attr("src");
+		console.log(url);
+		 $(".preview").attr("src",url);
+        var attachmentNo = parseInt((url.split("download/"))[1]);
+                		   $(".img-no").val(attachmentNo);
+	}));
+
+  $("form").submit(function(e){
+	 $(".note-editable").find(".item").remove();
+	
+	  
+	  });
+
 });
 </script>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

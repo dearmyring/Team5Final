@@ -9,6 +9,17 @@
 
 
 <style>
+.input {
+    font-size: 15px;
+    padding: 0.75em;
+    outline: none;
+    border:1px solid #CBCACA;
+    border-radius: 5px;
+}
+.input:focus {
+    border-color: #3bc5f0;
+    opacity: 70%;
+}
 .item-bold{
    font-weight: bold;
 }
