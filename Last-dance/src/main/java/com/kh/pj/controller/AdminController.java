@@ -76,8 +76,6 @@ public class AdminController {
 	@GetMapping("/")
 	public String main(Model model) {
 		
-		model.addAttribute("memberCount",adminDao.memberCount());
-		
 		return "admin/main";
 	}
 	

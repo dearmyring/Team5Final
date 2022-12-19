@@ -7,8 +7,9 @@
 
 
 <style>
-	.a {
-		color: red;
+	.member-chart {
+		width: 400px;
+		height: 400px;
 	}
 </style>
 
@@ -17,19 +18,12 @@
 <!-- 총 회원수 / 오늘 가입자 수 -->
 <div>
 	<h1>메인페이지</h1>
-	<span>회원 전체: ${memberAll}</span>
-	<span>오늘 가입:</span>
-	<span class="a">▲${todayJoin}</span>
-	<div>
-		<canvas id="myChart"></canvas>
-	</div>
+	<span>전체 회원 / 오늘 가입 수</span>
+	<div class="member-chart">
+        <canvas id="memberChart"></canvas>
+    </div>
 </div>
 
-    <div class="container-500">
-        <div class="row">
-            <canvas id="myChart"></canvas>
-        </div>
-    </div>
 
 
 <!-- jquery를 사용하기 위하여 라이브러리 js 파일을 불러온다 -->
@@ -50,7 +44,7 @@ $(function(){
             values.push(resp.allCount); 
             values.push(resp.todayCount); 
             
-                const ctx = document.querySelector('#myChart');
+                const ctx = document.querySelector('#memberChart');
                 const myChart = new Chart(ctx, {
                     type: 'bar',
                     // type: 'line',

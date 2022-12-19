@@ -29,7 +29,6 @@ public class AdminDaoImpl implements AdminDao{
 	//회원 전체, 오늘 가입자 카운트
 	@Override
 	public MemberCountVO memberCount() {
-		
 		return sqlSession.selectOne("admin.memberCount");
 	}
 	
