@@ -115,7 +115,8 @@
                 }
             };
             
-            $("input[name=memberId]").on("input", function(){
+            $("input[name=memberId]").on("input", function(e){
+            	e.preventDefault();
             	var memberId = $(this).val();
             	var possible = $(".send-btn");
             	$("input[name=memberId]").next("button").next("div").text("");
@@ -129,6 +130,7 @@
                              validChecking.memberIdValid = true;
                          }
                          else if(resp == "NNNNN") {
+                        	 possible.prop("disabled", true);
                              validChecking.memberIdValid = false;
                              $("input[name=memberId]").next("button").next("div").text("이미 사용중인 아이디입니다.")
                          }
@@ -141,7 +143,7 @@
 				var email = $("input[name=memberId]").val();
 				if (email.length == 0) return;
 				var btn = $(this);
-				btn.prop("disabled", true);
+				//btn.prop("disabled", true);
 				
 				$.ajax({
 					url:"${pageContext.request.contextPath}/member/send_email",

@@ -48,11 +48,25 @@
 .w-100 {
     width:100%;
 }
+
+.w-80 {
+    width:80%;
+}
+
+.w-70 {
+	width:70%
+}
+
 .w-50 {
     width:50%;
 }
+
 .w-33 {
     width:33.3333%;
+}
+
+.w-30 {
+	width: 30%;
 }
 .w-25 {
     width:25%;
@@ -728,11 +742,16 @@ ul.pagination.pagination-small {
 
 .first {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .first > div {
     flex-grow: 1;
+}
+
+.second {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .complex {
@@ -803,4 +822,6 @@ ul.pagination.pagination-small {
 	font-size:18px;
 }
 
-
+.push-list-num {
+	font-weight: bold;
+}

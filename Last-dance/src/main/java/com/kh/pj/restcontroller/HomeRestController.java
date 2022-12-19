@@ -20,11 +20,19 @@ public class HomeRestController {
 	@Autowired
 	private HomeDao homeDao;
 	
+	// 총 등록된 레시피 개수
+	@GetMapping("/total_add")
+	public RecipeTotalCountVO listTotal(){
+		return homeDao.counting();
+	}
+	
+	// 오늘 등록된 레시피 갯수
 	@GetMapping("/today_add")
-	public RecipeTotalCountVO list(){
+	public RecipeTotalCountVO listToday(){
 		return homeDao.todayCounting();
 	}
 	
+	//
 	@GetMapping("/push_recipe")
 	public List<PushRecipeListVO> pushList() {
 		return homeDao.pushRecipe();
