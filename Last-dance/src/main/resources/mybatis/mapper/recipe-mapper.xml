@@ -14,10 +14,10 @@
       values(${recipeNo}, #{recipeNick}, #{recipeTitle}, #{recipeInfo}, ${recipeTime}, #{recipeHashtag}, #{recipeDifficulty})
    </insert>
    
-<!--     레시피 조회  
-   <select id = "recipeList"  resultType = "RecipeDto" >
-      select * from recipe order by recipe_no
-   </select> -->
+   <!-- 레시피 제목 중복 조회 -->
+   <select id = "adminRecipeFind" parameterType="String" resultType = "RecipeDto" >
+      select * from recipe where recipe_title=#{recipeTitle}
+   </select>
    
    <!-- 재료 출력 -->
    <select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
@@ -81,19 +81,23 @@
       delete recipe where recipe_no = #{recipeNo}
    </delete>
    
-   <select id="adminList" parameterType="RecipeListSearchVO" resultType="RecipeDto">
-      select * from recipe
-      <!-- 검색 -->
-      <where>
-         <!-- 이름, 관리자 유사 대상 검색 -->
-         <if test="type != null and keyword != ''">
-            and instr(${type}, #{keyword}) > 0
-         </if>
-      </where>
-       <!-- 정렬 -->
-       <if test="sort != null">
-          order by ${sort}
-       </if>
+   <select id="adminList" parameterType="ListSearchVO" resultType="RecipeDto">
+	  select * from (
+		  select tmp.*, rownum rn from(
+		      select * from recipe
+		      <!-- 검색 -->
+		      <where>
+		         <!-- 이름, 관리자 유사 대상 검색 -->
+		         <if test="type != null and keyword != ''">
+		            instr(${type}, #{keyword}) > 0
+		         </if>
+		      </where>
+		       <!-- 정렬 -->
+		       <if test="sort != null">
+		          order by ${sort}
+		       </if>
+			  ) tmp
+		) where rn between ${startPost} and ${endPost}
    </select>
    
    <select id="adminDetail" parameterType="int" resultType="RecipeDto">

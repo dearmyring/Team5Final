@@ -2,6 +2,7 @@ package com.kh.pj.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -15,7 +16,7 @@ import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeDetailVO;
-import com.kh.pj.vo.RecipeListSearchVO;
+import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.RecipeListVO;
 
 @Repository
@@ -54,6 +55,7 @@ public class RecipeDaoImpl implements RecipeDao {
 //		return sqlSession.selectList("recipe.list");
 //
 //	}
+	
 	//레시피 삭제(DELETE)
 	@Override
 	public boolean delete(int recipeNo) {
@@ -87,7 +89,7 @@ public class RecipeDaoImpl implements RecipeDao {
 	}
 
 	@Override
-	public List<RecipeDto> adminList(RecipeListSearchVO vo) {
+	public List<RecipeDto> adminList(ListSearchVO vo) {
 		return sqlSession.selectList("recipe.adminList", vo);
 	}
 
@@ -123,12 +125,12 @@ public class RecipeDaoImpl implements RecipeDao {
 	}
 
 	//재료별 레시피 갯수 출력
-	@Override
-	public List<RecipeCountVO> selectRecipeList() {
-		String sql = "select COUNT(*) cnt from recipe R inner join recipe_ingredient RI "
-						+"on R.recipe_no=RI.recipe_no where recipe_ingredient_name=?";
-		return jdbcTemplate.query(sql,  countMapper);
-	}
+//	@Override
+//	public List<RecipeCountVO> selectRecipeList() {
+//		String sql = "select COUNT(*) cnt from recipe R inner join recipe_ingredient RI "
+//						+"on R.recipe_no=RI.recipe_no where recipe_ingredient_name=?";
+//		return jdbcTemplate.query(sql,  countMapper);
+//	}
 	
 	
 	
@@ -204,6 +206,7 @@ public class RecipeDaoImpl implements RecipeDao {
 		int result = sqlSession.delete("recipe.removeRecipeLike", dto);
 		return result > 0;
 	}
+
 	
 	//레시피 개수 출력
 	@Override
@@ -211,6 +214,15 @@ public class RecipeDaoImpl implements RecipeDao {
 		
 		return sqlSession.selectOne("recipe.countLike", recipeNo);
 	}
+
+//	@Override
+//	public int searchCount(String keyword) throws Exception {
+//
+//		HashMap<String, Object> data = new HashMap<String, Object>();
+//		
+//		data.put("keyword", keyword);
+//		return sql.selectOne(namespace + ".searchCount", data);
+//	}
 	
 	
 

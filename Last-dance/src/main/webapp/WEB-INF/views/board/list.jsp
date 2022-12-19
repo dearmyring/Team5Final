@@ -23,7 +23,6 @@
 .all-thumbnail-box {
    position:relative;
 }
-
 .thumbnail-box {
    position: relative;
     left: 200px;
@@ -32,7 +31,7 @@
 .thumbnail{
    width: 100%;
    height:100%;
-   
+  
 }
 .btn {
     border: none;
@@ -76,16 +75,13 @@
    position : absolute;
    width: 20px;
 }
-
 .search {
    position: relative;
 }
-
 h3 {
    font-size: 14px;
    font-weight: 100;
 }
-
 input {
    width: 50%;
    border: 2px solid #bbb;
@@ -93,7 +89,6 @@ input {
    padding: 10px 12px;
    font-size: 14px;
 }
-
 .input.input-seach {
    padding-right: 2.5em;
    background-image: url("/images/search.png");
@@ -102,12 +97,13 @@ input {
    background-position-x: 27.75em;
    background-position-y: center;
 }
-
 .board-search-btn {
    display: none;
 }
+<<<<<<< HEAD
 
-.board-bottom {
+
+.board-bottom{
    width:700px;
    border-bottom : 1px solid gray;
    
@@ -166,7 +162,6 @@ width: 20%;
 	margin-top: 23px;
 	font-weight: 900;
 }
-
 
 
 </style>
@@ -280,7 +275,6 @@ width: 20%;
             $(".board-search-btn").click();
          }
       });
-
       /* 레시피 리스트 검색 */
       $(".board-search-btn").click(function() {
                      var sort = $(".sort-click").val();
@@ -378,6 +372,7 @@ width: 20%;
                      sort : sort
                   }),
                   success : function(resp) {
+
                 	  $(".board-list").empty();
                       for (var i = 0; i < resp.length; i++) {
                      
@@ -440,11 +435,12 @@ width: 20%;
                             $(".board-content").eq(i).text($(".board-content").eq(i).text());
                          }
                       }
+
                   }
                });
             });
    });
 </script>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 

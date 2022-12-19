@@ -34,7 +34,7 @@ import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
 import com.kh.pj.vo.IngredientListSearchVO;
-import com.kh.pj.vo.RecipeListSearchVO;
+import com.kh.pj.vo.ListSearchVO;
 
 @Controller
 @RequestMapping("/admin")
@@ -104,8 +104,10 @@ public class AdminController {
 	//관리자 레시피 컨트롤러
 	@GetMapping("/recipe/list")
 	public String list(
-			@ModelAttribute(name="voPagination") RecipeListSearchVO vo, 
+			@ModelAttribute(name="voPagination") ListSearchVO vo, 
 			Model model) {
+		vo.setTable("recipe");
+		vo.setCount(adminDao.adminPostCount(vo));
 		model.addAttribute("recipeList", recipeDao.adminList(vo));
 		return "admin/recipe-list";
 	}

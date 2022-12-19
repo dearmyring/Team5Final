@@ -154,10 +154,23 @@ article {
    margin: 0 3px;
 }
 
-.need-ingredient {
+.recipe-enough {
    display: inline-block;
    border: none;
-   background-color: #abc9cc;
+   background-color: #4dd1a7;
+   text-align: center;
+   padding: 0.5em 0.8em 0.5em 0.8em;
+   border-radius: 7px;
+   font-weight: 600;
+   color: white;
+   font-size: 13px;
+   margin: 0 3px;
+}
+
+.recipe-lack {
+   display: inline-block;
+   border: none;
+   background-color: #ec7e42;
    text-align: center;
    padding: 0.5em 0.8em 0.5em 0.8em;
    border-radius: 7px;
@@ -261,7 +274,14 @@ width: 100px;
                            <i class="fa-regular fa-clock"></i>
                            ${recipeListVO.recipeDto.recipeTime}분 이내
                         </div>
-                        <div class="need-ingredient">필요 재료 개수 : 개 </div>
+                        <c:choose>
+                        <c:when test="${recipeListVO.enough==true}">
+                        <div class="recipe-enough">재료가 충분해요</div>
+                        </c:when>
+                        <c:otherwise>
+                        <div class="recipe-lack">재료가 부족해요</div>
+                        </c:otherwise>
+                        </c:choose>
                         <div class="cooking-level">${recipeListVO.recipeDto.recipeDifficulty}</div>
                         </div>
                         <div class="ingredient-box scroll">
