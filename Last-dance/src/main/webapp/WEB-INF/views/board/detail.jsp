@@ -54,6 +54,7 @@ width : 3%;
     margin-top: 16px;
 }
 	
+	
 	.other-info {
     display: flex;
     color: #757575;
