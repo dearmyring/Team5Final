@@ -6,7 +6,6 @@
 <!-- css 불러옴  -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mypage.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/user-card.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons-ring-join.css">
 
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param name="title" value="마이페이지"/>

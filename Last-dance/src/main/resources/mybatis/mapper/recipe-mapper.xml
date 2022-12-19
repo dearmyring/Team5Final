@@ -14,10 +14,10 @@
       values(${recipeNo}, #{recipeNick}, #{recipeTitle}, #{recipeInfo}, ${recipeTime}, #{recipeHashtag}, #{recipeDifficulty})
    </insert>
    
-<!--     레시피 조회  
-   <select id = "recipeList"  resultType = "RecipeDto" >
-      select * from recipe order by recipe_no
-   </select> -->
+   <!-- 레시피 제목 중복 조회 -->
+   <select id = "adminRecipeFind" parameterType="String" resultType = "RecipeDto" >
+      select * from recipe where recipe_title=#{recipeTitle}
+   </select>
    
    <!-- 재료 출력 -->
    <select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
