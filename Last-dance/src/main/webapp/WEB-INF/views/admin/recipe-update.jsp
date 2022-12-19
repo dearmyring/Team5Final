@@ -4,6 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
+<!-- css 파일 불러옴 -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin-recipe-insert.css">
+
 <div class="modal ingredient-insert-modal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
@@ -39,11 +42,11 @@
 <input type="hidden" name="recipeNo" value="${recipeDto.recipeNo}">
 
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">레시피 제목</div>
-			<div class="col-10">
-				<input type="text" name="recipeTitle" value="${recipeDto.recipeTitle}" class="w-100" placeholder="예) 치즈라볶이">
+			<div class="col-2 fw-bolder">레시피 제목</div>
+			<div class="col-8">
+				<input type="text" name="recipeTitle" value="${recipeDto.recipeTitle}" class="w-100 h-100 rounded pt-1 pb-1">
 				<div class="invalid-feedback">이미 존재하는 레시피 제목입니다.</div>
 			</div>
 		</div>
@@ -51,11 +54,11 @@
 </div>
 
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">레시피 소개</div>
-			<div class="col-10">
-				<input type="text" class="w-100" name="recipeInfo" value="${recipeDto.recipeInfo}" 
+			<div class="col-2 fw-bolder">레시피 소개</div>
+			<div class="col-8">
+				<input type="text" class="w-100 h-100 rounded pt-1 pb-1" name="recipeInfo" value="${recipeDto.recipeInfo}" 
 				placeholder="예) 생일에 빼놓을 수 없는 소고기를 넣어 더욱 깊은 맛으로 즐겨보세요.">
 			</div>
 		</div>
@@ -63,12 +66,12 @@
 </div>
 
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">레시피 정보</div>
-			<div class="col-2">시간</div>
-			<div class="col-2">
-				<select name="recipeTime">
+			<div class="col-2 fw-bolder">레시피 정보</div>
+			<div class="col-2 me-4">시간</div>
+			<div class="col-2 me-1">
+				<select name="recipeTime" class="rounded pb-1 ps-1">
 					<option value="">시간</option>
 					<c:forEach var="i" begin="5" step="5" end="120">
 						<c:choose>
@@ -82,9 +85,9 @@
 					</c:forEach>
 				</select>
 			</div>
-			<div class="col-2">난이도</div>
-			<div class="col-2">
-				<select name="recipeDifficulty">
+			<div class="col-2 pe-0">난이도</div>
+			<div class="col-2 ps-0">
+				<select class="rounded pb-1 ps-1" name="recipeDifficulty">
 				    <option value="">난이도</option>
 				    <c:choose>
 				    	<c:when test="${recipeDto.recipeDifficulty == '쉬워요'}">
@@ -110,30 +113,26 @@
 </div>
 
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="row">
-			<div class="col-4">
-				<label>
-					<i class="fa-regular fa-lightbulb"></i>음식의 재료를 입력해주세요.
-					<input type="text" class="input-ingredient" placeholder="재료">
-				</label>
-			</div>
-			<div class="col-2">
-				<button type="button" class="ingredient-all-clear">모두 지우기</button>
-			</div>
-		</div>
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<i class="fa-regular fa-lightbulb"></i>음식의 재료를 입력해주세요.
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<input type="text" class="input-ingredient" placeholder="재료">
+		<button type="button" class="ingredient-all-clear btn btn-md btn-light">모두 지우기</button>
 	</div>
 </div>
 
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="search-ingredient col-6"></div>
 	</div>
 </div>
 
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="add-ingredient col-6">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="add-ingredient col-10">
 			<c:forEach var="ingredient" items="${recipeIngredientList}">
 				<p>
 					<input type="text" name="recipeIngredientName" value="${ingredient}" readonly>
@@ -145,15 +144,15 @@
 </div>
 
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">요리 순서</div>
+			<div class="col-3 fw-bolder">요리 순서</div>
 		</div>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
 			<div class="col-12">
 				<label>
@@ -172,13 +171,13 @@
 <c:forEach var="no" begin="0" end="9">
 <div class="content-page">
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2 d-flex align-items-center">
+			<div class="col-2 d-flex align-items-center fs-4">
 				Step <fmt:formatNumber value="${no+1}" minIntegerDigits="2"/>
 			</div>
 			<div class="col-7">
-				<textarea class="w-100 h-100" name="recipeContentText">${recipeContentList[no].recipeContentText}</textarea>
+				<textarea class="w-100 h-100 rounded" name="recipeContentText">${recipeContentList[no].recipeContentText}</textarea>
 			</div>
 			<div class="col-3">
 				<c:choose>
@@ -198,21 +197,25 @@
 </div>
 
 <div class="row mt-2">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 text-center">
-		<label class="step-plus-btn"><button type="button"><i class="fa-solid fa-plus"></i></button> 순서 추가</label>
-		<label class="step-minus-btn"><button type="button"><i class="fa-solid fa-minus"></i></button> 순서 삭제</label>
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1 text-center">
+		<label class="step-plus-btn"><button class="green-btn btn btn-md ps-2 pe-2" type="button">
+			<i class="ms-1 me-1 fa-solid fa-plus"></i></button> 순서 추가
+		</label>
+		<label class="step-minus-btn"><button class="green-btn btn btn-md ps-2 pe-2" type="button">
+			<i class="ms-1 me-1 fa-solid fa-minus"></i></button> 순서 삭제
+		</label>
 	</div>
 </div>
 </div>
 </c:forEach>
 
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2">
-				요리 완성사진 
+			<div class="col-2 pe-0">
+				<span class="fw-bolder">요리 완성사진</span> 
 <!-- 				<button type="button">사진 한 번에 넣기</button> -->
-				<button class="thumb-all-clear" type="button">사진 모두 지우기</button>
+				<button class="thumb-all-clear btn btn-md btn-light mt-3" type="button">사진 모두 지우기</button>
 			</div>
 			<div class="thumb-page col-10">
 				<c:forEach var="no" begin="0" end="3">
@@ -234,11 +237,11 @@
 </div>
 
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="row">
-			<div class="col-2">요리 해시태그</div>
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+		<div class="row pe-0">
+			<div class="col-2 pe-0 fw-bolder">요리 해시태그</div>
 			<div class="col-2">
-				<select name="recipeHashtag">
+				<select name="recipeHashtag" class="rounded">
 					<option value="">해시태그</option>
 					<c:forEach var="hashtagDto" items="${hashtagList}">
 					<c:choose>
@@ -257,13 +260,13 @@
 </div>
 
 <div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
 			<div class="col-6 text-end">
-				<button class="col-5 btn btn-md text-lg yellow-btn recipe-return-btn" type="button">돌아가기</button>
+				<button class="col-6 btn btn-md text-lg btn-light recipe-return-btn" type="button">돌아가기</button>
 			</div>
 			<div class="col-6">
-				<button class="col-5 btn btn-md text-lg yellow-btn recipe-insert-btn" type="submit">레시피 수정하기</button>
+				<button class="col-6 btn btn-md text-lg yellow-btn recipe-insert-btn" type="submit">레시피 수정하기</button>
 			</div>
 		</div>
 	</div>
