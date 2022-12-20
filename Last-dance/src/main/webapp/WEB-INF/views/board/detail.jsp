@@ -30,7 +30,7 @@
 width : 10%;
 }
 .title-badge{
-width : 4%;
+width : 3%;
 }
 .author {
     font-size: 16px;
@@ -279,7 +279,7 @@ $(function(){
 										<pre>블라인드 처리된 게시물입니다</pre>
 									</c:when>
 									<c:otherwise>
-										<pre>{replyDto.replyContent}</pre>
+										<pre>{{replyDto.replyContent}}</pre>
 									</c:otherwise>
 									</c:choose>	
 								</p>
@@ -313,6 +313,24 @@ $(function(){
 
 
 </script>
+	<!-- <tr class="view">
+					<td>
+						작성자
+						<pre>{{replyContent}}</pre>
+						<br>
+						({{memberBadge}}) 
+						{{memberNick}}			
+						<br><br>
+						{{replyWriteTime}}
+						
+
+					</td>
+					<th>
+						수정과 삭제는 현재 사용자가 남긴 댓글에만 표시
+						<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
+						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyBoardNo}}" data-reply-no="{{replyNo}}"><img src="/images/delete.png" width="20" height="20"></a>
+					</th>
+				</tr>	 -->
 
 
 <div class="container-800 mt-40 mb-40">
@@ -336,13 +354,14 @@ $(function(){
 			<c:choose>
 				<c:when test="${like==null}">
 					<i class="fa-regular fa-heart like-btn"></i> 
+				<span>추천: ${boardDto.boardLike}</span>
 				</c:when>
 				<c:otherwise>
 					<i class="fa-solid fa-heart like-btn heart-color"></i> 
+				<span>추천: ${boardDto.boardLike}</span>
 				</c:otherwise>
 			</c:choose>
 			
-			<span>추천: ${boardDto.boardLike}</span>
 			</span>
 				
 		</div>

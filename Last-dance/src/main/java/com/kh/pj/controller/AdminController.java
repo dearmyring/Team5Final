@@ -17,13 +17,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.AdminDto;
+import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
 import com.kh.pj.repository.AdminDao;
+import com.kh.pj.repository.AttachmentDao;
 import com.kh.pj.repository.BoardDao;
+import com.kh.pj.repository.BoardImgDao;
 import com.kh.pj.repository.CategoryDao;
 import com.kh.pj.repository.HashtagDao;
 import com.kh.pj.repository.IngredientDao;
@@ -33,6 +36,7 @@ import com.kh.pj.repository.RecipeContentDao;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
+import com.kh.pj.repository.ReplyDao;
 import com.kh.pj.vo.IngredientListSearchVO;
 import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.RecipeViewTopFiveVO;
@@ -73,6 +77,15 @@ public class AdminController {
 	
 	@Autowired
 	private AdminDao adminDao;
+	
+	@Autowired
+	private BoardImgDao boardImgDao;
+	
+	@Autowired
+	private ReplyDao replyDao;
+	
+	@Autowired
+	private AttachmentDao attachmentDao;
 	
 	@GetMapping("/")
 	public String main(Model model) {
@@ -368,7 +381,5 @@ public class AdminController {
 		model.addAttribute("boardList", boardDao.boardList(null));
 		return "admin/board-list";
 	}
-	
-	
 	
 }

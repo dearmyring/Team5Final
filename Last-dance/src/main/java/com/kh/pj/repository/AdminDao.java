@@ -9,6 +9,7 @@ import com.kh.pj.vo.MemberCountVO;
 import com.kh.pj.vo.RecipeTopFiveVO;
 import com.kh.pj.vo.RecipeViewTopFiveVO;
 import com.kh.pj.vo.TrendingSearchesVO;
+import com.kh.pj.vo.ListSearchVO2;
 
 public interface AdminDao {
 	public AdminDto login(String adminId);
@@ -34,4 +35,5 @@ public interface AdminDao {
 	//레시피 TOP5(좋아요 많은 순 -> 조회수 많은 순)
 	List<RecipeViewTopFiveVO> recipeTopFive();
  	
+	public int adminBoardCount(ListSearchVO2 vo2);
 }
