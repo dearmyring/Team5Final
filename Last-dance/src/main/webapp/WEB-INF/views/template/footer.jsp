@@ -3,6 +3,121 @@
 
 	</div>
     <!-- 컨텐츠 영역 끝 -->
+    
+    	<!-- 송민영 -->
+    <!-- 1:1 문의 영역 -->
+    <div class="message-list">
+    	<div class="center row">
+    		<span>1:1 문의</span><i class="fa-solid fa-caret-up center-hide"></i>
+    	</div>
+		<div class="right center-message"></div>
+		<hr>
+		<div class="float-container">
+			<input class="message-content-input input w-80" type="text">
+			<button class="message-send-btn btn w-20" type="button">입력</button>
+		</div>
+	</div>
+	
+
+	 <script>
+    $(function(){
+    	
+        $(".fa-solid").click(function(){
+            if($(this).hasClass("fa-caret-up")){
+                $(this).removeClass("fa-caret-up center-hide").addClass("fa-caret-down");
+                
+                var uri = "ws://localhost:8888/ws/center";
+    			
+                socket = new WebSocket(uri);
+    			
+    			socket.onopen = function(){
+    			};
+    			socket.onclose = function(){
+    			};
+    			socket.onerror = function(){
+    			};
+    			socket.onmessage = function(e){
+    				saveMessage(e.data);
+    				var data = JSON.parse(e.data);
+    				
+    				var p = $("<p>").addClass("center-message");
+    				var time = moment(data.centerTime).format("YYYY-MM-DD hh:mm");
+    				var t = $("<p>").text(time);
+    				var c = $("<p>").text(data.centerContent);
+    				p.append(c).append(t);
+    				$(".message-list").append(p);
+    				
+    				//스크롤 하단으로 이동
+//     				var height = $(document).height();
+//     				$(window).scrollTop(height);
+    			};
+            }
+            else{
+                $(this).removeClass("fa-caret-down").addClass("fa-caret-up center-hide");
+            	socket.close();
+            }
+        });
+        
+		function saveMessage(e){
+			$.ajax({
+				url:"http://localhost:8888/rest/center",
+				method:"post",
+				contentType:"application/json",
+				data:e,
+				success:function(resp){
+					console.log(resp);
+				}
+			});
+		}
+		
+		$(".message-content-input").keydown(function(e){
+			if(e.keyCode == 13){
+				$(".message-send-btn").click();
+			}
+		});
+		
+		/* 메세지 전송 */
+		$(".message-send-btn").click(function(){
+			var text = $(".message-content-input").val();
+			if(text.length == 0) return;
+			
+			var data = {
+				centerContent : text
+			};
+			socket.send(JSON.stringify(data));
+			$(".message-content-input").val("");
+		});
+    });
+ </script>
+    <style>
+        .message-list{
+         position:fixed; 
+         border-radius: 10px; 
+         background-color: white; 
+         width:300px;
+         box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1); 
+         z-index: 99999; 
+         right:0; 
+         bottom:0;
+         transition: 0.6s;
+        }
+        .message-list:has( i.center-hide) {
+         right:0; 
+         bottom:-32%;
+         transition: 0.6s;
+        }
+        .message-list .fa-caret-up,
+        .message-list .fa-caret-down{
+            position:absolute; 
+            right:0.5em; 
+            top:0.5em;
+            cursor: pointer;
+        }
+        .center-message{
+            height:200px;
+        }
+    </style>
+    <!-- 송민영 -->
 
     <!-- 푸터 영역 시작 -->
     <div id="footer">
@@ -13,11 +128,12 @@
                     <li><a href="#">이용약관</a></li>
                     <li><a href="#">개인정보 처리 방침</a></li>
                     <li><a href="#">통합검색 고객센터</a></li>
-                    <li><a href="#">고객센터 02-1111-1111</a></li>
+                    <li><a href="${pageContext.request.contextPath}/center/${loginId}">고객센터 02-1111-1111</a></li>
                 </ul>
             </div>
         </div>
     </div><!-- 푸터 영역 끝 -->
+    
     
     <!-- 헤더 검색 -->
   	<script>

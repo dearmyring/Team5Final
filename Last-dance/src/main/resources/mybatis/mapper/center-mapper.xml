@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="center">
+
+	<!-- 관리자 페이지에서 리스트 뽑아주기 -->
+	<select id="adminList" resultType="CenterDto">
+		select distinct(center_member_id) from center order by center_time desc;
+	</select>
+	
+	<!-- 과거 대화 이력 -->
+	<select id="historyList" parameterType="String" resultType="CenterDto">
+		select * from center where center_member_id=#{loginId}
+	</select>
+	
+	<!-- 대화 저장용 -->
+	<insert id="insert" parameterType="CenterDto">
+		insert into center(center_member_id, center_id, center_content) 
+		values(#{centerMemberId}, #{centerId}, #{centerContent})
+	</insert>
+</mapper>

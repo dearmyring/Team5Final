@@ -33,7 +33,6 @@ import com.kh.pj.repository.RecipeContentDao;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
-import com.kh.pj.vo.IngredientListSearchVO;
 import com.kh.pj.vo.ListSearchVO;
 
 @Controller
@@ -371,7 +370,6 @@ public class AdminController {
 		vo.setCount(adminDao.adminPostCount(vo));
 		vo.setStartPost(vo.startRow());
 		vo.setEndPost(vo.endRow());
-		System.out.println(vo);
 		model.addAttribute("memberList", memberDao.adminList(vo));
 		return "admin/member-list";
 	}
@@ -381,6 +379,12 @@ public class AdminController {
 	public String boardList(Model model) {
 		model.addAttribute("boardList", boardDao.boardList(null));
 		return "admin/board-list";
+	}
+	
+	@GetMapping("/center/list")
+	public String centerList(Model model) {
+		
+		return "admin/center-list";
 	}
 	
 }
