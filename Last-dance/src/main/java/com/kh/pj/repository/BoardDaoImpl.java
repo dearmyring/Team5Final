@@ -19,6 +19,7 @@ import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.error.TargetNotFoundException;
 import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
+import com.kh.pj.vo.ListSearchVO2;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -128,6 +129,20 @@ public class BoardDaoImpl implements BoardDao {
 	public int replyCNT(MemberDto memberDto) {
 		return sqlSession.selectOne("board.replyCNT",memberDto);
 	}
+
+	@Override
+	public List<BoardDto> adminList(ListSearchVO2 vo2) {
+		return sqlSession.selectList("recipe.adminList", vo2);
+	}
+
+	@Override
+	public boolean blind(BoardDto boardDto) {
+		int count = sqlSession.update("board.blind", boardDto);
+		if (count == 0)
+			throw new TargetNotFoundException();
+		return count > 0;
+	}
+	
 
 	@Override
 	public List<NoticeDto> noticeList(NoticeDto noticeDto) {
