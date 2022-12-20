@@ -1,8 +1,6 @@
 package com.kh.pj.vo;
 
 
-
-
 import java.util.List;
 
 import com.kh.pj.entity.RecipeDto;
@@ -20,7 +18,6 @@ public class RecipeListVO {
 	private RecipeDto recipeDto;
 	private List<RecipeIngredientDto> recipeIngredientList;
 	private List<RecipeImgDto> recipeImgList;
-	boolean Enough;
-	
+	boolean enough;
 
 }

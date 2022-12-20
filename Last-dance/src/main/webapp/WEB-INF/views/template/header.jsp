@@ -93,9 +93,10 @@
                  <div class="search-list">
                    <!-- 검색 제시어가 나올 영역 -->
                  </div>
-             <div class="search-list-select left ms-50 me-50">
+             <input type="hidden" class="search-list-select left ms-50 me-50">
                 <!-- 검색할 재료를 선택하면 추가될 영역 -->
-             </div>
+             
+             <button class="btn btn-positive btn-list-submit" type="button">검색</button>
           </form>
         </div>
        

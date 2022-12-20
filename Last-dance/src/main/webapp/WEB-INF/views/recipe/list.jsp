@@ -261,7 +261,7 @@ width: 100px;
                            <i class="fa-regular fa-clock"></i>
                            ${recipeListVO.recipeDto.recipeTime}분 이내
                         </div>
-                        <div class="need-ingredient">필요 재료 개수 : 개 </div>
+                        <div class="need-ingredient">필요 재료 개수 : ${recipeListVO.recipeIngredientList.size()}개 </div>
                         <div class="cooking-level">${recipeListVO.recipeDto.recipeDifficulty}</div>
                         </div>
                         <div class="ingredient-box scroll">

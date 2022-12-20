@@ -118,11 +118,12 @@
  					  data : {
  					  	"submitList" : submitList
  					  },
-//  					  success: function(data){
-//  					  	console.log("성공");
-
+  					  success: function(data){
+  					  	console.log("성공");
+  					  	console.log(data);
+  					  	window.location = (data);
  					  
-//  					  }
+  					  }
  					});
 				  	window.location = ("/recipe/searchList");
  			})
