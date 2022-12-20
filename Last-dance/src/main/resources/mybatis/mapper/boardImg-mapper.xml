@@ -12,4 +12,9 @@
 	<select id="find" parameterType="int" resultType="BoardImgDto">
 		select * from board_img where board_no=${boardNo} order by board_attachment_no asc 
 	</select>
+	
+	<!-- 프로필 사진이 있을경우 수정 -->
+	<update id="editThumbnail" parameterType="BoardImgDto">
+		update board_img set board_attachment_no = #{boardAttachmentNo} where board_no = #{boardNo}
+	</update>
 </mapper>

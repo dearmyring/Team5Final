@@ -8,6 +8,13 @@
 </jsp:include>
 
 <style>
+.reply-border{
+	border-bottom : 1px solid lightgray;
+	width : 90%;
+}
+.title-nick{
+	margin-bottom: 10px;
+}
 .heart-color {
     color: red;
 }
@@ -19,8 +26,11 @@
 .btn.btn-positive:hover {
     background-color: #1E90FF;
 }
-.badge{
-width : 3%;
+.reply-badge{
+width : 10%;
+}
+.title-badge{
+width : 4%;
 }
 .author {
     font-size: 16px;
@@ -77,22 +87,25 @@ width : 3%;
 	.reply-box {
 		display: flex;
 		justfy-content: center;
+		flex-direction: column;
 	}
 	
-	.reply-author: {
-		width: 20%;
-	}
+	.reply-author {
+    width: 30%;
+    font-weight: 700;
+}
 	
 	.reply-main {
 		width: 40%;
-		margin-left: 60px;
+		margin-left: 40px;
 	}
 	
-	.reply-date {
-		width: 30%;
-		margin-left: 60px;
-	}
-	
+	.date {
+    width: 0%;
+    /* margin-left: 17px; */
+    font-size: 10px;
+    /* margin-top: 1px; */
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
@@ -247,23 +260,58 @@ $(function(){
 
 <script type="text/template" id="reply-list-item">
 				<tr class="view">
-					<td>
+					<td width="90%">
 						<!-- 작성자 -->
-						<pre>{{replyContent}}</pre>
-						<br>
-						({{memberBadge}}) 
-						{{memberNick}}			
-						<br><br>
-						{{replyWriteTime}}
-						
-
+						<ul class="reply-box">
+							<li class="reply-author left">
+								<p><c:if test="{{boardDto.memberBadge == 1 }}">
+								<img class="badge" src="/images/badge-1.png">
+									</c:if>{replyDto.memberNick}
+									
+								</p>							
+								
+							</li>
+							
+							<li class="reply-main left">
+								<p>
+									<c:choose>
+										<c:when test="{{replyDto.replyBlind}}">
+										<pre>블라인드 처리된 게시물입니다</pre>
+									</c:when>
+									<c:otherwise>
+										<pre>{replyDto.replyContent}</pre>
+									</c:otherwise>
+									</c:choose>	
+								</p>
+							</li>
+						</ul>
+ 
+						<br>											
+						<br>			
 					</td>
 					<th>
-						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
-						<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
-						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyBoardNo}}" data-reply-no="{{replyNo}}"><img src="/images/delete.png" width="20" height="20"></a>
+						<c:if test="{{loginId == replyDto.replyId}}">
+							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
+							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyDto.replyBoardNo}}" data-reply-no="{{replyDto.replyNo}}"><img src="/images/delete.png" width="20" height="20"></a>
+						</c:if>
+						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->				
+						
+						<c:if test="{{loginNick.contains('관리자')}}">
+							<!-- 블라인드 여부에 따라 다르게 표시 -->
+							<c:choose>
+								<c:when test="{{replyDto.replyBlind == 'Y'}}">
+									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="/images/blind2.png" width="20" height="20"></a>
+								</c:when>
+								<c:otherwise>
+									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="/images/blind.png" width="20" height="20"></a>
+								</c:otherwise>
+							</c:choose>
+							
+						</c:if>
 					</th>
 				</tr>	
+
+
 </script>
 
 
@@ -276,7 +324,7 @@ $(function(){
 		<div class="info">
 			<ul class="author">
 				<li><c:if test="${boardDto.memberBadge == 1 }">
-						<img class="badge" src="/images/badge-1.png">
+						<img class="title-badge" src="/images/badge-1.png">
 					</c:if>${boardDto.memberNick}</li>
 			</ul>
 			<ul class="other-info" >
@@ -320,22 +368,6 @@ $(function(){
 			<hr>
 		</div>
 	</div>	
-			<%-- <div class="row container-400">
-				
-				<c:if test="${attachmentList != null}">
-						<ul class="attachment-list">
-							<c:forEach var="attachmentDto" items="${attachmentList}">
-							<li>
-								${attachmentDto.attachmentName} 
-								(${attachmentDto.attachmentSize} bytes) 
-								- 
-								[${attachmentDto.attachmentType}]
-								<a href="/attachment/download/${attachmentDto.attachmentNo}"><img src="/images/download.png" width="15" height="15"></a>
-							</li>
-							</c:forEach>
-						</ul>
-				</c:if>
-			</div> --%>
 	
 	<div class="row center">
 		<table class="table table-slit table-hover table-reply-list">
@@ -352,29 +384,33 @@ $(function(){
 				
 				<!-- 사용자에게 보여주는 화면 -->
 				<tr class="view">
-					<td width="90%">
+					<td class="reply-border">
 						<!-- 작성자 -->
 						<ul class="reply-box">
-							<li class="reply-author">
+							<li class="reply-author left">
 								<p><c:if test="${boardDto.memberBadge == 1 }">
-						<img class="badge" src="/images/badge-1.png">
-						</c:if>${replyDto.memberNick}</p>
+								<img class="reply-badge" src="/images/badge-1.png">
+									</c:if>${replyDto.memberNick}
+									
+									<span class="date">
+										(<fmt:formatDate  value="${replyDto.replyWriteTime}" 
+													pattern="yyyy-MM-dd HH:mm"/>)
+									</span>
+								</p>							
+								
 							</li>
-							<li class="reply-main">
+							
+							<li class="reply-main left">
 								<p>
 									<c:choose>
 										<c:when test="${replyDto.replyBlind}">
-										<pre>블라인드 처리된 게시물입니다</pre>
+										블라인드 처리된 게시물입니다
 									</c:when>
 									<c:otherwise>
-										<pre>${replyDto.replyContent}</pre>
+										${replyDto.replyContent}
 									</c:otherwise>
 									</c:choose>	
 								</p>
-							</li>
-							<li class="reply-date">
-								<p class="date"><fmt:formatDate value="${replyDto.replyWriteTime}" 
-													pattern="yyyy-MM-dd HH:mm"/></p>
 							</li>
 						</ul>
  
