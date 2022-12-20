@@ -67,7 +67,7 @@
 		}
 		
 		.main-5 {
-			height: 500px;
+			height: 470px;
 		}
 		
 		.sub-heading {
@@ -254,7 +254,11 @@
 						<div class="swiper-slide">
 							<span class="view-count">조회수 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeClick}" pattern="#,###"/></span>
 							<span class="like-count">좋아요 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeLike}" pattern="#,###"/></span>
-							<div class="recipe-title mt-20"><a href="/recipe/detail?recipeNo=${mainRecipe.mainRecipeListTop5VO.recipeNo}">${mainRecipe.mainRecipeListTop5VO.recipeInfo}</a></div>
+							<div class="recipe-title mt-20">
+								<a href="/recipe/detail?recipeNo=${mainRecipe.mainRecipeListTop5VO.recipeNo}">
+									${mainRecipe.mainRecipeListTop5VO.recipeInfo}
+								</a>
+							</div>
 							<div class="how-long mt-5 me-5">
 								<i class="fa-regular fa-clock"></i>
 								${mainRecipe.mainRecipeListTop5VO.recipeTime}분 이내
@@ -268,10 +272,19 @@
 								</div>
 							</c:forEach>
 							</div>
-							<div class="img-box">
-								<div class="hash-tag">${mainRecipe.mainRecipeListTop5VO.recipeHashtag}</div>
-								<img class="main-1-img" src="/images/test.jpg">
-							</div>
+							<c:forEach var="recipeImg" items="${mainRecipe.recipeImgList}">
+								<div class="img-box">
+									<div class="hash-tag">${mainRecipe.mainRecipeListTop5VO.recipeHashtag}</div>
+									<c:choose>
+										<c:when test="${recipeImg.recipeAttachmentNo != null}">
+											<img class="main-1-img" src="/rest/download/${recipeImg.recipeAttachmentNo}">
+										</c:when>
+										<c:otherwise>
+											<img class="main-1-img" src="/images/test.jpg">
+										</c:otherwise>
+									</c:choose>
+								</div>
+							</c:forEach>
 						</div>
 					</c:forEach>
 				</div>
@@ -301,7 +314,7 @@
 						등록된 레시피
 					</span>
 					<div class="cnt mt-10">
-						<fmt:formatNumber value="${addRecipeCount.cnt}" pattern="#,###"/>개
+						<span class="total-add-num">${addRecipeCount.cnt}</span>개
 						<span class="today-add-icon">
 							<i class="fa-solid fa-caret-up"></i>
 						</span>
@@ -343,15 +356,10 @@
 						<img class="main-img-size" src="/images/main-push-recipe.png">
 					</span>
 					<span class="left sub-heading">
-						추천 레시피
+						인기 레시피
 					</span>
-					<div class="push-recipe-top10">
-						<c:forEach var="pushRecipe" items="${pushRecipe}">
-							<div class="row mt-20 ">
-								<span>${pushRecipe.recipeTitle}</span><br>
-							</div>
-							
-						</c:forEach>
+					<div class="push-recipe-top10 second ms-10">
+							<!-- 비동기로 조회한 목록이 추가될 영역 -->
 					</div>
 				</div>
 			</div>
@@ -363,6 +371,25 @@
 	<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 	<script>
 		$(function(){
+			// 오른쪽 하단 인기레시피top10 데이터 찍기
+			pushList();
+			
+			// 오른쪽 하단 인기레시피top10 데이터 5초마다 갱신하기
+			timer = setInterval(function() {
+				pushList()}, 5000);
+			
+			// 총 등록 레시피 비동기 5초마다 갱신 코드
+			timer = setInterval( function() {
+				$.ajax({
+					url:"http://localhost:8888/rest/total_add",
+					method:"get",
+					success:function(resp){
+						$(".total-add-num").text(resp.cnt);
+					}
+				});
+			}, 5000);
+			
+			// 오늘 등록된 레시피 비동기 5초마다 갱신 코드
 			timer = setInterval( function() {
 				$.ajax({
 					url:"http://localhost:8888/rest/today_add",
@@ -373,6 +400,23 @@
 				});
 			}, 5000);
 			
+			// 오른쪽 하단 인기레시피Top10 비동기 목록 조회
+			function pushList() {
+				$.ajax({
+					url: "http://localhost:8888/rest/push_recipe",
+					method: "get",
+					success: function(resp) {
+						$(".push-recipe-top10").empty();
+						for(var i = 0; i < resp.length; i++) {
+							var pushListNum = $("<div>").addClass("w-20 mt-20 left push-list-num").html(i + 1);
+							var pushListContent = $("<div>").addClass("w-80 mt-20 left").html(resp[i].recipeTitle);
+							$(".push-recipe-top10").append(pushListNum).append(pushListContent);
+						}
+					}
+				});
+			}
+			
+			// 메인 대문 레시피 스와이퍼 코드
 			var swiper = new Swiper('.swiper', {
 				direction: 'horizontal',//'vertical', == 화면슬라이드 방향 가로 세로방향 설정
                 loop: true,//true, == 반복여부
@@ -391,10 +435,7 @@
 
                 autoplay: {
                     delay: 5000,//자동재생 간격(ms)
-                },
-
-                effect: "slide",
-
+                }, effect: "slide",
          	});
 		});
 	</script>

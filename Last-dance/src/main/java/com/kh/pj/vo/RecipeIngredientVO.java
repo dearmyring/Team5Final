@@ -1,4 +1,7 @@
-package com.kh.pj.entity;
+package com.kh.pj.vo;
+
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,8 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
-public class IngredientDto {
-	private String ingredientName;
-	private String ingredientCategory;
-
+public class RecipeIngredientVO {
+	private List<String> recipeIngredientName;
 }

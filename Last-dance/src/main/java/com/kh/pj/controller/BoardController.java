@@ -45,7 +45,6 @@ public class BoardController {
 	private BoardDao boardDao;
 	@Autowired
 	private BoardService boardService;
-
 	@Autowired
 	private AttachmentDao attachmentDao;
 	@Autowired
