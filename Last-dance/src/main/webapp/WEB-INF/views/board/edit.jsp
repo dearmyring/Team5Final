@@ -6,6 +6,43 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="자유 게시판" name="title"/>
 </jsp:include>
+<style>
+.input {
+    font-size: 15px;
+    padding: 0.75em;
+    outline: none;
+    border:1px solid #CBCACA;
+    border-radius: 5px;
+}
+.input:focus {
+    border-color: #3bc5f0;
+    opacity: 70%;
+}
+.thumbnail-preview-wrapper {
+	display:flex;
+}
+.thumbnail-preview-wrapper > label {
+	width:50px;
+	height:50px;
+	position:relative;
+	overflow:hidden;
+}
+.thumbnail-preview-wrapper > label > img {
+	width:100%;
+	height:100%;
+}
+.thumbnail-preview-wrapper > label > [type=radio] {
+	position: absolute;
+	top:-50px;
+	left:-50px;
+}
+.thumbnail-preview-wrapper > label > [type=radio] + img {
+	border:3px transparent solid;
+}
+.thumbnail-preview-wrapper > label > [type=radio]:checked + img {
+	border:3px red solid;
+}
+</style>
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -14,7 +51,7 @@
 	$(function(){
 		$("[name=boardContent]").summernote({
 			height:300,
-			minHeight:300,
+			minHeight:700,
 		});
 	});
 </script>
@@ -47,14 +84,14 @@
 	
 	<div class="row left">
 		<label>내용</label>
-		<textarea name="boardContent" required value="${boardDto.boardContent}" required></textarea>
+		<textarea name="boardContent" required>${boardDto.boardContent}</textarea>
 	</div>
 	
 	<div class="row left">
 		<label>첨부파일(1개당 1MB. 최대 10MB 가능)</label>
 	<input class="input w-100 file-input" type="file" name="attachment" multiple>
-		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
-		<input type="hidden" class="img-no" name="boardAttachmentNo">
+	<div class="thumbnail-preview-wrapper"></div>	
+		
 	</div>
 	
 	<div class="row right">
@@ -94,18 +131,28 @@ $(function(){
                     processData: false,
                     contentType: false,
                     success: function(resp){
-                        that.next().attr("src", resp);
-                        var attachmentNo = parseInt((resp.split("download/"))[1]);
-                        that.parent().find(".img-no").val(attachmentNo);
-                        var img = $("<img>").attr("src", resp);
-                        $(".note-editable").append(img);
+                    	var img = $("<img>").attr("src",resp);
+						$("[name=boardContent]").summernote('insertNode', img[0]);
+						
+						var attachmentNo = parseInt((resp.split("download/"))[1]);
+						
+						var img2 = img.clone();
+						var label = $("<label>");
+						var checkbox = $("<input>").attr("type", "radio")
+						.attr("name", "boardAttachmentNo")//전송될 이름(변경필요)
+						.val(attachmentNo)//전송될 썸네일에 대한 값(변경필요)
+						.prop("checked", true);
+						label.append(checkbox).append(img2);
+						$(".thumbnail-preview-wrapper").append(label);
                     }
                 });
             }
-            else{
+            else{ 
                 $(".preview").attr("src", "https:/via.placeholder.com/240x180");
             }
     });
+
+
 });
 </script>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

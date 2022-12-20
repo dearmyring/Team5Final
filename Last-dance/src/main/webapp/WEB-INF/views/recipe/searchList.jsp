@@ -2,7 +2,12 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%
+	int leng = request.getParameterValues("recipeIngredientName").length;
+	pageContext.setAttribute("leng", leng);
+%>
+<c:set var="leng" value="${leng}"></c:set>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
@@ -56,15 +61,15 @@ article {
 }
 
 .recipe-recommend{
-   display: flex;
+   	display: flex;
     flex-direction: row;
     height: 130px;
 }
 
 .recipe-recommend-text{
-   font-size: 30px;
-    font-weight: 600;
-    margin: 35px 40px 30px 30px;
+   	font-size: 30px;
+   	font-weight: 600;
+   	margin: 35px 40px 30px 30px;
 }
 
 .recipe-box-shadow {
@@ -208,7 +213,7 @@ article {
 }
 
 .simple-info{
-margin 0 20px;
+	margin 0 20px;
 }
 
 .float-margin-left{
@@ -226,19 +231,21 @@ margin 0 20px;
     }
 
 .sort-select{
-padding: 10px;
-width: 100px;
+	padding: 10px;
+	width: 100px;
 }
 
 
 
 </style>
+
 </head>
 <body>
    <div class="layout">
       <article>
          <div class="recipe-recommend">         
             <div class="recipe-recommend-text w-70">${loginNick}님이 당장 할 수 있는 요리를 추천해드릴게요.</div>
+            <div>파라미터: ${leng }</div>
             <div class= "sort-select w-30">
                <select class="input sort-click">
                   <option value="recipe_no desc">최근 작성일 순</option>
@@ -252,45 +259,43 @@ width: 100px;
 
          <div class="flexbox">
             <div class="item float-container">
-               <c:forEach var="recipeListVO" items="${recipeList}">
-               <a href="/recipe/detail?recipeNo=${recipeListVO.recipeDto.recipeNo}">
+               <c:forEach var="recipeListVO" items="${complexSearch}">
+               <a href="/recipe/detail?recipeNo=${recipeListVO.recipeListSearchVO.recipeNo}">
                   <div class="list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left">
-                  
                      <div class="img-box">
-                        <div class="hash-tag">${recipeListVO.recipeDto.recipeHashtag}</div>
+                        <div class="hash-tag">${recipeListVO.recipeListSearchVO.recipeHashtag}</div>
                         <c:forEach var="recipeImg" begin="0" end="0" step="1" items="${recipeListVO.recipeImgList}">
                            <img class="img-thumnail"
                               src="${pageContext.request.contextPath}/rest/download/${recipeImg.recipeAttachmentNo}">
                         </c:forEach>
                      </div>
-
                      <div class="info-box">
-                        <span class="view-count">조회수
-                           ${recipeListVO.recipeDto.recipeClick}</span> <span class="like-count">좋아요
-                           ${recipeListVO.recipeDto.recipeLike}</span>
-                        <div class="recipe-title">${recipeListVO.recipeDto.recipeTitle}</div>
+                        <span class="view-count">조회수 ${recipeListVO.recipeListSearchVO.recipeClick}</span> 
+                        <span class="like-count">좋아요 ${recipeListVO.recipeListSearchVO.recipeLike}</span>
+                        <div class="recipe-title">${recipeListVO.recipeListSearchVO.recipeInfo}</div>
                         <div class="simpe-info">
-                        <div class="how-long">
-                           <i class="fa-regular fa-clock"></i>
-                           ${recipeListVO.recipeDto.recipeTime}분 이내
-                        </div>
-                        <c:choose>
-                        <c:when test="${recipeListVO.enough==true}">
-                        <div class="recipe-enough">재료가 충분해요</div>
-                        </c:when>
-                        <c:otherwise>
-                        <div class="recipe-lack">재료가 부족해요</div>
-                        </c:otherwise>
-                        </c:choose>
-                        <div class="cooking-level">${recipeListVO.recipeDto.recipeDifficulty}</div>
+	                        <div class="how-long">
+	                           <i class="fa-regular fa-clock"></i>
+	                           ${recipeListVO.recipeListSearchVO.recipeTime}분 이내
+	                        </div>
+	                        <c:choose>
+	                        	<c:when test="${fn:length(recipeListVO.recipeIngredientList) < leng}">
+		                        	<div class="cooking-level">재료가 충분</div>
+	                        	</c:when>
+	                        	<c:otherwise>
+		                        	<div class="cooking-level">간당간당하네</div>
+	                        	</c:otherwise>
+	                        </c:choose>
                         </div>
                         <div class="ingredient-box scroll">
-                        <c:forEach var="ingredient" items="${recipeListVO.recipeIngredientList}">
-                           <div class="hashtag-box mt-10"> ${ingredient.recipeIngredientName}</div>
-                        </c:forEach>
-                     </div>
+	                        <c:forEach var="ingredient" items="${recipeListVO.recipeIngredientList}">
+	                           <div class="hashtag-box mt-10">${ingredient.recipeIngredientName}</div>
+	                        </c:forEach>
+	                        <div class="hashtag-box mt-10">${fn:length(recipeListVO.recipeIngredientList)}</div>
+                     	</div>
                      </div>                     
-                  </div></a>
+                  </div>
+                  </a>
                </c:forEach>
             </div>
          </div>

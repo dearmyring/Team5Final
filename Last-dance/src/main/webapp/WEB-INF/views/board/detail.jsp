@@ -8,6 +8,35 @@
 </jsp:include>
 
 <style>
+.reply-border{
+	border-bottom : 1px solid lightgray;
+	width : 90%;
+}
+.title-nick{
+	margin-bottom: 10px;
+}
+.heart-color {
+    color: red;
+}
+.btn.btn-positive {
+    background-color: #35C5F0;
+    color: white;
+    font-weight: bold;
+}
+.btn.btn-positive:hover {
+    background-color: #1E90FF;
+}
+.reply-badge{
+width : 10%;
+}
+.title-badge{
+width : 4%;
+}
+.author {
+    font-size: 16px;
+    font-weight: bold;
+}
+
 	.heart {
 		text-decoration: none;
 		color:red;
@@ -17,10 +46,95 @@
 		padding:0;
 		list-style:none;
 	}
+	
+	.contaniner {
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.title {
+    font-size: 20px;
+    text-align: left;
+    padding-bottom: 5px;
+}
+	
+	.info {
+    margin-bottom: 21px;
+    width: 100%;
+    margin-top: 16px;
+}
+	
+	.other-info {
+    display: flex;
+    color: #757575;
+    margin-top: 15px;
+}
+	
+	.other-info > li:not(:first-child) {
+		margin-left: 20px;
+	}
+	
+	.main {
+		margin-top: 50px;
+		margin-bottom: 50px;
+		text-align: left;
+	}
+	
+	.main > p {
+		margin-top: 20px;
+	}
+	
+	.reply-box {
+		display: flex;
+		justfy-content: center;
+		flex-direction: column;
+	}
+	
+	.reply-author {
+    width: 30%;
+    font-weight: 700;
+}
+	
+	.reply-main {
+		width: 40%;
+		margin-left: 40px;
+	}
+	
+	.date {
+    width: 0%;
+    /* margin-left: 17px; */
+    font-size: 10px;
+    /* margin-top: 1px; */
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
+$(function(){
+
+    $(".like-btn").click(function(){
+
+        $(this).toggleClass("fa-solid fa-regular heart-color");
+        var url = location.href;
+        var boardNo = (url.slice(url.indexOf('=') + 1, url.length));
+
+        var that = $(this);
+        $.ajax({
+            url: "http://localhost:8888/rest/board_like/"+boardNo,
+            method: "get",
+            success: function(resp) {
+             that.next().html(resp);
+            }
+
+        });
+        // ajax end
+    });
+    
+    
+});
+
+
+
 	$(function(){
 		//목표 : 
 		//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
@@ -148,122 +262,100 @@
 				<tr class="view">
 					<td width="90%">
 						<!-- 작성자 -->
-						<pre>{{replyContent}}</pre>
-						<br>
-						({{memberBadge}}) 
-						{{memberNick}}			
-						<br><br>
-						{{replyWriteTime}}
-						
-
+						<ul class="reply-box">
+							<li class="reply-author left">
+								<p><c:if test="{{boardDto.memberBadge == 1 }}">
+								<img class="badge" src="/images/badge-1.png">
+									</c:if>{replyDto.memberNick}
+									
+								</p>							
+								
+							</li>
+							
+							<li class="reply-main left">
+								<p>
+									<c:choose>
+										<c:when test="{{replyDto.replyBlind}}">
+										<pre>블라인드 처리된 게시물입니다</pre>
+									</c:when>
+									<c:otherwise>
+										<pre>{replyDto.replyContent}</pre>
+									</c:otherwise>
+									</c:choose>	
+								</p>
+							</li>
+						</ul>
+ 
+						<br>											
+						<br>			
 					</td>
 					<th>
-						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
-						<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
-						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyBoardNo}}" data-reply-no="{{replyNo}}"><img src="/images/delete.png" width="20" height="20"></a>
+						<c:if test="{{loginId == replyDto.replyId}}">
+							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
+							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyDto.replyBoardNo}}" data-reply-no="{{replyDto.replyNo}}"><img src="/images/delete.png" width="20" height="20"></a>
+						</c:if>
+						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->				
+						
+						<c:if test="{{loginNick.contains('관리자')}}">
+							<!-- 블라인드 여부에 따라 다르게 표시 -->
+							<c:choose>
+								<c:when test="{{replyDto.replyBlind == 'Y'}}">
+									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="/images/blind2.png" width="20" height="20"></a>
+								</c:when>
+								<c:otherwise>
+									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="/images/blind.png" width="20" height="20"></a>
+								</c:otherwise>
+							</c:choose>
+							
+						</c:if>
 					</th>
 				</tr>	
+
+
 </script>
 
 
 <div class="container-800 mt-40 mb-40">
-	<div class="row center">
-		<h1>게시글 보기</h1>
-	</div>
-	
-	<div class="row center">
-		<table class="table table-border">
-			<tbody>
-				<tr>
-					<th width="25%">번호</th>
-					<td>${boardDto.boardNo}</td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td>
-						${boardDto.boardTitle}						
-					</td>
-				</tr>
-				<tr>
-					<th>작성자</th>
-					<td>${boardDto.memberNick}</td>
-				</tr>
-				<tr height="200" valign="top">
-					<th>내용</th>
-					<td>
-						<!-- pre 태그는 엔터, 띄어쓰기, 탭키 등을 있는 그대로 표시하는 영역 -->
-						<pre>${boardDto.boardContent}</pre>
-						<img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}">
-					</td>
-				</tr>
-				<tr>
-					<th>조회수</th>
-					<td>${boardDto.boardClick}</td>
-				</tr>
-				<tr>
-					<th>작성일</th>
-					<td>
-						<fmt:formatDate value="${boardDto.boardWriteTime}" pattern="y년 M월 d일 E요일 a h시 m분 s초"/>
-					</td>
-				</tr>
+	<div class="container">
+		<div class="title">
+			<h1>${boardDto.boardTitle}	</h1>
+		</div>
 		
-				<c:if test="${boardDto.boardEditTime != null}">
-				<tr>
-					<th>수정일</th>
-					<td>
-						<fmt:formatDate value="${boardDto.boardEditTime}" pattern="y년 M월 d일 E요일 a h시 m분 s초"/>
-					</td>
-				</tr>
+		<div class="info">
+			<ul class="author">
+				<li><c:if test="${boardDto.memberBadge == 1 }">
+						<img class="title-badge" src="/images/badge-1.png">
+					</c:if>${boardDto.memberNick}</li>
+			</ul>
+			<ul class="other-info" >
+				<li>작성일: ${boardDto.boardWriteTime}</li>
+				<li>조회수: ${boardDto.boardClick}</li>
+				<li>댓글: ${boardDto.replyCnt}</li>
+			</ul>
+			<span>
+			<c:choose>
+				<c:when test="${like==null}">
+					<i class="fa-regular fa-heart like-btn"></i> 
+				</c:when>
+				<c:otherwise>
+					<i class="fa-solid fa-heart like-btn heart-color"></i> 
+				</c:otherwise>
+			</c:choose>
+			
+			<span>추천: ${boardDto.boardLike}</span>
+			</span>
+				
+		</div>
+		<hr>
+		<div class="main">
+			<p>
+				${boardDto.boardContent}
+			</p>
+			<div class="right">
+				<c:if test="">
+						<a class="btn btn-positive" href="write">글쓰기</a>	
 				</c:if>
 				
-				<c:if test="${attachmentList != null}">
-				<tr>
-					<th>첨부파일</th>
-					<td>
-						<ul class="attachment-list">
-							<c:forEach var="attachmentDto" items="${attachmentList}">
-							<li>
-								${attachmentDto.attachmentName} 
-								(${attachmentDto.attachmentSize} bytes) 
-								- 
-								[${attachmentDto.attachmentType}]
-								<a href="/attachment/download/${attachmentDto.attachmentNo}"><img src="/images/download.png" width="15" height="15"></a>
-							</li>
-							</c:forEach>
-						</ul>
-					</td>
-				</tr>
-				</c:if>
-			</tbody>
-			<tfoot>
-				<tr>
-					
-					<td colspan="2" align="right">
-						
-						<c:if test="${loginId != null}">
-							<a class="heart"></a>
-						
-						</c:if>
-						<!-- 좋아요 하트 -->
-						<c:if test="${isLike == null}">
-						</c:if>
-						<c:if test="${isLike == true}">
-							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♥</a>
-						</c:if>
-						<c:if test="${isLike == false}">
-							<a class="heart" href="like?boardNo=${boardDto.boardNo}">♡</a>
-						</c:if>
-						추천:${likeCount} ${boardDto.boardLike}	
-						
-						<c:if test="">
-						<a class="btn btn-positive" href="write">글쓰기</a>	
-						</c:if>
-						
-						<%--
-							관리자는 삭제만, 회원은 자신의 글만 수정/삭제 가능하도록 처리
-						 --%>
-						 
-						
 					<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
 						
 					<c:if test="${owner}">
@@ -272,14 +364,10 @@
 						<a class="board-delete btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>	
 					</c:if>
 						<a class="btn btn-neutral" href="list">목록으로</a>
-					
-					
-					</td>
-				</tr>
-			</tfoot>
-		</table>	
-		
-	</div>
+			</div>
+			<hr>
+		</div>
+	</div>	
 	
 	<div class="row center">
 		<table class="table table-slit table-hover table-reply-list">
@@ -296,37 +384,45 @@
 				
 				<!-- 사용자에게 보여주는 화면 -->
 				<tr class="view">
-					<td width="90%">
+					<td class="reply-border">
 						<!-- 작성자 -->
-						${replyDto.memberNick}(${replyDto.replyId})
-						(${replyDto.memberBadge}) 
-						<br>
-						<c:if test="${boardDto.boardId ==  replyDto.replyId}">
-						
-						</c:if>
-						
-						<br>
-						
-						<!-- 블라인드 여부에 따라 다르게 표시 -->
-						<c:choose>
-							<c:when test="${replyDto.replyBlind}">
-								<pre>블라인드 처리된 게시물입니다</pre>
-							</c:when>
-							<c:otherwise>
-								<pre>${replyDto.replyContent}</pre>
-							</c:otherwise>
-						</c:choose>
-						
-						<br><br>
-						<fmt:formatDate value="${replyDto.replyWriteTime}" 
-													pattern="yyyy-MM-dd HH:mm"/>
+						<ul class="reply-box">
+							<li class="reply-author left">
+								<p><c:if test="${boardDto.memberBadge == 1 }">
+								<img class="reply-badge" src="/images/badge-1.png">
+									</c:if>${replyDto.memberNick}
+									
+									<span class="date">
+										(<fmt:formatDate  value="${replyDto.replyWriteTime}" 
+													pattern="yyyy-MM-dd HH:mm"/>)
+									</span>
+								</p>							
+								
+							</li>
+							
+							<li class="reply-main left">
+								<p>
+									<c:choose>
+										<c:when test="${replyDto.replyBlind}">
+										블라인드 처리된 게시물입니다
+									</c:when>
+									<c:otherwise>
+										${replyDto.replyContent}
+									</c:otherwise>
+									</c:choose>	
+								</p>
+							</li>
+						</ul>
+ 
+						<br>											
+						<br>			
 					</td>
 					<th>
-						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
 						<c:if test="${loginId == replyDto.replyId}">
 							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
 							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/images/delete.png" width="20" height="20"></a>
 						</c:if>
+						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->				
 						
 						<c:if test="${loginNick.contains('관리자')}">
 							<!-- 블라인드 여부에 따라 다르게 표시 -->
@@ -437,6 +533,11 @@ $(function(){
 	 	});
 	 });
  
+
+
+
+
+
 </script>
 
 

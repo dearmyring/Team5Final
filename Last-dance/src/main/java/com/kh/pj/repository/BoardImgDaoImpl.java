@@ -21,4 +21,11 @@ public class BoardImgDaoImpl implements BoardImgDao{
 	public BoardImgDto find(int boardNo) {
 		return sqlSession.selectOne("boardImg.find", boardNo);
 	}
+	
+	//썸네일 변경
+		@Override
+		public boolean editThumbnail(BoardImgDto boardImgDto) {
+			int result = sqlSession.update("boardImg.editThumbnail", boardImgDto);
+			return result > 0;
+		}
 }
