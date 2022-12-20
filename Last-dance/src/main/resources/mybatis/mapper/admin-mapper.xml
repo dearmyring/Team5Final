@@ -99,5 +99,14 @@
 		) where rn between 1 and 5
    </select>
    
+   <!-- 게시글 TOP5(좋아요 많은 순 -> 조회수 많은 순) -->
+   <select id="boardTopFive" resultType="BoardViewTopFiveVO">
+		select * from (
+		    select TMP.*, rownum rn from (
+		        select * from board order by board_like desc, board_click desc
+		    )TMP
+		) where rn between 1 and 5
+   </select>
+   
    
 </mapper>

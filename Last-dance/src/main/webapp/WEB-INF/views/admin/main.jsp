@@ -4,13 +4,15 @@
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons-ring-join.css">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 
 <style>
-	.chart-list {
+	.chart-list,
+	.top-list {
 		width: 1200px;
 		margin: auto;
 		display: flex;
@@ -18,40 +20,56 @@
 		flex-wrap: wrap;
 		justify-content: center;
 	}
+	
+	.top-list {
+		margin-bottom: 100px;
+	}
+	
 	.chart-box {
 		width: 400px;
 		height: 400px;
 	}
-	.recipe-top-five-box {
+	
+	.top-five-box {
 		width: 700px;
 	}
-	.recipe-top-five-list {
-		display: flex;
-		flex-direction: column;
+	
+	.top-five-list {
+		text-align: center;
 	}
-	.recipe-top-five-item {
-		display: flex;
-		flex-direction: row;
+	
+	.top-five-item {
+		display: table;
+		border-bottom: 1px solid black;
 	}
-	.recipe-top-five-list .recipe-top-five-item li {
-		display: flex;
-		justify-content: center;
-		border: 1px solid black;
+	
+	.top-five-list .top-five-item li {
+		display: table-cell;
 	}
-	.recipe-top-five-list > li:nth-child(2) > .recipe-top-five-item li:nth-child(2) {
-		justify-content: flex-start;
+	
+	.top-five-list > li:nth-child(2) > .top-five-item:hover {
+		background-color: #F7F7F7;
+		color: black;
 	}
-	.rtfi-no {
+	
+	.top-five-list > li:nth-child(2) > .top-five-item li:nth-child(2) {
+		text-align: left;
+	}
+	
+	.top-five-list > li:nth-child(2) > .top-five-item li:nth-child(2) > a {
+		display: block;
+		width: 100%;
+		color: #373A3C;
+	}
+	
+	.tfi-no,
+	.tfi-time,
+	.tfi-writer {
 		width: 100px;
 	}
-	.rtfi-title {
+	
+	.tfi-title {
 		width: 400px;
-	}
-	.rtfi-time {
-		width: 100px;
-	}
-	.rtfi-writer {
-		width: 100px;
 	}
 	
 </style>
@@ -59,34 +77,62 @@
 <div class="mt-5">&nbsp;</div>
 <div class="mt-5">&nbsp;</div>
 
-<!-- 총 회원수 / 오늘 가입자 수 -->
 <div>
-	<h1>미농이 페이지</h1>
-	<div class="chart-list">
-		<div class="recipe-top-five-box">
-			<ul class="recipe-top-five-list">
+	<h1 style="text-align: center; color: pink;">미농이 페이지</h1>
+	
+	<div class="top-list">
+		<!-- 인기 레시피 탑 5 -->
+		<div class="top-five-box">
+			<h2>인기 레시피</h2>
+			<ul class="top-five-list">
 				<li>
-					<ul class="recipe-top-five-item">
-						<li class="rtfi-no">번호</li>
-						<li class="rtfi-title">제목</li>
-						<li class="rtfi-time">소요시간</li>
-						<li class="rtfi-writer">작성자</li>
+					<ul class="top-five-item">
+						<li class="tfi-no">번호</li>
+						<li class="tfi-title">제목</li>
+						<li class="tfi-time">소요시간</li>
+						<li class="tfi-writer">작성자</li>
 					</ul>
 				</li>
 				<li>
 				<c:forEach var="recipeTopFive" items="${recipeTopFive}">
-					<ul class="recipe-top-five-item">
-						<li class="rtfi-no">${recipeTopFive.recipeNo}</li>
-						<li class="rtfi-title">${recipeTopFive.recipeTitle}</li>
-						<li class="rtfi-time">${recipeTopFive.recipeTime}</li>
-						<li class="rtfi-writer">${recipeTopFive.recipeNick}</li>
+					<ul class="top-five-item">
+						<li class="tfi-no">${recipeTopFive.recipeNo}</li>
+						<li class="tfi-title"><a href="recipe/detail/${recipeTopFive.recipeNo}">${recipeTopFive.recipeTitle}</a></li>
+						<li class="tfi-time">${recipeTopFive.recipeTime}</li>
+						<li class="tfi-writer">${recipeTopFive.recipeNick}</li>
 					</ul>
 				</c:forEach>
 				</li>
-			</ul>
-			
+			</ul>	
 		</div>
-	
+		
+		<!-- 인기 게시글 탑 5(닉네임까지 찍히도록 쿼리 수정해야함) -->
+		<div class="top-five-box">
+			<h2>인기 게시글</h2>
+			<ul class="top-five-list">
+				<li>
+					<ul class="top-five-item">
+						<li class="tfi-no">번호</li>
+						<li class="tfi-title">제목</li>
+						<li class="tfi-time">작성시간</li>
+						<li class="tfi-writer">작성자</li>
+					</ul>
+				</li>
+				<li>
+				<c:forEach var="boardTopFive" items="${boardTopFive}">
+					<ul class="top-five-item">
+						<li class="tfi-no">${boardTopFive.boardNo}</li>
+						<li class="tfi-title"><a href="board/detail/${boardTopFive.boardNo}">${boardTopFive.boardTitle}</a></li>
+						<li class="tfi-time">${boardTopFive.boardWriteTime}</li>
+						<li class="tfi-writer">${boardTopFive.boardId}</li>
+					</ul>
+				</c:forEach>
+				</li>
+			</ul>	
+		</div>
+	</div>
+		
+	<div class="chart-list">
 		<div class="chart-box">
 			<span>최근 일주일 가입자 수(이건 포기 못함)</span>
 	        <canvas id="memberChart"></canvas>
@@ -95,11 +141,6 @@
 	    <div class="chart-box">
 		    <span>오늘의 인기 검색어 탑10(이건 포기 못함)</span>
 	    	<canvas id="trendingSearchesChart"></canvas>
-	    </div>
-	    
-	    <div class="chart-box">
-		    <span>현재 최고 조회수 레시피 TOP 5(리스트로 뽑아서 필요 없음)</span>
-	    	<canvas id="recipeTopFiveChart"></canvas>
 	    </div>
 	    
 	    <div class="chart-box">
@@ -253,63 +294,6 @@ $(function(){
 	});
 	//ajax() end
 	
-	//현재 최고 조회수 레시피 TOP 5
-	$.ajax({
-		url: "http://localhost:8888/rest/view-top-five",
-		method: "get",
-		dataType: "json",
-		success: function(resp) {
-			//비어있는 배열 2개를 만들고 resp의 데이터를 분산 저장
-            var labels = [];
-            var values = [];
-            for(var i = 0; i < resp.length; i++) {
-	            labels.push(resp[i].recipeTitle+" (조회 수: "+resp[i].rn+"위)");
-	            values.push(resp[i].recipeClick); 
-            }
-            
-                const ctx = document.querySelector('#recipeTopFiveChart');
-                const myChart = new Chart(ctx, {
-                    type: 'bar',
-                    // type: 'line',
-                     //type: 'doughnut',
-                     //type: 'pie',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: '조회 수',
-                            data: values,
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-			
-		}//success end
-		
-	});
-	//ajax() end
 	
 	//오늘 가장 많은 좋아요 레시피 탑5
 	$.ajax({

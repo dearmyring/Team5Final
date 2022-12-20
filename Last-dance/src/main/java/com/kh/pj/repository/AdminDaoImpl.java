@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.AdminDto;
 import com.kh.pj.vo.BoardTopFiveVO;
+import com.kh.pj.vo.BoardViewTopFiveVO;
 import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.MemberCountVO;
 import com.kh.pj.vo.RecipeTopFiveVO;
@@ -81,10 +82,16 @@ public class AdminDaoImpl implements AdminDao{
 	}
 	
 	//레시피 TOP5(좋아요 많은 순 -> 조회수 많은 순)
-		@Override
-		public List<RecipeViewTopFiveVO> recipeTopFive() {
-			return sqlSession.selectList("admin.recipeTopFive");
-		}
+	@Override
+	public List<RecipeViewTopFiveVO> recipeTopFive() {
+		return sqlSession.selectList("admin.recipeTopFive");
+	}
+		
+	//게시글 TOP5(좋아요 많은 순 -> 조회수 많은 순)
+	@Override
+		public List<BoardViewTopFiveVO> boardTopFive() {
+			return sqlSession.selectList("admin.boardTopFive");
+		}	
 	
 	
 	

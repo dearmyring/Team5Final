@@ -92,6 +92,8 @@ public class AdminController {
 		
 		//레시피 TOP5(좋아요 많은 순 -> 조회수 많은 순)
 		model.addAttribute("recipeTopFive",adminDao.recipeTopFive());
+		//게시글 TOP5(좋아요 많은 순 -> 조회수 많은 순)
+		model.addAttribute("boardTopFive", adminDao.boardTopFive());
 		
 		return "admin/main";
 	}
