@@ -9,6 +9,7 @@ public class RecipeKeywordListSearchVO {
 	//필드
 	private String keyword; // 검색어
 	private List<String> submitList;
+	
 	@ToString.Include
 	// 검색 조회인지 반환
 	public boolean isSearch() {

@@ -5,7 +5,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="search">
-
+	
 	<!--  검색어 추가  -->	
 	<insert id = "add" parameterType = "String">
 		insert into search (search_ingredient) 
@@ -23,68 +23,68 @@
 		select * from ingredient where ingredient_name like '${ingredientName}%'
 	</select>
 	
-	   <!--  레시피 등록 시퀀스 추가  -->
-   <select id = "recipeNo" resultType="int">
-      select recipe_seq.nextval from dual
-   </select>
+	<!--  레시피 등록 시퀀스 추가  -->
+	<select id = "recipeNo" resultType="int">
+      	select recipe_seq.nextval from dual
+    </select>
+	
+	<!-- 계층 조회를 위한 음식재료 기본 조회 쿼리 -->
+   	<select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
+	    select * from recipe_ingredient where recipe_no = #{recipeNo}
+	</select>
+	
+	<!-- 계층 조회를 위한 첨부파일 기본 조회 쿼리 -->
+	<select id="recipeImg" parameterType="int" resultType="RecipeImgDto">
+		select * from recipe_img where recipe_no = #{recipeNo}
+	</select>
 
- 
-<!--     레시피 조회  
-   <select id = "recipeList"  resultType = "RecipeDto" >
-      select * from recipe order by recipe_no
-   </select> -->
+    <resultMap type="RecipeListSearchResultMapVO" id="recipeListSearch">
+   		<association property="recipeListSearchVO">
+   			<result column="recipe_no" property="recipeNo"/>
+   			<result column="recipe_click" property="recipeClick"/>
+   			<result column="recipe_like" property="recipeLike"/>
+   			<result column="recipe_time" property="recipeTime"/>
+   			<result column="recipe_writetime" property="recipeWritetime"/>
+   			<result column="rn" property="rn"/>
+   			<result column="recipe_info" property="recipeInfo"/>
+   			<result column="recipe_hashtag" property="recipeHashtag"/>
+   			<result column="recipe_difficulty" property="recipeDifficulty"/>
+   		</association>
+   		
+   		<collection property="recipeIngredientList" javaType="java.util.List" 
+   		ofType="RecipeIngredientDto" column="recipe_no" select="recipeIngredientList">
+   			<result column="recipe_ingredient_name" property="recipeIngredientName"/>
+   			<result column="recipe_no" property="recipeNo"/>
+   		</collection>
+   		
+  		<collection property="recipeImgList" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImg" column="recipe_no">
+			<result column="recipe_attachment_no" property="recipeAttachmentNo"/>
+			<result column="recipe_no" property="recipeNo"/>
+		</collection>
+    </resultMap>
    
-   <!-- 재료 출력 -->
-   <select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
-      select * from recipe_ingredient where recipe_no = #{recipeNo}
-   </select>
+    <select id="recipeListSearchFinal" resultMap="recipeListSearch" parameterType="RecipeIngredientVO">
+  		select distinct
+  			R.recipe_no,
+		    R.recipe_title,
+		    R.recipe_info,
+		    R.recipe_time,
+		    R.recipe_click,
+		    R.recipe_like,
+		    R.recipe_hashtag,
+		    R.recipe_difficulty,
+		    R.recipe_writetime
+		from recipe R inner join recipe_ingredient RI 
+		on R.recipe_no = RI.recipe_no
+		
+		<where>
+			<if test="recipeIngredientName != null">
+				<foreach collection="recipeIngredientName" item="r">
+					or recipe_ingredient_name = #{r}
+				</foreach>
+			</if>
+		</where>
+		
+    </select>
    
-   <!-- 레시피 리스트 계층형 조회 구문 + 검색어(재료) -->
-   <resultMap type="RecipeSearchListVO" id="searchList">
-      <association property="recipeDto">
-         <result column="recipe_no" property="recipeNo"/>
-         <result column="recipe_nick" property="recipeNick"/>
-         <result column="recipe_title" property="recipeTitle"/>
-         <result column="recipe_info" property="recipeInfo"/>
-         <result column="recipe_time" property="recipeTime"/>
-         <result column="recipe_click" property="recipeClick"/>
-         <result column="recipe_like" property="recipeLike"/>
-         <result column="recipe_hashtag" property="recipeHashtag"/>
-         <result column="recipe_writetime" property="recipeWritetime" javaType="java.sql.Date"/>
-         <result column="recipe_edittime" property="recipeEdittime" javaType="java.sql.Date"/>
-         <result column="recipe_difficulty" property="recipeDifficulty"/>
-      </association>
-      
-      <collection property="recipeIngredientList" javaType="java.util.List" ofType="RecipeIngredientDto" select="recipeIngredientList" column="recipe_no">
-         <result column="recipe_ingredient_name" property="recipeIngredientName"/>      
-         <result column="recipe_no" property="recipeNo"/>      
-      </collection>
-      
-       <collection property="recipeImgList" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImgList" column="recipe_no">
-         <result column="recipe_attachment_no" property="recipeAttachmentNo"/> 
-          <result column="recipe_no" property="recipeNo"/>                       
-      </collection>
-      
-            <collection property="searchList" javaType="java.util.List" ofType="SearchDto" select="searchList" column="search_Ingredient">
-         <result column="search_Ingredient" property="search_Ingredient"/> 
-          <result column="searchtime" property="searchTime"/>    
-          </collection>
-   </resultMap>
-   
-   
-      <!--  레시피 전체조회(통합)  -->
-   <select id="searchList" resultMap="searchList" >
-   select * from recipe
-         <where>
-         <!-- 이름, 관리자 유사 대상 검색 -->
-         <if test="keyword != ''">
-            and instr(#{keyword}) > 0
-         </if>
-      </where>
-       <!-- 정렬 -->
-       <if test="sort != null">
-          order by ${sort}
-       </if>
-   </select>
-   	
 </mapper>
