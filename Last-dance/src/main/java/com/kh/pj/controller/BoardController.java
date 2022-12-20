@@ -69,8 +69,7 @@ public class BoardController {
 	}
 	@PostMapping("/write") 
 	public String write(@ModelAttribute BoardDto boardDto, MemberDto memberDto,
-						@RequestParam List<Integer> boardAttachmentNo,
-						@RequestParam List<MultipartFile> attachment,
+						@RequestParam int boardAttachmentNo,
 						HttpSession session, RedirectAttributes attr) throws Exception {
 //		session에 있는 회원 아이디를 작성자로 추가한 뒤 등록해야함
 		String boardId = (String)session.getAttribute(SessionConstant.ID);
@@ -80,14 +79,12 @@ public class BoardController {
 		boardDao.write(boardDto);
 		
 		
-		for(int attachmentNo : boardAttachmentNo) {
 			BoardImgDto imgDto = BoardImgDto.builder()
-				.boardAttachmentNo(attachmentNo)
+				.boardAttachmentNo(boardAttachmentNo)
 				.boardNo(boardNo)
 			.build();
 			boardImgDao.insert(imgDto);
 			
-		}
 		memberDto.setMemberId(boardId);
 		if(boardDao.boardCNT(memberDto)<=3) {
 			memberDto.setMemberPoint(5);
@@ -124,27 +121,28 @@ public class BoardController {
 	}
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute BoardDto boardDto,
-						@RequestParam List<Integer> boardAttachmentNo,
+						@RequestParam int boardAttachmentNo,
 						RedirectAttributes attr) {
 		
-		boolean result = boardDao.edit(boardDto);
-		int boardNo = boardDto.getBoardNo();
-		
-		if(result) {
-			for(int attachmentNo : boardAttachmentNo) {
-				BoardImgDto imgDto = BoardImgDto.builder()
-					.boardAttachmentNo(attachmentNo)
-					.boardNo(boardNo)
+		if(boardImgDao.find(boardDto.getBoardNo()) ==  null){
+			BoardImgDto imgDto = BoardImgDto.builder()
+					.boardAttachmentNo(boardAttachmentNo)
+					.boardNo(boardDto.getBoardNo())
 				.build();
-				boardImgDao.insert(imgDto);		
-			}
-			attr.addAttribute("boardNo",boardDto.getBoardNo());
-			
-			return "redirect:detail";
+			boardImgDao.insert(imgDto);	
 		}
 		else {
-			return "redirect:list";
+			BoardImgDto imgDto = BoardImgDto.builder()
+					.boardAttachmentNo(boardAttachmentNo)
+					.boardNo(boardDto.getBoardNo())
+				.build();
+			boardImgDao.editThumbnail(imgDto);	
 		}
+		
+		attr.addAttribute("boardNo",boardDto.getBoardNo());	
+		boardDao.edit(boardDto);
+		
+		return "redirect:detail";
 	}
 	
 	@GetMapping("/delete")

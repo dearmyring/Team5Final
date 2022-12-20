@@ -40,8 +40,8 @@
 }
 
 .thumbnail{
-   width: 100%;
-   height:100%;
+   width: 70%;
+   height:70%;
   
 }
 .btn {
@@ -76,7 +76,7 @@
 }
 .board-list-content{
    margin : 40px;
-   font-size:15px;
+   font-size:18px;
    margin-left :7px;
    height: 50px;
    font-weight: 500;
@@ -115,13 +115,13 @@ input {
 
 .board-bottom{
    width:700px;
-   border-bottom : 1px solid gray;
+   border-bottom : 1px solid lightgray;
    
 }
 
 .notice-bottom {
    width:700px;
-   border-bottom : 0.5px solid gray;
+   border-bottom : 0.5px solid lightgray;
    
 }
 

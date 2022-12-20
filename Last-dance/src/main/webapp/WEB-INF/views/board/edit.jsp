@@ -18,6 +18,30 @@
     border-color: #3bc5f0;
     opacity: 70%;
 }
+.thumbnail-preview-wrapper {
+	display:flex;
+}
+.thumbnail-preview-wrapper > label {
+	width:50px;
+	height:50px;
+	position:relative;
+	overflow:hidden;
+}
+.thumbnail-preview-wrapper > label > img {
+	width:100%;
+	height:100%;
+}
+.thumbnail-preview-wrapper > label > [type=radio] {
+	position: absolute;
+	top:-50px;
+	left:-50px;
+}
+.thumbnail-preview-wrapper > label > [type=radio] + img {
+	border:3px transparent solid;
+}
+.thumbnail-preview-wrapper > label > [type=radio]:checked + img {
+	border:3px red solid;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
@@ -66,8 +90,8 @@
 	<div class="row left">
 		<label>첨부파일(1개당 1MB. 최대 10MB 가능)</label>
 	<input class="input w-100 file-input" type="file" name="attachment" multiple>
-		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
-		<input type="hidden" class="img-no" name="boardAttachmentNo">
+	<div class="thumbnail-preview-wrapper"></div>	
+		
 	</div>
 	
 	<div class="row right">
@@ -108,32 +132,26 @@ $(function(){
                     contentType: false,
                     success: function(resp){
                     	var img = $("<img>").attr("src",resp);
-                        var icon = $("<i>").addClass("item fa-square fa-regular");
-                        var div = $("<div>").append(img).append(icon);
-                       	 $(".note-editable").append(div); 
-                       	 
+						$("[name=boardContent]").summernote('insertNode', img[0]);
+						
+						var attachmentNo = parseInt((resp.split("download/"))[1]);
+						
+						var img2 = img.clone();
+						var label = $("<label>");
+						var checkbox = $("<input>").attr("type", "radio")
+						.attr("name", "boardAttachmentNo")//전송될 이름(변경필요)
+						.val(attachmentNo)//전송될 썸네일에 대한 값(변경필요)
+						.prop("checked", true);
+						label.append(checkbox).append(img2);
+						$(".thumbnail-preview-wrapper").append(label);
                     }
                 });
             }
-            else{
+            else{ 
                 $(".preview").attr("src", "https:/via.placeholder.com/240x180");
             }
     });
 
- 
-	$(document).on("click",".item",(function(){
-		var url = $(this).prev().attr("src");
-		console.log(url);
-		 $(".preview").attr("src",url);
-        var attachmentNo = parseInt((url.split("download/"))[1]);
-                		   $(".img-no").val(attachmentNo);
-	}));
-
-  $("form").submit(function(e){
-	 $(".note-editable").find(".item").remove();
-	
-	  
-	  });
 
 });
 </script>

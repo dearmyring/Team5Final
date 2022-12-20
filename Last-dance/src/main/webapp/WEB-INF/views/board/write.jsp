@@ -41,6 +41,31 @@
 .btn.btn-positive:hover {
     background-color: #1E90FF;
 }
+.thumbnail-preview-wrapper {
+	display:flex;
+}
+.thumbnail-preview-wrapper > label {
+	width:50px;
+	height:50px;
+	position:relative;
+	overflow:hidden;
+}
+.thumbnail-preview-wrapper > label > img {
+	width:100%;
+	height:100%;
+}
+.thumbnail-preview-wrapper > label > [type=radio] {
+	position: absolute;
+	top:-50px;
+	left:-50px;
+}
+.thumbnail-preview-wrapper > label > [type=radio] + img {
+	border:3px transparent solid;
+}
+.thumbnail-preview-wrapper > label > [type=radio]:checked + img {
+	border:3px red solid;
+}
+
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
@@ -55,6 +80,7 @@
 			  lang: "ko-KR",
 			  // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
 			  focus : true,
+			  placeholder:"사진 첨부시 체크박스 클릭한 사진이 썸네일 화면으로 저장되어 출력됩니다!!!(지워서 올려주세요)",
 			  toolbar: [
 				    // 글꼴 설정
 				    ['fontname', ['fontname']],
@@ -92,14 +118,13 @@
 	</div>
 	<div class="row left">
 		<label>내용</label>
-		<textarea name="boardContent" placeholder=>사진 첨부시 체크박스 클릭한 사진이 썸네일 화면으로 저장되어 출력됩니다!!!(지워서 올려주세요)</textarea>
+		<textarea name="boardContent"></textarea>
 	</div>
 	
 	<div class="row left">
 		<label>썸네일 첨부파일(1개당 1MB. 최대 10MB 가능)</label>
 		<input class="input w-100 file-input" type="file" name="attachment" multiple>
-		<img class="preview" src="https:/via.placeholder.com/200x200" width="200" height="200">
-		<input type="hidden" class="img-no" name="boardAttachmentNo">
+		<div class="thumbnail-preview-wrapper"></div>
 	</div>
 	
 	
@@ -111,8 +136,8 @@
 
 </form>
 <script>
-
     $(function(){
+       
         //목표: 파일이 선택되면 해당하는 파일을 서버에 업로드 
         $(".file-input").change(function(){
         	var that = $(this);
@@ -140,33 +165,64 @@
                         contentType: false,
                         success: function(resp){
                         	var img = $("<img>").attr("src",resp);
-                            var icon = $("<i>").addClass("item fa-square fa-regular");
-                            var div = $("<div>").append(img).append(icon);
-                           	 $(".note-editable").append(div); 
-                           	 
+							$("[name=boardContent]").summernote('insertNode', img[0]);
+							
+							var attachmentNo = parseInt((resp.split("download/"))[1]);
+							
+							var img2 = img.clone();
+							var label = $("<label>");
+							var checkbox = $("<input>").attr("type", "radio")
+							.attr("name", "boardAttachmentNo")//전송될 이름(변경필요)
+							.val(attachmentNo)//전송될 썸네일에 대한 값(변경필요)
+							.prop("checked", true);
+							label.append(checkbox).append(img2);
+							$(".thumbnail-preview-wrapper").append(label);
                         }
                     });
                 }
-                else{
+                else{ 
                     $(".preview").attr("src", "https:/via.placeholder.com/240x180");
                 }
         });
     
-     
-    	$(document).on("click",".item",(function(){
-    		var url = $(this).prev().attr("src");
-    		console.log(url);
-    		 $(".preview").attr("src",url);
-            var attachmentNo = parseInt((url.split("download/"))[1]);
-                    		   $(".img-no").val(attachmentNo);
-    	}));
-    
-      $("form").submit(function(e){
-    	 $(".note-editable").find(".item").remove();
-    	
-    	  
-  	  });
    
     });
+    
+ /*    $.ajax({
+        url:" http://localhost:8888/rest/upload",
+        method:"post",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(resp){
+        	var img = $("<img>").attr("src",resp);
+            var icon = $("<i>").addClass("item fa-square fa-regular");
+            var div = $("<div>").append(img).append(icon);
+           	 $(".note-editable").append(div); 
+           	 
+        }
+    });
+}
+else{
+    $(".preview").attr("src", "https:/via.placeholder.com/240x180");
+}
+});
+
+
+$(document).on("click",".item",(function(){
+var url = $(this).prev().attr("src");
+console.log(url);
+$(".preview").attr("src",url);
+var attachmentNo = parseInt((url.split("download/"))[1]);
+    		   $(".img-no").val(attachmentNo);
+}));
+
+$("form").submit(function(e){
+$(".note-editable").find(".item").remove();
+
+
+});
+
+}); */
 </script>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
