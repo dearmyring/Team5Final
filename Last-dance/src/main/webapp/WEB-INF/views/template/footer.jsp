@@ -10,60 +10,100 @@
     	<div class="center row">
     		<span>1:1 문의</span><i class="fa-solid fa-caret-up center-hide"></i>
     	</div>
-		<div class="right center-message"></div>
-		<hr>
-		<div class="float-container">
-			<input class="message-content-input input w-80" type="text">
-			<button class="message-send-btn btn w-20" type="button">입력</button>
+		<div class="center-message-list"></div>
+		<div class="float-container center message-input-area">
+			<input class="message-content-input input w-75" type="text">
+			<button class="message-send-btn btn w-20" type="button"><i class="fa-solid fa-paper-plane"></i></button>
 		</div>
 	</div>
 	
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 	 <script>
     $(function(){
+		var uri = "${pageContext.request.contextPath}/ws/center";
+		socket = new SockJS(uri);
+				
+		socket.onopen = function(){
+			var data = {
+				type:1,
+				room:"${loginId}"
+			};
+			socket.send(JSON.stringify(data));
+		};
     	
+// 		$("html").click(function(e){
+// 	    	if(!$(e.target).hasClass("message-list")){
+// 	    		$(".message-list").removeClass("fa-caret-down").addClass("fa-caret-up center-hide");
+// 	        }
+// 		});
+		
         $(".fa-solid").click(function(){
             if($(this).hasClass("fa-caret-up")){
                 $(this).removeClass("fa-caret-up center-hide").addClass("fa-caret-down");
                 
-                var uri = "ws://localhost:8888/ws/center";
+				if(!$(".center-message-list").text()){
+	                var centerMemberId = "${loginId}";
+	                historyMessage(centerMemberId);
+				}
     			
-                socket = new WebSocket(uri);
+   				socket.onclose = function(){
+    			};
     			
-    			socket.onopen = function(){
-    			};
-    			socket.onclose = function(){
-    			};
     			socket.onerror = function(){
     			};
     			socket.onmessage = function(e){
-    				saveMessage(e.data);
-    				var data = JSON.parse(e.data);
-    				
-    				var p = $("<p>").addClass("center-message");
-    				var time = moment(data.centerTime).format("YYYY-MM-DD hh:mm");
-    				var t = $("<p>").text(time);
-    				var c = $("<p>").text(data.centerContent);
-    				p.append(c).append(t);
-    				$(".message-list").append(p);
-    				
-    				//스크롤 하단으로 이동
-//     				var height = $(document).height();
-//     				$(window).scrollTop(height);
+    				var data = JSON.parse(e.data);//객체
+    				data.centerMemberId = "${loginId}";
+    				saveMessage(data);
+		        	var div = $("<div>").addClass("right");
+		        	var p = $("<p>").addClass("center-message center-member");
+					var time = moment(data.centerTime).format("YYYY-MM-DD hh:mm");
+					var t = $("<p>").addClass("time-font").text(time);
+					var c = $("<p>").text(data.centerContent);
+					p.append(c).append(t);
+					div.append(p);
+					$(".center-message-list").append(div);
     			};
             }
             else{
                 $(this).removeClass("fa-caret-down").addClass("fa-caret-up center-hide");
-            	socket.close();
             }
         });
         
-		function saveMessage(e){
+        function historyMessage(centerMemberId){
+        	$.ajax({
+        		url:"http://localhost:8888/rest/center/"+centerMemberId,
+        		method:"get",
+        		success: function(data){
+		        	for(var i=0; i<data.length; i++){
+			        	var div = $("<div>")
+			        	var p = $("<p>").addClass("center-message");
+		        		if(data[i].centerId == "${loginId}"){
+		        			div.addClass("right");
+			        		p.addClass("center-member");
+		        		}
+		        		else{
+		        			p.addClass("center-admin");
+		        		}
+						var time = moment(data[i].centerTime).format("YYYY-MM-DD hh:mm");
+						var t = $("<p>").addClass("time-font").text(time);
+						var c = $("<p>").text(data[i].centerContent);
+						p.append(c).append(t);
+						div.append(p);
+						$(".center-message-list").append(div);
+		        	}
+        		}
+        	});
+        }
+        
+        
+		function saveMessage(data){
 			$.ajax({
 				url:"http://localhost:8888/rest/center",
 				method:"post",
 				contentType:"application/json",
-				data:e,
+				data:JSON.stringify(data),
 				success:function(resp){
 					console.log(resp);
 				}
@@ -82,7 +122,8 @@
 			if(text.length == 0) return;
 			
 			var data = {
-				centerContent : text
+				type: 2,
+				text : text
 			};
 			socket.send(JSON.stringify(data));
 			$(".message-content-input").val("");
@@ -91,30 +132,68 @@
  </script>
     <style>
         .message-list{
-         position:fixed; 
-         border-radius: 10px; 
-         background-color: white; 
-         width:300px;
-         box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1); 
-         z-index: 99999; 
-         right:0; 
-         bottom:0;
-         transition: 0.6s;
+			position:fixed; 
+			border-radius: 10px 10px 0 0; 
+			background-color: white; 
+			width:300px;
+			box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1); 
+			z-index: 99999; 
+			right:0; 
+			bottom:0;
+			transition: 0.6s;
         }
         .message-list:has( i.center-hide) {
-         right:0; 
-         bottom:-32%;
-         transition: 0.6s;
+			right:0; 
+			bottom:-258px;
+			transition: 0.6s;
+        }
+        .message-list .message-input-area{
+        	margin: 0.5em;
+        	border: 1px solid #D0CECE;
+        	border-radius: 10px;
+        }
+        .message-list .message-content-input,
+        .message-list .message-send-btn{
+			border: none;
+			background-color: white;
+        }
+        .message-list .message-send-btn{
+        	padding-right: 0;
+			color: grey;
+        }
+        .message-list .message-send-btn:hover{
+			color: black;
+			transition: 0.3s;
+        }
+        .message-list .time-font{
+        	font-size: 14px;
+        	color: grey;
         }
         .message-list .fa-caret-up,
         .message-list .fa-caret-down{
             position:absolute; 
             right:0.5em; 
-            top:0.5em;
+            top:0.7em;
             cursor: pointer;
         }
         .center-message{
+        	display: inline-block;
+        	width:auto;
+        	height:auto;
+        	border-radius: 10px;
+        	padding: 0 1em 0 1em;
+        	margin-top: 0;
+        }
+        .center-message.center-member{
+			background-color: #eff5e9;
+        }
+        .center-message.center-admin{
+        	background-color: #EEEEEE;
+        }
+        .center-message-list{
             height:200px;
+            overflow:auto;
+            padding: 0 0.5em 0 0.5em;
         }
     </style>
     <!-- 송민영 -->

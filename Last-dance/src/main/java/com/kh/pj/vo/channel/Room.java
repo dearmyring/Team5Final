@@ -9,7 +9,7 @@ import org.springframework.web.socket.TextMessage;
 public class Room {
 	//사용자 목록
 	private Set<User> users = new CopyOnWriteArraySet<>();
-
+	
 	public void enter(User user) {
 		users.add(user);
 	}
@@ -29,5 +29,5 @@ public class Room {
 	}
 	public int size() {
 		return users.size();
-	}
+	} 
 }

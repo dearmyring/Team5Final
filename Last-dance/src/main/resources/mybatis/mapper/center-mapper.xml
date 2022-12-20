@@ -12,7 +12,7 @@
 	
 	<!-- 과거 대화 이력 -->
 	<select id="historyList" parameterType="String" resultType="CenterDto">
-		select * from center where center_member_id=#{loginId}
+		select * from center where center_member_id=#{centerMemberId} order by center_time asc
 	</select>
 	
 	<!-- 대화 저장용 -->

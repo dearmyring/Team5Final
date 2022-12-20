@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 public class User {
 	private String centerId;
 	private WebSocketSession session;
-
-	public boolean is(String centerId) {
-		if(centerId == null) return false;
+	
+	public boolean is(String memberId) {
+		if(memberId == null) return false;
 		if(this.centerId == null) return false;
-		return this.centerId.equals(centerId);
+		return this.centerId.equals(memberId);
 	}
-
+	
 	public void send(TextMessage message) throws IOException {
 		session.sendMessage(message);
 	}

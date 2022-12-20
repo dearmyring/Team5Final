@@ -14,9 +14,6 @@ public class HomeController {
 	@Autowired
 	private HomeDao homeDao;
 	
-	@Autowired
-	private CenterDao centerDao;
-	
 	@RequestMapping("/")
 	public String home(Model model) {
 		model.addAttribute("addRecipeCount", homeDao.counting());
