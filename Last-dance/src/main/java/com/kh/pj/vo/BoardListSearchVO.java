@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class BoardListSearchVO {
-	private String sort = "board_no desc";//정렬기준
+	private String sort = "board_writetime desc";//정렬기준
 	
 	private String type;//컬럼명
 	private String keyword;//검색어

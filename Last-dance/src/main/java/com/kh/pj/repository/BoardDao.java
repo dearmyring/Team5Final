@@ -3,10 +3,10 @@ package com.kh.pj.repository;
 import java.util.List;
 
 import com.kh.pj.entity.BoardDto;
+import com.kh.pj.entity.BoardImgDto;
 import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.NoticeDto;
-import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
 
@@ -35,6 +35,8 @@ public interface BoardDao {
 	//첨부파일 관련 기능
 		void connectAttachment(int boardOriginNo, int boardAttachmentNo);
 		int insert2(BoardDto boardDto);
+		
+		
 
 		
 		//레시피 좋아요 확인

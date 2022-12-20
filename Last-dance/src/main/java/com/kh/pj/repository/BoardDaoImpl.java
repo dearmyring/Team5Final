@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.BoardDto;
+import com.kh.pj.entity.BoardImgDto;
 import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.NoticeDto;
@@ -168,11 +169,6 @@ public class BoardDaoImpl implements BoardDao {
 	public int countLike(int boardNo) {
 		return sqlSession.selectOne("board.countLike", boardNo);
 	}
-	
-
-
-	
-
 
 
 }
