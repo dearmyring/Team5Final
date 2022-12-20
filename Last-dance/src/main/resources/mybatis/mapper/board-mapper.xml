@@ -6,28 +6,30 @@
 <mapper namespace="board">
 
 	<select id="list" parameterType="BoardListSearchVO" resultType="BoardListVO">
-	select
-	  		  B.*,
-  	 		 M.member_nick,
-   			 M.member_badge
-		from (
-	select 
-    		board.*, 
-   			NVL(reply_cnt, 0) reply_cnt
-		from (
+	select c.*, a.board_attachment_no from board_img a right outer join (
+		select
+             B.*,
+             M.member_nick,
+             M.member_badge
+      from (
+   select 
+          board.*, 
+            NVL(reply_cnt, 0) reply_cnt
+      from (
     SELECT
         reply_board_no, 
         count(reply_no) reply_cnt 
     FROM reply
-   	 GROUP BY reply_board_no
-		) reply right outer join board on reply.reply_board_no=board.board_no
-		) B inner join member M on B.board_id = M.member_id
+       GROUP BY reply_board_no
+      ) reply right outer join board on reply.reply_board_no=board.board_no
+      ) b inner join member M on B.board_id = M.member_id
+	) c on a.board_no = c.board_no 
 		<where>
 			<if test="type != null and keyword !=''">
 				and instr(${type},#{keyword})>0
 			</if>
 		</where>
-		<if test = "sort != null">
+		<if test = "sort != ''">
 				order by ${sort}
 		</if>
 	</select>
@@ -85,9 +87,23 @@
 	</select>
 	
 	<select id="detail" parameterType="int" resultType="BoardListVO">
-		select board.*,member_nick,member_badge 
-		from board left outer join member on board_id=member_id 
-		where board_no=#{boardNo}
+		select
+	  		  B.*,
+  	 		 M.member_nick,
+   			 M.member_badge
+		from (
+	select 
+    		board.*, 
+   			NVL(reply_cnt, 0) reply_cnt
+		from (
+    SELECT
+        reply_board_no, 
+        count(reply_no) reply_cnt 
+    FROM reply
+   	 GROUP BY reply_board_no
+		) reply right outer join board on reply.reply_board_no=board.board_no
+		) B inner join member M on B.board_id = M.member_id
+        where board_no=#{boardNo}
 	</select>
 
 	<!-- 조회수 증가 처리 -->
@@ -128,5 +144,43 @@
          recipe_no = #{recipeNo}   
    </update>
 
-
+	<!-- 유저게시판에 공지사항 3개 출력 구문 -->
+	<select id="noticelist" resultType="NoticeDto">
+	
+		select * from (
+		    select tmp.*, rownum rn from(
+		        select notice_no,notice_title from notice order by notice_no desc
+		    ) tmp
+		) where rn between 1 and 3
+	</select>
+	
+	 <!-- 좋아요 업데이트 -->
+   <update id="likeUp">
+   	update board set board_like= board_like+1 where board_no = #{boardNo}
+   </update>
+   
+   <update id="likeDown">
+   	update board set board_like= board_like-1 where board_no = #{boardNo}
+   </update>
+   
+   <!-- 좋아요한 글이 있는지 조회 -->
+   <select id="selectBoardLike" parameterType="BoardLikeDto" resultType="BoardLikeDto">
+		select * from board_like where board_like_no = #{boardLikeNo} and board_like_id = #{boardLikeId}
+   </select>
+   
+   <!-- 좋아요 정보 등록 -->
+   <insert id="addBoardLike" parameterType="BoardLikeDto">
+		insert into board_like values(#{boardLikeNo}, #{boardLikeId}, sysdate)
+   </insert>
+   
+   <!-- 좋아요 정보 삭제 -->
+   <delete id="removeBoardLike" parameterType="BoardLikeDto">
+		delete board_like where board_like_no = #{boardLikeNo} and board_like_id = #{boardLikeId}
+   </delete>
+   
+   <!-- 좋아요 개수 출력 -->
+   <select id="countLike" parameterType="int" resultType="int">
+		select board_like from board where board_no = #{boardNo}
+   </select>
+	
 </mapper>
