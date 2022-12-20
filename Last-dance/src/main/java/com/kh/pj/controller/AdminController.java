@@ -35,6 +35,7 @@ import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
 import com.kh.pj.vo.IngredientListSearchVO;
 import com.kh.pj.vo.ListSearchVO;
+import com.kh.pj.vo.RecipeViewTopFiveVO;
 
 @Controller
 @RequestMapping("/admin")
@@ -75,6 +76,9 @@ public class AdminController {
 	
 	@GetMapping("/")
 	public String main(Model model) {
+		
+		//레시피 TOP5(좋아요 많은 순 -> 조회수 많은 순)
+		model.addAttribute("recipeTopFive",adminDao.recipeTopFive());
 		
 		return "admin/main";
 	}
@@ -364,5 +368,7 @@ public class AdminController {
 		model.addAttribute("boardList", boardDao.boardList(null));
 		return "admin/board-list";
 	}
+	
+	
 	
 }
