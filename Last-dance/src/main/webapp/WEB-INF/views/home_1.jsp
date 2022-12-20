@@ -272,10 +272,19 @@
 								</div>
 							</c:forEach>
 							</div>
-							<div class="img-box">
-								<div class="hash-tag">${mainRecipe.mainRecipeListTop5VO.recipeHashtag}</div>
-								<img class="main-1-img" src="/images/test.jpg">
-							</div>
+							<c:forEach var="recipeImg" items="${mainRecipe.recipeImgList}">
+								<div class="img-box">
+									<div class="hash-tag">${mainRecipe.mainRecipeListTop5VO.recipeHashtag}</div>
+									<c:choose>
+										<c:when test="${recipeImg.recipeAttachmentNo != null}">
+											<img class="main-1-img" src="/rest/download/${recipeImg.recipeAttachmentNo}">
+										</c:when>
+										<c:otherwise>
+											<img class="main-1-img" src="/images/test.jpg">
+										</c:otherwise>
+									</c:choose>
+								</div>
+							</c:forEach>
 						</div>
 					</c:forEach>
 				</div>
@@ -362,7 +371,12 @@
 	<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 	<script>
 		$(function(){
+			// 오른쪽 하단 인기레시피top10 데이터 찍기
+			pushList();
 			
+			// 오른쪽 하단 인기레시피top10 데이터 5초마다 갱신하기
+			timer = setInterval(function() {
+				pushList()}, 5000);
 			
 			// 총 등록 레시피 비동기 5초마다 갱신 코드
 			timer = setInterval( function() {
@@ -386,9 +400,8 @@
 				});
 			}, 5000);
 			
-			// 메인 우측 하단 추천레시피 Top10 비동기 조회 함수
-			
-			timer = setInterval(function() {
+			// 오른쪽 하단 인기레시피Top10 비동기 목록 조회
+			function pushList() {
 				$.ajax({
 					url: "http://localhost:8888/rest/push_recipe",
 					method: "get",
@@ -401,8 +414,7 @@
 						}
 					}
 				});
-			}, 5000);
-			
+			}
 			
 			// 메인 대문 레시피 스와이퍼 코드
 			var swiper = new Swiper('.swiper', {
@@ -423,10 +435,7 @@
 
                 autoplay: {
                     delay: 5000,//자동재생 간격(ms)
-                },
-
-                effect: "slide",
-
+                }, effect: "slide",
          	});
 		});
 	</script>

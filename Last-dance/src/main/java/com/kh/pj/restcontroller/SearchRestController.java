@@ -1,5 +1,6 @@
 package com.kh.pj.restcontroller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import com.kh.pj.repository.SearchDao;
 @RestController
 @RequestMapping("/rest")
 public class SearchRestController {
-	
 	@Autowired
 	private SearchDao searchDao;
 	

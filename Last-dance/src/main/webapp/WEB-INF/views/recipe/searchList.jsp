@@ -2,7 +2,12 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%
+	int leng = request.getParameterValues("recipeIngredientName").length;
+	pageContext.setAttribute("leng", leng);
+%>
+<c:set var="leng" value="${leng}"></c:set>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
@@ -56,15 +61,15 @@ article {
 }
 
 .recipe-recommend{
-   display: flex;
+   	display: flex;
     flex-direction: row;
     height: 130px;
 }
 
 .recipe-recommend-text{
-   font-size: 30px;
-    font-weight: 600;
-    margin: 35px 40px 30px 30px;
+   	font-size: 30px;
+   	font-weight: 600;
+   	margin: 35px 40px 30px 30px;
 }
 
 .recipe-box-shadow {
@@ -154,10 +159,23 @@ article {
    margin: 0 3px;
 }
 
-.need-ingredient {
+.recipe-enough {
    display: inline-block;
    border: none;
-   background-color: #abc9cc;
+   background-color: #4dd1a7;
+   text-align: center;
+   padding: 0.5em 0.8em 0.5em 0.8em;
+   border-radius: 7px;
+   font-weight: 600;
+   color: white;
+   font-size: 13px;
+   margin: 0 3px;
+}
+
+.recipe-lack {
+   display: inline-block;
+   border: none;
+   background-color: #ec7e42;
    text-align: center;
    padding: 0.5em 0.8em 0.5em 0.8em;
    border-radius: 7px;
@@ -195,7 +213,7 @@ article {
 }
 
 .simple-info{
-margin 0 20px;
+	margin 0 20px;
 }
 
 .float-margin-left{
@@ -213,19 +231,21 @@ margin 0 20px;
     }
 
 .sort-select{
-padding: 10px;
-width: 100px;
+	padding: 10px;
+	width: 100px;
 }
 
 
 
 </style>
+
 </head>
 <body>
    <div class="layout">
       <article>
          <div class="recipe-recommend">         
             <div class="recipe-recommend-text w-70">${loginNick}님이 당장 할 수 있는 요리를 추천해드릴게요.</div>
+            <div>파라미터: ${leng }</div>
             <div class= "sort-select w-30">
                <select class="input sort-click">
                   <option value="recipe_no desc">최근 작성일 순</option>
@@ -239,93 +259,98 @@ width: 100px;
 
          <div class="flexbox">
             <div class="item float-container">
-               <c:forEach var="recipeListVO" items="${recipeList}">
-               <a href="/recipe/detail?recipeNo=${recipeListVO.recipeDto.recipeNo}">
+               <c:forEach var="recipeListVO" items="${complexSearch}">
+               <a href="/recipe/detail?recipeNo=${recipeListVO.recipeListSearchVO.recipeNo}">
                   <div class="list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left">
-                  
                      <div class="img-box">
-                        <div class="hash-tag">${recipeListVO.recipeDto.recipeHashtag}</div>
+                        <div class="hash-tag">${recipeListVO.recipeListSearchVO.recipeHashtag}</div>
                         <c:forEach var="recipeImg" begin="0" end="0" step="1" items="${recipeListVO.recipeImgList}">
                            <img class="img-thumnail"
                               src="${pageContext.request.contextPath}/rest/download/${recipeImg.recipeAttachmentNo}">
                         </c:forEach>
                      </div>
-
                      <div class="info-box">
-                        <span class="view-count">조회수
-                           ${recipeListVO.recipeDto.recipeClick}</span> <span class="like-count">좋아요
-                           ${recipeListVO.recipeDto.recipeLike}</span>
-                        <div class="recipe-title">${recipeListVO.recipeDto.recipeTitle}</div>
+                        <span class="view-count">조회수 ${recipeListVO.recipeListSearchVO.recipeClick}</span> 
+                        <span class="like-count">좋아요 ${recipeListVO.recipeListSearchVO.recipeLike}</span>
+                        <div class="recipe-title">${recipeListVO.recipeListSearchVO.recipeInfo}</div>
                         <div class="simpe-info">
-                        <div class="how-long">
-                           <i class="fa-regular fa-clock"></i>
-                           ${recipeListVO.recipeDto.recipeTime}분 이내
-                        </div>
-                        <div class="need-ingredient">필요 재료 개수 : ${recipeListVO.recipeIngredientList.size()}개 </div>
-                        <div class="cooking-level">${recipeListVO.recipeDto.recipeDifficulty}</div>
+	                        <div class="how-long">
+	                           <i class="fa-regular fa-clock"></i>
+	                           ${recipeListVO.recipeListSearchVO.recipeTime}분 이내
+	                        </div>
+	                        <c:choose>
+	                        	<c:when test="${fn:length(recipeListVO.recipeIngredientList) < leng}">
+		                        	<div class="cooking-level">재료가 충분</div>
+	                        	</c:when>
+	                        	<c:otherwise>
+		                        	<div class="cooking-level">간당간당하네</div>
+	                        	</c:otherwise>
+	                        </c:choose>
                         </div>
                         <div class="ingredient-box scroll">
-                        <c:forEach var="ingredient" items="${recipeListVO.recipeIngredientList}">
-                           <div class="hashtag-box mt-10"> ${ingredient.recipeIngredientName}</div>
-                        </c:forEach>
-                     </div>
+	                        <c:forEach var="ingredient" items="${recipeListVO.recipeIngredientList}">
+	                           <div class="hashtag-box mt-10">${ingredient.recipeIngredientName}</div>
+	                        </c:forEach>
+	                        <div class="hashtag-box mt-10">${fn:length(recipeListVO.recipeIngredientList)}</div>
+                     	</div>
                      </div>                     
-                  </div></a>
+                  </div>
+                  </a>
                </c:forEach>
             </div>
          </div>
       </article>
    </div>
    
-         <div class="row center">
-      <ul class="pagination">
-         <!-- 이전 -->
-         <c:choose>
-            <c:when test="${not recipeListSearchVO.isFirst()}"> <!-- 맨 처음 페이지가 아니라면  -->
-               <li><a href="list?p=${noticeListSearchVO.firstBlock()}&${noticeListSearchVO.parameter()}">&laquo;</a></li> <!-- 첫번째 페이지로 이동  -->
-            </c:when>
-            <c:otherwise> <!-- 그렇지 않으면  -->
-               <li><a href="">&laquo;</a></li> <!-- 페이지 변화 없음  -->
-            </c:otherwise>
-         </c:choose>
-         
-         <!-- 이전 구간의 마지막 페이지로 이동 -->         
-         <c:choose>
-            <c:when test="${noticeListSearchVO.hasPrev()}"> <!-- 이전 페이지가 없다면-->   
-               <li><a href="list?p=${noticeListSearchVO.prevBlock()}&${noticeListSearchVO.parameter()}">&lt;</a></li> <!-- 이전 구간의 마지막 페이지로 이동-->   
-            </c:when>
-            <c:otherwise> <!-- 그렇지 않으면  -->
-               <li><a href="">&lt;</a></li> <!-- 페이지 변화 없음  -->
-            </c:otherwise>
-         </c:choose>
-         
-         <!-- 현재 구간의 페이지 이동 -->
-         <!-- 변수명을 i로 하며 시작과 끝은 noticeListSearchVO의 startBlock(), endBlock()의 반환값으로, 간격은 1로 한다  -->
-         <c:forEach var="i" begin="${noticeListSearchVO.startBlock()}" end="${noticeListSearchVO.endBlock()}" step="1">
-               <a href = "list?p=${i}&${noticeListSearchVO.parameter()}">${i}</a>
-         </c:forEach>
-         
-         <!-- 다음을 누르면 다음 구간의 첫 페이지로 안내 -->
-         <c:choose>
-            <c:when test="${noticeListSearchVO.hasNext()}"> <!-- 다음페이지가 있으면  -->
-               <li><a href="list?p=${noticeListSearchVO.nextBlock()}&${noticeListSearchVO.parameter()}">&gt;</a></li> <!-- 다음 구간의 첫 페이지로 이동  -->
-            </c:when>
-            <c:otherwise> <!-- 그렇지 않으면  -->
-               <li><a href="">&gt;</a></li> <!-- 페이지 변화 없음  -->
-            </c:otherwise>
-         </c:choose>
-         
-         <!-- 맨 마지막 페이지로 이동 -->
-         <c:choose>
-            <c:when test="${not noticeListSearchVO.isLast()}"> <!-- 맨 마지막 페이지가 아니라면 -->
-               <li><a href="list?p=${noticeListSearchVO.lastBlock()}&${noticeListSearchVO.parameter()}">&raquo;</a></li> <!-- 맨 마지막 페이지로 이동 -->
-            </c:when>
-            <c:otherwise>  <!-- 그렇지 않으면  -->
-               <li><a href="">&raquo;</a></li> <!-- 페이지 변화 없음  -->
-            </c:otherwise>
-         </c:choose>
-      </ul>
-   </div>
+   		<div class="row center">
+		<ul class="pagination">
+			<!-- 이전 -->
+			<c:choose>
+				<c:when test="${not recipeListSearchVO.isFirst()}"> <!-- 맨 처음 페이지가 아니라면  -->
+					<li><a href="list?p=${noticeListSearchVO.firstBlock()}&${noticeListSearchVO.parameter()}">&laquo;</a></li> <!-- 첫번째 페이지로 이동  -->
+				</c:when>
+				<c:otherwise> <!-- 그렇지 않으면  -->
+					<li><a href="">&laquo;</a></li> <!-- 페이지 변화 없음  -->
+				</c:otherwise>
+			</c:choose>
+			
+			<!-- 이전 구간의 마지막 페이지로 이동 -->			
+			<c:choose>
+				<c:when test="${noticeListSearchVO.hasPrev()}"> <!-- 이전 페이지가 없다면-->	
+					<li><a href="list?p=${noticeListSearchVO.prevBlock()}&${noticeListSearchVO.parameter()}">&lt;</a></li> <!-- 이전 구간의 마지막 페이지로 이동-->	
+				</c:when>
+				<c:otherwise> <!-- 그렇지 않으면  -->
+					<li><a href="">&lt;</a></li> <!-- 페이지 변화 없음  -->
+				</c:otherwise>
+			</c:choose>
+			
+			<!-- 현재 구간의 페이지 이동 -->
+			<!-- 변수명을 i로 하며 시작과 끝은 noticeListSearchVO의 startBlock(), endBlock()의 반환값으로, 간격은 1로 한다  -->
+			<c:forEach var="i" begin="${noticeListSearchVO.startBlock()}" end="${noticeListSearchVO.endBlock()}" step="1">
+					<a href = "list?p=${i}&${noticeListSearchVO.parameter()}">${i}</a>
+			</c:forEach>
+			
+			<!-- 다음을 누르면 다음 구간의 첫 페이지로 안내 -->
+			<c:choose>
+				<c:when test="${noticeListSearchVO.hasNext()}"> <!-- 다음페이지가 있으면  -->
+					<li><a href="list?p=${noticeListSearchVO.nextBlock()}&${noticeListSearchVO.parameter()}">&gt;</a></li> <!-- 다음 구간의 첫 페이지로 이동  -->
+				</c:when>
+				<c:otherwise> <!-- 그렇지 않으면  -->
+					<li><a href="">&gt;</a></li> <!-- 페이지 변화 없음  -->
+				</c:otherwise>
+			</c:choose>
+			
+			<!-- 맨 마지막 페이지로 이동 -->
+			<c:choose>
+				<c:when test="${not noticeListSearchVO.isLast()}"> <!-- 맨 마지막 페이지가 아니라면 -->
+					<li><a href="list?p=${noticeListSearchVO.lastBlock()}&${noticeListSearchVO.parameter()}">&raquo;</a></li> <!-- 맨 마지막 페이지로 이동 -->
+				</c:when>
+				<c:otherwise>  <!-- 그렇지 않으면  -->
+					<li><a href="">&raquo;</a></li> <!-- 페이지 변화 없음  -->
+				</c:otherwise>
+			</c:choose>
+		</ul>
+	</div>
 </body>
 </html>
 

@@ -5,9 +5,9 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="search">
-
+	
 	<!--  검색어 추가  -->	
-	<insert id = "add" parameterType = "SearchDto">
+	<insert id = "add" parameterType = "String">
 		insert into search (search_ingredient) 
 			values(#{searchIngredient})
 	</insert>
@@ -23,6 +23,68 @@
 		select * from ingredient where ingredient_name like '${ingredientName}%'
 	</select>
 	
+	<!--  레시피 등록 시퀀스 추가  -->
+	<select id = "recipeNo" resultType="int">
+      	select recipe_seq.nextval from dual
+    </select>
 	
+	<!-- 계층 조회를 위한 음식재료 기본 조회 쿼리 -->
+   	<select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
+	    select * from recipe_ingredient where recipe_no = #{recipeNo}
+	</select>
 	
+	<!-- 계층 조회를 위한 첨부파일 기본 조회 쿼리 -->
+	<select id="recipeImg" parameterType="int" resultType="RecipeImgDto">
+		select * from recipe_img where recipe_no = #{recipeNo}
+	</select>
+
+    <resultMap type="RecipeListSearchResultMapVO" id="recipeListSearch">
+   		<association property="recipeListSearchVO">
+   			<result column="recipe_no" property="recipeNo"/>
+   			<result column="recipe_click" property="recipeClick"/>
+   			<result column="recipe_like" property="recipeLike"/>
+   			<result column="recipe_time" property="recipeTime"/>
+   			<result column="recipe_writetime" property="recipeWritetime"/>
+   			<result column="rn" property="rn"/>
+   			<result column="recipe_info" property="recipeInfo"/>
+   			<result column="recipe_hashtag" property="recipeHashtag"/>
+   			<result column="recipe_difficulty" property="recipeDifficulty"/>
+   		</association>
+   		
+   		<collection property="recipeIngredientList" javaType="java.util.List" 
+   		ofType="RecipeIngredientDto" column="recipe_no" select="recipeIngredientList">
+   			<result column="recipe_ingredient_name" property="recipeIngredientName"/>
+   			<result column="recipe_no" property="recipeNo"/>
+   		</collection>
+   		
+  		<collection property="recipeImgList" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImg" column="recipe_no">
+			<result column="recipe_attachment_no" property="recipeAttachmentNo"/>
+			<result column="recipe_no" property="recipeNo"/>
+		</collection>
+    </resultMap>
+   
+    <select id="recipeListSearchFinal" resultMap="recipeListSearch" parameterType="RecipeIngredientVO">
+  		select distinct
+  			R.recipe_no,
+		    R.recipe_title,
+		    R.recipe_info,
+		    R.recipe_time,
+		    R.recipe_click,
+		    R.recipe_like,
+		    R.recipe_hashtag,
+		    R.recipe_difficulty,
+		    R.recipe_writetime
+		from recipe R inner join recipe_ingredient RI 
+		on R.recipe_no = RI.recipe_no
+		
+		<where>
+			<if test="recipeIngredientName != null">
+				<foreach collection="recipeIngredientName" item="r">
+					or recipe_ingredient_name = #{r}
+				</foreach>
+			</if>
+		</where>
+		
+    </select>
+   
 </mapper>
