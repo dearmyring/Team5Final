@@ -105,6 +105,12 @@
 			border-color: #98C778;
 			color: white!important;
 		}
+		
+		.history-link,
+		.history-link a{
+			color: grey;
+			font-size: 14px;
+		}
     </style>
 </head>
 <body>

@@ -5,8 +5,8 @@
 <div class="mt-3">&nbsp;</div>
 <div class="mt-3">&nbsp;</div>
 
-<div class="text-end">
-	<a class="main-page-link"></a> > 유저 게시판(관리자)
+<div class="history-link text-end">
+	<a class="main-page-link"></a> <i class="fa-solid fa-chevron-right"></i> 유저 게시판(관리자)
 </div>
 
 <div class="container-fluid mt-5">

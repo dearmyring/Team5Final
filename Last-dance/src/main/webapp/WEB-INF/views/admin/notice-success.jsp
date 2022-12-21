@@ -5,10 +5,9 @@
 <div class="mt-3">&nbsp;</div>
 <div class="mt-3">&nbsp;</div>
 
-<div class="text-end">
-	<a class="main-page-link"></a> > 
-	<a class="text-dark" href="detail/+${noticeDto.noticeNo}">공지사항</a> 
-	> 등록하기
+<div class="history-link text-end">
+	<a class="main-page-link"></a> <i class="fa-solid fa-chevron-right"></i> 
+	<a href="detail/+${noticeDto.noticeNo}">공지사항</a> <i class="fa-solid fa-chevron-right"></i> 등록하기
 </div>
 
 <div class="container-fluid mt-5">

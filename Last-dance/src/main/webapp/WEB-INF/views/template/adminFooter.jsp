@@ -3,7 +3,7 @@
 
 <script type="text/javascript">
 	$(function(){
-		$(".main-page-link").addClass("text-dark").attr("href", "${pageContext.request.contextPath}/admin/").text("메인 페이지");
+		$(".main-page-link").attr("href", "${pageContext.request.contextPath}/admin/").text("메인 페이지");
 		/* 모든 돌아가기 + 모달창 구현 예정 */
 		$(".return-btn").click(function(){
 			history.back();

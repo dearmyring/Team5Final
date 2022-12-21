@@ -37,10 +37,9 @@
 <div class="mt-3">&nbsp;</div>
 <div class="mt-3">&nbsp;</div>
 
-<div class="text-end">
-	<a class="main-page-link"></a> >
-	<a href="list" class="text-dark">레시피</a> > 
-	 레시피 등록하기
+<div class="history-link text-end">
+	<a class="main-page-link"></a> <i class="fa-solid fa-chevron-right"></i> 
+	<a href="list">레시피</a> <i class="fa-solid fa-chevron-right"></i> 레시피 등록하기
 </div>
 
 <form action="write" method="post" class="recipe-insert-form" autocomplete="off" enctype="multipart/form-data">
@@ -104,14 +103,14 @@
 </div>
 <div class="row">
 	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<input type="text" class="input-ingredient align-middle me-3 rounded" placeholder="재료">
+		<input type="text" class="input-ingredient align-middle me-3 rounded h-100" placeholder="재료">
 		<button type="button" class="ingredient-all-clear btn btn-md btn-light">모두 지우기</button>	
 	</div>
 </div>
 
-<div class="row mt-5">
+<div class="row">
 	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="search-ingredient col-6"></div>
+		<div class="search-ingredient"></div>
 	</div>
 </div>
 

@@ -34,9 +34,9 @@
 <div class="mt-3">&nbsp;</div>
 <div class="mt-3">&nbsp;</div>
 
-<div class="text-end">
-	<a class="main-page-link"></a> >
-	<a href="list" class="text-dark">레시피</a> > 
+<div class="history-link text-end">
+	<a class="main-page-link"></a> <i class="fa-solid fa-chevron-right"></i>
+	<a href="list">레시피</a> <i class="fa-solid fa-chevron-right"></i> 
 	 레시피 수정하기
 </div>
 
