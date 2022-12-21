@@ -1,8 +1,154 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
    </div>
     <!-- 컨텐츠 영역 끝 -->
+    
+	<!-- 웹소켓 고객센터 영역 시작 -->
+	<c:if test="${!loginNick.contains('관리자')}">
+		<div class="message-list">
+		   	<div class="center row">
+		   		<span>실시간 1:1 채팅</span><i class="fa-solid fa-caret-up center-hide"></i>
+		   	</div>
+			<div class="center-message-list"></div>
+			<div class="float-container center message-input-area">
+				<input class="message-content-input input w-75" type="text">
+				<button class="message-send-btn btn w-20" type="button"><i class="fa-solid fa-paper-plane"></i></button>
+			</div>
+		</div>
+	</c:if>
+		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+	<script>
+	    $(function(){
+        	var loginId = "${loginId}";
+	    	
+	        $(".fa-solid").click(function(){
+	        	if(loginId == ""){
+	        		alert("회원 전용 메뉴입니다.");
+	        		location.replace("http://localhost:8888/member/login");
+	        		return;
+	        	}
+	            if($(this).hasClass("fa-caret-up")){
+					var uri = "${pageContext.request.contextPath}/ws/center";
+					socket = new SockJS(uri);
+							
+					socket.onopen = function(){
+						var data = {
+							type:1,
+							room:loginId
+						};
+						socket.send(JSON.stringify(data));
+					};
+					
+	                $(this).removeClass("fa-caret-up center-hide").addClass("fa-caret-down");
+	                
+					if(!$(".center-message-list").text()){
+		                var centerMemberId = loginId;
+		                historyMessage(centerMemberId);
+					}
+	    			
+	   				socket.onclose = function(){
+	    			};
+	    			
+	    			socket.onerror = function(){
+	    			};
+	    			socket.onmessage = function(e){
+	    				var data = JSON.parse(e.data);//객체
+			        	var div = $("<div>");
+			        	var p = $("<p>").addClass("center-message");
+			        	if(data.centerId == loginId){
+			        		div.addClass("right");
+			        		p.addClass("center-member");
+			        	}
+			        	else{
+			        		p.addClass("center-admin");
+			        	}
+						var time = moment(data.centerTime).format("YYYY-MM-DD hh:mm");
+						var t = $("<p>").addClass("time-font").text(time);
+						var c = $("<p>").text(data.centerContent);
+						p.append(c).append(t);
+						div.append(p);
+						$(".center-message-list").append(div);
+	    			};
+	            }
+	            else{
+	                $(this).removeClass("fa-caret-down").addClass("fa-caret-up center-hide");
+	                socket.close();
+	            }
+	        });
+	        
+	        $(window).on()
+	        
+	        function historyMessage(centerMemberId){
+	        	$.ajax({
+	        		url:"http://localhost:8888/rest/center/"+centerMemberId,
+	        		method:"get",
+	        		success: function(data){
+	        			if(data.length==0) return;
+			        	for(var i=0; i<data.length; i++){
+				        	var div = $("<div>");
+				        	var p = $("<p>").addClass("center-message");
+			        		if(data[i].centerId == loginId){
+			        			div.addClass("right");
+				        		p.addClass("center-member");
+			        		}
+			        		else{
+			        			p.addClass("center-admin");
+			        		}
+							var time = moment(data[i].centerTime).format("YYYY-MM-DD hh:mm");
+							var t = $("<p>").addClass("time-font").text(time);
+							var c = $("<p>").text(data[i].centerContent);
+							p.append(c).append(t);
+							div.append(p);
+							$(".center-message-list").append(div);
+			        	}
+	        		}
+	        	});
+	        }
+	        
+	        
+			function saveMessage(db){
+				$.ajax({
+					url:"http://localhost:8888/rest/center",
+					method:"post",
+					contentType:"application/json",
+					data:JSON.stringify(db),
+					success:function(resp){
+					}
+				});
+			}
+			
+			$(".message-content-input").keydown(function(e){
+				if(e.keyCode == 13){
+					$(".message-send-btn").click();
+				}
+			});
+			
+			/* 메세지 전송 */
+			$(".message-send-btn").click(function(){
+				var text = $(".message-content-input").val();
+				if(text.length == 0) return;
+				
+				var data = {
+					type: 2,
+					text : text
+				};
+				socket.send(JSON.stringify(data));
+				
+				var db = {
+					centerMemberId : loginId,
+					centerId : loginId,
+					centerContent : text
+				};
+				saveMessage(db);
+				$(".message-content-input").val("");
+			});
+	    });
+	</script>
+	<!-- 웹소켓 고객센터 영역 끝 -->
 
     <!-- 푸터 영역 시작 -->
     <div id="footer">
@@ -18,6 +164,7 @@
             </div>
         </div>
     </div><!-- 푸터 영역 끝 -->
+    
     
     <!-- 헤더 검색 -->
      <script>
