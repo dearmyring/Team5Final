@@ -3,6 +3,7 @@ package com.kh.pj.repository;
 import java.util.List;
 
 import com.kh.pj.entity.MemberDto;
+import com.kh.pj.vo.ListSearchVO;
 
 public interface MemberDao {
 	// 회원가입
@@ -19,5 +20,5 @@ public interface MemberDao {
 	boolean editPw(MemberDto memberDto);
 	
 	//관리자 회원 목록 조회
-	List<MemberDto> adminList();
+	List<MemberDto> adminList(ListSearchVO vo);
 }

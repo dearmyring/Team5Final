@@ -6,6 +6,7 @@
 	.preview{
 		border: 1px solid #C2C2C2;
 		cursor: pointer;
+		object-fit: cover;
 	}
 	.preview.preview-disabled{
 		cursor: default;

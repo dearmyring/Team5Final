@@ -1,6 +1,7 @@
 package com.kh.pj.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.IngredientDto;
-import com.kh.pj.vo.IngredientListSearchVO;
+import com.kh.pj.vo.ListSearchVO;
 
 @Repository
 public class IngredientDaoImpl implements IngredientDao {
@@ -40,10 +41,8 @@ public class IngredientDaoImpl implements IngredientDao {
   
 	//재료 수정
 	@Override
-	public boolean update(IngredientDto ingredientDto) {
-		String sql = "update Ingredient set ingredient_name=?";
-		Object[] param = {ingredientDto.getIngredientName()};
-		return jdbcTemplate.update(sql, param) > 0;
+	public void update(Map<String, String> data) {
+		sqlSession.update("ingredient.adminUpdate", data);
 	}
 	
 	//재료 조회
@@ -63,7 +62,7 @@ public class IngredientDaoImpl implements IngredientDao {
 	}
 
 	@Override
-	public List<IngredientDto> adminList(IngredientListSearchVO vo) {
+	public List<IngredientDto> adminList(ListSearchVO vo) {
 		return sqlSession.selectList("ingredient.adminList", vo);
 	}
 

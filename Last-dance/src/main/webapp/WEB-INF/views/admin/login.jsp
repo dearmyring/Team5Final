@@ -28,17 +28,18 @@
   </head>
   <body>
 
-    <div class="container-fluid mt-5">
+    <div class="container-fluid 
+    position-absolute top-50 start-50 translate-middle">
 
-        <div class="row mt-5">
-            <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+        <div class="row">
+            <div class="col-lg-2 offset-lg-5 col-md-4 offset-md-4 col-sm-6 offset-sm-3">
 				<img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
             </div>
 		</div>
 		
         <form action="login" method="post" class="admin-login-form">
-        <div class="row mt-4">
-            <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+        <div class="row">
+            <div class="col-lg-2 offset-lg-5 col-md-4 offset-md-4 col-sm-6 offset-sm-3">
                 <div class="form-floating">
                     <input type="text" name="adminId" autocomplete="off" id="floatingInput" placeholder="name@example.com" class="form-control rounded">
                     <div class="invalid-feedback"></div>
@@ -48,7 +49,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+            <div class="col-lg-2 offset-lg-5 col-md-4 offset-md-4 col-sm-6 offset-sm-3">
                 <div class="form-floating">
                     <input type="password" name="adminPw" autocomplete="off" id="floatingPassword" placeholder="Password" class="form-control rounded">
                     <div class="invalid-feedback">아이디 또는 비밀번호 입력정보를 확인해주세요.</div>
@@ -57,7 +58,7 @@
             </div>
         </div>
         <div class="row mt-4">
-            <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+            <div class="col-lg-2 offset-lg-5 col-md-4 offset-md-4 col-sm-6 offset-sm-3">
                 <div class="form-floating">
                     <button class="login-btn btn btn-lg w-100 rounded yellow-btn admin-login-btn" type="submit">로그인</button>
                 </div>
@@ -66,9 +67,12 @@
         </form>
         
         <div class="row mt-4">
-            <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+            <div class="col-lg-2 offset-lg-5 col-md-4 offset-md-4 col-sm-6 offset-sm-3">
 				<div class="text-center">
-					&copy; Last-dance Corp. All rights reserved.
+					&copy; Last-dance Corp.
+				</div>
+				<div class="text-center">
+					All rights reserved.
 				</div>
 			</div>        	
         </div>

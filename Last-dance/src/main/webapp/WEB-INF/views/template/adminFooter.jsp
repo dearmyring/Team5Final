@@ -66,7 +66,7 @@
 
       <a class="col-2 btn btn-floating btn-md text-dark" href="#">개인정보 처리 방침</a>
 
-      <a class="col-2 btn btn-floating btn-md text-dark" href="#">통합검색 고객센터</a>
+      <a class="col-2 btn btn-floating btn-md text-dark" href="#">고객센터</a>
 
       <a class="col-2 btn btn-floating btn-md text-dark" href="#">고객센터 02-1111-1111</a>
 
