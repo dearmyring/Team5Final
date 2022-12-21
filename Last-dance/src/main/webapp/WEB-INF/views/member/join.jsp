@@ -229,6 +229,10 @@
                                 validChecking.memberNickValid = false;
                                 $("input[name=memberNick]").next("div").text("이미 사용중인 닉네임입니다.");
                             }
+                            else if(resp.memberNick == "관리자") {
+                            	 validChecking.memberNickValid = false;
+                                 $("input[name=memberNick]").next("div").text("닉네임에는 '관리자'를 포함할 수 없습니다.");
+                            }
                         }
                     })
                 };
