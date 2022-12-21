@@ -134,14 +134,14 @@
 		<p class="fw-light mb-0" style="font-family: 'Noto Sans KR', sans-serif;">
 			<i class="fa-regular fa-lightbulb"></i>요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.
 		</p>
-		<p class="fw-light mb-0" style="font-family: 'Noto Sans KR', sans-serif;">
-			예) 10분간 익혀주세요       10분간 약한불로 익혀주세요.
+		<p class="fw-light mb-0 recipe-example" style="font-family: 'Noto Sans KR', sans-serif; text-indent: 8px;">
+			예) 10분간 익혀주세요 <i class="fa-solid fa-caret-right"></i> 10분간 약한불로 익혀주세요. 
 		</p> 
-		<p class="fw-lighter mb-0" style="font-family: 'Noto Sans KR', sans-serif;">
-			 마늘편은 익혀주세요        마늘편은 충분히 익혀주셔야 매운 맛이 사라집니다.
+		<p class="fw-lighter mb-0 recipe-example" style="font-family: 'Noto Sans KR', sans-serif;">
+			마늘편은 익혀주세요 <i class="fa-solid fa-caret-right"></i> 마늘편은 충분히 익혀주셔야 매운 맛이 사라집니다.
 		</p> 
-		<p class="fw-lighter mb-0" style="font-family: 'Noto Sans KR', sans-serif;">
-  					 꿀을 조금 넣어주세요         꿀이 없는 경우, 설탕 1스푼으로 대체 가능합니다.
+		<p class="fw-lighter mb-0 recipe-example" style="font-family: 'Noto Sans KR', sans-serif;">
+			꿀을 조금 넣어주세요 <i class="fa-solid fa-caret-right"></i> 꿀이 없는 경우, 설탕 1스푼으로 대체 가능합니다.
 		</p> 
 	</div>
 </div>

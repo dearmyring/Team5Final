@@ -16,7 +16,7 @@
 			}
 		});
 		
-		//페이지 이전 주소를 가져와서 저장
+/* 		//페이지 이전 주소를 가져와서 저장
 		var referrer = document.referrer;
 // 		console.log(referrer);
 		
@@ -43,7 +43,7 @@
 // 			alert("성공"+referrer);
 // 			console.log("성공");
 // 			<a href="#"><li>여기가 거기</li></a>
-// 		});
+// 		}); */
 		 
 	});
 

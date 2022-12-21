@@ -26,6 +26,9 @@
 		background-color : #99C779;
 		color : white;
 	}
+	label:has(.green-btn){
+		cursor: pointer;
+	} 
 	
 	.search-ingredient {
 		box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
@@ -55,4 +58,12 @@
 	    padding: 5px 5px;
 	    color: white;
 	    font-weight: 400;
+	}
+	.recipe-example{
+		font-size: 14px;
+		color: grey;
+		text-indent: 30px;
+	}
+	.recipe-example i{
+		text-indent: 0;
 	}

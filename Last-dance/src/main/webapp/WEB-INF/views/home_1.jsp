@@ -289,10 +289,10 @@
    		</div>
         <div class="modal center-move-screen">
         	<div class="row center center-info">
-        		<p>고객센터 문의가</p>
+        		<p>고객센터 1:1 문의가</p>
         		<p>실시간 채팅으로 가능해졌어요!</p>
         		<p>문의 사항이 생기시면</p>
-        		<p>' <i class="fa-solid fa-caret-up center-hide"></i> ' 버튼을 눌러주세요.</p>
+        		<p>' <i class="fa-solid fa-caret-up center-hide"></i> ' 버튼을 눌러주세요 :)</p>
         	</div>
             <div class="row center">
                 <img class="w-33 center-img" src="${pageContext.request.contextPath}/images/center-move.png">
@@ -436,6 +436,7 @@
 				$(this).parent().removeClass("fullscreen");
 			});
 			$(".customer-service").click(function(){
+				if("${loginNick}".includes("관리자")) return;
 				if("${loginId}" == ""){
 					alert("로그인이 필요한 서비스입니다.");
 	        		location.replace("http://localhost:8888/member/login");
