@@ -6,14 +6,28 @@
   
 <mapper namespace="ingredient">
 
-	<select id="adminList" parameterType="IngredientListSearchVO" resultType="IngredientDto">
-		select * from ingredient 
-		<where>
-			<if test="type != null and keyword != ''">
-				instr(${type}, #{keyword}) > 0 
-			</if>
-		</where>
-		order by ingredient_name ${sort}
+	<select id="adminList" parameterType="ListSearchVO" resultType="IngredientDto">
+		select * from (
+			select tmp.*, rownum rn from(
+				select * from ingredient 
+				<where>
+					<if test="type != null and keyword != ''">
+						instr(${type}, #{keyword}) > 0 
+					</if>
+				</where>
+				<if test="sort != null">
+					order by ${sort}
+				</if>
+			  ) tmp
+		) where rn between 
+		<choose>
+			<when test="endPost == 0">
+				1 and 10
+			</when>
+			<otherwise>
+				${startPost} and ${endPost}
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="cate" resultType="String">
@@ -30,6 +44,11 @@
 		select ingredient_name from ingredient where ingredient_name=#{ingredient_name}
 	</select>
 
+	<update id="adminUpdate" parameterType="map">
+		update ingredient set 
+			ingredient_name = #{ingredientName}, ingredient_category = #{ingredientCategory} 
+		where ingredient_name = #{originName}
+	</update>
 </mapper>
 
 

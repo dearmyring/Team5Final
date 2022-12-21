@@ -8,6 +8,11 @@
 </jsp:include>
 
 <style>
+.profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
 .reply-border{
 	border-bottom : 1px solid lightgray;
 	width : 90%;
@@ -68,6 +73,7 @@ width : 3%;
     display: flex;
     color: #757575;
     margin-top: 15px;
+    font-size: 13px;
 }
 	
 	.other-info > li:not(:first-child) {
@@ -111,61 +117,82 @@ width : 3%;
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 $(function(){
-
-    $(".like-btn").click(function(){
-
-        $(this).toggleClass("fa-solid fa-regular heart-color");
-        var url = location.href;
-        var boardNo = (url.slice(url.indexOf('=') + 1, url.length));
-
-        var that = $(this);
-        $.ajax({
-            url: "http://localhost:8888/rest/board_like/"+boardNo,
-            method: "get",
-            success: function(resp) {
-             that.next().html(resp);
-            }
-
-        });
-        // ajax end
-    });
-    
-    
-});
-
-
-
-	$(function(){
-		//목표 : 
-		//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
-		//2. cancel-btn을 누르면 editor를 숨기고 view를 보여준다
-		//3. 처음에는 view만 보여준다
-		//1
-		$(".edit-btn").click(function(){
-			$(this).parents(".view").hide();
-			$(this).parents(".view").next(".editor").show();
-		});
-		//2
-		$(".cancel-btn").click(function(){
-			$(this).parents(".editor").hide();
-			$(this).parents(".editor").prev(".view").show();
-		});
-		//3
-		$(".editor").hide();
-	});
+	loadList();
 	
-	
+	//목록을 불러오는 함수
+	function loadList(){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/rest/reply/list/${param.boardNo}",
+			method:"get",
+			success:function(resp) {
+				//원래 있던 댓글 삭제
+				$(".table-reply-list").empty();//태그는 유지하고 내부를 삭제
+				
+				//헤더 생성
+				var header = $("#reply-list-header").text();
+				header = header.replace("{{size}}", resp.length);
+				$(".table-reply-list").append(header);
+				
+				//바디 생성
+				var tbody = $("<tbody>");
+				$(".table-reply-list").append(tbody);
+				
+				//현재 resp는 배열이다.
+				//미리 댓글 형식을 만들어두고 값만 바꿔치기해서 댓글 목록에 추가하도록 구현
+				var loginId = "${loginId}";
+				var loginNick = "${loginNick}";
+				
+				for(var i=0; i < resp.length; i++){
+					var reply = resp[i];
+					var item = $("#reply-list-item").text();
+					var html = $.parseHTML(item);
+					
+					//html의 내용을 상태에 맞게 수정 또는 제거
+					//배지 처리(레벨에 따라 다른 배지가 등장)
+					if(reply.memberBadge >= 1 && reply.memberBadge <= 10) {
+						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+					}
+					
+					//작성자 닉네임
+					$(html).find(".reply-member-nickname").text(reply.memberNick);
+					$(html).find(".reply-writetime").text(reply.replyWriteTime);
+					
+					//블라인드 글 표시 설정
+					if(reply.replyBlind == "Y") {
+						$(html).find(".visible-post-content").remove();
+					}
+					else {
+						$(html).find(".blind-post-content").remove();
+						$(html).find(".visible-post-content").text(reply.replyContent);
+					}
+					
+					//수정/삭제 버튼 작성자에게만 표시
+					if(loginId != reply.replyId) {//작성자일 경우
+						$(html).find(".edit-btn").remove();
+						$(html).find(".delete-btn").remove();
+					}
+					
+					//관리자 처리(블라인드 설정/해제 버튼)
+					if(loginNick.indexOf("관리자") != 0) {
+						$(html).find(".blind-btn").remove();
+						$(html).find(".visible-btn").remove();
+					}
+					
+					
+					
+					tbody.append(html);
+				}
+			}
+		});
+	}
+				
 	//댓글 등록 처리
-	$(function(){
 		$(".reply-insert-form").submit(function(e){
 			e.preventDefault();
 			
 			//댓글 입력값을 가져와서 검사 후 전송
 			var text = $(this).find("[name=replyContent]").val();
-			if(!text){
-				alert("내용을 작성해주세요");
-				return;
-			}
+			
 			
 			var form = this;
 			
@@ -173,23 +200,13 @@ $(function(){
  			$.ajax({
  				url:"${pageContext.request.contextPath}/rest/reply/insert",
  				method:"post",
- 			 /* 	data:{
- 					replyBoardNo:$(this).find("[name=replyBoardNo]").val(),
- 					replyContent:text
- 				},
- 					success:function(resp){
- 						console.log(resp);  */
- 			 		data:$(form).serialize(),//form을 전송 가능한 형태의 문자로 변환한다
- 					success:function(resp){
- 			 		listHandler(resp);
-					
- 					//입력창 초기화(= 폼 초기화) - 자바스크립트로 처리
- 					form.reset();
+		 		data:$(form).serialize(),//form을 전송 가능한 형태의 문자로 변환한다
+				success:function(resp){
+			 		loadList();
+					form.reset();
  				} 
  			});
-			
 		});
-// 		
 		
 		//댓글 삭제버튼을 누르면 삭제 후 목록 갱신
 		$(".delete-btn").click(deleteHandler);
@@ -206,45 +223,51 @@ $(function(){
 					replyBoardNo:$(this).data("reply-board-no"),
 					replyNo:$(this).data("reply-no")
 				},
-				success:function(resp){
-					listHandler(resp);
-				}
-// 				success:listHandler
+				success:loadList(),
 			});
 		}
-		function listHandler(resp){
-			//원래 있던 댓글 삭제
-			$(".table-reply-list").empty();//태그는 유지하고 내부를 삭제
-			
-			//헤더 생성
-			var header = $("#reply-list-header").text();
-			header = header.replace("{{size}}", resp.length);
-			$(".table-reply-list").append(header);
-			
-			//바디 생성
-			$(".table-reply-list").append("<tbody>");
-			
-			//현재 resp는 배열이다.
-			//미리 댓글 형식을 만들어두고 값만 바꿔치기해서 댓글 목록에 추가하도록 구현
-			for(var i=0; i < resp.length; i++){
-				//console.log(resp[i]);
-				var item = $("#reply-list-item").text();
-				item = item.replace("{{memberNick}}", resp[i].memberNick);
-				item = item.replace("{{boardId}}", resp[i].boardId);
-				item = item.replace("{{memberBadge}}", resp[i].memberBadge);
-				item = item.replace("{{replyContent}}", resp[i].replyContent);
-				item = item.replace("{{replyWriteTime}}", resp[i].replyWriteTime);
-				item = item.replace("{{replyEditTime}}", resp[i].replyEditTime);
-				item = item.replace("{{replyNo}}", resp[i].replyNo);
-				item = item.replace("{{replyBoardNo}}", resp[i].replyBoardNo);
-				var result  = $(item);
-				result.find(".delete-btn").click(deleteHandler);//개별 추가
-				console.log("result", result.find(".delete-btn"));
-				$(".table-reply-list").children("tbody").append(result);
-			}
-			
-		}
+		
+})
+
+$(function(){
+	//목표 : 
+	//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
+	//2. cancel-btn을 누르면 editor를 숨기고 view를 보여준다
+	//3. 처음에는 view만 보여준다
+	
+	$(".edit-btn").click(function(){
+		$(this).parents(".view").hide();
+		$(this).parents(".view").next(".editor").show();
 	});
+	
+	$(".cancel-btn").click(function(){
+		$(this).parents(".editor").hide();
+		$(this).parents(".editor").prev(".view").show();
+	});
+	
+	$(".editor").hide();
+});
+	
+	
+//좋아요 비동기
+$(function(){
+    $(".like-btn").click(function(){
+
+        $(this).toggleClass("fa-solid fa-regular heart-color");
+        var url = location.href;
+        var boardNo = (url.slice(url.indexOf('=') + 1, url.length));
+
+        var that = $(this);
+        $.ajax({
+            url: "http://localhost:8888/rest/board_like/"+boardNo,
+            method: "get",
+            success: function(resp) {
+             that.next().html(resp);
+            }
+        });
+        // ajax end
+    });
+});
 </script>
 
 <!-- 자바스크립트 템플릿 생성 -->
@@ -260,6 +283,42 @@ $(function(){
 
 <script type="text/template" id="reply-list-item">
 				<tr class="view">
+					<td class="reply-border">
+						<!-- 작성자 -->
+						<ul class="reply-box">
+							<li class="reply-author left">
+								<p>
+									<img class="reply-badge" src="/images/badge-1.png">
+									<span class="reply-member-nickname"></span>
+									<span class="reply-writetime date"></span>
+								</p>													
+							</li>
+							
+							<li class="reply-main left">
+								<p>
+									<pre class="blind-post-content">블라인드 처리된 게시물입니다</pre>
+									<pre class="visible-post-content"></pre>
+								</p>
+							</li>
+						</ul>
+ 
+						<br>											
+						<br>			
+					</td>
+					<th>
+						<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
+						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyDto.replyBoardNo}}" data-reply-no="{{replyDto.replyNo}}"><img src="/images/delete.png" width="20" height="20"></a>
+						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->	
+			
+						<!-- 블라인드 여부에 따라 다르게 표시 -->
+						<a style="display:block; margin:10px 0px;" class="blind-btn" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="/images/blind2.png" width="20" height="20"></a>
+						<a style="display:block; margin:10px 0px;" class="visible-btn" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="/images/blind.png" width="20" height="20"></a>
+					</th>
+				</tr>	
+
+</script>
+
+<%-- <tr class="view">
 					<td width="90%">
 						<!-- 작성자 -->
 						<ul class="reply-box">
@@ -274,14 +333,12 @@ $(function(){
 							
 							<li class="reply-main left">
 								<p>
-									<c:choose>
+									
 										<c:when test="{{replyDto.replyBlind}}">
 										<pre>블라인드 처리된 게시물입니다</pre>
-									</c:when>
-									<c:otherwise>
+									
 										<pre>{{replyDto.replyContent}}</pre>
-									</c:otherwise>
-									</c:choose>	
+									
 								</p>
 							</li>
 						</ul>
@@ -309,29 +366,7 @@ $(function(){
 							
 						</c:if>
 					</th>
-				</tr>	
-
-
-</script>
-	<!-- <tr class="view">
-					<td>
-						작성자
-						<pre>{{replyContent}}</pre>
-						<br>
-						({{memberBadge}}) 
-						{{memberNick}}			
-						<br><br>
-						{{replyWriteTime}}
-						
-
-					</td>
-					<th>
-						수정과 삭제는 현재 사용자가 남긴 댓글에만 표시
-						<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
-						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyBoardNo}}" data-reply-no="{{replyNo}}"><img src="/images/delete.png" width="20" height="20"></a>
-					</th>
-				</tr>	 -->
-
+				</tr>	 --%>
 
 <div class="container-800 mt-40 mb-40">
 	<div class="container">
@@ -341,9 +376,12 @@ $(function(){
 		
 		<div class="info">
 			<ul class="author">
-				<li><c:if test="${boardDto.memberBadge == 1 }">
+				<li>
+				 <img class="profile" src="${pageContext.request.contextPath}/rest/download/${boardDto.profileAttachmentNo}">					
+					${boardDto.memberNick}
+					<c:if test="${boardDto.memberBadge == 1 }">
 						<img class="title-badge" src="/images/badge-1.png">
-					</c:if>${boardDto.memberNick}</li>
+					</c:if></li>
 			</ul>
 			<ul class="other-info" >
 				<li>작성일: ${boardDto.boardWriteTime}</li>
@@ -399,64 +437,8 @@ $(function(){
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="replyDto" items="${replyList}">
 				
-				<!-- 사용자에게 보여주는 화면 -->
-				<tr class="view">
-					<td class="reply-border">
-						<!-- 작성자 -->
-						<ul class="reply-box">
-							<li class="reply-author left">
-								<p><c:if test="${boardDto.memberBadge == 1 }">
-								<img class="reply-badge" src="/images/badge-1.png">
-									</c:if>${replyDto.memberNick}
-									
-									<span class="date">
-										(<fmt:formatDate  value="${replyDto.replyWriteTime}" 
-													pattern="yyyy-MM-dd HH:mm"/>)
-									</span>
-								</p>							
-								
-							</li>
-							
-							<li class="reply-main left">
-								<p>
-									<c:choose>
-										<c:when test="${replyDto.replyBlind}">
-										블라인드 처리된 게시물입니다
-									</c:when>
-									<c:otherwise>
-										${replyDto.replyContent}
-									</c:otherwise>
-									</c:choose>	
-								</p>
-							</li>
-						</ul>
- 
-						<br>											
-						<br>			
-					</td>
-					<th>
-						<c:if test="${loginId == replyDto.replyId}">
-							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
-							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="${replyDto.replyBoardNo}" data-reply-no="${replyDto.replyNo}"><img src="/images/delete.png" width="20" height="20"></a>
-						</c:if>
-						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->				
-						
-						<c:if test="${loginNick.contains('관리자')}">
-							<!-- 블라인드 여부에 따라 다르게 표시 -->
-							<c:choose>
-								<c:when test="${replyDto.replyBlind == 'Y'}">
-									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyBoardNo=${replyDto.replyBoardNo}"><img src="/images/blind2.png" width="20" height="20"></a>
-								</c:when>
-								<c:otherwise>
-									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo=${replyDto.replyNo}&replyBoardNo=${replyDto.replyBoardNo}"><img src="/images/blind.png" width="20" height="20"></a>
-								</c:otherwise>
-							</c:choose>
-							
-						</c:if>
-					</th>
-				</tr>
+				
 				
 				<c:if test="${loginId ==  replyDto.replyId}">
 				<!-- 수정하기 위한 화면 : 댓글 작성자 본인에게만 출력 -->
@@ -476,7 +458,7 @@ $(function(){
 				</tr>
 				</c:if>
 				
-				</c:forEach>
+				
 			</tbody>
 		</table>
 	</div>
