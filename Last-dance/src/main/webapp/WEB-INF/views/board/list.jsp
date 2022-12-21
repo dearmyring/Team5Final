@@ -39,10 +39,10 @@
     left: 200px;
 }
 
-.thumbnail{
-   width: 70%;
-   height:70%;
-  
+.thumbnail {
+    width: 250px;
+    height: 100%;
+    margin-top: 12px;
 }
 .btn {
     border: none;
@@ -289,7 +289,7 @@ width: 20%;
       });
       
       
-      var p =1;
+    /*   var p =1;
       $(".board-plus-btn").click(function(){
     	  p=p+1;     	  
     	  $.ajax({
@@ -360,7 +360,7 @@ width: 20%;
                  }
               }
            });
-	  });
+	  }); */
       
       
       /* 레시피 리스트 검색 */

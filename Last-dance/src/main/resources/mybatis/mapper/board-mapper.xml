@@ -5,7 +5,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 
-   <select id="list" parameterType="BoardListSearchVO" resultType="BoardListVO" >
+<!--    <select id="list" parameterType="BoardListSearchVO" resultType="BoardListVO" >
       select * from (select tmp.*, rownum rn from(select c.*, a.board_attachment_no from board_img a right outer join (
 		select
              B.*,
@@ -33,9 +33,9 @@
 		<if test = "sort != ''">
 				order by ${sort}
 		</if>
-   </select> 
+   </select>  -->
    
-	<!-- <select id="list" parameterType="BoardListSearchVO" resultType="BoardListVO">
+	 <select id="list" parameterType="BoardListSearchVO" resultType="BoardListVO">
 	select c.*, a.board_attachment_no from board_img a right outer join (
 		select
              B.*,
@@ -62,7 +62,7 @@
 		<if test = "sort != ''">
 				order by ${sort}
 		</if>
-	</select> -->
+	</select>
 	
 
 	<insert id="insert" parameterType="BoardDto">
