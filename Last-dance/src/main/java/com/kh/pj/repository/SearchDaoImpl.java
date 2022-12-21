@@ -1,23 +1,20 @@
 package com.kh.pj.repository;
 
+
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.IngredientDto;
-import com.kh.pj.entity.NoticeDto;
-import com.kh.pj.entity.SearchDto;
-import com.kh.pj.vo.RecipeKeywordListSearchVO;
+import com.kh.pj.vo.RecipeIngredientVO;
+import com.kh.pj.vo.RecipeListSearchResultMapVO;
+
 @Repository
 public class SearchDaoImpl implements SearchDao {
 	
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
-	
+
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -28,27 +25,13 @@ public class SearchDaoImpl implements SearchDao {
 		
 	}
 	
-	private RowMapper<SearchDto> mapper = (rs,idx)-> {
-		return SearchDto.builder()
-				.searchIngredient(rs.getString("search_ingredient"))
-				.searchTime(rs.getDate("search_time"))
-				.build();
-	};
-
-	@Override
-	public List<SearchDto> searchList(String SearchIngredient) {
-		String sql = "select R.* ,RI.recipe_ingredient_name from recipe R inner join recipe_ingredient RI on R.recipe_no=RI.recipe_no where recipe_ingredient_name=?";
-		Object[] param = {SearchIngredient};
-		return jdbcTemplate.query(sql, mapper,param);
-
-	}
-	
 	@Override
 	public List<IngredientDto> searchForIngredients(String ingredientName) {
 		return sqlSession.selectList("search.searchForIngredient", ingredientName);
 	}
 	
-
-	
-
+	@Override
+	public List<RecipeListSearchResultMapVO> complexSearch(RecipeIngredientVO recipeIngredientVO) {
+		return sqlSession.selectList("search.recipeListSearchFinal", recipeIngredientVO);
+	}
 }

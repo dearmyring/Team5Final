@@ -23,7 +23,9 @@ import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeImgDto;
 import com.kh.pj.entity.RecipeIngredientDto;
 import com.kh.pj.repository.AdminDao;
+import com.kh.pj.repository.AttachmentDao;
 import com.kh.pj.repository.BoardDao;
+import com.kh.pj.repository.BoardImgDao;
 import com.kh.pj.repository.CategoryDao;
 import com.kh.pj.repository.CenterDao;
 import com.kh.pj.repository.HashtagDao;
@@ -34,6 +36,7 @@ import com.kh.pj.repository.RecipeContentDao;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
+import com.kh.pj.repository.ReplyDao;
 import com.kh.pj.vo.ListSearchVO;
 
 @Controller
@@ -75,6 +78,15 @@ public class AdminController {
 	
 	@Autowired
 	private CenterDao centerDao;
+	
+	@Autowired
+	private BoardImgDao boardImgDao;
+	
+	@Autowired
+	private ReplyDao replyDao;
+	
+	@Autowired
+	private AttachmentDao attachmentDao;
 	
 	@GetMapping("/")
 	public String main() {
@@ -391,4 +403,18 @@ public class AdminController {
 		return "admin/center-list";
 	}
 	
+	//관리자 게시판 상세
+	@GetMapping("/board/detail/{boardNo}")
+	public String boardDetail(@PathVariable int boardNo, Model model,
+											HttpSession session) {
+		
+		//모델로 첨부
+		model.addAttribute("boardDto", boardDao.selectOne(boardNo));  //상세
+		model.addAttribute("boardImgDto", boardImgDao.find(boardNo)); //이미지
+		model.addAttribute("replyList",replyDao.selectList(boardNo)); //댓글
+		model.addAttribute("filesList", attachmentDao.selectBoardFileList(boardNo)); //첨부파일
+
+		return "admin/board-detail";
+		}
+		
 }

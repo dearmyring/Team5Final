@@ -9,6 +9,17 @@
 
 
 <style>
+.input {
+    font-size: 15px;
+    padding: 0.75em;
+    outline: none;
+    border:1px solid #CBCACA;
+    border-radius: 5px;
+}
+.input:focus {
+    border-color: #3bc5f0;
+    opacity: 70%;
+}
 .item-bold{
    font-weight: bold;
 }
@@ -29,8 +40,8 @@
 }
 
 .thumbnail{
-   width: 100%;
-   height:100%;
+   width: 70%;
+   height:70%;
   
 }
 .btn {
@@ -65,7 +76,7 @@
 }
 .board-list-content{
    margin : 40px;
-   font-size:15px;
+   font-size:18px;
    margin-left :7px;
    height: 50px;
    font-weight: 500;
@@ -100,18 +111,17 @@ input {
 .board-search-btn {
    display: none;
 }
-<<<<<<< HEAD
 
 
 .board-bottom{
    width:700px;
-   border-bottom : 1px solid gray;
+   border-bottom : 1px solid lightgray;
    
 }
 
 .notice-bottom {
    width:700px;
-   border-bottom : 0.5px solid gray;
+   border-bottom : 0.5px solid lightgray;
    
 }
 
@@ -173,10 +183,10 @@ width: 20%;
       착용해보세요 :)</h3>
    <div class="center search mt-10">
       <select class="input-type input">
+         
          <option value="board_title">제목</option>
          <option value="member_nick">작성자</option>
          <option value="board_content">내용</option>
-         <option value="">제목</option>
       </select> <input class="input input-keyword input-seach" type="text"
          placeholder="검색어를 입력하세요">
       <button class="board-search-btn" type="button"></button>
@@ -190,7 +200,7 @@ width: 20%;
    <tr>
       <th colspan="12"><select class="sort-click float-left input">
             <option value="">정렬</option>
-            <option value="board_no desc">최근 작성일 순</option>
+            <option value="board_writetime desc">최근 작성일 순</option>
             <option value="board_click desc">조회수 높은 순</option>
             <option value="board_like desc">추천 많은 순</option>
             <option value="reply_cnt desc">댓글 많은 순</option>
@@ -240,9 +250,8 @@ width: 20%;
 				</div>
 			</div>
 			<div class="all-thumbnail-box w-20">
-			<%-- 	 <img src="${pageContext.request.contextPath}/rest/download/${boardImgDto.boardAttachmentNo}">  --%>
 				<div class="thumbnail-box">
-					<img class="thumbnail" src="${pageContext.request.contextPath}/images/image 3.png">
+					 <img class="thumbnail" src="${pageContext.request.contextPath}/rest/download/${boardDto.boardAttachmentNo}" onerror="this.style.display='none';">			
 				</div>
 			</div>                  
 		</div>
@@ -336,8 +345,8 @@ width: 20%;
                      				divSecond1.append(divTitle).append(divContent).append(divNick);
                                           
 
-//                                     var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo);
-                                    var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
+                                    var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
+                                   // var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
                                     var thumbnail = $("<div>").addClass("thumbnail-box").append(thumbnailImg);
                                     var divSecond2 = $("<div>").addClass("all-thumbnail-box w-20").append(thumbnail);
                                     
@@ -419,8 +428,8 @@ width: 20%;
           				divSecond1.append(divTitle).append(divContent).append(divNick);
                                
 
-//                          var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo);
-                         var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
+                       var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
+                      //   var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
                          var thumbnail = $("<div>").addClass("thumbnail-box").append(thumbnailImg);
                          var divSecond2 = $("<div>").addClass("all-thumbnail-box w-20").append(thumbnail);
                          
