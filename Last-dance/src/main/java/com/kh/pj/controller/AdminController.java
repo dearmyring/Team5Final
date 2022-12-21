@@ -26,7 +26,6 @@ import com.kh.pj.repository.AdminDao;
 import com.kh.pj.repository.AttachmentDao;
 import com.kh.pj.repository.BoardDao;
 import com.kh.pj.repository.BoardImgDao;
-
 import com.kh.pj.repository.CategoryDao;
 import com.kh.pj.repository.CenterDao;
 import com.kh.pj.repository.HashtagDao;
@@ -39,6 +38,7 @@ import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
 import com.kh.pj.repository.ReplyDao;
 import com.kh.pj.vo.ListSearchVO;
+import com.kh.pj.vo.RecipeViewTopFiveVO;
 
 @Controller
 @RequestMapping("/admin")
@@ -90,9 +90,14 @@ public class AdminController {
 	private AttachmentDao attachmentDao;
 	
 
-	
 	@GetMapping("/")
-	public String main() {
+	public String main(Model model) {
+		
+		//레시피 TOP5(좋아요 많은 순 -> 조회수 많은 순)
+		model.addAttribute("recipeTopFive",adminDao.recipeTopFive());
+		//게시글 TOP5(좋아요 많은 순 -> 조회수 많은 순)
+		model.addAttribute("boardTopFive", adminDao.boardTopFive());
+		
 		return "admin/main";
 	}
 	
@@ -419,5 +424,4 @@ public class AdminController {
 
 		return "admin/board-detail";
 		}
-		
 }

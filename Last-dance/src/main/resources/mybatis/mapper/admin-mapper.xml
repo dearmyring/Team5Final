@@ -23,4 +23,90 @@
 				</otherwise>
 			</choose>
    </select>
+   
+   <!-- 최근 일주일 가입자 수 -->
+   <select id="memberCount" resultType="MemberCountVO">
+		select to_char(member_join, 'yyyy-MM-dd') JOIN, count(member_id) CNT from member 
+		where to_char(member_join, 'yyyy-MM-dd') between to_char(sysdate-6, 'yyyy-MM-dd') and to_char(sysdate, 'yyyy-MM-dd') 
+		group by member_id, to_char(member_join, 'yyyy-MM-dd') order by CNT desc
+   </select>
+   
+   <!-- 오늘의 인기 검색어 1~10위 -->
+   <select id="trendingSearches" resultType="TrendingSearchesVO">
+		select * from (
+		    select TMP.*, rownum rn from (
+		        select search_ingredient, count(search_ingredient) CNT from search where to_char(search_time, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd') group by search_ingredient order by CNT desc
+		    )TMP
+		) where rn between 1 and 10
+   </select>
+   
+   <!-- 오늘 가장 많은 좋아요 레시피 탑5  -->
+   <select id="recipeTodayLikeTopFive" resultType="RecipeTopFiveVO">
+		select * from (
+		    select TMP.*, rownum rn from (
+		        select R.recipe_title, count(R.recipe_title) CNT from recipe R inner join recipe_like RL on R.recipe_no = RL.recipe_like_no where to_char(RL.recipe_like_time, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd') group by R.recipe_title order by CNT desc
+		    )TMP
+		) where rn between 1 and 5
+   </select>
+   
+   <!-- 최근 일주일 조회 수 높은 레시피 탑5 -->
+   <select id="latelyTopViewRecipe" resultType="RecipeTopFiveVO">
+		select * from (
+		    select TMP.*, rownum rn from (
+		        select R.recipe_title, count(R.recipe_title) CNT from recipe R inner join recipe_view RV on R.recipe_no = RV.recipe_view_no where to_char(RV.recipe_view_time, 'yyyy-MM-dd') between to_char(sysdate-7, 'yyyy-MM-dd') and to_char(sysdate-1, 'yyyy-MM-dd') group by R.recipe_title order by CNT desc
+		    )TMP
+		) where rn between 1 and 5
+   </select>
+   
+   <!-- 오늘 최고 조회 수 레시피 탑5 -->
+   <select id="todayTopViewRecipe" resultType="RecipeTopFiveVO">
+		select * from (
+		    select TMP.*, rownum rn from (
+		        select R.recipe_title, count(R.recipe_title) CNT from recipe R 
+		        inner join recipe_view RV on R.recipe_no = RV.recipe_view_no 
+		        where to_char(RV.recipe_view_time, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd') group by R.recipe_title order by CNT desc
+		    )TMP
+		) where rn between 1 and 5
+   </select>
+   
+   <!-- 최근 일주일 좋아요 레시피 탑5 -->
+   <select id="latelyTopLikeRecipe" resultType="RecipeTopFiveVO">
+		select * from (
+		    select TMP.*, rownum rn from (
+		        select R.recipe_title, count(R.recipe_title) CNT from recipe R 
+		        inner join recipe_like RL on R.recipe_no = RL.recipe_like_no 
+		        where to_char(RL.recipe_like_time, 'yyyy-MM-dd') between to_char(sysdate-7, 'yyyy-MM-dd') and to_char(sysdate-1, 'yyyy-MM-dd') group by R.recipe_title order by CNT desc
+		    )TMP
+		) where rn between 1 and 5
+   </select>
+   
+   <!-- 오늘 가장 많은 게시글을 쓴 사람 탑5 -->
+   <select id="todayTopWriter" resultType="BoardTopFiveVO">
+		select * from (
+		    select TMP.*, rownum rn from (
+		        select M.member_id, M.member_nick, count(M.member_id) CNT from member M inner join board B on M.member_id = B.board_id 
+		        where to_char(B.board_writetime, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd') group by M.member_id, M.member_nick order by CNT desc
+		    )TMP
+		) where rn between 1 and 5
+   </select>
+   
+   <!-- 레시피 TOP5(좋아요 많은 순 -> 조회수 많은 순) -->
+   <select id="recipeTopFive" resultType="RecipeViewTopFiveVO">
+		select * from (
+		    select TMP.*, rownum rn from (
+		        select * from recipe order by recipe_like desc, recipe_click desc
+		    )TMP
+		) where rn between 1 and 5
+   </select>
+   
+   <!-- 게시글 TOP5(좋아요 많은 순 -> 조회수 많은 순) -->
+   <select id="boardTopFive" resultType="BoardViewTopFiveVO">
+		select * from (
+		    select TMP.*, rownum rn from (
+		        select * from board order by board_like desc, board_click desc
+		    )TMP
+		) where rn between 1 and 5
+   </select>
+   
+   
 </mapper>
