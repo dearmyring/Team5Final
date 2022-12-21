@@ -7,6 +7,7 @@ import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeDetailVO;
+import com.kh.pj.vo.LatelyViewListVO;
 import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.RecipeListVO;
 
@@ -78,6 +79,9 @@ public interface RecipeDao {
 	
 	//레시피 개수 출력
 	int countLike(int recipeNo);
+	
+	//최근 본 레시피 3개
+	List<LatelyViewListVO> latelyViewList(String memberId);
 	
 
 }

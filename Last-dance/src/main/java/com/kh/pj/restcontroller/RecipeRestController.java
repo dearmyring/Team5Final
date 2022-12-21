@@ -19,6 +19,7 @@ import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.repository.AdminDao;
 import com.kh.pj.repository.RecipeDao;
+import com.kh.pj.vo.LatelyViewListVO;
 import com.kh.pj.vo.ListSearchVO;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
@@ -77,5 +78,11 @@ public class RecipeRestController {
 		return recipeDao.countLike(recipeNo);
 		
 	}//likeUpdate() end
+	
+	@GetMapping("/recipe-latelyViewList")
+	public List<LatelyViewListVO> latelyViewList(HttpSession session) {
+		String memberId = (String) session.getAttribute("loginId");
+		return recipeDao.latelyViewList(memberId);
+	}
 	
 }
