@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.AdminDto;
-import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
@@ -28,6 +27,7 @@ import com.kh.pj.repository.AttachmentDao;
 import com.kh.pj.repository.BoardDao;
 import com.kh.pj.repository.BoardImgDao;
 import com.kh.pj.repository.CategoryDao;
+import com.kh.pj.repository.CenterDao;
 import com.kh.pj.repository.HashtagDao;
 import com.kh.pj.repository.IngredientDao;
 import com.kh.pj.repository.MemberDao;
@@ -37,7 +37,6 @@ import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
 import com.kh.pj.repository.ReplyDao;
-import com.kh.pj.vo.IngredientListSearchVO;
 import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.RecipeViewTopFiveVO;
 
@@ -77,6 +76,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminDao adminDao;
+	
+	@Autowired
+	private CenterDao centerDao;
 	
 	@Autowired
 	private BoardImgDao boardImgDao;
@@ -127,6 +129,7 @@ public class AdminController {
 			@ModelAttribute(name="voPagination") ListSearchVO vo, 
 			Model model) {
 		vo.setTable("recipe");
+		vo.setSort("recipe_no desc");
 		vo.setCount(adminDao.adminPostCount(vo));
 		model.addAttribute("recipeList", recipeDao.adminList(vo));
 		return "admin/recipe-list";
@@ -363,8 +366,16 @@ public class AdminController {
 	
 	//관리자 재료 컨트롤러
 	@GetMapping("/ingredient/list")
-	public String ingredientList(Model model) {
-		IngredientListSearchVO vo = IngredientListSearchVO.builder().build();
+	public String ingredientList(
+			@ModelAttribute(name="voPagination") ListSearchVO vo,
+			Model model) {
+		vo.setTable("ingredient");
+		if(vo.getSort() == null) {
+			vo.setSort("ingredient_name asc");
+		}
+		vo.setCount(adminDao.adminPostCount(vo));
+		vo.setStartPost(vo.startRow());
+		vo.setEndPost(vo.endRow());
 		model.addAttribute("ingredientList", ingredientDao.adminList(vo));
 		model.addAttribute("categoryList", categoryDao.adminList());
 		return "admin/ingredient-list";
@@ -372,8 +383,17 @@ public class AdminController {
 	
 	//관리자 사용자 컨트롤러
 	@GetMapping("/member/list")
-	public String memberList(Model model) {
-		model.addAttribute("memberList", memberDao.adminList());
+	public String memberList(
+			Model model, 
+			@ModelAttribute(name="voPagination") ListSearchVO vo) {
+		vo.setTable("member");
+		if(vo.getSort() == null) {
+			vo.setSort("member_id asc");
+		}
+		vo.setCount(adminDao.adminPostCount(vo));
+		vo.setStartPost(vo.startRow());
+		vo.setEndPost(vo.endRow());
+		model.addAttribute("memberList", memberDao.adminList(vo));
 		return "admin/member-list";
 	}
 	
@@ -384,4 +404,23 @@ public class AdminController {
 		return "admin/board-list";
 	}
 	
+	@GetMapping("/center/list")
+	public String centerList(Model model) {
+		model.addAttribute("centerList", centerDao.adminList());
+		return "admin/center-list";
+	}
+	
+	//관리자 게시판 상세
+	@GetMapping("/board/detail/{boardNo}")
+	public String boardDetail(@PathVariable int boardNo, Model model,
+											HttpSession session) {
+		
+		//모델로 첨부
+		model.addAttribute("boardDto", boardDao.selectOne(boardNo));  //상세
+		model.addAttribute("boardImgDto", boardImgDao.find(boardNo)); //이미지
+		model.addAttribute("replyList",replyDao.selectList(boardNo)); //댓글
+		model.addAttribute("filesList", attachmentDao.selectBoardFileList(boardNo)); //첨부파일
+
+		return "admin/board-detail";
+		}
 }
