@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.BoardLikeDto;
+import com.kh.pj.entity.RecipeDto;
 import com.kh.pj.repository.AdminDao;
 
 import com.kh.pj.repository.BoardDao;
 import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
+import com.kh.pj.vo.ListSearchVO1;
 import com.kh.pj.vo.ListSearchVO2;
 
 @CrossOrigin(origins ="http://127.0.0.1:5500")
@@ -36,11 +38,18 @@ public class BoardRestController {
 	@PostMapping("/board")
 	public List<BoardListVO> boardList(
 			@RequestBody BoardListSearchVO vo){
-		int total = boardDao.boardTotal();
-		vo.setCount(total);
+		vo.setCount(boardDao.boardTotal(vo));		
+		vo.setStartPost(vo.startRow());
+		vo.setEndPost(vo.endRow());
 		return boardDao.boardList(vo);
 	}
 	
+	@PostMapping("/board-count")
+	public BoardListSearchVO recipeCount(@RequestBody BoardListSearchVO vo) {
+		vo.setCount(boardDao.boardTotal(vo));
+
+		return vo;
+	}
 	
 	@PostMapping("/board2")
 	public List<BoardDto> adminList(
