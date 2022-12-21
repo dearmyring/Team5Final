@@ -3,6 +3,7 @@ package com.kh.pj.repository;
 import java.util.List;
 
 import com.kh.pj.entity.AdminDto;
+import com.kh.pj.entity.MemberDto;
 import com.kh.pj.vo.BoardTopFiveVO;
 import com.kh.pj.vo.BoardViewTopFiveVO;
 import com.kh.pj.vo.ListSearchVO;
@@ -32,6 +33,8 @@ public interface AdminDao {
 	List<RecipeTopFiveVO> latelyTopLikeRecipe();
 	//오늘 가장 많은 게시글을 쓴 사람 탑5
 	List<BoardTopFiveVO> todayTopWriter();
+	//레벨별 회원 분포
+	List<MemberDto> levelCount();
 	
 	//레시피 TOP5(좋아요 많은 순 -> 조회수 많은 순)
 	List<RecipeViewTopFiveVO> recipeTopFive();

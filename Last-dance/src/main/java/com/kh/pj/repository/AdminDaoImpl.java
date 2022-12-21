@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.AdminDto;
+import com.kh.pj.entity.MemberDto;
 import com.kh.pj.vo.BoardTopFiveVO;
 import com.kh.pj.vo.BoardViewTopFiveVO;
 import com.kh.pj.vo.ListSearchVO;
@@ -79,6 +80,12 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public List<BoardTopFiveVO> todayTopWriter() {
 		return sqlSession.selectList("admin.todayTopWriter");
+	}
+	
+	//레벨별 회원 분포
+	@Override
+	public List<MemberDto> levelCount() {
+		return sqlSession.selectList("member.adminList");
 	}
 	
 	//레시피 TOP5(좋아요 많은 순 -> 조회수 많은 순)

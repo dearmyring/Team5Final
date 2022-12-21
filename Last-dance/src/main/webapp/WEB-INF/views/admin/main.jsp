@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css">
@@ -11,52 +12,95 @@
 
 
 <style>
-	.chart-list,
-	.top-list {
+	.admin-main-container {
 		width: 1200px;
 		margin: auto;
+	}
+
+	.chart-list {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+	
+	.user-active {
 		display: flex;
 		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
+		justify-content: space-around;
+		width: 100%;
+	}
+	
+	.top-recipe {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		width: 100%;
+	}
+	
+	.top-recipe > div {
+		display: flex;
+		justify-content: space-around;
 	}
 	
 	.top-list {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
 		margin-bottom: 100px;
+		justify-content: space-between;
 	}
 	
 	.chart-box {
 		width: 400px;
 		height: 400px;
+		margin-bottom: 100px;
+	}
+	
+	.lately-join-user > .chart-box {
+		width: 700px;
+	}
+	
+	.top-recipe > div:nth-child(2) > .chart-box {
+		width: 700px;
+	}
+	
+	.chart-box > p {
+		margin-bottom: 50px;
+		text-align: center;
 	}
 	
 	.top-five-box {
-		width: 700px;
+		width: 580px;
 	}
 	
 	.top-five-list {
 		text-align: center;
 	}
 	
-	.top-five-item {
-		display: table;
-		border-bottom: 1px solid black;
+	.top-five-item  {
+		border-bottom: 1px solid #E7E7E7;
+		height: 30px;
 	}
 	
-	.top-five-list .top-five-item li {
-		display: table-cell;
+	thead > .top-five-item {
+		border-bottom: 1px solid #373A3C;
 	}
 	
-	.top-five-list > li:nth-child(2) > .top-five-item:hover {
+	.top-five-item > td {
+		vertical-align: middle;
+	}
+
+	.top-five-item:hover {
 		background-color: #F7F7F7;
 		color: black;
 	}
 	
-	.top-five-list > li:nth-child(2) > .top-five-item li:nth-child(2) {
+	 .top-five-item td:nth-child(2) {
 		text-align: left;
 	}
 	
-	.top-five-list > li:nth-child(2) > .top-five-item li:nth-child(2) > a {
+	.tfi-title > a {
 		display: block;
 		width: 100%;
 		color: #373A3C;
@@ -77,96 +121,112 @@
 <div class="mt-5">&nbsp;</div>
 <div class="mt-5">&nbsp;</div>
 
-<div>
-	<h1 style="text-align: center; color: pink;">미농이 페이지</h1>
+<div class="admin-main-container">
+	<h1 style="text-align: center; color: pink;">
+		<i class="fa-solid fa-poo"></i>
+		미농이 페이지
+		<i class="fa-solid fa-poo"></i>
+	</h1>
 	
 	<div class="top-list">
 		<!-- 인기 레시피 탑 5 -->
 		<div class="top-five-box">
-			<h2>인기 레시피</h2>
-			<ul class="top-five-list">
-				<li>
-					<ul class="top-five-item">
-						<li class="tfi-no">번호</li>
-						<li class="tfi-title">제목</li>
-						<li class="tfi-time">소요시간</li>
-						<li class="tfi-writer">작성자</li>
-					</ul>
-				</li>
-				<li>
+			<h3>인기 레시피</h3>
+			<table class="top-five-list">
+				<thead>
+					<tr class="top-five-item">
+						<th class="tfi-no">번호</th>
+						<th class="tfi-title">제목</th>
+						<th class="tfi-time">소요시간</th>
+						<th class="tfi-writer">작성자</th>
+					</tr>
+				</thead>
+				<tbody>
 				<c:forEach var="recipeTopFive" items="${recipeTopFive}">
-					<ul class="top-five-item">
-						<li class="tfi-no">${recipeTopFive.recipeNo}</li>
-						<li class="tfi-title"><a href="recipe/detail/${recipeTopFive.recipeNo}">${recipeTopFive.recipeTitle}</a></li>
-						<li class="tfi-time">${recipeTopFive.recipeTime}</li>
-						<li class="tfi-writer">${recipeTopFive.recipeNick}</li>
-					</ul>
+					<tr class="top-five-item">
+						<td class="tfi-no">${recipeTopFive.recipeNo}</td>
+						<td class="tfi-title"><a href="recipe/detail/${recipeTopFive.recipeNo}">${recipeTopFive.recipeTitle}</a></td>
+						<td class="tfi-time">${recipeTopFive.recipeTime}</td>
+						<td class="tfi-writer">${recipeTopFive.recipeNick}</td>
+					</tr>
 				</c:forEach>
-				</li>
-			</ul>	
+				</tbody>
+			</table>	
 		</div>
 		
 		<!-- 인기 게시글 탑 5(닉네임까지 찍히도록 쿼리 수정해야함) -->
 		<div class="top-five-box">
-			<h2>인기 게시글</h2>
-			<ul class="top-five-list">
-				<li>
-					<ul class="top-five-item">
-						<li class="tfi-no">번호</li>
-						<li class="tfi-title">제목</li>
-						<li class="tfi-time">작성시간</li>
-						<li class="tfi-writer">작성자</li>
-					</ul>
-				</li>
-				<li>
+			<h3>인기 게시글</h3>
+			<table class="top-five-list">
+				<thead>
+					<tr class="top-five-item">
+						<th class="tfi-no">번호</th>
+						<th class="tfi-title">제목</th>
+						<th class="tfi-time">작성시간</th>
+						<th class="tfi-writer">작성자</th>
+					</tr>
+				</thead>
+				<tbody>
 				<c:forEach var="boardTopFive" items="${boardTopFive}">
-					<ul class="top-five-item">
-						<li class="tfi-no">${boardTopFive.boardNo}</li>
-						<li class="tfi-title"><a href="board/detail/${boardTopFive.boardNo}">${boardTopFive.boardTitle}</a></li>
-						<li class="tfi-time">${boardTopFive.boardWriteTime}</li>
-						<li class="tfi-writer">${boardTopFive.boardId}</li>
-					</ul>
+					<tr class="top-five-item">
+						<td class="tfi-no">${boardTopFive.boardNo}</td>
+						<td class="tfi-title"><a href="board/detail/${boardTopFive.boardNo}">${boardTopFive.boardTitle}</a></td>
+						<td class="tfi-time">
+						<fmt:formatDate value="${boardTopFive.boardWriteTime}" pattern="yy.MM.dd"/>
+						</td>
+						<td class="tfi-writer">${boardTopFive.boardId}</td>
+					</tr>
 				</c:forEach>
-				</li>
-			</ul>	
+				</tbody>
+			</table>	
 		</div>
 	</div>
-		
+	
+	<!-- 차트 시작  -->
 	<div class="chart-list">
-		<div class="chart-box">
-			<span>최근 일주일 가입자 수(이건 포기 못함)</span>
-	        <canvas id="memberChart"></canvas>
+		<div class="lately-join-user">
+			<div class="chart-box">
+				<p>최근 일주일 가입자 수</p>
+		        <canvas id="memberChart"></canvas>
+		    </div>
+		</div>
+		    <div class="user-active">
+		    	<div class="chart-box">
+			    <p>오늘의 인기 검색어 탑10</p>
+		    	<canvas id="trendingSearchesChart"></canvas>
+		    </div>
+	    	<div class="chart-box">
+			    <p>오늘 가장 많은 게시글을 쓴 사람 TOP 5</p>
+		    	<canvas id="todayTopWriterChart"></canvas>
+		    </div>
 	    </div>
 	    
-	    <div class="chart-box">
-		    <span>오늘의 인기 검색어 탑10(이건 포기 못함)</span>
-	    	<canvas id="trendingSearchesChart"></canvas>
+	    <div class="top-recipe">
+	    	<div>
+	    		<div class="chart-box">
+				    <p>오늘 가장 많은 좋아요를 받은 레시피 TOP 5</p>
+			    	<canvas id="recipeTodayLikeTopFiveChart"></canvas>
+			    </div>
+			    
+			    <div class="chart-box">
+				    <p>최근 일주일 조회 수 높은 레시피 TOP 5</p>
+			    	<canvas id="latelyTopViewRecipeChart"></canvas>
+			    </div>
+	    	</div>
+			<div>
+				<div class="chart-box">
+				    <p>오늘 최고 조회 수 레시피 TOP 5</p>
+			    	<canvas id="todayTopViewRecipeChart"></canvas>
+			    </div>
+			    
+			    <div class="chart-box">
+				    <p>최근 일주일 좋아요 수 높은 레시피 TOP 5</p>
+			    	<canvas id="latelyTopLikeRecipeChart"></canvas>
+			    </div>
+			</div>
+		    
 	    </div>
 	    
-	    <div class="chart-box">
-		    <span>오늘 가장 많은 좋아요를 받은 레시피 TOP 5</span>
-	    	<canvas id="recipeTodayLikeTopFiveChart"></canvas>
-	    </div>
-	    
-	    <div class="chart-box">
-		    <span>최근 일주일 조회 수 높은 레시피 TOP 5</span>
-	    	<canvas id="latelyTopViewRecipeChart"></canvas>
-	    </div>
-	    
-	    <div class="chart-box">
-		    <span>오늘 최고 조회 수 레시피 TOP 5</span>
-	    	<canvas id="todayTopViewRecipeChart"></canvas>
-	    </div>
-	    
-	    <div class="chart-box">
-		    <span>최근 일주일 좋아요 수 높은 레시피 TOP 5</span>
-	    	<canvas id="latelyTopLikeRecipeChart"></canvas>
-	    </div>
-	    
-	    <div class="chart-box">
-		    <span>오늘 가장 많은 게시글을 쓴 사람 TOP 5</span>
-	    	<canvas id="todayTopWriterChart"></canvas>
-	    </div>
     
     </div>
     
@@ -398,6 +458,11 @@ $(function(){
                         }]
                     },
                     options: {
+                    	plugins:{
+                            legend: {
+                                display: false
+                            },
+                        },
                         scales: {
                             y: {
                                 beginAtZero: true
@@ -517,6 +582,12 @@ $(function(){
                         scales: {
                             y: {
                                 beginAtZero: true
+                            }
+                        },
+                        legend: {
+                            display: false,
+                            labels: {
+                                fontColor: 'rgb(255, 99, 132)'
                             }
                         }
                     }

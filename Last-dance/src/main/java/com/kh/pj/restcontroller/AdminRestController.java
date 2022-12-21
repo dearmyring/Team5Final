@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.pj.entity.AdminDto;
+import com.kh.pj.entity.MemberDto;
 import com.kh.pj.repository.AdminDao;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.vo.BoardTopFiveVO;
@@ -93,6 +94,12 @@ public class AdminRestController {
 	@GetMapping("today-top-writer")
 	public List<BoardTopFiveVO> todayTopWriter() {
 		return adminDao.todayTopWriter();
+	}
+	
+	//레벨별 회원 분포
+	@GetMapping("level-count")
+	public List<MemberDto> levelCount() {
+		return adminDao.levelCount();
 	}
 	
 	
