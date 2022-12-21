@@ -417,7 +417,17 @@
 						$(".push-recipe-top10").empty();
 						for(var i = 0; i < resp.length; i++) {
 							var pushListNum = $("<div>").addClass("w-20 mt-20 left push-list-num").html(i + 1);
-							var pushListContent = $("<div>").addClass("w-80 mt-20 left").html(resp[i].recipeTitle);
+							var pushListContent = 
+								$("<div>").addClass("w-80 mt-20 left").html("<a href='/recipe/detail?recipeNo="+ resp[i].recipeNo + "'>" + resp[i].recipeTitle + "</a>").hover(
+									function(){
+										$(this).css("transition", "transform .2s ease, padding .2s ease")
+										.css("transform", "translate(5px ,0)")
+										.css("cursor", "pointer");
+									}, 
+									function(){
+										$(this).css("transform", "translate(0 ,0)")
+									}
+								);
 							$(".push-recipe-top10").append(pushListNum).append(pushListContent);
 						}
 					}

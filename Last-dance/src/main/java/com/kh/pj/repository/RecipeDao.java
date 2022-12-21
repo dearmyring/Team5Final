@@ -8,6 +8,7 @@ import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeDetailVO;
 import com.kh.pj.vo.ListSearchVO;
+import com.kh.pj.vo.ListSearchVO1;
 import com.kh.pj.vo.RecipeListVO;
 
 public interface RecipeDao {
@@ -36,7 +37,7 @@ public interface RecipeDao {
 	public void adminUpdate(RecipeDto recipeDto);
 	
 	//레시피 리스트 출력
-	public List<RecipeListVO> recipeList();
+	public List<RecipeDto> recipeList(ListSearchVO1 vo1);
 //	
 //	//재료별 레시피 갯수 출력
 //	public int searchCount(String keyword)throws Exception;
@@ -78,6 +79,10 @@ public interface RecipeDao {
 	
 	//레시피 개수 출력
 	int countLike(int recipeNo);
+	
+	
+	//레시피 리스트 정렬 관련
+	public int recipePostCount(ListSearchVO1 vo1);
 	
 
 }

@@ -17,6 +17,7 @@ import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeDetailVO;
 import com.kh.pj.vo.ListSearchVO;
+import com.kh.pj.vo.ListSearchVO1;
 import com.kh.pj.vo.RecipeListVO;
 
 @Repository
@@ -119,10 +120,10 @@ public class RecipeDaoImpl implements RecipeDao {
 	
 
 	//레시피 리스트 출력
-	@Override
-	public List<RecipeListVO> recipeList() {
-		return sqlSession.selectList("recipe.recipeList");
-	}
+//	@Override
+//	public List<RecipeListVO> recipeList() {
+//		return sqlSession.selectList("recipe.recipeList");
+//	}
 
 	//재료별 레시피 갯수 출력
 //	@Override
@@ -229,6 +230,17 @@ public class RecipeDaoImpl implements RecipeDao {
 	@Override
 	public RecipeDto adminRecipeFind(String recipeTitle) {
 		return sqlSession.selectOne("recipe.adminRecipeFind", recipeTitle);
+	}
+
+	@Override
+	public int recipePostCount(ListSearchVO1 vo1) {
+		return sqlSession.selectOne("recipe.recipePostCount", vo1);
+	}
+
+	@Override
+	public List<RecipeDto> recipeList(ListSearchVO1 vo1) {
+		
+		return sqlSession.selectList("recipe.recipeList", vo1);
 	}
 
 }
