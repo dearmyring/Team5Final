@@ -27,7 +27,8 @@
   </div>
 </div>
 
-<div class="mt-5">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
 
 <div class="text-end">
 	<a class="main-page-link"></a> > 1:1문의

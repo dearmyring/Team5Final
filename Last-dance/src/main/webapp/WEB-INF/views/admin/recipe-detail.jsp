@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
-<div class="mt-5">&nbsp;</div>
+
+<div class="mt-3">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
 
 <div class="text-end">
 	<a class="main-page-link"></a> > <a class="text-dark" href="../list">레시피</a> > 상세보기

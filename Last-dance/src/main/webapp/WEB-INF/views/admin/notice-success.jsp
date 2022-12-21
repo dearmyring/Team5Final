@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
-    
+
+<div class="mt-3">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
+
+<div class="text-end">
+	<a class="main-page-link"></a> > 
+	<a class="text-dark" href="detail/+${noticeDto.noticeNo}">공지사항</a> 
+	> 등록하기
+</div>
+
 <div class="container-fluid mt-5">
 
 	<div class="row mt-5">

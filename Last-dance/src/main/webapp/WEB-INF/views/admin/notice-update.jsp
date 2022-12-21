@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
-<div class="mt-5">&nbsp;</div>
+
+<div class="mt-3">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
 
 <div class="text-end">
 	<a class="main-page-link"></a> > 

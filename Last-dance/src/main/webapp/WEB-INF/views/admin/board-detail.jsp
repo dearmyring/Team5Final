@@ -10,11 +10,12 @@
 	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>
 </c:set>
 
-<div class="mt-5">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
 
-<!-- <div class="text-end"> --> 
-<!-- 	<a class="main-page-link"></a> > <a class="text-dark" href="../list">공지사항</a> > 상세보기 -->
-<!-- </div> -->
+<div class="text-end"> 
+	<a class="main-page-link"></a> > <a class="text-dark" href="../list">공지사항</a> > 상세보기
+</div>
 
 
 <div class="container-fluid mt-5">
