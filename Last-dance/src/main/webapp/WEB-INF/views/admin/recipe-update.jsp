@@ -119,7 +119,7 @@
 </div>
 <div class="row">
 	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<input type="text" class="input-ingredient" placeholder="재료">
+		<input type="text" class="input-ingredient rounded" placeholder="재료">
 		<button type="button" class="ingredient-all-clear btn btn-md btn-light">모두 지우기</button>
 	</div>
 </div>

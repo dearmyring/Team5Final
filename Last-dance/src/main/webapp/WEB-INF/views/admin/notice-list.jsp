@@ -24,13 +24,13 @@
 			</thead>
 			<tbody class="notice-list">
 				<c:forEach var="noticeDto" items="${noticeList}">
-					<tr>
-						<td class="text-center">
+					<tr class="text-center">
+						<td>
 							<i class="fa-regular fa-square icon-check-item"></i>
 							<input class="check-item" name="noticeNo" value="${noticeDto.noticeNo}" type="hidden">
 						</td>
-						<td class="text-center">${noticeDto.noticeNo}</td>
-						<td>
+						<td>${noticeDto.noticeNo}</td>
+						<td class="text-start">
 							<a class="text-decoration-none link-dark" href="detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}</a>
 						</td>
 						<td>${noticeDto.noticeNick}</td>

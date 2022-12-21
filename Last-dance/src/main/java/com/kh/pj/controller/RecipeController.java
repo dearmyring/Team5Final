@@ -43,8 +43,10 @@ public class RecipeController {
    //여기부터 레시피 디테일
    @GetMapping("/detail")
    public String recipeDetail(Model model, @RequestParam int recipeNo, HttpSession session) {
+      String loginNick = (String)session.getAttribute("loginNick");
+      boolean member = session.getAttribute("loginId") != null;
       
-      if(session.getAttribute("loginId") != null) {
+      if(member && !loginNick.contains("관리자")) {
       //본적이 있는 글인지 확인
       RecipeViewDto recipeViewDto = RecipeViewDto.builder()
                .recipeViewId((String)session.getAttribute("loginId"))
