@@ -33,6 +33,7 @@
     	/* 폰트 */
 		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 		*{ font-family: 'Noto Sans KR', sans-serif; }
+		p{ font-family: 'Noto Sans KR', sans-serif !important; }
 		    
 		/* 테이블 호버 수정 */
 		.table-link tbody tr { background-color:white; }

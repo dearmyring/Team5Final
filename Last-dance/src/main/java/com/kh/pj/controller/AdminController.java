@@ -25,6 +25,7 @@ import com.kh.pj.entity.RecipeIngredientDto;
 import com.kh.pj.repository.AdminDao;
 import com.kh.pj.repository.BoardDao;
 import com.kh.pj.repository.CategoryDao;
+import com.kh.pj.repository.CenterDao;
 import com.kh.pj.repository.HashtagDao;
 import com.kh.pj.repository.IngredientDao;
 import com.kh.pj.repository.MemberDao;
@@ -71,6 +72,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminDao adminDao;
+	
+	@Autowired
+	private CenterDao centerDao;
 	
 	@GetMapping("/")
 	public String main() {
@@ -383,7 +387,7 @@ public class AdminController {
 	
 	@GetMapping("/center/list")
 	public String centerList(Model model) {
-		
+		model.addAttribute("centerList", centerDao.adminList());
 		return "admin/center-list";
 	}
 	

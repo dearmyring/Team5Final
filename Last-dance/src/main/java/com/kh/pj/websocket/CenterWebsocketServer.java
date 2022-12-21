@@ -1,4 +1,4 @@
-package com.kh.pj.service;
+package com.kh.pj.websocket;
 
 import java.util.Date;
 import java.util.Map;
@@ -18,7 +18,7 @@ import com.kh.pj.vo.channel.Room;
 import com.kh.pj.vo.channel.User;
 
 @Service
-public class CenterService extends TextWebSocketHandler{
+public class CenterWebsocketServer extends TextWebSocketHandler{
 	private Room waitingRoom = new Room();
 	
 	private Channel channel = new Channel();
@@ -38,8 +38,6 @@ public class CenterService extends TextWebSocketHandler{
 	//연결 종료
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		//사용자가 나가면
-		//- 대기실에 있을지 채널에 있을지 알 수 없다.
 		Map<String, Object> attr = session.getAttributes();
 		User user = User.builder()
 					.centerId((String)attr.get(SessionConstant.ID))
@@ -58,22 +56,15 @@ public class CenterService extends TextWebSocketHandler{
 					.session(session)
 				.build();
 		
-		//메세지 해석
 		ObjectMapper mapper = new ObjectMapper();
 		ReceiveVO receiveVO = mapper.readValue(message.getPayload(), ReceiveVO.class);
 		
 		if(receiveVO.getType() == 1) {
-			//사용자가 입장하려고 하는 경우(방이름을 사용자가 보냄)
-			//- 해당 이름의 방이 있는지 확인
-			//(- 방이 없으면 생성)
-			//- 해당 방에 사용자(user)를 입장시킴
-			//- 대기실에서 사용자를 제거
+
 			waitingRoom.leave(user);
 			channel.join(user, receiveVO.getRoom());
 		}
 		else if(receiveVO.getType() == 2) {
-			//사용자가 채팅을 보내는 경우(채팅내용을 사용자가 보냄)
-			//- 해당하는 방의 모든 사용자에게 메세지 전송
 			
 			MessageVO vo = MessageVO.builder()
 									.centerId(user.getCenterId())

@@ -23,4 +23,9 @@ public class CenterDaoImpl implements CenterDao{
 	public void insert(CenterDto centerDto) {
 		sqlSession.insert("center.insert", centerDto);
 	}
+
+	@Override
+	public List<CenterDto> adminList() {
+		return sqlSession.selectList("center.adminList");
+	}
 }
