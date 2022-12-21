@@ -246,8 +246,60 @@
 			transform: translate(0,-5px);
 		}
 		
+		/* 고객센터 이동 안내 풀스크린 모달 */
+		.center-move-screen{
+			display: none;
+			
+		}
+		.fullscreen .center-move-screen{
+			display: block;
+		    position: absolute;
+		
+		    top:50%;
+		    left:50%;
+		
+		    transform: translate(-5%, -20%);
+		}
+		.center-info{
+			display: inline-block;
+			font-weight: bold;
+			font-size: 20px;
+			text-shadow: 4px 4px 10px black;
+			color: white;
+		}
+		.center-info p{
+			margin: 0.7em 0;
+		}
+		.fullscreen .fullscreen-xmark{
+			display: block;
+			margin: 0.5em 0.8em 0 0;
+			font-size: 20px;
+			text-shadow: 1px 1px 3px black;
+			color: white;
+			cursor: pointer;
+		}
+		.fullscreen-xmark{
+			display: none;
+		}
 	</style>
 	
+    <div>
+    	<div class="right fullscreen-xmark">
+   			<i class="fa-solid fa-xmark"></i>
+   		</div>
+        <div class="modal center-move-screen">
+        	<div class="row center center-info">
+        		<p>고객센터 문의가</p>
+        		<p>실시간 채팅으로 가능해졌어요!</p>
+        		<p>문의 사항이 생기시면</p>
+        		<p>' <i class="fa-solid fa-caret-up center-hide"></i> ' 버튼을 눌러주세요.</p>
+        	</div>
+            <div class="row center">
+                <img class="w-33 center-img" src="${pageContext.request.contextPath}/images/center-move.png">
+            </div>
+        </div>
+    </div>
+    
 	<div class="container-1300">
 		<div class="mt-10 mb-40 main-heading">
 			<h1>
@@ -379,6 +431,19 @@
 	<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 	<script>
 		$(function(){
+			//고객센터 안내 풀스크린 관련 기능
+			$(".fullscreen-xmark").click(function(){
+				$(this).parent().removeClass("fullscreen");
+			});
+			$(".customer-service").click(function(){
+				if("${loginId}" == ""){
+					alert("로그인이 필요한 서비스입니다.");
+	        		location.replace("http://localhost:8888/member/login");
+	        		return;
+				}
+				$(".fullscreen-xmark").parent().addClass("fullscreen");
+			});
+			
 			// 오른쪽 하단 인기레시피top10 데이터 찍기
 			pushList();
 			

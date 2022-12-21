@@ -45,6 +45,9 @@
     top:0.7em;
     cursor: pointer;
 }
+.chat-icon{
+    color: #F9E24C;
+}
 .center-message{
     display: inline-block;
     width:auto;
@@ -52,6 +55,7 @@
     border-radius: 10px;
     padding: 0 1em 0 1em;
     margin-top: 0;
+    max-width: 200px;
 }
 .center-message.center-member{
     background-color: #eff5e9;

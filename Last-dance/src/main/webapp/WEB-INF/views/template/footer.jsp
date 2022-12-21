@@ -9,7 +9,8 @@
 	<c:if test="${!loginNick.contains('관리자')}">
 		<div class="message-list">
 		   	<div class="center row">
-		   		<span>실시간 1:1 문의</span><i class="fa-solid fa-caret-up center-hide"></i>
+		   		<span><i class="fa-regular fa-comments chat-icon"></i> 실시간 1:1 문의</span>
+		   		<i class="center-icon fa-solid fa-caret-up center-hide"></i>
 		   	</div>
 			<div class="center-message-list"></div>
 			<div class="float-container center message-input-area">
@@ -25,12 +26,13 @@
 	    $(function(){
         	var loginId = "${loginId}";
 	    	
-	        $(".fa-solid").click(function(){
+	        $(".center-icon").click(function(){
 	        	if(loginId == ""){
-	        		alert("회원 전용 메뉴입니다.");
+	        		alert("로그인이 필요한 서비스입니다.");
 	        		location.replace("http://localhost:8888/member/login");
 	        		return;
 	        	}
+	        	$(".fullscreen-xmark").parent().removeClass("fullscreen");
 	            if($(this).hasClass("fa-caret-up")){
 					var uri = "${pageContext.request.contextPath}/ws/center";
 					socket = new SockJS(uri);
