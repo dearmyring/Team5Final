@@ -87,17 +87,17 @@
       <!-- 헤더 영역 끝-->
        </div>
        <div class="center container-700 search-box">
-          	<i class="fa-solid fa-magnifying-glass search-icon"></i>
-           	<input class="search-input w-100" type="text" placeholder="냉장고 속 재료를 입력해보세요." autocomplete="off">
-           	<div class="search-list">
+             <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              <input class="search-input w-100" type="text" placeholder="냉장고 속 재료를 입력해보세요." autocomplete="off">
+              <div class="search-list">
              <!-- 검색 제시어가 나올 영역 -->
-           	</div>
-           	<form class="search-form" action="/recipe/searchList" method="get">
-             	<div class="search-list-select left ms-50 me-50">
-                	<!-- 검색할 재료를 선택하면 추가될 영역 -->
-             	</div>
-             	<button class="btn btn-positive btn-list-submit" type="submit">검색</button>
-          	</form>
+              </div>
+              <form class="search-form" action="/recipe/searchList" method="get">
+                <div class="search-list-select left ms-50 me-50">
+                   <!-- 검색할 재료를 선택하면 추가될 영역 -->
+                </div>
+                <button class="btn btn-positive btn-list-submit" type="submit">검색</button>
+             </form>
         </div>
     </header>
     <!-- 컨텐츠 영역 시작 -->
