@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.pj.constant.SessionConstant;
 import com.kh.pj.entity.AdminDto;
-import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.entity.RecipeContentDto;
 import com.kh.pj.entity.RecipeDto;
@@ -27,7 +26,6 @@ import com.kh.pj.repository.AdminDao;
 import com.kh.pj.repository.AttachmentDao;
 import com.kh.pj.repository.BoardDao;
 import com.kh.pj.repository.BoardImgDao;
-import com.kh.pj.repository.BoardLikeDao;
 import com.kh.pj.repository.CategoryDao;
 import com.kh.pj.repository.HashtagDao;
 import com.kh.pj.repository.IngredientDao;
@@ -86,9 +84,6 @@ public class AdminController {
 	
 	@Autowired
 	private AttachmentDao attachmentDao;
-	
-	@Autowired
-	private BoardLikeDao boardLikeDao;
 	
 	@GetMapping("/")
 	public String main() {
