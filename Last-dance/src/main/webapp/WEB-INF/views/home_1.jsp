@@ -238,13 +238,21 @@
 		  border: 1px solid #EDEDED;
 		}
 		
+		.main-box-shadow {
+			transition: transform .2s ease, padding .2s ease
+		}
+		
+		.main-box-shadow:hover {
+			transform: translate(0,-5px);
+		}
+		
 	</style>
 	
 	<div class="container-1300">
 		<div class="mt-10 mb-40 main-heading">
 			<h1>
 				<img class="megaphone" src="/images/main-megaphone-2.png">
-				<span class="main-heading-text">냉장고 속 식재료를 입력해보세요 🔍</span>
+				<span class="main-heading-text">냉장고 속 식재료를 입력해보세요</span>
 			</h1>
 		</div>
 		<div class="border-box">
