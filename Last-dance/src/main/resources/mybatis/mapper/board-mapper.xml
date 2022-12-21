@@ -131,17 +131,13 @@
 		) where rn between ${startPost} and ${endPost}
    </select>
    
-      <!-- 블라인드 처리?(지원 테스트) -->
+      <!-- 블라인드 처리?(지원 테스트) 제목 블라인드 처리된 게시물입니다 로 바꾸기 -->
    <update id = "blind" parameterType = "BoardDto">
-      update recipe
+      update board
       set
-         recipe_title = #{recipeTitle},
-         recipe_info = #{recipeInfo},
-         recipe_time = #{recipeTime},
-         recipe_hashtag = #{recipeHashtag},
-         recipe_difficulty = #{recipeDifficulty},
+         board_title = #{boardTitle},
       where
-         recipe_no = #{recipeNo}   
+         board_no = #{recipeNo}   
    </update>
 
 	<!-- 유저게시판에 공지사항 3개 출력 구문 -->
