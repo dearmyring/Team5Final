@@ -185,5 +185,11 @@ public class BoardDaoImpl implements BoardDao {
 		return sqlSession.selectOne("board.countLike", boardNo);
 	}
 
+	@Override
+	public int boardTotal() {
+		return sqlSession.selectOne("board.boardcount");
+		
+	}
+
 
 }

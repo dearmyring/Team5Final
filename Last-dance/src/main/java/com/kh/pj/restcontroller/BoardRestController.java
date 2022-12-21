@@ -36,8 +36,11 @@ public class BoardRestController {
 	@PostMapping("/board")
 	public List<BoardListVO> boardList(
 			@RequestBody BoardListSearchVO vo){
+		int total = boardDao.boardTotal();
+		vo.setCount(total);
 		return boardDao.boardList(vo);
 	}
+	
 	
 	@PostMapping("/board2")
 	public List<BoardDto> adminList(

@@ -257,6 +257,7 @@ width: 20%;
 		</div>
 	</td>
 </tr>
+	<button class=""></button>
       </c:forEach>
    </tbody>
 </table>
@@ -284,6 +285,82 @@ width: 20%;
             $(".board-search-btn").click();
          }
       });
+      
+      var p =1;
+      
+      $(".board_plus-btn").click(function(){
+    	  p=p+1;     	  
+    	  $.ajax({
+              url : "http://localhost:8888/rest/board",
+              method : "post",
+              contentType : "application/json",
+              data : JSON.stringify({
+               	 p:p
+              }),
+              success : function(resp) {
+                 $(".board-list").empty();
+                 for (var i = 0; i < resp.length; i++) {
+                
+                	
+                	var divSecond1 = $("<div>").addClass("float-left w-80")
+                	
+                	var title = $("<a>").attr("href","detail?boardNo="+ resp[i].boardNo).text(resp[i].boardTitle);
+                    var divTitle = $("<div>").addClass("board-list-title left").append(title);
+                     
+                    var content = $("<a>").attr("href","detail?boardNo="+ resp[i].boardNo)
+                    	.html(resp[i].boardContent);
+                    var divContent = $("<div>").addClass("board-content board-list-content left").append(content);
+                    
+                    var url = "";
+                    if (resp[i].memberBadge == 1) {
+                       url = "/images/badge-1.png";
+                    }
+                    var badge = $("<img>").attr("src", url)
+                    .addClass("badge");
+                    
+                    var nick = $("<div>").addClass("w-20 item-bold")
+                    .text(resp[i].memberNick)
+                    .append(badge);
+                    
+                    
+                    var tdWriteTime = $("<div>").addClass("f").text(resp[i].boardWriteTime);
+                                                                                        
+                    var Like = $("<div>").addClass("f item-color").text("추천 :"+resp[i].boardLike);
+                    
+                    var Click = $("<div>").addClass("f item-color").text("조회수 : "+resp[i].boardClick);
+                    
+                    var Reply = $("<div>").addClass("f item-color").text("댓글 : " +resp[i].replyCnt);
+                    
+                    
+                    var divNick =  $("<div>").addClass("board-list-item float-container left")
+                          .append(nick).append(tdWriteTime)
+                          .append(Like).append(Click).append(Reply);
+     
+     
+     				divSecond1.append(divTitle).append(divContent).append(divNick);
+                          
+
+                    var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
+                   // var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
+                    var thumbnail = $("<div>").addClass("thumbnail-box").append(thumbnailImg);
+                    var divSecond2 = $("<div>").addClass("all-thumbnail-box w-20").append(thumbnail);
+                    
+                	var divFirst1 = $("<div>").addClass("float-container1").append(divSecond1).append(divSecond2);
+                	var td = $("<td>").append(divFirst1);
+                	var tr = $("<tr>").addClass("board-bottom").append(td);
+                	
+                    $(".board-list").append(tr);
+                    $(".board-content").find("img").remove();
+                    var contentCnt = $(".board-content");
+                    for(var i=0; i<contentCnt.length; i++){
+                       $(".board-content").eq(i).text($(".board-content").eq(i).text());
+                    }
+                 }
+              }
+           });
+	  });
+      
+      
       /* 레시피 리스트 검색 */
       $(".board-search-btn").click(function() {
                      var sort = $(".sort-click").val();
@@ -330,11 +407,11 @@ width: 20%;
                                     
                                     var tdWriteTime = $("<div>").addClass("f").text(resp[i].boardWriteTime);
                                                                                                         
-                                    var Like = $("<div>").addClass("f item-color").text(resp[i].boardLike);
+                                    var Like = $("<div>").addClass("f item-color").text("추천 :"+resp[i].boardLike);
                                     
-                                    var Click = $("<div>").addClass("f item-color").text(resp[i].boardClick);
+                                    var Click = $("<div>").addClass("f item-color").text("조회수 : "+resp[i].boardClick);
                                     
-                                    var Reply = $("<div>").addClass("f item-color").text(resp[i].replyCnt);
+                                    var Reply = $("<div>").addClass("f item-color").text("댓글 : " +resp[i].replyCnt);
                                     
                                     
                                     var divNick =  $("<div>").addClass("board-list-item float-container left")
