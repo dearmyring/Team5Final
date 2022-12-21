@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.pj.entity.RecipeIngredientDto;
 import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.SearchDao;
 import com.kh.pj.vo.RecipeIngredientVO;
-import com.kh.pj.vo.RecipeKeywordListSearchVO;
 
 @Controller
 @RequestMapping("/recipe")
