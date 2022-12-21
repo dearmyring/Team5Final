@@ -173,19 +173,14 @@
           $(".complex").click(function(){
              $("html, body").animate({scrollTop : 0}, 400);
                 $(".search-box").slideToggle(600);
-            });
-          
-          // form 기본 이벤트 차단
-          //$(".search-form").submit(function(e){
-             //e.preventDefault();
-          //});
+          });
           
           // 목록 조회 결과를 전역 변수 배열에 넣기
           const searchRepository = [];
           
           // 키워드 조회 비동기
           $(".search-input").on("input", function(e){
-             e.preventDefault;
+             e.preventDefault();
              const keyword = $(this).val();
              const noneList = $("<div>").addClass("not-in-keyword mt-20").text("검색 결과가 없습니다 😥");
              
@@ -208,7 +203,7 @@
                   else {
                      for(var i = 0; i < resp.length; i++) {
                         const getList = $("<div>").addClass("left result-keyword").html("<i class='fa-solid fa-square-plus'></i><span class='ms-10 get-keyword'>" + resp[i].ingredientName + "</span>");
-                        $(".search-list").append(getList);
+                        $(".search-list").append(getList).css("position", "relative").css("top", "-40px");
                         searchRepository.push(resp[i].ingredientName);
                      }
                   }
@@ -220,15 +215,13 @@
           $(".search-input").keypress(function(key) {
              const keyword = $(this).val();
              //const addList = $("<div>").addClass("get-ingredient ms-10 mt-10").text(keyword);
-             const addList = $("<input>").addClass("get-ingredient ms-10 mt-10").attr("value", keyword).attr("name", "recipeIngredientName").attr("type", "text").attr("size", keyword.length);
+             const addList = $("<input>").addClass("get-ingredient ms-10 mt-10").attr("value", keyword).attr("name", "recipeIngredientName").attr("type", "text").attr("size", keyword.length).css("position", "relative").css("top", "-40px");
             if(key.keyCode == 13){
                if(!$(this).val() == "") {
                   $(".search-list-select").append(addList);
                   $(".search-list").css("display", "none");
                   $(".search-list-select").css("display", "block");
                   $(".search-input").val("");
-                  // 클릭 이벤트가 끝나기 직전에 배열 추가
-                  submitList.push(keyword);
                }
                else {
                   alert("검색어 입력하고 엔터 누르길 요망");
@@ -240,23 +233,23 @@
           $(document).on("click", ".result-keyword", function(){
              $(".search-input").val($(this).text());
              const keyword = $(".search-input").val();
-             const addList = $("<input>").addClass("get-ingredient ms-10 mt-10").attr("value", keyword).attr("name", "recipeIngredientName").attr("type", "text").css("width", "100px");
+             const addList = $("<input>").addClass("get-ingredient ms-10 mt-10").attr("value", keyword).attr("name", "recipeIngredientName").attr("type", "text").attr("size", keyword.length).css("position", "relative").css("top", "-40px");;
              $(".search-list-select").append(addList);
              $(".search-list").css("display", "none");
              $(".search-list-select").css("display", "block");
-            $(".search-input").val("");
-            $(".search-input").focus();
+             $(".search-input").val("");
+             $(".search-input").focus();
           });
           
           // 추가된 데이터를 삭제하는 이벤트
           $(document).on("click", ".get-ingredient", function(){
-             $(this).remove();
+              $(this).remove();
           });
           
           // 재료 입력이 끝나고 검색 버튼을 누르면 폼으로 넘어간다.
           $(".btn-list-submit").on("click", ".get-ingredient", function(){
-            $(".search-form").submit();
-         });
+        	  $(".search-form").submit();
+          });
           
        }); // jQuery 종료
     </script>

@@ -116,9 +116,6 @@ width : 3%;
 
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-
-
-
 $(function(){
 	loadList();
 	
@@ -183,44 +180,19 @@ $(function(){
 					
 					
 					
-					tbody.append(html);			
+					tbody.append(html);
 				}
 			}
 		});
 	}
-	
-	
-	$(function(){
-		//목표 : 
-		//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
-		//2. cancel-btn을 누르면 editor를 숨기고 view를 보여준다
-		//3. 처음에는 view만 보여준다
-		//1
-		$(".edit-btn").click(function(){
-			$(this).parents(".view").hide();
-			$(this).parents(".view").next(".editor").show();
-		});
-		//2
-		$(".cancel-btn").click(function(){
-			$(this).parents(".editor").hide();
-			$(this).parents(".editor").prev(".view").show();
-		});
-		//3
-		$(".editor").hide();
-	});
-	
-	
+				
 	//댓글 등록 처리
-	$(function(){
 		$(".reply-insert-form").submit(function(e){
 			e.preventDefault();
 			
 			//댓글 입력값을 가져와서 검사 후 전송
 			var text = $(this).find("[name=replyContent]").val();
-			if(!text){
-				alert("내용을 작성해주세요");
-				return;
-			}
+			
 			
 			var form = this;
 			
@@ -228,23 +200,13 @@ $(function(){
  			$.ajax({
  				url:"${pageContext.request.contextPath}/rest/reply/insert",
  				method:"post",
- 			 /* 	data:{
- 					replyBoardNo:$(this).find("[name=replyBoardNo]").val(),
- 					replyContent:text
- 				},
- 					success:function(resp){
- 						console.log(resp);  */
- 			 		data:$(form).serialize(),//form을 전송 가능한 형태의 문자로 변환한다
- 					success:function(resp){
- 			 		loadList();
-					
- 					//입력창 초기화(= 폼 초기화) - 자바스크립트로 처리
- 					form.reset();
+		 		data:$(form).serialize(),//form을 전송 가능한 형태의 문자로 변환한다
+				success:function(resp){
+			 		loadList();
+					form.reset();
  				} 
  			});
-			
 		});
-// 		
 		
 		//댓글 삭제버튼을 누르면 삭제 후 목록 갱신
 		$(".delete-btn").click(deleteHandler);
@@ -264,68 +226,27 @@ $(function(){
 				success:loadList(),
 			});
 		}
-		function loadList(){
-			//원래 있던 댓글 삭제
-			$(".table-reply-list").empty();//태그는 유지하고 내부를 삭제
-			
-			//헤더 생성
-			var header = $("#reply-list-header").text();
-			header = header.replace("{{size}}", resp.length);
-			$(".table-reply-list").append(header);
-			
-			//바디 생성
-			var tbody = $("<tbody>");
-			$(".table-reply-list").append(tbody);
-			
-			//현재 resp는 배열이다.
-			//미리 댓글 형식을 만들어두고 값만 바꿔치기해서 댓글 목록에 추가하도록 구현
-			var loginId = "${loginId}";
-			var loginNick = "${loginNick}";
-			
-			for(var i=0; i < resp.length; i++){
-				var reply = resp[i];
-				var item = $("#reply-list-item").text();
-				var html = $.parseHTML(item);
-				
-				//html의 내용을 상태에 맞게 수정 또는 제거
-				//배지 처리(레벨에 따라 다른 배지가 등장)
-				if(reply.memberBadge >= 1 && reply.memberBadge <= 10) {
-					$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
-				}
-				
-				//작성자 닉네임
-				$(html).find(".reply-member-nickname").text(reply.memberNick);
-				$(html).find(".reply-writetime").text(reply.replyWriteTime);
-				
-				//블라인드 글 표시 설정
-				if(reply.replyBlind == "Y") {
-					$(html).find(".visible-post-content").remove();
-				}
-				else {
-					$(html).find(".blind-post-content").remove();
-					$(html).find(".visible-post-content").text(reply.replyContent);
-				}
-				
-				//수정/삭제 버튼 작성자에게만 표시
-				if(loginId != reply.replyId) {//작성자일 경우
-					$(html).find(".edit-btn").remove();
-					$(html).find(".delete-btn").remove();
-				}
-				
-				//관리자 처리(블라인드 설정/해제 버튼)
-				if(loginNick.indexOf("관리자") != 0) {
-					$(html).find(".blind-btn").remove();
-					$(html).find(".visible-btn").remove();
-				}
-
-				tbody.append(html);				
-			}
-			
-		}
-	});
+		
 })
 
+$(function(){
+	//목표 : 
+	//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
+	//2. cancel-btn을 누르면 editor를 숨기고 view를 보여준다
+	//3. 처음에는 view만 보여준다
 	
+	$(".edit-btn").click(function(){
+		$(this).parents(".view").hide();
+		$(this).parents(".view").next(".editor").show();
+	});
+	
+	$(".cancel-btn").click(function(){
+		$(this).parents(".editor").hide();
+		$(this).parents(".editor").prev(".view").show();
+	});
+	
+	$(".editor").hide();
+});
 	
 	
 //좋아요 비동기
@@ -343,12 +264,9 @@ $(function(){
             success: function(resp) {
              that.next().html(resp);
             }
-
         });
         // ajax end
     });
-    
-    
 });
 </script>
 
