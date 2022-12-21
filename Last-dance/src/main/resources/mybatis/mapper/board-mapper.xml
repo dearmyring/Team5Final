@@ -87,22 +87,25 @@
 	</select>
 	
 	<select id="detail" parameterType="int" resultType="BoardListVO">
+		select c.*, a.profile_attachment_no from profile_img a right outer join (
 		select
-	  		  B.*,
-  	 		 M.member_nick,
-   			 M.member_badge
-		from (
-	select 
-    		board.*, 
-   			NVL(reply_cnt, 0) reply_cnt
-		from (
+             B.*,
+             M.member_nick,
+             M.member_badge,
+             M.member_id
+      from (
+   select 
+          board.*, 
+            NVL(reply_cnt, 0) reply_cnt
+      from (
     SELECT
         reply_board_no, 
         count(reply_no) reply_cnt 
     FROM reply
-   	 GROUP BY reply_board_no
-		) reply right outer join board on reply.reply_board_no=board.board_no
-		) B inner join member M on B.board_id = M.member_id
+       GROUP BY reply_board_no
+      ) reply right outer join board on reply.reply_board_no=board.board_no
+      ) b inner join member M on B.board_id = M.member_id
+	) c on a.profile_id = c.board_id
         where board_no=#{boardNo}
 	</select>
 

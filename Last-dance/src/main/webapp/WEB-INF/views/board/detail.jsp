@@ -8,6 +8,11 @@
 </jsp:include>
 
 <style>
+.profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
 .reply-border{
 	border-bottom : 1px solid lightgray;
 	width : 90%;
@@ -68,6 +73,7 @@ width : 3%;
     display: flex;
     color: #757575;
     margin-top: 15px;
+    font-size: 13px;
 }
 	
 	.other-info > li:not(:first-child) {
@@ -341,9 +347,12 @@ $(function(){
 		
 		<div class="info">
 			<ul class="author">
-				<li><c:if test="${boardDto.memberBadge == 1 }">
+				<li>
+				 <img class="profile" src="${pageContext.request.contextPath}/rest/download/${boardDto.profileAttachmentNo}">					
+					${boardDto.memberNick}
+					<c:if test="${boardDto.memberBadge == 1 }">
 						<img class="title-badge" src="/images/badge-1.png">
-					</c:if>${boardDto.memberNick}</li>
+					</c:if></li>
 			</ul>
 			<ul class="other-info" >
 				<li>작성일: ${boardDto.boardWriteTime}</li>
