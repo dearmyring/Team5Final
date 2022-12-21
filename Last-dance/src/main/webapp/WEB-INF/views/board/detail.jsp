@@ -227,8 +227,6 @@ $(function(){
 			});
 		}
 		
-})
-
 $(function(){
 	//목표 : 
 	//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
@@ -247,6 +245,10 @@ $(function(){
 	
 	$(".editor").hide();
 });
+		
+		
+})
+
 	
 	
 //좋아요 비동기

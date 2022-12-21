@@ -222,8 +222,8 @@ width: 20%;
    
   </c:forEach>
          
-   <tbody class="board-list center mt-50">
-         <c:forEach var="boardDto" items="${boardList}">
+<tbody class="board-list center mt-50">
+<c:forEach var="boardDto" items="${boardList}">
 <tr class="board-bottom">
 	<%-- <td>${boardDto.boardNo}</td> --%>
 	<td>
@@ -257,8 +257,10 @@ width: 20%;
 		</div>
 	</td>
 </tr>
-	<button class=""></button>
-      </c:forEach>
+</c:forEach>
+	<div>
+		<button class="board-plus-btn" type="button">더보기</button>
+	</div>
    </tbody>
 </table>
 <br>
@@ -286,9 +288,9 @@ width: 20%;
          }
       });
       
-      var p =1;
       
-      $(".board_plus-btn").click(function(){
+      var p =1;
+      $(".board-plus-btn").click(function(){
     	  p=p+1;     	  
     	  $.ajax({
               url : "http://localhost:8888/rest/board",
@@ -298,10 +300,10 @@ width: 20%;
                	 p:p
               }),
               success : function(resp) {
-                 $(".board-list").empty();
+            	  console.log(resp);
+                 $(".board-list").append(divSecond1);
                  for (var i = 0; i < resp.length; i++) {
-                
-                	
+           	
                 	var divSecond1 = $("<div>").addClass("float-left w-80")
                 	
                 	var title = $("<a>").attr("href","detail?boardNo="+ resp[i].boardNo).text(resp[i].boardTitle);

@@ -218,7 +218,7 @@
    
    
    <!-- 게시판 토탈 카운트 -->
-   <select id="boardcount">
+   <select id="boardcount" resultType="int">
 		select count(*) from board
    </select>
    
