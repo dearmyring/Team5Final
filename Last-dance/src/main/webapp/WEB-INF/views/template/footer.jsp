@@ -9,7 +9,7 @@
 	<c:if test="${!loginNick.contains('관리자')}">
 		<div class="message-list">
 		   	<div class="center row">
-		   		<span>실시간 1:1 채팅</span><i class="fa-solid fa-caret-up center-hide"></i>
+		   		<span>실시간 1:1 문의</span><i class="fa-solid fa-caret-up center-hide"></i>
 		   	</div>
 			<div class="center-message-list"></div>
 			<div class="float-container center message-input-area">
