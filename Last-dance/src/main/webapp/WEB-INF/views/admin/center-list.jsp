@@ -35,9 +35,9 @@
 </div>
 
 <div class="container-fluid">
-<div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<table class="table table-sm table-link">
+	<div class="row mt-5">
+		<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+			<table class="table table-sm table-link" style="table-layout:fixed">
 				<thead>
 					<tr class="text-center">
 						<th class="col-1"><i class="fa-regular fa-square icon-check-all"></i></th>
@@ -54,7 +54,7 @@
 								<input class="check-item" name="centerMemberId" value="${centerDto.centerMemberId}" type="hidden">
 							</td>
 							<td>${centerDto.centerMemberId}</td>
-							<td class="position-relative text-start">
+							<td class="position-relative text-start text-cutter">
 								<a class="text-decoration-none link-dark center-connect 
 									stretched-link text-decoration-none link-dark" href="#">
 									${centerDto.centerContent}
@@ -89,6 +89,11 @@
 </div>
 
 <style>
+	.text-cutter{
+		overflow:hidden;
+		white-space:nowrap;
+		text-overflow:ellipsis;
+	}
 	.connect-center-id{
 		font-size: 14px;
 		background-color: #EEEEEE;
@@ -111,7 +116,9 @@
 		height:auto;
 		border-radius: 10px;
 		padding: 0.5em 1em 0 1em;
-		margin-top: 0;
+		margin-top: 0.5em;
+		margin-bottom: 0;
+		max-width: 300px;
 	}
 	.center-message.center-member{
 		background-color: #EEEEEE;
@@ -120,6 +127,11 @@
 	.center-admin .time-font{
 		background-color: #6094ee;
 		color: white;
+	}
+	.message-content-input{
+		padding-left: 0.5em;
+		border: none;
+		outline-color: white;
 	}
 </style>
 
@@ -164,7 +176,7 @@
 	        	var p = $("<p>").addClass("center-message center-admin");
 	        	if(data.centerId == "${loginId}"){
 	        		div.addClass("text-end");
-	        		p.addClass(".center-admin");
+	        		p.addClass(".center-admin text-start");
 	        	}
 	        	else{
 	        		p.addClass(".center-member");
@@ -233,7 +245,7 @@
 		        		}
 		        		else{
 		        			div.addClass("text-end");
-		        			p.addClass("center-admin");
+		        			p.addClass("center-admin text-start");
 		        		}
 						var time = moment(data[i].centerTime).format("YYYY-MM-DD hh:mm");
 						var t = $("<p>").addClass("time-font").text(time);

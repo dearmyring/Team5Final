@@ -145,9 +145,7 @@
 		where board_no=#{boardNo}
 	</update>
 	
-	   <select id="adminList" parameterType="ListSearchVO2" resultType="BoardDto">
-	  select * from (
-		  select tmp.*, rownum rn from(
+	   <select id="adminList" parameterType="BoardListSearchVO" resultType="BoardDto">
 		      select * from board  
 		      <!-- 검색 -->
 		      <where>
@@ -160,8 +158,6 @@
 		       <if test="sort != null">
 		          order by ${sort}
 		       </if>
-			  ) tmp
-		) where rn between ${startPost} and ${endPost}
    </select>
    
       <!-- 블라인드 처리?(지원 테스트) 제목 블라인드 처리된 게시물입니다 로 바꾸기 -->

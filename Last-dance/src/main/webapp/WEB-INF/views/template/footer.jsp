@@ -24,29 +24,36 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 	<script>
 	    $(function(){
+	    	//로딩 하자마자 웹소켓 접속
         	var loginId = "${loginId}";
+			var uri = "${pageContext.request.contextPath}/ws/center";
+			socket = new SockJS(uri);
+					
+			socket.onopen = function(){
+				var data = {
+					type:1,
+					room:loginId
+				};
+				socket.send(JSON.stringify(data));
+			};
 	    	
+			//1:1 문의창 관련 기능
 	        $(".center-icon").click(function(){
+	        	//로그인 안 돼 있으면 return
 	        	if(loginId == ""){
 	        		alert("로그인이 필요한 서비스입니다.");
 	        		location.replace("http://localhost:8888/member/login");
 	        		return;
 	        	}
 	        	$(".fullscreen-xmark").parent().removeClass("fullscreen");
+	        	//삼각형을 누르면 대화창 열기
 	            if($(this).hasClass("fa-caret-up")){
-					var uri = "${pageContext.request.contextPath}/ws/center";
-					socket = new SockJS(uri);
-							
-					socket.onopen = function(){
-						var data = {
-							type:1,
-							room:loginId
-						};
-						socket.send(JSON.stringify(data));
-					};
-					
+	            	//안 읽은 메세지 있으면 읽음처리하는 기능 추가 예정
+	            	
+	            	//역삼각형으로 바꾸기
 	                $(this).removeClass("fa-caret-up center-hide").addClass("fa-caret-down");
 	                
+	            	//리스트에 내용이 없으면 이전 내역 불러와서 찍어주기
 					if(!$(".center-message-list").text()){
 		                var centerMemberId = loginId;
 		                historyMessage(centerMemberId);
@@ -57,13 +64,17 @@
 	    			
 	    			socket.onerror = function(){
 	    			};
+	    			//메세지 받을 때
 	    			socket.onmessage = function(e){
+	    				//안 읽은 메세지 개수 구해서 알림 띄워줄 예정
+	    				
+	    				
 	    				var data = JSON.parse(e.data);//객체
 			        	var div = $("<div>");
 			        	var p = $("<p>").addClass("center-message");
 			        	if(data.centerId == loginId){
 			        		div.addClass("right");
-			        		p.addClass("center-member");
+			        		p.addClass("center-member left");
 			        	}
 			        	else{
 			        		p.addClass("center-admin");
@@ -78,11 +89,12 @@
 	            }
 	            else{
 	                $(this).removeClass("fa-caret-down").addClass("fa-caret-up center-hide");
-	                socket.close();
 	            }
 	        });
-	        
-	        $(window).on()
+			
+	      	//안 읽은 메세지 개수 비동기로 구해서 알림 띄워줄 예정
+			function countUnread(cemterMemberId){
+			}
 	        
 	        function historyMessage(centerMemberId){
 	        	$.ajax({
@@ -95,7 +107,7 @@
 				        	var p = $("<p>").addClass("center-message");
 			        		if(data[i].centerId == loginId){
 			        			div.addClass("right");
-				        		p.addClass("center-member");
+				        		p.addClass("center-member left");
 			        		}
 			        		else{
 			        			p.addClass("center-admin");
