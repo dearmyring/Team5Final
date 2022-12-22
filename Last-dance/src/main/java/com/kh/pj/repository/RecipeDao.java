@@ -9,6 +9,7 @@ import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeDetailVO;
 import com.kh.pj.vo.LatelyViewListVO;
 import com.kh.pj.vo.ListSearchVO;
+import com.kh.pj.vo.ListSearchVO1;
 import com.kh.pj.vo.RecipeListVO;
 
 public interface RecipeDao {
@@ -37,7 +38,7 @@ public interface RecipeDao {
 	public void adminUpdate(RecipeDto recipeDto);
 	
 	//레시피 리스트 출력
-	public List<RecipeListVO> recipeList();
+	public List<RecipeDto> recipeList(ListSearchVO1 vo1);
 //	
 //	//재료별 레시피 갯수 출력
 //	public int searchCount(String keyword)throws Exception;
@@ -82,6 +83,9 @@ public interface RecipeDao {
 	
 	//최근 본 레시피 3개
 	List<LatelyViewListVO> latelyViewList(String memberId);
+	
+	//레시피 리스트 정렬 관련
+	public int recipePostCount(ListSearchVO1 vo1);
 	
 
 }

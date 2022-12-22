@@ -178,7 +178,7 @@ input::placeholder {
 
 .btn-none {
     border: none;
-    font-size: 15px;
+    font-size: 20px;
     padding: 0.75em;/*글자 크기의 0.75배*/
     cursor: pointer;
     /* a 태그를 버튼으로 만들기 위해 추가 */
@@ -186,7 +186,7 @@ input::placeholder {
     text-align: center;
     text-decoration: none;
     border-radius: 5px;
-    color: #333333;
+    background-color: #333333;
 }
 
 .send-btn {
@@ -556,6 +556,14 @@ ul.pagination.pagination-small {
     transform: translate(-50%, -50%);
 }
 
+.screen-bottom-join {
+	position: absolute;
+	top:140%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+}
+
 @Keyframes fadeInUp {
 	0% {
 		opacity: 0;
@@ -570,6 +578,7 @@ ul.pagination.pagination-small {
 .notice-in {
 	animation: fadeInUp 1s;
 }
+
 
 
 /*
@@ -842,7 +851,21 @@ ul.pagination.pagination-small {
 .btn-list-submit {
 	display: inline-block;
 	position: relative;
-	top: -62px;
-	left: 270px;
+	top: -65px;
+	left: 300px;
 	color: white;
+	transition: transform .2s ease, padding .2s ease;
+}
+
+.btn-list-submit:hover {
+	transform: translate(5px ,0);
+}
+
+.in-use-id:hover {
+	font-weight: bold;
+	color: #8000ff;
+}
+
+.menu-hover:hover {
+	color: red;
 }

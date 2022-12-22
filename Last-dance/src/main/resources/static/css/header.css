@@ -65,7 +65,7 @@
 }
 
 .menu-list  li a:hover {
-    color: black;
+    color: #373A3C;
 }
 
 .sign-tab {
@@ -170,5 +170,3 @@
     right: 100;
     top: 0;
 }
-
-

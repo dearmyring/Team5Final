@@ -21,6 +21,8 @@ import com.kh.pj.repository.AdminDao;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.vo.LatelyViewListVO;
 import com.kh.pj.vo.ListSearchVO;
+import com.kh.pj.vo.ListSearchVO1;
+import com.kh.pj.vo.RecipeListVO;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RequestMapping("/rest")
@@ -85,4 +87,24 @@ public class RecipeRestController {
 		return recipeDao.latelyViewList(memberId);
 	}
 	
+	@PostMapping("/recipe1")
+	public List<RecipeDto> recipeList(@RequestBody ListSearchVO1 vo1){
+			vo1.setCount(recipeDao.recipePostCount(vo1));
+//		vo1.setTable("recipe");
+//		vo1.setCount(recipeDao.recipePostCount(vo1));
+		vo1.setStartPost(vo1.startRow());
+		vo1.setEndPost(vo1.endRow());
+		return recipeDao.recipeList(vo1);
+	}
+	
+	@PostMapping("/recipe-count")
+	public ListSearchVO1 recipeCount(@RequestBody ListSearchVO1 vo1) {
+		vo1.setCount(recipeDao.recipePostCount(vo1));
+//		vo1.setFirstBlock(vo1.startBlock());
+//		vo1.setLastBlock(vo1.endBlock());
+//		vo1.setHavePrev(vo1.hasPrev());
+//		vo1.setHaveNext(vo1.hasNext());	
+		return vo1;
+	}
+
 }
