@@ -107,7 +107,7 @@ article {
    position: relative;
 }
 .info-box{
-    height: 230px;
+    height: 235px;
     width: 350px;
     padding: 15px;
     display:block;
@@ -173,18 +173,19 @@ article {
    margin: 0 3px;
 }
 .recipe-info {
-	color: #373A3C;
-	font-size: 23px;
+    color: #373A3C;
+    font-size: 23px;
     font-weight: bold;
-    height: 58;
-    margin: 0 0 8;
+    height: 68;
+    margin: 6 0 12;
     padding: 10px;
     display: block;
-	overflow: hidden;
-	text-overflow: ellipsis; 
-	display: -webkit-box;
-	-webkit-line-clamp: 2; 
-	-webkit-box-orient: vertical; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.2;
 }
 .view-count, .like-count {
    margin: 10px;
@@ -222,7 +223,7 @@ height  : 25px;
 padding: 10px;
 width: 100px;
 }
-.btn{
+.yellow-btn{
  width: 120px;
  color: #373A3C;
  font-size: 18px;
@@ -295,7 +296,7 @@ width: 100px;
                </c:forEach>
             </div>
             
-           <div class="container-fluid row center"><button class="btn yellow-btn more">더보기</button></div>                 
+           <div class="container-fluid row center"><button class="yellow-btn more">더보기</button></div>                 
          </div>
       </article>
    </div>
