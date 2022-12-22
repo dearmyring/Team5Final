@@ -48,6 +48,9 @@ public class RecipeController {
       String loginNick = (String)session.getAttribute("loginNick");
       boolean member = session.getAttribute("loginId") != null;
       
+      //조회수 증가
+      recipeDao.recipeClickUpdate(recipeNo);
+      
       if(member && !loginNick.contains("관리자")) {
       //본적이 있는 글인지 확인
       RecipeViewDto recipeViewDto = RecipeViewDto.builder()
