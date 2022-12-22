@@ -74,7 +74,7 @@
 			        	var p = $("<p>").addClass("center-message");
 			        	if(data.centerId == loginId){
 			        		div.addClass("right");
-			        		p.addClass("center-member");
+			        		p.addClass("center-member left");
 			        	}
 			        	else{
 			        		p.addClass("center-admin");
@@ -107,7 +107,7 @@
 				        	var p = $("<p>").addClass("center-message");
 			        		if(data[i].centerId == loginId){
 			        			div.addClass("right");
-				        		p.addClass("center-member");
+				        		p.addClass("center-member left");
 			        		}
 			        		else{
 			        			p.addClass("center-admin");

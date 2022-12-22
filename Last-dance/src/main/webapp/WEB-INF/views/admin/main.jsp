@@ -16,8 +16,6 @@
 
 <div class="mt-5">&nbsp;</div>
 <div class="mt-5">&nbsp;</div>
-<div class="mt-5">&nbsp;</div>
-<div class="mt-5">&nbsp;</div>
 
 <div class="admin-main-container">
 	<div class="top-list">
@@ -37,7 +35,9 @@
 				<c:forEach var="recipeTopFive" items="${recipeTopFive}">
 					<tr class="top-five-item">
 						<td class="tfi-no">${recipeTopFive.recipeNo}</td>
-						<td class="tfi-title"><a href="recipe/detail/${recipeTopFive.recipeNo}">${recipeTopFive.recipeTitle}</a></td>
+						<td class="tfi-title text-cutter">
+							<a href="recipe/detail/${recipeTopFive.recipeNo}">${recipeTopFive.recipeTitle}</a>
+						</td>
 						<td class="tfi-time">${recipeTopFive.recipeTime}</td>
 						<td class="tfi-writer">${recipeTopFive.recipeNick}</td>
 					</tr>

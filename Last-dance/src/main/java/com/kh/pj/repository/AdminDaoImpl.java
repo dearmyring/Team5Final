@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.AdminDto;
 import com.kh.pj.entity.MemberDto;
+import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardTopFiveVO;
 import com.kh.pj.vo.BoardViewTopFiveVO;
 import com.kh.pj.vo.ListSearchVO;
@@ -15,7 +16,6 @@ import com.kh.pj.vo.MemberCountVO;
 import com.kh.pj.vo.RecipeTopFiveVO;
 import com.kh.pj.vo.RecipeViewTopFiveVO;
 import com.kh.pj.vo.TrendingSearchesVO;
-import com.kh.pj.vo.ListSearchVO2;
 
 @Repository
 public class AdminDaoImpl implements AdminDao{
@@ -34,8 +34,8 @@ public class AdminDaoImpl implements AdminDao{
 	}
 
 	@Override
-	public int adminBoardCount(ListSearchVO2 vo2) {
-		return sqlSession.selectOne("admin.adminBoardCount", vo2);
+	public int adminBoardCount(BoardListSearchVO vo) {
+		return sqlSession.selectOne("admin.adminBoardCount", vo);
 	}
 	
 	

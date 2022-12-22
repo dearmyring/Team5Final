@@ -1,25 +1,19 @@
 package com.kh.pj.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.BoardDto;
-import com.kh.pj.entity.BoardImgDto;
 import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.NoticeDto;
 import com.kh.pj.error.TargetNotFoundException;
 import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
-import com.kh.pj.vo.ListSearchVO2;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -131,8 +125,8 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public List<BoardDto> adminList(ListSearchVO2 vo2) {
-		return sqlSession.selectList("recipe.adminList", vo2);
+	public List<BoardDto> adminList(BoardListSearchVO vo) {
+		return sqlSession.selectList("board.adminList", vo);
 	}
 
 	@Override
