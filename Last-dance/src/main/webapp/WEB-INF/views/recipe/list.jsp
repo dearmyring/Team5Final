@@ -290,20 +290,7 @@ width: 100px;
 <script type="text/javascript">
 	$(function() {
 		
-		$.ajax({
-            url: "http://localhost:8888/rest/recipe-latelyViewList",
-            method: "get",
-            dataType: "json",
-            success: function(resp) {
-                console.log(resp);
-                for(var i = 0; i < resp.length; i++) {
-                	//console.log($(".banner-item:nth-child("+(i+1)+")").find("span").text());
-                	$(".banner-item:nth-child("+(i+1)+")").find("img").attr("src",${pageContext.request.contextPath}+"/rest/download/"+resp[i].recipeImgList.recipeAttachmentNo);
-                	$(".banner-item:nth-child("+(i+1)+")").find("span").text(resp[i].recipeDto.recipeTitle);
-                }//for end
-                
-            }
-        });//ajax end
+		
 		
 	});
 </script>

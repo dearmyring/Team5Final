@@ -216,7 +216,7 @@
 	    select TMP.*, rownum rn from (
 	        select R.* from recipe R 
 	        inner join recipe_view RV on R.recipe_no = RV.recipe_view_no where RV.recipe_view_id = #{memberId} 
-	        order by RV.recipe_view_time
+	        order by RV.recipe_view_time desc
 	    )TMP
 	) where rn between 1 and 3
    </select>
