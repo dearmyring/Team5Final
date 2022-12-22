@@ -17,7 +17,7 @@ public class AdminInterceptor implements HandlerInterceptor{
 		
 		HttpSession session = request.getSession();
 		String adm = (String)session.getAttribute(SessionConstant.ADM);
-		boolean admin = adm != null && adm.equals("관리자1");
+		boolean admin = adm != null ;
 		
 		if(admin) { //관리자라면
 			return true;

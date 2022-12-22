@@ -25,8 +25,8 @@ public class MemberInterceptor implements HandlerInterceptor{
 		
 		//1. 세션이 없을 때는 HttpServletRequest에서 획득 가능
 		HttpSession session = request.getSession();
-		String loginId = (String) session.getAttribute(SessionConstant.MEM);
-		if(loginId == null) {//비회원. 2-(2)
+		String member = (String) session.getAttribute(SessionConstant.MEM);
+		if(member == null) {//비회원. 2-(2)
 			//선택지는 2가지가 있다
 			
 			//[1] 로그인 페이지로 리다이렉트

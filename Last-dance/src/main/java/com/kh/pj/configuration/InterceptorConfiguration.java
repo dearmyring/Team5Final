@@ -37,22 +37,16 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 	//회원용 인터셉터
 		registry.addInterceptor(memberInterceptor)
 						.addPathPatterns(//인터셉터가 감시할 주소
-								"/admin/**",//관리자 페이지 전부
-								"/board/**",//유저게시판 전체
 								"/member/**"//회원 전체
 								
 					)
 			.excludePathPatterns(//위의 주소에서 제외할 주소
 								"/member/join*",//회원가입
 								"/member/login",//로그인
-								"/admin/login", //관리자 로그인
-								"/board/list",//유저게시판 글목록
-								"/board/write", // 유저게시판 글등록
-								"/board/edit", //유저게시판 글수정
-								"/board/delete", //유저게시판 글 삭제
 								"/recipe/list",//전체보기
-								"/recipe/searchList",//통합검색
-								"/mypage/**"//마이페이지 전체
+								"/board/list",
+								"/board/detail",
+								"/recipe/searchList"//통합검색
 				);
 	
 	
@@ -60,16 +54,15 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				registry.addInterceptor(adminInterceptor)
 				.addPathPatterns(//인터셉터가 감시할 주소
 								"/board/edit*",//유저글 수정페이지
-								"/member/list",//회원목록
-								"/member/detail",//회원상세
+								"/member/edit_pw", //회원 비밀번호 변경
+								"/member/edit_success", //회원 비밀번호 성공
+								"/member/find_pw",//회원 비밀번호 찾기
 								"/mypage*"//마이페이지 전체
 							)
 							.excludePathPatterns(//위의 주소에서 제외할 주소
-								"/board/updatePoint",//회원 포인트 업데이트
-								"/board/deletePoint",//회원 포인트 삭제
-								"/board/blind",//관리자 게시글 블라인드
-								"board/adminList", //관리자 유저게시판 조회
-								"member/adminList" //관리자 회원목록 조회
+								"/board/adminList", //관리자 유저게시판 조회
+								"/member/adminList" //관리자 회원목록 조회
+
 							);
 				
 	//관리자만 레시피를 등록할 수 있도록 검사하는 인터셉터
