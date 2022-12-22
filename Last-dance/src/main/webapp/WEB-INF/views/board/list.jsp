@@ -37,13 +37,13 @@
 .thumbnail-box {
    position: relative;
     left: 200px;
+    object-fit: cover;
 }
 
-.thumbnail {
-    width: 250px;
-    height: 100%;
-    margin-top: 12px;
-}
+/* .thumbnail {
+    width: 100%;
+    
+} */
 .btn {
     border: none;
     font-size: 15px;
@@ -78,8 +78,10 @@
    margin : 40px;
    font-size:18px;
    margin-left :7px;
-   height: 50px;
+   height: 37px;
    font-weight: 500;
+   overflow:hidden;
+   text-overflow:ellipsis;
    
 }
 .badge {
@@ -215,7 +217,7 @@ width: 20%;
                <td>
                	<div class="notice-box">
                   <p class="notice-title">공지</p>
-                  <a class="notice" href="/admin/notice/detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}✌</a>
+                  <a class="notice" href="/notice/detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}✌</a>
                	</div>
                </td>
    </tr>
@@ -239,9 +241,48 @@ width: 20%;
 				</div>
 				<div class="board-list-item float-container left">
 					<div class="w-20 item-bold">${boardDto.memberNick}
-						<c:if test="${boardDto.memberBadge == 1 }">
-						<img class="badge" src="/images/badge-1.png">
-						</c:if>
+						<c:choose>
+                    		<c:when test="${boardDto.memberPoint<=100}">
+                    		
+                    			<img class="badge" src="${pageContext.request.contextPath}/images/lev1.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=300}">
+                    			
+                    			<img class="badge" src="${pageContext.request.contextPath}/images/lev2.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=550}">
+                    			
+                    			<img class="badge" src="${pageContext.request.contextPath}/images/lev3.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=850}">
+                    			
+                    			<img class="badge" src="${pageContext.request.contextPath}/images/lev4.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=1200}">
+                    			
+                    			<img class="badge" src="${pageContext.request.contextPath}/images/lev5.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=1600}">
+                    			
+                    			<img class="badge" src="${pageContext.request.contextPath}/images/lev6.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=2050}">
+                    			
+                    			<img class="badge" src="${pageContext.request.contextPath}/images/lev7.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=2500}">
+                    			
+                    			<img class="badge" src="${pageContext.request.contextPath}/images/lev8.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<3000}">
+                    			
+                    			<img class="badge" src="${pageContext.request.contextPath}/images/lev9.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint==3000}">
+                    			
+                    			<img class="badge" src="${pageContext.request.contextPath}/images/lev10.png"/>
+                    		</c:when>
+                    	</c:choose>
 					</div>         
 					<div class="f">${boardDto.boardWriteTime}</div>
 					<div class="f item-color">추천 :${boardDto.boardLike}</div>
@@ -251,7 +292,7 @@ width: 20%;
 			</div>
 			<div class="all-thumbnail-box w-20">
 				<div class="thumbnail-box">
-					 <img class="thumbnail" src="${pageContext.request.contextPath}/rest/download/${boardDto.boardAttachmentNo}" onerror="this.style.display='none';">			
+					 <img class="thumbnail w-100" src="${pageContext.request.contextPath}/rest/download/${boardDto.boardAttachmentNo}" onerror="this.style.display='none';">			
 				</div>
 			</div>                  
 		</div>
@@ -287,7 +328,8 @@ width: 20%;
             $(".board-search-btn").click();
          }
       });
-      var p = 1;
+      
+      	var p = 1;
 		
 		$(".board-plus-btn").click(function(){
 			var sort = $(".sort-click").val();
@@ -321,9 +363,38 @@ width: 20%;
                 var divContent = $("<div>").addClass("board-content board-list-content left").append(content);
                 
                 var url = "";
-                if (resp[i].memberBadge == 1) {
-                   url = "/images/badge-1.png";
+                if (resp[i].memberPoint <= 100) {
+                   url = "/images/lev1.png";
                 }
+                else if(resp[i].memberPoint <= 300){
+                	url = "/images/lev2.png";
+                }
+                else if(resp[i].memberPoint <= 550){
+                	url = "/images/lev3.png";
+                }
+                else if(resp[i].memberPoint <= 850){
+                	url = "/images/lev4.png";
+                }
+                else if(resp[i].memberPoint <= 1200){
+                	url = "/images/lev5.png";
+                }
+                else if(resp[i].memberPoint <= 1600){
+                	url = "/images/lev6.png";
+                }
+                else if(resp[i].memberPoint <= 2050){
+                	url = "/images/lev7.png";
+                }
+                else if(resp[i].memberPoint <= 2500){
+                	url = "/images/lev8.png";
+                }
+                else if(resp[i].memberPoint <= 3000){
+                	url = "/images/lev9.png";
+                } 
+                else if(resp[i].memberPoint == 3000){
+                	url = "/images/lev10.png";
+                }
+                
+             
                 var badge = $("<img>").attr("src", url)
                 .addClass("badge");
                 
@@ -349,7 +420,7 @@ width: 20%;
  				divSecond1.append(divTitle).append(divContent).append(divNick);
                       
 
-                var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
+                var thumbnailImg = $("<img>").addClass("thumbnail w-100").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
                // var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
                 var thumbnail = $("<div>").addClass("thumbnail-box").append(thumbnailImg);
                 var divSecond2 = $("<div>").addClass("all-thumbnail-box w-20").append(thumbnail);
@@ -359,12 +430,12 @@ width: 20%;
             	var tr = $("<tr>").addClass("board-bottom").append(td);
             	
                 $(".board-list").append(tr);
+             }
                 $(".board-content").find("img").remove();
-                var contentCnt = $(".board-content");
+           	   	var contentCnt = $(".board-content");
                 for(var i=0; i<contentCnt.length; i++){
                    $(".board-content").eq(i).text($(".board-content").eq(i).text());
                 }
-             }
           }
        });
 });
@@ -383,10 +454,11 @@ width: 20%;
                               method : "post",
                               contentType : "application/json",
                               data : JSON.stringify({
-                                 type : type,
-                                 keyword : keyword,
-                                 sort : sort,
-                                 p : p
+                            	  type : type,
+                                  keyword : keyword,
+                                  sort : sort,
+           		             		p : p
+                                 
                               }),
                               success : function(resp) {
                                  $(".board-list").empty();
@@ -403,9 +475,36 @@ width: 20%;
                                     var divContent = $("<div>").addClass("board-content board-list-content left").append(content);
                                     
                                     var url = "";
-                                    if (resp[i].memberBadge == 1) {
-                                       url = "/images/badge-1.png";
-                                    }
+                                    if (resp[i].memberPoint <= 100) {
+                                        url = "/images/lev1.png";
+                                     }
+                                     else if(resp[i].memberPoint <= 300){
+                                     	url = "/images/lev2.png";
+                                     }
+                                     else if(resp[i].memberPoint <= 550){
+                                     	url = "/images/lev3.png";
+                                     }
+                                     else if(resp[i].memberPoint <= 850){
+                                     	url = "/images/lev4.png";
+                                     }
+                                     else if(resp[i].memberPoint <= 1200){
+                                     	url = "/images/lev5.png";
+                                     }
+                                     else if(resp[i].memberPoint <= 1600){
+                                     	url = "/images/lev6.png";
+                                     }
+                                     else if(resp[i].memberPoint <= 2050){
+                                     	url = "/images/lev7.png";
+                                     }
+                                     else if(resp[i].memberPoint <= 2500){
+                                     	url = "/images/lev8.png";
+                                     }
+                                     else if(resp[i].memberPoint <= 3000){
+                                     	url = "/images/lev9.png";
+                                     } 
+                                     else if(resp[i].memberPoint == 3000){
+                                     	url = "/images/lev10.png";
+                                     }
                                     var badge = $("<img>").attr("src", url)
                                     .addClass("badge");
                                     
@@ -431,7 +530,7 @@ width: 20%;
                      				divSecond1.append(divTitle).append(divContent).append(divNick);
                                           
 
-                                    var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
+                                    var thumbnailImg = $("<img>").addClass("thumbnail w-100").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
                                    // var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
                                     var thumbnail = $("<div>").addClass("thumbnail-box").append(thumbnailImg);
                                     var divSecond2 = $("<div>").addClass("all-thumbnail-box w-20").append(thumbnail);
@@ -462,10 +561,11 @@ width: 20%;
                   method : "post",
                   contentType : "application/json",
                   data : JSON.stringify({
-                     type : type,
-                     keyword : keyword,
-                     sort : sort, 
-                     p : p
+                	  type : type,
+                      keyword : keyword,
+                      sort : sort,
+		             p : p
+                     
                   }),
                   success : function(resp) {
 
@@ -482,10 +582,36 @@ width: 20%;
                          	.html(resp[i].boardContent);
                          var divContent = $("<div>").addClass("board-content board-list-content left").append(content);
                          
-                         var url = "";
-                         if (resp[i].memberBadge == 1) {
-                            url = "/images/badge-1.png";
-                         }
+                         if (resp[i].memberPoint <= 100) {
+                             url = "/images/lev1.png";
+                          }
+                          else if(resp[i].memberPoint <= 300){
+                          	url = "/images/lev2.png";
+                          }
+                          else if(resp[i].memberPoint <= 550){
+                          	url = "/images/lev3.png";
+                          }
+                          else if(resp[i].memberPoint <= 850){
+                          	url = "/images/lev4.png";
+                          }
+                          else if(resp[i].memberPoint <= 1200){
+                          	url = "/images/lev5.png";
+                          }
+                          else if(resp[i].memberPoint <= 1600){
+                          	url = "/images/lev6.png";
+                          }
+                          else if(resp[i].memberPoint <= 2050){
+                          	url = "/images/lev7.png";
+                          }
+                          else if(resp[i].memberPoint <= 2500){
+                          	url = "/images/lev8.png";
+                          }
+                          else if(resp[i].memberPoint <= 3000){
+                          	url = "/images/lev9.png";
+                          } 
+                          else if(resp[i].memberPoint == 3000){
+                          	url = "/images/lev10.png";
+                          }
                          var badge = $("<img>").attr("src", url)
                          .addClass("badge");
                          
@@ -515,7 +641,7 @@ width: 20%;
           				divSecond1.append(divTitle).append(divContent).append(divNick);
                                
 
-                       var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
+                       var thumbnailImg = $("<img>").addClass("thumbnail w-100").attr("src", "${pageContext.request.contextPath}/rest/download/"+resp[i].boardAttachmentNo).attr("onerror","this.style.display='none'");
                       //   var thumbnailImg = $("<img>").addClass("thumbnail").attr("src", "${pageContext.request.contextPath}/images/image 3.png");
                          var thumbnail = $("<div>").addClass("thumbnail-box").append(thumbnailImg);
                          var divSecond2 = $("<div>").addClass("all-thumbnail-box w-20").append(thumbnail);
