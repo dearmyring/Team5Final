@@ -405,24 +405,27 @@ article {
   			              var div_info_container = $("<div>").attr("class", "info-box");	
    			              var span_click =$("<span>").attr("class","view-count").text("조회수 " + resp[i].recipeListSearchVO.recipeClick); 		  //2-1            
    			              var span_like = $("<span>").attr("class", "like-count").text(" 좋아요 " + resp[i].recipeListSearchVO.recipeLike); 	 //2-2
-   			              var div_recipe_info = $("<div>").attr("class", "recipe-info").text(resp[i].recipeListSearchVO.recipeInfo); //2-3
+   			              var div_recipe_info = $("<div>").attr("class", "recipe-title").text(resp[i].recipeListSearchVO.recipeInfo); //2-3
 			              			              		            			              
  			              var div_simple_info_container = $("<div>").attr("class", "simpe-info");    		             
 			              var div_difficulty = $("<div>").attr("class", "cooking-level").text(resp[i].recipeListSearchVO.recipeDifficulty); 	
 
-			              
 			              var leng = ${leng};
 			              var recipeLeng = ${fn:length(recipeListVO.recipeIngredientList)};
+			              var recipeEnough = leng *0.6
+			              var recipeLessEnough = leng *0.5
+// 			              var recipeLess = leng *0.4
+			            
 			              
-			              if recipeLeng < leng *0.6 {
+			              if (recipeLeng <= recipeEnough) {
 			            	  var answer =   $("<div>").attr("class", "recipe-enough").text( "재료가 충분해요");
 			              }
-			              else if recipeLeng > 0.6 {
-			            	  var answer =   $("<div>").attr("class", "recipe-less-enough").text( "재료가 조금 모자라요");
+			              else if (recipeLeng > recipeEnough) {
+			            	  var answer =   $("<div>").attr("class", "recipe-lack").text( "재료가 조금 모자라요");
 			              }
-			              else {
-			            	  var answer =   $("<div>").attr("class", "recipe-lack").text( "재료가 모자라요");
-			              }
+// 			              else {
+// 			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 모자라요");
+// 			              }  
 			              //var div_enough = answer;
 			              
   			              var div_time = $("<div>").attr("class", "how-long").text(" "+resp[i].recipeListSearchVO.recipeTime+"분 이내").prepend($("<i>").attr("class","fa-regular fa-clock"));         		                         
@@ -436,7 +439,7 @@ article {
   			               			               
  			           	  //var ingredient_box = div_ingredient_container.append(div_ingredient);
  			           	  
- 	 		              var simple_info = div_simple_info_container.append(div_time).append.(answer).append(div_difficulty); //2-4
+ 	 		              var simple_info = div_simple_info_container.append(div_time).append(answer).append(div_difficulty); //2-4
   			              var div_info = div_info_container.append(span_click).append(span_like).append(div_recipe_info).append(simple_info).append(div_ingredient_container);	      
  			              var div_inner = div_inner_container.append(div_img_container).append(div_info_container);	
 			              var div_outer = div_outer_container.append(div_inner);	
@@ -488,7 +491,7 @@ article {
 			              var div_info_container = $("<div>").attr("class", "info-box");	
 			              var span_click =$("<span>").attr("class","view-count").text("조회수 " + resp[i].recipeListSearchVO.recipeClick); 		  //2-1            
 			              var span_like = $("<span>").attr("class", "like-count").text(" 좋아요 " + resp[i].recipeListSearchVO.recipeLike); 	 //2-2
-			              var div_recipe_info = $("<div>").attr("class", "recipe-info").text(resp[i].recipeListSearchVO.recipeInfo); //2-3
+			              var div_recipe_info = $("<div>").attr("class", "recipe-title").text(resp[i].recipeListSearchVO.recipeInfo); //2-3
 			              			              		            			              
 			              var div_simple_info_container = $("<div>").attr("class", "simpe-info");    		             
 			              var div_difficulty = $("<div>").attr("class", "cooking-level").text(resp[i].recipeListSearchVO.recipeDifficulty); 				              
@@ -496,16 +499,21 @@ article {
 			              
 			              var leng = ${leng};
 			              var recipeLeng = ${fn:length(recipeListVO.recipeIngredientList)};
+			              var recipeEnough = leng *0.6
+			              var recipeLessEnough = leng *0.5
+// 			              var recipeLess = leng *0.4
+			            
 			              
-			              if recipeLeng <= leng *0.6 {
-			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 충분해요");
+			              if (recipeLeng <= recipeEnough) {
+			            	  var answer =   $("<div>").attr("class", "recipe-enough").text( "재료가 충분해요");
 			              }
-			              else if recipeLeng > 0.6 {
-			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 조금 모자라요");
+			              else if (recipeLeng > recipeEnough) {
+			            	  var answer =   $("<div>").attr("class", "recipe-lack").text( "재료가 조금 모자라요");
 			              }
-			              else {
-			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 모자라요");
-			              }  
+// 			              else {
+// 			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 모자라요");
+// 			              }  
+			              //var div_enough = answer;
 
 			              
 			              var div_time = $("<div>").attr("class", "how-long").text(" "+resp[i].recipeListSearchVO.recipeTime+"분 이내").prepend($("<i>").attr("class","fa-regular fa-clock"));         		                         
@@ -519,7 +527,7 @@ article {
 			               			               
 			           	  //var ingredient_box = div_ingredient_container.append(div_ingredient);
 			           	  
-	 		               var simple_info = div_simple_info_container.append(div_time).append.(div_enough).append(div_difficulty); //2-4
+	 		               var simple_info = div_simple_info_container.append(div_time).append(answer).append(div_difficulty); //2-4
 			              var div_info = div_info_container.append(span_click).append(span_like).append(div_recipe_info).append(simple_info).append(div_ingredient_container);	      
 			              var div_inner = div_inner_container.append(div_img_container).append(div_info_container);	
 			              var div_outer = div_outer_container.append(div_inner);	
