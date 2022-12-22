@@ -15,7 +15,6 @@ import com.kh.pj.vo.MemberCountVO;
 import com.kh.pj.vo.RecipeTopFiveVO;
 import com.kh.pj.vo.RecipeViewTopFiveVO;
 import com.kh.pj.vo.TrendingSearchesVO;
-import com.kh.pj.vo.ListSearchVO2;
 
 @Repository
 public class AdminDaoImpl implements AdminDao{
@@ -33,10 +32,6 @@ public class AdminDaoImpl implements AdminDao{
 		return sqlSession.selectOne("admin.adminPostCount", vo);
 	}
 
-	@Override
-	public int adminBoardCount(ListSearchVO2 vo2) {
-		return sqlSession.selectOne("admin.adminBoardCount", vo2);
-	}
 	
 	
 	//관리자 메인페이지 시작!

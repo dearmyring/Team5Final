@@ -7,12 +7,9 @@ import com.kh.pj.entity.BoardImgDto;
 import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.NoticeDto;
-import com.kh.pj.entity.RecipeDto;
 
 import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
-import com.kh.pj.vo.ListSearchVO;
-import com.kh.pj.vo.ListSearchVO2;
 
 public interface BoardDao {
 	
@@ -40,8 +37,6 @@ public interface BoardDao {
 		void connectAttachment(int boardOriginNo, int boardAttachmentNo);
 		int insert2(BoardDto boardDto);
 		
-	//관리자 유저게시판 조회
-		public List<BoardDto> adminList(ListSearchVO2 vo2);
 	//관리자 유저게시글 블라인드
 		boolean blind(BoardDto boardDto);
 		

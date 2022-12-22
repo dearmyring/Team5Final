@@ -38,7 +38,6 @@ import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
 import com.kh.pj.repository.ReplyDao;
 import com.kh.pj.vo.ListSearchVO;
-import com.kh.pj.vo.RecipeViewTopFiveVO;
 
 @Controller
 @RequestMapping("/admin")
