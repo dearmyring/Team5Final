@@ -79,8 +79,8 @@ article {
 }
 
 .ingredient-box {
-    height: 110px;
-   overflow: auto;
+    height: 80px;
+    overflow: auto;
   }
   
     .ingredient-name-box{
@@ -92,8 +92,7 @@ article {
    border-radius: 7px;
    font-weight: 600;
    color: white;
-   font-size: 13px;
-   margin: 0 3px;  
+   font-size: 14px; 
   }
 
 .item {
@@ -115,9 +114,10 @@ article {
 }
 
 .info-box{
-   height: 240px;
-   width: 350px;
-   padding: 15px;
+    height: 235px;
+    width: 350px;
+    padding: 15px;
+    display:block;
 }
 
 .hash-tag {
@@ -212,11 +212,19 @@ article {
 }
 
 .recipe-title {
-   color: #373A3C;
-   font-size: 23px;
-   font-weight: bold;
-   height: 60px;
-   padding: 10px;
+    color: #373A3C;
+    font-size: 23px;
+    font-weight: bold;
+    height: 68;
+    margin: 6 0 12;
+    padding: 10px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.2;
 }
 
 .view-count, .like-count {
@@ -292,8 +300,7 @@ article {
                   <option value="recipe_no desc">최근 작성일 순</option>
                   <option value="recipe_click desc">조회수 높은 순</option>
                   <option value="recipe_like desc">좋아요 많은 순</option>
-<!-- 				 <option value="검색&레시피 일치 재료수 desc">재료 많은 순</option> -->
-<!-- 				<option value="검색&레시피 일치 재료수 asc">재료 적은 순</option> -->
+<!-- //				<option value=" desc">재료 많은 순</option> -->
                   <option value="recipe_time asc">조리시간 짧은 순</option>
                   <option value="recipe_time desc">조리시간 긴 순</option>
                </select>
@@ -321,19 +328,19 @@ article {
 	                           <i class="fa-regular fa-clock"></i>
 	                           ${recipeListVO.recipeListSearchVO.recipeTime}분 이내
 	                        </div>
-	                        <div class="enough">
+	                     
 		                        <c:choose>
 		                        	<c:when test="${fn:length(recipeListVO.recipeIngredientList) <= leng*0.6}">
 			                        	<div class="recipe-enough">재료가 충분해요</div>
 		                        	</c:when>
 		                        	<c:when test="${fn:length(recipeListVO.recipeIngredientList) > leng *0.6}">
-			                        	<div class="recipe-less-enough">재료가 조금 모자라요</div>
+			                        	<div class="recipe-less-enough">재료가 조금 있어요</div>
 		                        	</c:when>
 		                        	<c:otherwise>
 			                        	<div class="recipe-lack">재료가 모자라요</div>
 		                        	</c:otherwise>
 	                        </c:choose>
-	                        </div>
+	                  
 	                         <div class="cooking-level">${recipeListVO.recipeListSearchVO.recipeDifficulty}</div>
                         </div>
                         <div class="ingredient-box scroll">
@@ -397,25 +404,28 @@ article {
   			              var div_info_container = $("<div>").attr("class", "info-box");	
    			              var span_click =$("<span>").attr("class","view-count").text("조회수 " + resp[i].recipeListSearchVO.recipeClick); 		  //2-1            
    			              var span_like = $("<span>").attr("class", "like-count").text(" 좋아요 " + resp[i].recipeListSearchVO.recipeLike); 	 //2-2
-   			              var div_recipe_info = $("<div>").attr("class", "recipe-info").text(resp[i].recipeListSearchVO.recipeInfo); //2-3
+   			              var div_recipe_info = $("<div>").attr("class", "recipe-title").text(resp[i].recipeListSearchVO.recipeInfo); //2-3
 			              			              		            			              
  			              var div_simple_info_container = $("<div>").attr("class", "simpe-info");    		             
 			              var div_difficulty = $("<div>").attr("class", "cooking-level").text(resp[i].recipeListSearchVO.recipeDifficulty); 	
 
-			              
 			              var leng = ${leng};
 			              var recipeLeng = ${fn:length(recipeListVO.recipeIngredientList)};
+			              var recipeEnough = leng *0.6
+			              var recipeLessEnough = leng *0.5
+// 			              var recipeLess = leng *0.4
+			            
 			              
-			              if recipeLeng <= leng *0.6 {
+			              if (recipeLeng <= recipeEnough) {
 			            	  var answer =   $("<div>").attr("class", "recipe-enough").text( "재료가 충분해요");
 			              }
-			              else if recipeLeng > 0.6 {
-			            	  var answer =   $("<div>").attr("class", "recipe-less-enough").text( "재료가 조금 모자라요");
+			              else if (recipeLeng > recipeEnough) {
+			            	  var answer =   $("<div>").attr("class", "recipe-lack").text( "재료가 조금 모자라요");
 			              }
-			              else {
-			            	  var answer =   $("<div>").attr("class", "recipe-lack").text( "재료가 모자라요");
-			              }
-			              var div_enough = answer;
+// 			              else {
+// 			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 모자라요");
+// 			              }  
+			              //var div_enough = answer;
 			              
   			              var div_time = $("<div>").attr("class", "how-long").text(" "+resp[i].recipeListSearchVO.recipeTime+"분 이내").prepend($("<i>").attr("class","fa-regular fa-clock"));         		                         
 		                          
@@ -428,7 +438,7 @@ article {
   			               			               
  			           	  //var ingredient_box = div_ingredient_container.append(div_ingredient);
  			           	  
- 	 		              var simple_info = div_simple_info_container.append(div_time).append.(div_enough).append(div_difficulty); //2-4
+ 	 		              var simple_info = div_simple_info_container.append(div_time).append(answer).append(div_difficulty); //2-4
   			              var div_info = div_info_container.append(span_click).append(span_like).append(div_recipe_info).append(simple_info).append(div_ingredient_container);	      
  			              var div_inner = div_inner_container.append(div_img_container).append(div_info_container);	
 			              var div_outer = div_outer_container.append(div_inner);	
@@ -480,7 +490,7 @@ article {
 			              var div_info_container = $("<div>").attr("class", "info-box");	
 			              var span_click =$("<span>").attr("class","view-count").text("조회수 " + resp[i].recipeListSearchVO.recipeClick); 		  //2-1            
 			              var span_like = $("<span>").attr("class", "like-count").text(" 좋아요 " + resp[i].recipeListSearchVO.recipeLike); 	 //2-2
-			              var div_recipe_info = $("<div>").attr("class", "recipe-info").text(resp[i].recipeListSearchVO.recipeInfo); //2-3
+			              var div_recipe_info = $("<div>").attr("class", "recipe-title").text(resp[i].recipeListSearchVO.recipeInfo); //2-3
 			              			              		            			              
 			              var div_simple_info_container = $("<div>").attr("class", "simpe-info");    		             
 			              var div_difficulty = $("<div>").attr("class", "cooking-level").text(resp[i].recipeListSearchVO.recipeDifficulty); 				              
@@ -488,16 +498,21 @@ article {
 			              
 			              var leng = ${leng};
 			              var recipeLeng = ${fn:length(recipeListVO.recipeIngredientList)};
+			              var recipeEnough = leng *0.6
+			              var recipeLessEnough = leng *0.5
+// 			              var recipeLess = leng *0.4
+			            
 			              
-			              if recipeLeng <= leng *0.6 {
-			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 충분해요");
+			              if (recipeLeng <= recipeEnough) {
+			            	  var answer =   $("<div>").attr("class", "recipe-enough").text( "재료가 충분해요");
 			              }
-			              else if recipeLeng > 0.6 {
-			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 조금 모자라요");
+			              else if (recipeLeng > recipeEnough) {
+			            	  var answer =   $("<div>").attr("class", "recipe-lack").text( "재료가 조금 모자라요");
 			              }
-			              else {
-			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 모자라요");
-			              }  
+// 			              else {
+// 			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 모자라요");
+// 			              }  
+			              //var div_enough = answer;
 
 			              
 			              var div_time = $("<div>").attr("class", "how-long").text(" "+resp[i].recipeListSearchVO.recipeTime+"분 이내").prepend($("<i>").attr("class","fa-regular fa-clock"));         		                         
@@ -511,7 +526,7 @@ article {
 			               			               
 			           	  //var ingredient_box = div_ingredient_container.append(div_ingredient);
 			           	  
-	 		               var simple_info = div_simple_info_container.append(div_time).append.(div_enough).append(div_difficulty); //2-4
+	 		               var simple_info = div_simple_info_container.append(div_time).append(answer).append(div_difficulty); //2-4
 			              var div_info = div_info_container.append(span_click).append(span_like).append(div_recipe_info).append(simple_info).append(div_ingredient_container);	      
 			              var div_inner = div_inner_container.append(div_img_container).append(div_info_container);	
 			              var div_outer = div_outer_container.append(div_inner);	

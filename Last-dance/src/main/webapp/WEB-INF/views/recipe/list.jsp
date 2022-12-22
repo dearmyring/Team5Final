@@ -77,8 +77,8 @@ article {
     margin-bottom: 60px;
 }
 .ingredient-box {
-    height: 110px;
-   overflow: auto;
+    height: 80px;
+    overflow: auto;
   }
   
   .ingredient-name-box{
@@ -90,8 +90,7 @@ article {
    border-radius: 7px;
    font-weight: 600;
    color: white;
-   font-size: 13px;
-   margin: 0 3px;  
+   font-size: 14px;
   }
 .item {
    min-height: 200px;
@@ -108,9 +107,10 @@ article {
    position: relative;
 }
 .info-box{
-   height: 240px;
-   width: 350px;
-   padding: 15px;
+    height: 235px;
+    width: 350px;
+    padding: 15px;
+    display:block;
 }
 .hash-tag {
     position: absolute;
@@ -173,11 +173,19 @@ article {
    margin: 0 3px;
 }
 .recipe-info {
-   color: #373A3C;
-   font-size: 23px;
-   font-weight: bold;
-   height: 60px;
-   padding: 10px;
+    color: #373A3C;
+    font-size: 23px;
+    font-weight: bold;
+    height: 68;
+    margin: 6 0 12;
+    padding: 10px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.2;
 }
 .view-count, .like-count {
    margin: 10px;
@@ -196,7 +204,8 @@ article {
    overflow: hidden;
 }
 .simple-info{
-margin 0 20px;
+margin : 0 30px;
+height  : 25px;
 }
 .float-margin-left{
    float: left;
@@ -214,7 +223,7 @@ margin 0 20px;
 padding: 10px;
 width: 100px;
 }
-.btn{
+.yellow-btn{
  width: 120px;
  color: #373A3C;
  font-size: 18px;
@@ -287,7 +296,7 @@ width: 100px;
                </c:forEach>
             </div>
             
-           <div class="container-fluid row center"><button class="btn yellow-btn more">더보기</button></div>                 
+           <div class="container-fluid row center"><button class="yellow-btn more">더보기</button></div>                 
          </div>
       </article>
    </div>
