@@ -3,10 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
-<div class="mt-5">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
 
-<div class="text-end">
-	<a class="main-page-link"></a> > 레시피 리스트
+<div class="history-link text-end">
+	<a class="main-page-link"></a> <i class="fa-solid fa-chevron-right"></i> 레시피 리스트
 </div>
 
 <div class="container-fluid">

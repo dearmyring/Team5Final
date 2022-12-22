@@ -34,4 +34,9 @@ public class SearchDaoImpl implements SearchDao {
 	public List<RecipeListSearchResultMapVO> complexSearch(RecipeIngredientVO recipeIngredientVO) {
 		return sqlSession.selectList("search.recipeListSearchFinal", recipeIngredientVO);
 	}
+
+	@Override
+	public int recipeSearchPostCount(RecipeIngredientVO recipeIngredientVO) {
+		return sqlSession.selectOne("search.recipeSearchPostCount", recipeIngredientVO);
+	}
 }

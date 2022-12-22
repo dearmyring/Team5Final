@@ -59,7 +59,11 @@
 
       <!--  레시피 전체조회(통합)  -->
    <select id="recipeList" parameterType="ListSearchVO1" resultMap="recipeList" >
-		select * from (select tmp.*, rownum rn from(select * from recipe order by recipe_no desc)tmp) where rn between #{startPost} and #{endPost}
+		select * from (
+			select tmp.*, rownum rn from(
+				select * from recipe order by ${sort}
+			)tmp
+		) where rn between #{startPost} and #{endPost}
    </select>
 
 

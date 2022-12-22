@@ -50,8 +50,10 @@
 		}
 		
 		/* 헤더 관리자 닉네임 포인터 금지 */
-		.admin-nick {
+		.admin-nick,
+		.admin-nick:hover {
 			cursor: default;
+			color: #737373;
 		}
 		
 		/* 검색창 돋보기 추가 */
@@ -103,7 +105,12 @@
 			border-color: #98C778;
 			color: white!important;
 		}
-
+		
+		.history-link,
+		.history-link a{
+			color: grey;
+			font-size: 14px;
+		}
     </style>
 </head>
 <body>
@@ -114,12 +121,13 @@
         <!-- navbar : 드롭다운 메뉴를 제공하는 상단 메뉴바 -->
         <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top d-lg-flex flex-column align-items-lg-center">
-            <div class="container-fluid border-bottom">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top d-lg-flex 
+        	pt-0 pb-0 flex-column align-items-lg-center">
+            <div class="container-fluid">
             	<div class="col-lg-8 offset-lg-2 d-lg-flex flex-row align-items-center">
 	                <!-- brand : 로고 이미지와 대표 상호를 적는 공간 -->
-	                <a class="col-2 navbar-brand" href="${pageContext.request.contextPath}/admin/">
-	                    <img class="w-100" src="${pageContext.request.contextPath}/images/logo.png"/>
+	                <a class="navbar-brand" href="${pageContext.request.contextPath}/admin/">
+	                    <img width="200px" src="${pageContext.request.contextPath}/images/logo.png"/>
 	                </a>
 	                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 	                    data-bs-target="#navbarColor03" 
@@ -168,21 +176,12 @@
 	                        <li class="nav-item">
 	                            <a class="nav-link logout-btn" href="${pageContext.request.contextPath}/admin/logout">logout</a>
 	                        </li>
-	                        <li class="nav-item">
-	                            <span class="nav-link admin-nick">${loginNick}님</span>
-	                        </li>
 	                    </ul>
+						<span class="navbar-text">
+	                            <span class="nav-link admin-nick">${loginNick}님</span>
+						</span>
                    	</div>
                 </div>
-            </div>
-            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 container-fluid d-lg-flex flex-row align-items-center">
-               <ul class="before-address d-lg-flex list-unstyled nav nav-link text-muted">
-                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
-                  
-                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a><span>&nbsp;&gt;&nbsp;</span></li>
-                  
-                  <li class="nav-item"><a class="text-decoration-none text-reset" href="#">여기가 거기</a></li>
-               </ul>
             </div>
       </nav>
    </div>
