@@ -287,16 +287,6 @@ width: 100px;
    
 
 <script type="text/javascript">
-<<<<<<< HEAD
-=======
-	$(function() {
-		
-		
-		
-	});
-</script>
-
-<script type="text/javascript">
           
        /* 레시피 리스트 정렬 */
       $(".sort-click").on("input", function(){
@@ -333,7 +323,6 @@ width: 100px;
          });
       });       
 
->>>>>>> refs/remotes/origin/main
 	
 	 $(function(){
 		// 초기 페이지를 1페이지로
