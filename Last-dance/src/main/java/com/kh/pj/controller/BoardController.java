@@ -123,6 +123,7 @@ public class BoardController {
 						@RequestParam int boardAttachmentNo,
 						RedirectAttributes attr) {
 		
+		
 		if(boardImgDao.find(boardDto.getBoardNo()) ==  null){
 			BoardImgDto imgDto = BoardImgDto.builder()
 					.boardAttachmentNo(boardAttachmentNo)

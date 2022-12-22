@@ -16,6 +16,7 @@ import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeDetailVO;
+import com.kh.pj.vo.LatelyViewListVO;
 import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.ListSearchVO1;
 import com.kh.pj.vo.RecipeListVO;
@@ -230,6 +231,12 @@ public class RecipeDaoImpl implements RecipeDao {
 	@Override
 	public RecipeDto adminRecipeFind(String recipeTitle) {
 		return sqlSession.selectOne("recipe.adminRecipeFind", recipeTitle);
+	}
+	
+	//최근 본 레시피 3개
+	@Override
+	public List<LatelyViewListVO> latelyViewList(String memberId) {
+		return sqlSession.selectList("recipe.latelyViewList", memberId);
 	}
 
 	@Override

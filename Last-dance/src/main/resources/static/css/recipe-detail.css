@@ -118,14 +118,27 @@
 	margin-bottom: 30px;
 }
 
-.recipe-detail-content > span {
+.recipe-detail-content > div {
 	display: flex;
 	text-align: center;
 	flex-direction: row;
 	align-items: center;
+	width: 600px;
 }
 
-.recipe-detail-content > span > div {
+.recipe-detail-content > div > span {
+	width: 560px;
+	text-align: start;
+}
+
+/* .recipe-detail-content > span {
+	display: flex;
+	text-align: center;
+	flex-direction: row;
+	align-items: center;
+} */
+
+.recipe-detail-content > div > div {
 	background-color: #8BC96E;
     font-size: 16px;
     width: 30px;
