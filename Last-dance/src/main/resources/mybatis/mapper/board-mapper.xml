@@ -6,8 +6,8 @@
 <mapper namespace="board">
 
   <select id="list" parameterType="BoardListSearchVO" resultType="BoardListVO" >
-      select * from (select tmp.*, rownum rn from(select c.*, a.board_attachment_no from board_img a right outer join (
-		select
+      select * from (select tmp.*, rownum rn from( select c.*, a.board_attachment_no from board_img a right outer join (
+      select
              B.*,
              M.member_nick,
              M.member_point
@@ -23,7 +23,8 @@
        GROUP BY reply_board_no
       ) reply right outer join board on reply.reply_board_no=board.board_no
       ) b inner join member M on B.board_id = M.member_id
-	) c on a.board_no = c.board_no  )tmp) where rn between #{startPost} and #{endPost}
+   ) c on a.board_no = c.board_no 
+    order by board_writetime desc)tmp) where rn between #{startPost} and #{endPost}
 	
 	<where>
 			<if test="type != null and keyword !=''">
