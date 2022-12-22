@@ -214,6 +214,54 @@
 		select recipe_like from recipe where recipe_no = #{recipeNo}
    </select>
    
+   <!-- 최근 본 레시피 3개 출력 -->
+   <select id="latelyViewList" parameterType="String" resultMap="latelyViewList">
+	select * from (
+	    select TMP.*, rownum rn from (
+	        select R.* from recipe R 
+	        inner join recipe_view RV on R.recipe_no = RV.recipe_view_no where RV.recipe_view_id = #{memberId} 
+	        order by RV.recipe_view_time desc
+	    )TMP
+	) where rn between 1 and 3
+   </select>
+   
+   <!-- 재료 출력 -->
+	<select id="recipeIngredientList2" resultType="RecipeIngredientDto" parameterType="int">
+		select * from recipe_ingredient where recipe_no = #{recipeNo}
+	</select>
+	
+	<!-- 레시피 썸네일 이미지 출력 -->
+	<select id="recipeImg2" parameterType="int" resultType="RecipeImgDto">
+		select * from recipe_img where recipe_no = #{recipeNo}
+	</select>
+   
+   <!-- 레시피 리스트 계층형 조회 구문 -->
+	<resultMap type="LatelyViewListVO" id="latelyViewList">
+		<association property="recipeDto">
+			<result column="recipe_no" property="recipeNo"/>
+			<result column="recipe_nick" property="recipeNick"/>
+			<result column="recipe_title" property="recipeTitle"/>
+			<result column="recipe_info" property="recipeInfo"/>
+			<result column="recipe_time" property="recipeTime"/>
+			<result column="recipe_click" property="recipeClick"/>
+			<result column="recipe_like" property="recipeLike"/>
+			<result column="recipe_hashtag" property="recipeHashtag"/>
+			<result column="recipe_writetime" property="recipeWritetime" javaType="java.sql.Date"/>
+			<result column="recipe_edittime" property="recipeEdittime" javaType="java.sql.Date"/>
+			<result column="recipe_difficulty" property="recipeDifficulty"/>
+		</association>
+		
+		<collection property="recipeIngredientList" javaType="java.util.List" ofType="RecipeIngredientDto" select="recipeIngredientList2" column="recipe_no">
+			<result column="recipe_ingredient_name" property="recipeIngredientName"/>		
+			<result column="recipe_no" property="recipeNo"/>		
+		</collection>
+		
+		<collection property="recipeImgList" javaType="java.util.List" ofType="RecipeImgDto" select="recipeImg2" column="recipe_no">
+			<result column="recipe_attachment_no" property="recipeAttachmentNo"/>
+			<result column="recipe_no" property="recipeNo"/>
+		</collection>
+		
+	</resultMap>
    <!-- 총 게시물 개수 세기용 -->
    <select id="recipePostCount" parameterType="ListSearchVO1" resultType="int">
 		select count(*) from recipe

@@ -30,7 +30,7 @@
    <!--  무한스크롤 관련 rn추가 -->	
 	<!-- 계층 조회를 위한 음식재료 기본 조회 쿼리  --> 
    	<select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
-	    select 	* from recipe_ingredient 
+	    select 	* from recipe_ingredient where recipe_no = #{recipeNo}
 	</select>
 	
 	<!-- 계층 조회를 위한 첨부파일 기본 조회 쿼리 -->
@@ -64,6 +64,8 @@
     </resultMap>
 
     <select id="recipeListSearchFinal" resultMap="recipeListSearch" parameterType="RecipeIngredientVO">
+  			select * from (
+			select tmp.*, rownum rn from(	
   		select distinct
   			R.recipe_no,
 		    R.recipe_title,
@@ -74,20 +76,8 @@
 		    R.recipe_hashtag,
 		    R.recipe_difficulty,
 		    R.recipe_writetime
-		from(
-		select tmp.*, rownum rn from (
-			select 	distinct R.recipe_no,
-		    R.recipe_title,
-		    R.recipe_info,
-		    R.recipe_time,
-		    R.recipe_click,
-		    R.recipe_like,
-		    R.recipe_hashtag,
-		    R.recipe_difficulty,
-		    R.recipe_writetime from recipe R inner join recipe_ingredient RI 
-		on R.recipe_no = RI.recipe_no order by ${sort}
-		)tmp
-	)where rn between #{startPost} and #{endPost}
+		from recipe R inner join recipe_ingredient RI 
+		on R.recipe_no = RI.recipe_no
 		
 		<where>
 			<if test="recipeIngredientName != null">
@@ -96,6 +86,9 @@
 				</foreach>
 			</if>
 		</where>
+		order by #{sort}
+				)tmp
+		) where rn between #{startPost} and #{endPost}
 		
     </select>
     
