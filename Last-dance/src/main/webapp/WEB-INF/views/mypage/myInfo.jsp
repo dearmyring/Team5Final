@@ -11,7 +11,7 @@
 <script src="/js/myInfo.js"></script>
 
 
-<form action="infoEdit" method="post">
+<form class="update-form" action="infoEdit" method="post">
 	<div class="my-info-box container-1200">
 		<div class="w-100">
 			<label for="memberId">이메일</label>
@@ -22,14 +22,16 @@
 		<div>
 			<label for="memberPw">비밀번호</label>
 			<input class="w-100 login-input-password" id="memberPw" type="password" name="memberPw"/>
+			<div class="mt-5 help-text"></div>	
 		</div>
 		<div>
-			<label for="memberPwRe">비밀번호 확인</label>
-			<input class="w-100 login-input-password" id="memberPwRe" type="password"/>
+			<label for="memberPwChecking">비밀번호 확인</label>
+			<input class="w-100 login-input-password" id="memberPwChecking" type="password"/>
+			<div class="mt-5 help-text"></div>	
 		</div>
 		<div>
 			<label for="memberNick">닉네임</label>
-			<input class="w-100 login-input-password" id="memberNick" type="text" name="memberNick" value="${userInfo.memberNick}"/>
+			<input readonly class="w-100 login-input-password" id="memberNick" type="text" name="memberNick" value="${userInfo.memberNick}"/>
 		</div>
 		<div>
 			<label>성별</label>
@@ -51,6 +53,7 @@
 		<div>
 			<label for="memberPhone">휴대폰 번호</label>
 			<input class="w-100 login-input-password" id="memberPhone" type="text" name="memberPhone" value="${userInfo.memberPhone}"/>
+			<div class="mt-5 help-text"></div>	
 		</div>
 		<div>
 			<button class="w-100 mt-10 btn btn-positive" type="submit">변경하기</button><!-- 구현 완료 후 type submit으로 변경 -->
@@ -58,5 +61,6 @@
 		</div>
 	</div>
 </form>
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

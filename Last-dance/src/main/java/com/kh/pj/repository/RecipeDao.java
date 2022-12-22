@@ -62,6 +62,9 @@ public interface RecipeDao {
 	
 	//내가 본 레시피 시간 업데이트
 	boolean updateRecipeViewTime(RecipeViewDto recipeViewDto);
+	
+	//조회 수 증가
+	boolean recipeClickUpdate(int recipeNo);
 
 	//레시피 좋아요 확인
 	RecipeLikeDto recipeLikeOne(RecipeLikeDto dto);

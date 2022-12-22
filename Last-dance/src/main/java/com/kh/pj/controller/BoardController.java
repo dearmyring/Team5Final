@@ -1,6 +1,7 @@
 package com.kh.pj.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,8 +69,8 @@ public class BoardController {
 	}
 	@PostMapping("/write") 
 	public String write(@ModelAttribute BoardDto boardDto, MemberDto memberDto,
-						@RequestParam int boardAttachmentNo,
-						HttpSession session, RedirectAttributes attr) throws Exception {
+			 @RequestParam(required = false) Integer boardAttachmentNo, 
+						HttpSession session, RedirectAttributes attr) throws Exception{
 //		session에 있는 회원 아이디를 작성자로 추가한 뒤 등록해야함
 		String boardId = (String)session.getAttribute(SessionConstant.ID);
 		boardDto.setBoardId(boardId);
@@ -78,11 +79,13 @@ public class BoardController {
 		boardDao.write(boardDto);
 		
 		
-			BoardImgDto imgDto = BoardImgDto.builder()
-				.boardAttachmentNo(boardAttachmentNo)
-				.boardNo(boardNo)
-			.build();
-			boardImgDao.insert(imgDto);
+		  if(boardAttachmentNo != null) { 
+			  BoardImgDto imgDto = BoardImgDto.builder()
+					  .boardAttachmentNo(boardAttachmentNo) 
+					  .boardNo(boardNo) .build();
+			  		boardImgDao.insert(imgDto); 
+			  		}
+		 
 			
 		memberDto.setMemberId(boardId);
 		if(boardDao.boardCNT(memberDto)<=3) {
@@ -120,16 +123,15 @@ public class BoardController {
 	}
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute BoardDto boardDto,
-						@RequestParam int boardAttachmentNo,
+			@RequestParam(required = false) Integer boardAttachmentNo,
 						RedirectAttributes attr) {
 		
-		
-		if(boardImgDao.find(boardDto.getBoardNo()) ==  null){
-			BoardImgDto imgDto = BoardImgDto.builder()
-					.boardAttachmentNo(boardAttachmentNo)
-					.boardNo(boardDto.getBoardNo())
-				.build();
-			boardImgDao.insert(imgDto);	
+		 if(boardAttachmentNo != null) { 
+			  BoardImgDto imgDto = BoardImgDto.builder()
+					  .boardAttachmentNo(boardAttachmentNo) 
+					  .boardNo(boardDto.getBoardNo()) .build();
+			  		boardImgDao.insert(imgDto); 
+			  		
 		}
 		else {
 			BoardImgDto imgDto = BoardImgDto.builder()
@@ -154,8 +156,11 @@ public class BoardController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int boardNo,Model model,HttpSession session
 						) {	
-		model.addAttribute("boardImgDto", boardImgDao.find(boardNo));
 		
+		String loginNick = (String)session.getAttribute("loginNick");
+		boolean member = session.getAttribute("loginId") != null;
+		
+		if(member && !loginNick.contains("관리자")) {
 		System.out.println(boardImgDao.find(boardNo));
 		@SuppressWarnings("unchecked")
 		Set<Integer> history = (Set<Integer>)session.getAttribute("history");
@@ -168,27 +173,29 @@ public class BoardController {
 			model.addAttribute("boardDto", boardDao.click(boardNo)); 
 		}
 		
-		else {//추가가 안 된 경우 - 읽은 적이 있는 번호면
-			model.addAttribute("boardDto", boardDao.selectOne(boardNo)); //불러와
-		}
+		//좋아요 한적이 있는지 확인
+		BoardLikeDto boardLikeDto = BoardLikeDto.builder()
+				.boardLikeNo(boardNo)
+				.boardLikeId((String) session.getAttribute("loginId"))
+				.build();
 		
 		
 //	(4) 갱신된 저장소를 세션에 다시 저장
-	session.setAttribute("history", history);
-	
+		session.setAttribute("history", history);
+		
+		boardDao.boardLikeOne(boardLikeDto);
+		model.addAttribute("like", boardDao.boardLikeOne(boardLikeDto));
+		} //회원인지 아닌지 if end
+		
+		model.addAttribute("boardDto", boardDao.selectOne(boardNo)); //불러와
+		
+		model.addAttribute("boardImgDto", boardImgDao.find(boardNo));
+		
 //	(+ 추가) 댓글 목록을 조회하여 첨부
 		model.addAttribute("replyList",replyDao.selectList(boardNo));
 		model.addAttribute("filesList", attachmentDao.selectBoardFileList(boardNo));
 		
-		//좋아요 한적이 있는지 확인
-		BoardLikeDto boardLikeDto = BoardLikeDto.builder()
-								.boardLikeNo(boardNo)
-								.boardLikeId((String) session.getAttribute("loginId"))
-								.build();
 		
-		boardDao.boardLikeOne(boardLikeDto);
-		
-		model.addAttribute("like", boardDao.boardLikeOne(boardLikeDto));
 		
 		return "board/detail";
 	}

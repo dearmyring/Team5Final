@@ -10,7 +10,7 @@
 		select
              B.*,
              M.member_nick,
-             M.member_badge
+             M.member_point
       from (
    select 
           board.*, 
@@ -121,7 +121,7 @@
 		select
              B.*,
              M.member_nick,
-             M.member_badge,
+             M.member_point,
              M.member_id
       from (
    select 

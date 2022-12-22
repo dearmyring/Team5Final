@@ -118,7 +118,7 @@
 	
 	<div class="row left">
 		<label>첨부파일(1개당 1MB. 최대 10MB 가능)</label>
-	<input class="input w-100 file-input" type="file" name="attachment" multiple>
+	<input class="input w-100 file-input" type="file">
 	<div class="thumbnail-preview-wrapper"></div>	
 		
 	</div>
