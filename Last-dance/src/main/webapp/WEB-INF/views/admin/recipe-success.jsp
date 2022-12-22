@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
+<div class="mt-3">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
+
+<div class="history-link text-end">
+	<a class="main-page-link"></a> <i class="fa-solid fa-chevron-right"></i> 
+	<a href="list">레시피</a> <i class="fa-solid fa-chevron-right"></i> 레시피 등록하기
+</div>
+
 <div class="container-fluid mt-5">
 
 	<div class="row mt-5">

@@ -13,7 +13,7 @@
 }
 .message-list:has( i.center-hide) {
     right:0; 
-    bottom:-258px;
+    bottom:-305px;
     transition: 0.6s;
 }
 .message-list .message-input-area{
@@ -45,6 +45,9 @@
     top:0.7em;
     cursor: pointer;
 }
+.chat-icon{
+    color: #F9E24C;
+}
 .center-message{
     display: inline-block;
     width:auto;
@@ -52,6 +55,7 @@
     border-radius: 10px;
     padding: 0 1em 0 1em;
     margin-top: 0;
+    max-width: 200px;
 }
 .center-message.center-member{
     background-color: #eff5e9;
@@ -60,7 +64,7 @@
     background-color: #EEEEEE;
 }
 .center-message-list{
-    height:200px;
+    height:250px;
     overflow:auto;
     padding: 0 0.5em 0 0.5em;
 }
