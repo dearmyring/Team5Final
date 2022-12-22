@@ -98,10 +98,12 @@
 		<c:set var="num" value="${num+1}"></c:set>
 		<div class="recipe-detail-content">
 			<img class="content-image" src = "${pageContext.request.contextPath}/rest/download/${recipeContent.recipeContentAttachmentNo}">
-			<span>
+			<div>
 				<div>${num}</div>
-				${recipeContent.recipeContentText}
-			</span>
+				<span>
+					${recipeContent.recipeContentText}
+				</span>
+			</div>
 		</div>
 		</c:forEach>
 	</div>

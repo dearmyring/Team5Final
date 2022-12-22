@@ -2,6 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="login" value="${loginId != null}"></c:set>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,6 +19,13 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp">
    <jsp:param value="레시피 리스트" name="title" />
 </jsp:include>
+
+<c:choose>
+	<c:when test="${login}">
+	<!-- 사이드 배너 템플릿 -->
+	<jsp:include page="/WEB-INF/views/template/side-banner.jsp"></jsp:include>
+	</c:when>
+</c:choose>
 
 <style>
 /*
@@ -306,6 +314,49 @@ width: 100px;
    
 
 <script type="text/javascript">
+	$(function() {
+		
+		
+		
+	});
+</script>
+
+<script type="text/javascript">
+          
+       /* 레시피 리스트 정렬 */
+      $(".sort-click").on("input", function(){
+         var sort = $(this).val();
+         $.ajax({
+            url: "http://localhost:8888/rest/recipe",
+            method: "post",
+            contentType: "application/json",
+            data: JSON.stringify({
+               sort: sort
+            }),
+            success: function(resp){
+               $(".list").find("a").remove();
+               for(var i=0; i<resp.length; i++){
+                  var a = $("<a>");
+                  var acheck = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
+                  var listCheck = $("<list>").append(check); 
+                  var link = $("<a>").addClass("text-decoration-none link-dark")
+               .attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle);
+                  var listThumbnail = $("<td>").addClass("img-thumnail").append(link); /*첨부파일은 파일이아니라 링크? 주소를 가져오는것 주소로 다 가져올수 있음*/
+                  var listInfo = $("<list>").append($("<a>").attr("src", "detail/"+resp[i].recipeNo).text(resp[i].recipeInfo));
+                  var listClick = $("<list>").text(resp[i].recipeClick);   /*${pageContext.request.contextPath}/rest/download/${recipeImg.recipeAttachmentNo}*/
+                  var listLike = $("<list>").text(resp[i].recipeLike);
+                  var listTime = $("<list>").text(resp[i].recipeTime+'분');
+               /*   var listEnough = $("<list>").text(resp[i].recipeEnough);
+                  var listLack = $("<list>").text(resp[i].recipeLack);*/
+                  var listDifficulty = $("<list>").text(resp[i].recipeDifficulty);
+                  var listIngredient = $("<list>").text(resp[i].recipeIngredientName);
+                  list.append(aCheck).append(listThumbnail).append(listInfo).append(listClick).append(listLike).append(listTime)
+                  .append(listDifficulty).append(listIngredient);
+                  $(".list").append(a);
+               }
+            }
+         });
+      });       
 
 	
 	 $(function(){
