@@ -2,10 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
-<div class="mt-5">&nbsp;</div>
 
-<div class="text-end">
-	<a class="main-page-link"></a> > <a class="text-dark" href="../list">레시피</a> > 상세보기
+<div class="mt-3">&nbsp;</div>
+<div class="mt-3">&nbsp;</div>
+
+<div class="history-link text-end">
+	<a class="main-page-link"></a> <i class="fa-solid fa-chevron-right"></i> 
+	<a href="../list">레시피</a> <i class="fa-solid fa-chevron-right"></i> 상세보기
 </div>
 
 <div class="container-fluid mt-5">

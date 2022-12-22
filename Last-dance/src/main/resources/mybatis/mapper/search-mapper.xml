@@ -27,10 +27,15 @@
 	<select id = "recipeNo" resultType="int">
       	select recipe_seq.nextval from dual
     </select>
-	
-	<!-- 계층 조회를 위한 음식재료 기본 조회 쿼리 -->
+   <!--  무한스크롤 관련 rn추가 -->	
+	<!-- 계층 조회를 위한 음식재료 기본 조회 쿼리  --> 
    	<select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
-	    select * from recipe_ingredient where recipe_no = #{recipeNo}
+	    select 
+			* from
+				(select tmp.*, rownum rn from
+				(select * from recipe_ingredient)
+			tmp)
+			where  rn between #{startPost} and #{endPost}
 	</select>
 	
 	<!-- 계층 조회를 위한 첨부파일 기본 조회 쿼리 -->
@@ -62,7 +67,7 @@
 			<result column="recipe_no" property="recipeNo"/>
 		</collection>
     </resultMap>
-   
+
     <select id="recipeListSearchFinal" resultMap="recipeListSearch" parameterType="RecipeIngredientVO">
   		select distinct
   			R.recipe_no,
@@ -86,5 +91,10 @@
 		</where>
 		
     </select>
+    
+       <!-- 검색 총 게시물 개수 세기용 왜 안나오지 -->
+   <select id="recipeSearchPostCount" parameterType="RecipeIngredientVO" resultType="int">
+		select count(*) from recipe
+   </select>
    
 </mapper>

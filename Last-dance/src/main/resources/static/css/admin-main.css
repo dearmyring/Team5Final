@@ -1,0 +1,103 @@
+.admin-main-container {
+	width: 1200px;
+	margin: auto;
+}
+
+.chart-list {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.user-active {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+}
+
+.top-recipe {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 100%;
+}
+
+.top-recipe > div {
+	display: flex;
+	justify-content: space-around;
+}
+
+.top-list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin-bottom: 100px;
+	justify-content: space-between;
+}
+
+.chart-box {
+	width: 400px;
+	height: 400px;
+	margin-bottom: 100px;
+}
+
+.lately-join-user > .chart-box {
+	width: 700px;
+}
+
+.top-recipe > div:nth-child(2) > .chart-box {
+	width: 700px;
+}
+
+.chart-box > p {
+	margin-bottom: 50px;
+	text-align: center;
+}
+
+.top-five-box {
+	width: 580px;
+}
+
+.top-five-list {
+	text-align: center;
+}
+
+.top-five-item  {
+	border-bottom: 1px solid #E7E7E7;
+	height: 30px;
+}
+
+thead > .top-five-item {
+	border-bottom: 1px solid #373A3C;
+}
+
+.top-five-item > td {
+	vertical-align: middle;
+}
+
+.top-five-item:hover {
+	background-color: #F7F7F7;
+	color: black;
+}
+
+ .top-five-item td:nth-child(2) {
+	text-align: left;
+}
+
+.tfi-title > a {
+	display: block;
+	width: 100%;
+	color: #373A3C;
+}
+
+.tfi-no,
+.tfi-time,
+.tfi-writer {
+	width: 100px;
+}
+
+.tfi-title {
+	width: 400px;
+}

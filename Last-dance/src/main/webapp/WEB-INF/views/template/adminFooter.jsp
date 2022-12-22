@@ -3,7 +3,7 @@
 
 <script type="text/javascript">
 	$(function(){
-		$(".main-page-link").addClass("text-dark").attr("href", "${pageContext.request.contextPath}/admin/").text("메인 페이지");
+		$(".main-page-link").attr("href", "${pageContext.request.contextPath}/admin/").text("메인 페이지");
 		/* 모든 돌아가기 + 모달창 구현 예정 */
 		$(".return-btn").click(function(){
 			history.back();
@@ -16,7 +16,7 @@
 			}
 		});
 		
-		//페이지 이전 주소를 가져와서 저장
+/* 		//페이지 이전 주소를 가져와서 저장
 		var referrer = document.referrer;
 // 		console.log(referrer);
 		
@@ -43,7 +43,7 @@
 // 			alert("성공"+referrer);
 // 			console.log("성공");
 // 			<a href="#"><li>여기가 거기</li></a>
-// 		});
+// 		}); */
 		 
 	});
 
