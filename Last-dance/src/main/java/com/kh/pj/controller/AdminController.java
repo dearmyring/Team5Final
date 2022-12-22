@@ -291,7 +291,7 @@ public class AdminController {
 		return "redirect:detail/"+recipeNo;
 	}
 	
-	@GetMapping("/delete/{recipeNo}")
+	@GetMapping("/recipe/delete/{recipeNo}")
 	public String delete(@PathVariable int recipeNo) {
 		recipeDao.delete(recipeNo);
 		return "redirect:../list";
