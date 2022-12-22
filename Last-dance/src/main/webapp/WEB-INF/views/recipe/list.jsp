@@ -91,6 +91,7 @@ article {
    font-weight: 600;
    color: white;
    font-size: 14px;
+   margin: 6 2 3;
   }
 .item {
    min-height: 200px;
