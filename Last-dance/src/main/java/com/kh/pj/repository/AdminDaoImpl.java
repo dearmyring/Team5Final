@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.pj.entity.AdminDto;
 import com.kh.pj.entity.MemberDto;
+import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardTopFiveVO;
 import com.kh.pj.vo.BoardViewTopFiveVO;
 import com.kh.pj.vo.ListSearchVO;
@@ -32,6 +33,10 @@ public class AdminDaoImpl implements AdminDao{
 		return sqlSession.selectOne("admin.adminPostCount", vo);
 	}
 
+	@Override
+	public int adminBoardCount(BoardListSearchVO vo) {
+		return sqlSession.selectOne("admin.adminBoardCount", vo);
+	}
 	
 	
 	//관리자 메인페이지 시작!

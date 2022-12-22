@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.pj.entity.AdminDto;
 import com.kh.pj.entity.MemberDto;
+import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardTopFiveVO;
 import com.kh.pj.vo.BoardViewTopFiveVO;
 import com.kh.pj.vo.ListSearchVO;
@@ -40,4 +41,5 @@ public interface AdminDao {
 	//게시글 TOP5(좋아요 많은 순 -> 조회수 많은 순)
 	List<BoardViewTopFiveVO> boardTopFive();
  	
+	public int adminBoardCount(BoardListSearchVO vo);
 }

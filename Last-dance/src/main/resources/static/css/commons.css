@@ -344,15 +344,15 @@ textarea.input.fix-size {
 
 /* 확장스타일 : 옆트임 테이블 */
 .table.table-slit {
-    border: 3px solid gray;
+    border: 1px solid gray;
     border-left: none;
     border-right: none;
 }
 .table.table-slit > thead {
-    border-bottom: 2px solid gray;
+    border-bottom: 1px solid gray;
 }
 .table.table-slit > tfoot {
-    border-top: 2px solid gray;
+    border-top: 1px solid gray;
 }
 
 /* 확장스타일 : 체스판 테이블 */

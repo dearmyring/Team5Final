@@ -145,7 +145,7 @@
 		where board_no=#{boardNo}
 	</update>
 	
-	   <select id="boardList" parameterType="ListSearchVO" resultType="BoardDto">
+	   <select id="adminList" parameterType="BoardListSearchVO" resultType="BoardDto">
 		      select * from board  
 		      <!-- 검색 -->
 		      <where>

@@ -24,6 +24,12 @@
 	width: 100%;
 }
 
+.text-cutter{
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+
 .top-recipe > div {
 	display: flex;
 	justify-content: space-around;
