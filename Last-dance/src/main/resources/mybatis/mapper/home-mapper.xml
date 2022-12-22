@@ -27,16 +27,11 @@
 	
 	<select id="pushRecipeForMain" resultType="PushRecipeListVO">
 		<![CDATA[
-			select 
-				R.recipe_attachment_no,
-				T.*
-			from
-				recipe_img R right outer join 
-				(select * from(
-				    select TMP.*, rownum rn from(
-				        select recipe_no, recipe_title, recipe_info, ((recipe_click + (recipe_like*2))/2.5) cal from recipe order by cal desc, recipe_time asc    
-    			)TMP) where rn between 1 and 10) T 
-    		on R.recipe_no = T.recipe_no order by rn asc
+			select * from(
+			    select TMP.*, rownum rn from(
+			        select recipe_no, recipe_title, recipe_info, ((recipe_click + (recipe_like*2))/2.5) cal from recipe order by cal desc, recipe_time asc    
+			    )TMP
+			) where rn between 1 and 10
 		]]>
 	</select>
 	
