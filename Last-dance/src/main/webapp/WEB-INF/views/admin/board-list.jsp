@@ -193,7 +193,6 @@ $(function(){
 				linkPrev.append(prev);
 				liPrev.append(linkPrev);
 				$(".pagination").append(liPrev);
-
 				for(var i=resp.firstBlock; i<=resp.lastBlock; i++){
 		    		var link = $("<a>").addClass("page-link").text(i).attr("data-no", i);
 		    		var li = $("<li>").addClass("page-item").append(link);
