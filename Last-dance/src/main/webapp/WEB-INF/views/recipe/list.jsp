@@ -227,7 +227,14 @@ width: 100px;
    <div class="layout">
       <article>
          <div class="recipe-recommend">         
-            <div class="recipe-recommend-text w-70">${loginNick}님이 당장 할 수 있는 요리를 추천해드릴게요.</div>
+          <c:choose>
+         <c:when test="${loginId != null}">    
+            <div class="recipe-recommend-text w-70">안녕하세요 ${loginNick}님, 요리를 시작해볼까요?</div>
+            </c:when> 
+            <c:otherwise>
+            <div class="recipe-recommend-text w-70">다양한 레시피를 보고 손쉽게 요리를 해보세요~</div>
+            </c:otherwise>
+             </c:choose>
             <div class= "sort-select w-30">
                <select class="sort-click form-select">
                   <option value="recipe_no desc">최근 작성일 순</option>
@@ -322,7 +329,6 @@ width: 100px;
             }
          });
       });       
-
 	
 	 $(function(){
 		// 초기 페이지를 1페이지로

@@ -17,4 +17,5 @@ public class RecipeListSearchResultMapVO {
 	private RecipeListSearchVO recipeListSearchVO;
 	private List<RecipeIngredientDto> recipeIngredientList;
 	private List<RecipeImgDto> recipeImgList;
+
 }
