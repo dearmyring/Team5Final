@@ -82,6 +82,19 @@ article {
     height: 110px;
    overflow: auto;
   }
+  
+    .ingredient-name-box{
+   display: inline-block;
+   border: none;
+   background-color: #88db9d;
+   text-align: center;
+   padding: 0.5em 0.8em 0.5em 0.8em;
+   border-radius: 7px;
+   font-weight: 600;
+   color: white;
+   font-size: 13px;
+   margin: 0 3px;  
+  }
 
 .item {
    min-height: 200px;
@@ -172,6 +185,19 @@ article {
    margin: 0 3px;
 }
 
+.recipe-less-enough {
+   display: inline-block;
+   border: none;
+   background-color: #c8e889;
+   text-align: center;
+   padding: 0.5em 0.8em 0.5em 0.8em;
+   border-radius: 7px;
+   font-weight: 600;
+   color: white;
+   font-size: 13px;
+   margin: 0 3px;
+}
+
 .recipe-lack {
    display: inline-block;
    border: none;
@@ -235,7 +261,7 @@ article {
 	width: 100px;
 }
 
-.btn{
+.yellow-btn{
  width: 120px;
  color: #373A3C;
  font-size: 18px;
@@ -251,20 +277,27 @@ article {
 <body>
    <div class="layout">
       <article>
-         <div class="recipe-recommend">         
-            <div class="recipe-recommend-text w-70">${loginNick}님이 당장 할 수 있는 요리를 추천해드릴게요.</div>
+         <div class="recipe-recommend">    
+          <c:choose>
+         <c:when test="${loginId != null}">   
+            <div class="recipe-recommend-text w-70">안녕하세요 ${loginNick}님, 요리를 시작해볼까요?</div>
+            </c:when> 
+            <c:otherwise>
+            <div class="recipe-recommend-text w-70">다양한 레시피를 보고 손쉽게 요리를 해보세요~</div>
+            </c:otherwise>
+             </c:choose>
             <div>파라미터: ${leng }</div>
             <div class= "sort-select w-30">
                <select class="input sort-click">
                   <option value="recipe_no desc">최근 작성일 순</option>
                   <option value="recipe_click desc">조회수 높은 순</option>
                   <option value="recipe_like desc">좋아요 많은 순</option>
-				 <option value="검색&레시피 일치 재료수 desc">재료 많은 순</option>
-				<option value="검색&레시피 일치 재료수 asc">재료 많은 순</option>
+<!-- 				 <option value="검색&레시피 일치 재료수 desc">재료 많은 순</option> -->
+<!-- 				<option value="검색&레시피 일치 재료수 asc">재료 적은 순</option> -->
                   <option value="recipe_time asc">조리시간 짧은 순</option>
                   <option value="recipe_time desc">조리시간 긴 순</option>
                </select>
-            </div>
+            </div> 
          </div>
 
          <div class="flexbox">
@@ -288,14 +321,19 @@ article {
 	                           <i class="fa-regular fa-clock"></i>
 	                           ${recipeListVO.recipeListSearchVO.recipeTime}분 이내
 	                        </div>
-	                        <c:choose>
-	                        	<c:when test="${fn:length(recipeListVO.recipeIngredientList) < leng}">
-		                        	<div class="recipe-enough">재료가 충분</div>
-	                        	</c:when>
-	                        	<c:otherwise>
-		                        	<div class="recipe-lack">간당간당하네</div>
-	                        	</c:otherwise>
+	                        <div class="enough">
+		                        <c:choose>
+		                        	<c:when test="${fn:length(recipeListVO.recipeIngredientList) <= leng*0.6}">
+			                        	<div class="recipe-enough">재료가 충분해요</div>
+		                        	</c:when>
+		                        	<c:when test="${fn:length(recipeListVO.recipeIngredientList) > leng *0.6}">
+			                        	<div class="recipe-less-enough">재료가 조금 모자라요</div>
+		                        	</c:when>
+		                        	<c:otherwise>
+			                        	<div class="recipe-lack">재료가 모자라요</div>
+		                        	</c:otherwise>
 	                        </c:choose>
+	                        </div>
 	                         <div class="cooking-level">${recipeListVO.recipeListSearchVO.recipeDifficulty}</div>
                         </div>
                         <div class="ingredient-box scroll">
@@ -309,7 +347,7 @@ article {
                   </a>
                </c:forEach>
             </div>
-                            <div class="container-fluid row center"><button class="btn yellow-btn more">더보기</button></div>                 
+                            <div class="container-fluid row center"><button class="yellow-btn more">더보기</button></div>                 
          </div>
       </article>
    </div>
@@ -318,79 +356,174 @@ article {
 </html>
 
 <script type="text/javascript">
+               
 
-$(function(){
-	// 초기 페이지를 1페이지로
-	var p = 1;
 	
-	$(".more").click(function(){
+	 $(function(){
+		// 초기 페이지를 1페이지로
+		var p = 1;
 		
-		p = p+1;
-		
-		$.ajax({
-	           url: "http://localhost:8888/rest/recipe2",
-	           method: "post",
-	           contentType: "application/json",
-	           data: JSON.stringify({
-	              p : p
-       	}),
-       	success: function(resp){
-         	console.log(resp);
-         	
+		$(".more").click(function(){
+			
+			p = p+1;
+			
+			$.ajax({
+		           url: "http://localhost:8888/rest/recipe2",
+		           method: "post",
+		           contentType: "application/json",
+		           data: JSON.stringify({
+		              p : p
+           	}),
+           	success: function(resp){
+             	console.log(resp);
+             	
+ 		               for(var i = 0 ; i < resp.length ; i ++) {					          
+ 			              var div_outer_container = $("<a>").attr("href", "/recipe/detail?recipeNo=" + resp[i].recipeListSearchVO.recipeNo);				              			              
+			             
+ 			              var div_inner_container = $("<div>").attr("class", "list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left");
+			              
+			              
+  			              var div_img_container = $("<div>").attr("class", "img-box");		    			              
+			              
+ 			              var div_hashtag = $("<div>").attr("class", "hash-tag").html(resp[i].recipeListSearchVO.recipeHashtag);	
+			              
+  			              div_img_container.append(div_hashtag);
+			              
+   			               var div_img;
+ 			              for(var j= 0 ; j < resp[i].recipeImgList.length ; j++) {	
+   			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
+   			              }		
+			                    
+  			              var div_info_container = $("<div>").attr("class", "info-box");	
+   			              var span_click =$("<span>").attr("class","view-count").text("조회수 " + resp[i].recipeListSearchVO.recipeClick); 		  //2-1            
+   			              var span_like = $("<span>").attr("class", "like-count").text(" 좋아요 " + resp[i].recipeListSearchVO.recipeLike); 	 //2-2
+   			              var div_recipe_info = $("<div>").attr("class", "recipe-info").text(resp[i].recipeListSearchVO.recipeInfo); //2-3
+			              			              		            			              
+ 			              var div_simple_info_container = $("<div>").attr("class", "simpe-info");    		             
+			              var div_difficulty = $("<div>").attr("class", "cooking-level").text(resp[i].recipeListSearchVO.recipeDifficulty); 	
+
+			              
+			              var leng = ${leng};
+			              var recipeLeng = ${fn:length(recipeListVO.recipeIngredientList)};
+			              
+			              if recipeLeng <= leng *0.6 {
+			            	  var answer =   $("<div>").attr("class", "recipe-enough").text( "재료가 충분해요");
+			              }
+			              else if recipeLeng > 0.6 {
+			            	  var answer =   $("<div>").attr("class", "recipe-less-enough").text( "재료가 조금 모자라요");
+			              }
+			              else {
+			            	  var answer =   $("<div>").attr("class", "recipe-lack").text( "재료가 모자라요");
+			              }
+			              var div_enough = answer;
+			              
+  			              var div_time = $("<div>").attr("class", "how-long").text(" "+resp[i].recipeListSearchVO.recipeTime+"분 이내").prepend($("<i>").attr("class","fa-regular fa-clock"));         		                         
+		                          
+  			              
+ 			              var div_ingredient_container = $("<div>").attr("class","ingredient-box scroll");
+ 			              var ingredient_box; //2-5
+  			               for(var k = 0 ; k < resp[i].recipeIngredientList.length ; k ++) {
+  			            	 ingredient_box =  div_ingredient_container.append($("<div>").attr("class", "ingredient-name-box mt-10").text(resp[i].recipeIngredientList[k].recipeIngredientName));  	   
+			               }
+  			               			               
+ 			           	  //var ingredient_box = div_ingredient_container.append(div_ingredient);
+ 			           	  
+ 	 		              var simple_info = div_simple_info_container.append(div_time).append.(div_enough).append(div_difficulty); //2-4
+  			              var div_info = div_info_container.append(span_click).append(span_like).append(div_recipe_info).append(simple_info).append(div_ingredient_container);	      
+ 			              var div_inner = div_inner_container.append(div_img_container).append(div_info_container);	
+			              var div_outer = div_outer_container.append(div_inner);	
+			              $(".item").append(div_outer);
+ 		              }
+		              
+ 		             
+		               
+		           }
+		        });
+		})
+	}); 
+	 
+ 	/* 레시피 리스트 정렬 */
+		$(".sort-click").on("input", function(){
+			var sort = $(this).val();
+			console.log(sort);
+			var data = {
+					sort: sort,
+					p: 1,
+					table: "recipe"
+			};
+			$.ajax({
+		           url: "http://localhost:8888/rest/recipe2",
+		           method: "post",
+		           contentType: "application/json",
+		           data: JSON.stringify(data),
+        	success: function(resp){
+          	console.log(resp);
+          	$(".item").empty();
+          	
 		               for(var i = 0 ; i < resp.length ; i ++) {					          
-			              var div_outer_container = $("<a>").attr("href", "/recipe/detail?recipeNo=" + resp[i].recipeDto.recipeNo);				              			              
-		             
+			              var div_outer_container = $("<a>").attr("href", "/recipe/detail?recipeNo=" + resp[i].recipeListSearchVO.recipeNo);				              			              
+			             
 			              var div_inner_container = $("<div>").attr("class", "list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left");
-		              
-		              
+			              
+			              
 			              var div_img_container = $("<div>").attr("class", "img-box");		    			              
-		              
-			              var div_hashtag = $("<div>").attr("class", "hash-tag").html(resp[i].recipeDto.recipeHashtag);	
-		              
+			              
+			              var div_hashtag = $("<div>").attr("class", "hash-tag").html(resp[i].recipeListSearchVO.recipeHashtag);	
+			              
 			              div_img_container.append(div_hashtag);
-		              
+			              
 			               var div_img;
 			              for(var j= 0 ; j < resp[i].recipeImgList.length ; j++) {	
 			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
 			              }		
-		                    
+			                    
 			              var div_info_container = $("<div>").attr("class", "info-box");	
-			              var span_click =$("<span>").attr("class","view-count").text("조회수 " + resp[i].recipeDto.recipeClick); 		  //2-1            
-			              var span_like = $("<span>").attr("class", "like-count").text(" 좋아요 " + resp[i].recipeDto.recipeLike); 	 //2-2
-			              var div_recipe_info = $("<div>").attr("class", "recipe-info").text(resp[i].recipeDto.recipeInfo); //2-3
-		              			              		            			              
+			              var span_click =$("<span>").attr("class","view-count").text("조회수 " + resp[i].recipeListSearchVO.recipeClick); 		  //2-1            
+			              var span_like = $("<span>").attr("class", "like-count").text(" 좋아요 " + resp[i].recipeListSearchVO.recipeLike); 	 //2-2
+			              var div_recipe_info = $("<div>").attr("class", "recipe-info").text(resp[i].recipeListSearchVO.recipeInfo); //2-3
+			              			              		            			              
 			              var div_simple_info_container = $("<div>").attr("class", "simpe-info");    		             
-		              var div_difficulty = $("<div>").attr("class", "cooking-level").text(resp[i].recipeDto.recipeDifficulty); 				              
-			              var div_ingredient_count = $("<div>").attr("class", "need-ingredient").html("필요 재료 : " +resp[i].recipeIngredientList.length+"개"); 
-			              var div_time = $("<div>").attr("class", "how-long").text(" "+resp[i].recipeDto.recipeTime+"분 이내").prepend($("<i>").attr("class","fa-regular fa-clock"));         		                         
-	                          
+			              var div_difficulty = $("<div>").attr("class", "cooking-level").text(resp[i].recipeListSearchVO.recipeDifficulty); 				              
+
+			              
+			              var leng = ${leng};
+			              var recipeLeng = ${fn:length(recipeListVO.recipeIngredientList)};
+			              
+			              if recipeLeng <= leng *0.6 {
+			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 충분해요");
+			              }
+			              else if recipeLeng > 0.6 {
+			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 조금 모자라요");
+			              }
+			              else {
+			            	  var answer =   $("<div>").attr("class", "enough").text( "재료가 모자라요");
+			              }  
+
+			              
+			              var div_time = $("<div>").attr("class", "how-long").text(" "+resp[i].recipeListSearchVO.recipeTime+"분 이내").prepend($("<i>").attr("class","fa-regular fa-clock"));         		                         
+		                          
 			              
 			              var div_ingredient_container = $("<div>").attr("class","ingredient-box scroll");
 			              var ingredient_box; //2-5
 			               for(var k = 0 ; k < resp[i].recipeIngredientList.length ; k ++) {
 			            	 ingredient_box =  div_ingredient_container.append($("<div>").attr("class", "ingredient-name-box mt-10").text(resp[i].recipeIngredientList[k].recipeIngredientName));  	   
-		               }
+			               }
 			               			               
 			           	  //var ingredient_box = div_ingredient_container.append(div_ingredient);
 			           	  
-	 		              var simple_info = div_simple_info_container.append(div_time).append(div_ingredient_count).append(div_difficulty); //2-4
+	 		               var simple_info = div_simple_info_container.append(div_time).append.(div_enough).append(div_difficulty); //2-4
 			              var div_info = div_info_container.append(span_click).append(span_like).append(div_recipe_info).append(simple_info).append(div_ingredient_container);	      
 			              var div_inner = div_inner_container.append(div_img_container).append(div_info_container);	
-		              var div_outer = div_outer_container.append(div_inner);	
-		              $(".item").append(div_outer);
+			              var div_outer = div_outer_container.append(div_inner);	
+			              $(".item").append(div_outer);
 		              }
-	              
+		              
 		             
-	               
-	           }
-	        });
-	})
-}); 
-   
+		               
+		           }
+		        });
+		});
+	 
 </script>
-
-
-
-
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
