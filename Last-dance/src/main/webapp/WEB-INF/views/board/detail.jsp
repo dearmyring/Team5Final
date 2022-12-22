@@ -8,6 +8,10 @@
 </jsp:include>
 
 <style>
+img{
+	max-width: 1000px;
+	max-height: 1000px;
+}
 .profile {
     width: 50px;
     height: 50px;
@@ -499,7 +503,7 @@ $(function(){
 		</div>
 		<hr>
 		<div class="main">
-			<p>
+			<p class="maxsize">
 				${boardDto.boardContent}
 			</p>
 			<div class="right">

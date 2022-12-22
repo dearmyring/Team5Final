@@ -16,7 +16,7 @@ public class BoardListSearchVO {
 	
 	private int p=1;//다른 일 없으면 1페이지부터 보여줌
 	
-	private int size=10;//게시글은 10개씩 보여줌
+	private int size=6;//게시글은 10개씩 보여줌
 	private int count;//총 게시글 수
 	
 	private int blockSize = 10;//무한스크롤 페이징은 어떻게 하는거징..? 최종 갯수가없어서 임의값 줬어요

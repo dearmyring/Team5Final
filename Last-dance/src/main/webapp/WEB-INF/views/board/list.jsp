@@ -33,6 +33,8 @@
  }
 .all-thumbnail-box {
    position:relative;
+   width : 30%;
+   
 }
 .thumbnail-box {
    position: relative;
@@ -40,10 +42,10 @@
     object-fit: cover;
 }
 
-/* .thumbnail {
-    width: 100%;
-    
-} */
+.thumbnail {
+    width: 230px;
+    height: 160px;
+}
 .btn {
     border: none;
     font-size: 15px;
@@ -64,7 +66,7 @@
     background-color: #1E90FF;
 }
 .board-list-title{
-   font-size : 30px;
+   font-size : 22px;
    font-weight: 900;
 }
 .board-list-item{
@@ -306,6 +308,7 @@ width: 20%;
    			<td>
    				<div class="center">
    					<button class="board-plus-btn btn w-100" type=button>더보기</button>
+   					<button class="top btn" type=button>위로</button>
    				</div>
    			</td>
    		</tr>
@@ -328,6 +331,11 @@ width: 20%;
             $(".board-search-btn").click();
          }
       });
+      
+      $(".top").click(function() {
+    	  $("html, body").animate({ scrollTop: 0 }, "slow");
+    	  return false;
+    	});
       
       	var p = 1;
 		
