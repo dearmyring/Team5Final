@@ -142,6 +142,11 @@
       update recipe_view set recipe_view_time = sysdate where recipe_view_id = #{recipeViewId} and recipe_view_no = #{recipeViewNo}
    </update>
    
+   <!-- 조회 수 증가 -->
+   <update id="recipeClickUpdate" parameterType="int">
+		update recipe set recipe_click = recipe_click+1 where recipe_no = #{recipeNo}
+   </update>
+   
    <!-- 레시피별 재료 출력 -->
    <select id="recipeDetailIngredientList" parameterType="int" resultType="RecipeIngredientDto">
 		select * from recipe_ingredient where recipe_no = #{recipeNo}
@@ -164,7 +169,7 @@
 			<result column="recipe_hashtag" property="recipeHashtag"/>
 			<result column="recipe_writetime" property="recipeWritetime" javaType="java.sql.Date"/>
 			<result column="recipe_edittime" property="recipeEdittime" javaType="java.sql.Date"/>
-			<result column="recipe_diffculty" property="recipeDiffculty"/>
+			<result column="recipe_difficulty" property="recipeDifficulty"/>
 		</association>
 		
 		<collection property="recipeDetailIngredientList" javaType="java.util.List" ofType="RecipeIngredientDto" select="recipeDetailIngredientList" column="recipe_no">
