@@ -110,7 +110,7 @@
 	});
 </script>
 
-<form action="write" method="post" enctype="multipart/form-data">
+<form action="write" method="post">
 <div class="container-800 mt-40">
 	<div class="row left">
 		<label>제목</label>
@@ -121,11 +121,11 @@
 		<textarea name="boardContent"></textarea>
 	</div>
 	
-	<div class="row left">
+	 <div class="row left">
 		<label>썸네일 첨부파일(1개당 1MB. 최대 10MB 가능)</label>
-		<input class="input w-100 file-input" type="file" name="attachment" multiple>
+		<input class="input w-100 file-input" type="file">
 		<div class="thumbnail-preview-wrapper"></div>
-	</div>
+	</div> 
 	
 	
 	<div class="row right">
