@@ -46,6 +46,18 @@
     width: 230px;
     height: 160px;
 }
+.morebtn {
+    border: none;
+    font-size: 15px;
+    padding: 0.75em;/*글자 크기의 0.75배*/
+    cursor: pointer;
+    /* a 태그를 버튼으로 만들기 위해 추가 */
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
 .btn {
     border: none;
     font-size: 15px;
@@ -307,8 +319,8 @@ width: 20%;
    		<tr>
    			<td>
    				<div class="center">
-   					<button class="board-plus-btn btn w-100" type=button>더보기</button>
-   					<button class="top btn" type=button>위로</button>
+   					<button class="board-plus-btn btn w-80 left" type=button><i class="fa-solid fa-caret-down"></i></button>
+   					<button class="top btn w-10" type=button><i class="fa-solid fa-arrow-up"></i></button>
    				</div>
    			</td>
    		</tr>
@@ -353,7 +365,7 @@ width: 20%;
 		        	   type : type,
                        keyword : keyword,
                        sort : sort,
-		             	 p : p
+		             	 p : 1
          	}),
          	success: function(resp){
            	console.log(resp);
@@ -465,7 +477,7 @@ width: 20%;
                             	  type : type,
                                   keyword : keyword,
                                   sort : sort,
-           		             		p : p
+           		             	  p:1
                                  
                               }),
                               success : function(resp) {
@@ -572,7 +584,7 @@ width: 20%;
                 	  type : type,
                       keyword : keyword,
                       sort : sort,
-		             p : p
+		             p : 1
                      
                   }),
                   success : function(resp) {
@@ -639,8 +651,7 @@ width: 20%;
                          
                          var divNick =  $("<div>").addClass("board-list-item float-container left")
                                .append(nick)
-                               .append(tdWriteTime)   
-                               
+                               .append(tdWriteTime)                               
                                .append(Like)
                                .append(Click)
                                .append(Reply);

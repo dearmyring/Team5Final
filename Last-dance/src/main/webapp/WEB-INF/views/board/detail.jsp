@@ -372,7 +372,7 @@ $(function(){
 				</tr>
 </script>
 
-<<script type="text/javascript">
+<script type="text/javascript">
 
 </script>
 
@@ -514,11 +514,11 @@ $(function(){
 					<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
 						
 					<c:if test="${owner}">
-						<a class="btn btn-positive" href="write">글쓰기</a>	
-						<a class="edit-btn btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정하기</a>	
-						<a class="board-delete btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>	
+						<a class="btn btn-positive" href="write">글작성</a>	
+						<a class="edit-btn btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정</a>	
+						<a class="board-delete btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제</a>	
 					</c:if>
-						<a class="btn btn-neutral" href="list">목록으로</a>
+						<a class="btn btn-neutral" href="list">목록</a>
 			</div>
 			<hr>
 		</div>
