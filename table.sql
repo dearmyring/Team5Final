@@ -148,7 +148,8 @@ create table center(
 center_member_id references member(member_id) on delete set null,
 center_id varchar2(60) not null,
 center_content varchar2(4000) not null, 
-center_time date default sysdate not null
+center_time date default sysdate not null,
+center_read char default 'N' check(center_read in('Y', 'N')) not null
 );
 
 --게시판
