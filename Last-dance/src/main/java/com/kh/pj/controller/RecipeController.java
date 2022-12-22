@@ -15,6 +15,8 @@ import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.SearchDao;
+import com.kh.pj.vo.ListSearchVO;
+import com.kh.pj.vo.ListSearchVO1;
 import com.kh.pj.vo.RecipeIngredientVO;
 
 @Controller
@@ -31,11 +33,12 @@ public class RecipeController {
       
    //레시피 목록
    @GetMapping("/list")
-   public String recipeList(Model model) {
+   public String recipeList(Model model,
+		   @ModelAttribute(name="vo1Pagination")ListSearchVO1 vo1) {
       
       //model에 조회 유형에 따른 조회 결과를 첨부
 
-      model.addAttribute("recipeList", recipeDao.recipeList());      
+      model.addAttribute("recipeList", recipeDao.recipeList(vo1));      
 
       return "recipe/list";
    }

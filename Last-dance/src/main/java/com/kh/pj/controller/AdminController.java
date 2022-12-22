@@ -88,7 +88,6 @@ public class AdminController {
 	
 	@Autowired
 	private AttachmentDao attachmentDao;
-	
 
 	@GetMapping("/")
 	public String main(Model model) {

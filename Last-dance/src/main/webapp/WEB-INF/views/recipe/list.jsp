@@ -167,7 +167,7 @@ article {
    margin: 0 3px;
 }
 
-.recipe-title {
+.recipe-info {
    color: #373A3C;
    font-size: 23px;
    font-weight: bold;
@@ -252,127 +252,110 @@ width: 100px;
                      </div>
 
                      <div class="info-box">
-                        <span class="view-count">조회수
-                           ${recipeListVO.recipeDto.recipeClick}</span> <span class="like-count">좋아요
-                           ${recipeListVO.recipeDto.recipeLike}</span>
-                        <div class="recipe-title">${recipeListVO.recipeDto.recipeTitle}</div>
+                     
+                        <span class="view-count">조회수 ${recipeListVO.recipeDto.recipeClick}</span> 
+                        <span class="like-count">좋아요 ${recipeListVO.recipeDto.recipeLike}</span>
+                        <div class="recipe-info">${recipeListVO.recipeDto.recipeInfo}</div>
+                        
                         <div class="simpe-info">
-                        <div class="how-long">
-                           <i class="fa-regular fa-clock"></i>
-                           ${recipeListVO.recipeDto.recipeTime}분 이내
+	                        <div class="how-long">
+	                           <i class="fa-regular fa-clock"></i>
+	                           ${recipeListVO.recipeDto.recipeTime}분 이내
+	                        </div>
+	                        <div class="need-ingredient">필요 재료 : ${recipeListVO.recipeIngredientList.size()}개 </div>
+	                        <div class="cooking-level">${recipeListVO.recipeDto.recipeDifficulty}</div>
                         </div>
-                        <div class="need-ingredient">필요 재료 개수 : ${recipeListVO.recipeIngredientList.size()}개 </div>
-                        <div class="cooking-level">${recipeListVO.recipeDto.recipeDifficulty}</div>
-                        </div>
+                        
                         <div class="ingredient-box scroll">
-                        <c:forEach var="ingredient" items="${recipeListVO.recipeIngredientList}">
-                           <div class="hashtag-box mt-10"> ${ingredient.recipeIngredientName}</div>
-                        </c:forEach>
+	                        <c:forEach var="ingredient" items="${recipeListVO.recipeIngredientList}">
+	                           <div class="ingredient-name-box mt-10"> ${ingredient.recipeIngredientName}</div>
+	                        </c:forEach>
                      </div>
+                     
                      </div>                     
-                  </div></a>
+                  </div>
+                  </a>
                </c:forEach>
             </div>
+            
+            <button class="btn yellow-btn more">더보기</button>
          </div>
       </article>
    </div>
    
-         <div class="row center">
-      <ul class="pagination">
-         <!-- 이전 -->
-         <c:choose>
-            <c:when test="${not recipeListSearchVO.isFirst()}"> <!-- 맨 처음 페이지가 아니라면  -->
-               <li><a href="list?p=${noticeListSearchVO.firstBlock()}&${noticeListSearchVO.parameter()}">&laquo;</a></li> <!-- 첫번째 페이지로 이동  -->
-            </c:when>
-            <c:otherwise> <!-- 그렇지 않으면  -->
-               <li><a href="">&laquo;</a></li> <!-- 페이지 변화 없음  -->
-            </c:otherwise>
-         </c:choose>
-         
-         <!-- 이전 구간의 마지막 페이지로 이동 -->         
-         <c:choose>
-            <c:when test="${noticeListSearchVO.hasPrev()}"> <!-- 이전 페이지가 없다면-->   
-               <li><a href="list?p=${noticeListSearchVO.prevBlock()}&${noticeListSearchVO.parameter()}">&lt;</a></li> <!-- 이전 구간의 마지막 페이지로 이동-->   
-            </c:when>
-            <c:otherwise> <!-- 그렇지 않으면  -->
-               <li><a href="">&lt;</a></li> <!-- 페이지 변화 없음  -->
-            </c:otherwise>
-         </c:choose>
-         
-         <!-- 현재 구간의 페이지 이동 -->
-         <!-- 변수명을 i로 하며 시작과 끝은 noticeListSearchVO의 startBlock(), endBlock()의 반환값으로, 간격은 1로 한다  -->
-         <c:forEach var="i" begin="${noticeListSearchVO.startBlock()}" end="${noticeListSearchVO.endBlock()}" step="1">
-               <a href = "list?p=${i}&${noticeListSearchVO.parameter()}">${i}</a>
-         </c:forEach>
-         
-         <!-- 다음을 누르면 다음 구간의 첫 페이지로 안내 -->
-         <c:choose>
-            <c:when test="${noticeListSearchVO.hasNext()}"> <!-- 다음페이지가 있으면  -->
-               <li><a href="list?p=${noticeListSearchVO.nextBlock()}&${noticeListSearchVO.parameter()}">&gt;</a></li> <!-- 다음 구간의 첫 페이지로 이동  -->
-            </c:when>
-            <c:otherwise> <!-- 그렇지 않으면  -->
-               <li><a href="">&gt;</a></li> <!-- 페이지 변화 없음  -->
-            </c:otherwise>
-         </c:choose>
-         
-         <!-- 맨 마지막 페이지로 이동 -->
-         <c:choose>
-            <c:when test="${not noticeListSearchVO.isLast()}"> <!-- 맨 마지막 페이지가 아니라면 -->
-               <li><a href="list?p=${noticeListSearchVO.lastBlock()}&${noticeListSearchVO.parameter()}">&raquo;</a></li> <!-- 맨 마지막 페이지로 이동 -->
-            </c:when>
-            <c:otherwise>  <!-- 그렇지 않으면  -->
-               <li><a href="">&raquo;</a></li> <!-- 페이지 변화 없음  -->
-            </c:otherwise>
-         </c:choose>
-      </ul>
-   </div>
-</body>
-</html>
 
 <script type="text/javascript">
-          
-       /* 레시피 리스트 정렬 */
-      $(".sort-click").on("input", function(){
-         var sort = $(this).val();
-         $.ajax({
-            url: "http://localhost:8888/rest/recipe",
-            method: "post",
-            contentType: "application/json",
-            data: JSON.stringify({
-               sort: sort
-            }),
-            success: function(resp){
-               $(".list").find("a").remove();
-               for(var i=0; i<resp.length; i++){
-                  var a = $("<a>");
-                  var acheck = $("<input>").addClass("check-item").attr("name", "recipeNo").val(resp[i].recipeNo).attr("type", "checkbox");
-                  var listCheck = $("<list>").append(check); 
-                  var link = $("<a>").addClass("text-decoration-none link-dark")
-               .attr("href", "detail/"+resp[i].recipeNo).text(resp[i].recipeTitle);
-                  var listThumbnail = $("<td>").addClass("img-thumnail").append(link); /*첨부파일은 파일이아니라 링크? 주소를 가져오는것 주소로 다 가져올수 있음*/
-                  var listInfo = $("<list>").append($("<a>").attr("src", "detail/"+resp[i].recipeNo).text(resp[i].recipeInfo));
-                  var listClick = $("<list>").text(resp[i].recipeClick);   /*${pageContext.request.contextPath}/rest/download/${recipeImg.recipeAttachmentNo}*/
-                  var listLike = $("<list>").text(resp[i].recipeLike);
-                  var listTime = $("<list>").text(resp[i].recipeTime+'분');
-               /*   var listEnough = $("<list>").text(resp[i].recipeEnough);
-                  var listLack = $("<list>").text(resp[i].recipeLack);*/
-                  var listDifficulty = $("<list>").text(resp[i].recipeDifficulty);
-                  var listIngredient = $("<list>").text(resp[i].recipeIngredientName);
-                  list.append(aCheck).append(listThumbnail).append(listInfo).append(listClick).append(listLike).append(listTime)
-                  .append(listDifficulty).append(listIngredient);
-                  $(".list").append(a);
-               }
-            }
-         });
-      });       
+
+	
+	 $(function(){
+		// 초기 페이지를 1페이지로
+		var p = 1;
+		
+		$(".more").click(function(){
+			
+			p = p+1;
+			
+			$.ajax({
+		           url: "http://localhost:8888/rest/recipe1",
+		           method: "post",
+		           contentType: "application/json",
+		           data: JSON.stringify({
+		              p : p
+           	}),
+           	success: function(resp){
+             	console.log(resp);
+             	
+ 		               for(var i = 0 ; i < resp.length ; i ++) {					          
+ 			              var div_outer_container = $("<a>").attr("href", "/recipe/detail?recipeNo=" + resp[i].recipeDto.recipeNo);				              			              
+			             
+ 			              var div_inner_container = $("<div>").attr("class", "list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left");
+			              
+			              
+  			              var div_img_container = $("<div>").attr("class", "img-box");		    			              
+			              
+ 			              var div_hashtag = $("<div>").attr("class", "hash-tag").html(resp[i].recipeDto.recipeHashtag);	
+			              
+  			              div_img_container.append(div_hashtag);
+			              
+   			               var div_img;
+ 			              for(var j= 0 ; j < resp[i].recipeImgList.length ; j++) {	
+   			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
+   			              }		
+			                    
+  			              var div_info_container = $("<div>").attr("class", "info-box");	
+   			              var span_click =$("<span>").attr("class","view-count").text("조회수 " + resp[i].recipeDto.recipeClick); 		  //2-1            
+   			              var span_like = $("<span>").attr("class", "like-count").text(" 좋아요 " + resp[i].recipeDto.recipeLike); 	 //2-2
+   			              var div_recipe_info = $("<div>").attr("class", "recipe-info").text(resp[i].recipeDto.recipeInfo); //2-3
+			              			              		            			              
+ 			              var div_simple_info_container = $("<div>").attr("class", "simpe-info");    		             
+			              var div_difficulty = $("<div>").attr("class", "cooking-level").text(resp[i].recipeDto.recipeDifficulty); 				              
+   			              var div_ingredient_count = $("<div>").attr("class", "need-ingredient").html("필요 재료 : " +resp[i].recipeIngredientList.length+"개"); 
+  			              var div_time = $("<div>").attr("class", "how-long").text(" "+resp[i].recipeDto.recipeTime+"분 이내").prepend($("<i>").attr("class","fa-regular fa-clock"));         		                         
+		                          
+  			              
+ 			              var div_ingredient_container = $("<div>").attr("class","ingredient-box scroll");
+ 			              var ingredient_box; //2-5
+  			               for(var k = 0 ; k < resp[i].recipeIngredientList.length ; k ++) {
+  			            	 ingredient_box =  div_ingredient_container.append($("<div>").attr("class", "ingredient-name-box mt-10").text(resp[i].recipeIngredientList[k].recipeIngredientName));  	   
+			               }
+  			               			               
+ 			           	  //var ingredient_box = div_ingredient_container.append(div_ingredient);
+ 			           	  
+ 	 		              var simple_info = div_simple_info_container.append(div_time).append(div_ingredient_count).append(div_difficulty); //2-4
+  			              var div_info = div_info_container.append(span_click).append(span_like).append(div_recipe_info).append(simple_info).append(div_ingredient_container);	      
+ 			              var div_inner = div_inner_container.append(div_img_container).append(div_info_container);	
+			              var div_outer = div_outer_container.append(div_inner);	
+			              $(".item").append(div_outer);
+ 		              }
+		              
+ 		             
+		               
+		           }
+		        });
+		})
+	}); 
+
 </script>
-
-<!-- 썸네일 -->
-<!-- 인포 -->
-<!-- 조회수 좋아요 -->
-<!-- 조리시간 충분불충분(enough/lack) 난이도 -->
-<!-- 재료-->
-
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

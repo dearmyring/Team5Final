@@ -90,7 +90,7 @@
 		</form>
 		<div class="center mb-50">
 			<span>이미 아이디가 있으신가요?</span>
-			<span><a href="../member/login">로그인</a></span>
+			<span><a class="in-use-id" href="../member/login">로그인</a></span>
 		</div>
 	</div>
 	
@@ -215,6 +215,10 @@
                 if(!regex.test(memberNick)) {
                 	validChecking.memberNickValid = false;
                 	$("input[name=memberNick]").next("div").text("닉네임 형식이 맞지 않습니다.");
+                } 
+                else if(memberNick.search('관리자') > -1) {
+                	validChecking.memberNickValid = false;
+                	$("input[name=memberNick]").next("div").text("관리자는 포함할 수 없습니다.");
                 }
                 else if(regex.test(memberNick)) {
                     $.ajax({
@@ -229,10 +233,7 @@
                                 validChecking.memberNickValid = false;
                                 $("input[name=memberNick]").next("div").text("이미 사용중인 닉네임입니다.");
                             }
-                            else if(resp.memberNick == "관리자") {
-                            	 validChecking.memberNickValid = false;
-                                 $("input[name=memberNick]").next("div").text("닉네임에는 '관리자'를 포함할 수 없습니다.");
-                            }
+                            
                         }
                     })
                 };
@@ -307,7 +308,7 @@
                 if(validChecking.isAllValid()) {
                    	this.submit();
                 } else {
-                	$(".join-fail").text("입력 사항을 확인해 주세요.");
+                	$(".join-fail").text("입력 사항을 확인해 주세요.").addClass("btn fail-btn screen-bottom-join notice-in notice-out");
                 }
             });
             // jQuery 끝

@@ -251,6 +251,8 @@ article {
                   <option value="recipe_no desc">최근 작성일 순</option>
                   <option value="recipe_click desc">조회수 높은 순</option>
                   <option value="recipe_like desc">좋아요 많은 순</option>
+				 <option value="검색&레시피 일치 재료수 desc">재료 많은 순</option>
+				<option value="검색&레시피 일치 재료수 asc">재료 많은 순</option>
                   <option value="recipe_time asc">조리시간 짧은 순</option>
                   <option value="recipe_time desc">조리시간 긴 순</option>
                </select>
@@ -280,10 +282,10 @@ article {
 	                        </div>
 	                        <c:choose>
 	                        	<c:when test="${fn:length(recipeListVO.recipeIngredientList) < leng}">
-		                        	<div class="cooking-level">재료가 충분</div>
+		                        	<div class="recipe-enough">재료가 충분</div>
 	                        	</c:when>
 	                        	<c:otherwise>
-		                        	<div class="cooking-level">간당간당하네</div>
+		                        	<div class="recipe-lack">간당간당하네</div>
 	                        	</c:otherwise>
 	                        </c:choose>
                         </div>
