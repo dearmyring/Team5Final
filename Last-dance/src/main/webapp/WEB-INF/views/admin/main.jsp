@@ -5,7 +5,6 @@
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons-ring-join.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin-main.css">
 
 <!-- chart.js cdn 불러옴 -->
