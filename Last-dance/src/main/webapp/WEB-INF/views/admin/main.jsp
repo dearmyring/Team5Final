@@ -5,7 +5,6 @@
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons-ring-join.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin-main.css">
 
 <!-- chart.js cdn 불러옴 -->
@@ -15,8 +14,6 @@
 <script src="${pageContext.request.contextPath}/js/admin-main.js"></script>
 
 
-<div class="mt-5">&nbsp;</div>
-<div class="mt-5">&nbsp;</div>
 <div class="mt-5">&nbsp;</div>
 <div class="mt-5">&nbsp;</div>
 
@@ -38,7 +35,9 @@
 				<c:forEach var="recipeTopFive" items="${recipeTopFive}">
 					<tr class="top-five-item">
 						<td class="tfi-no">${recipeTopFive.recipeNo}</td>
-						<td class="tfi-title"><a href="recipe/detail/${recipeTopFive.recipeNo}">${recipeTopFive.recipeTitle}</a></td>
+						<td class="tfi-title text-cutter">
+							<a href="recipe/detail/${recipeTopFive.recipeNo}">${recipeTopFive.recipeTitle}</a>
+						</td>
 						<td class="tfi-time">${recipeTopFive.recipeTime}</td>
 						<td class="tfi-writer">${recipeTopFive.recipeNick}</td>
 					</tr>

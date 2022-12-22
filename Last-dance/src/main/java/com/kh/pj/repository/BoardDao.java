@@ -3,11 +3,9 @@ package com.kh.pj.repository;
 import java.util.List;
 
 import com.kh.pj.entity.BoardDto;
-import com.kh.pj.entity.BoardImgDto;
 import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.entity.MemberDto;
 import com.kh.pj.entity.NoticeDto;
-
 import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
 
@@ -37,6 +35,8 @@ public interface BoardDao {
 		void connectAttachment(int boardOriginNo, int boardAttachmentNo);
 		int insert2(BoardDto boardDto);
 		
+	//관리자 유저게시판 조회
+		public List<BoardDto> adminList(BoardListSearchVO vo);
 	//관리자 유저게시글 블라인드
 		boolean blind(BoardDto boardDto);
 		
