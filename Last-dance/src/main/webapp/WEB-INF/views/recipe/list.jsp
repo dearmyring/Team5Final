@@ -45,7 +45,6 @@ article {
    flex-grow: 1;
    flex-shrink: 1;
 }
-
 .flexbox {
    display: flex;
    flex-wrap: wrap;
@@ -54,25 +53,21 @@ article {
    /*background-color: #f0f0f0;*/
    justify-content: center;
 }
-
 .recipe-recommend{
    display: flex;
     flex-direction: row;
     height: 130px;
 }
-
 .recipe-recommend-text{
    font-size: 30px;
     font-weight: 600;
     margin: 35px 40px 30px 30px;
 }
-
 .recipe-box-shadow {
     box-shadow: 0px 0px 30px 0px rgb(0 0 0 / 10%);
     border-radius: 10px;
     margin-bottom: 60px;
 }
-
 .ingredient-box {
     height: 110px;
    overflow: auto;
@@ -90,31 +85,25 @@ article {
    font-size: 13px;
    margin: 0 3px;  
   }
-
 .item {
    min-height: 200px;
    flex-shrink: 1;
    flex-grow: 1;
    position: relative;
 }
-
 .img-thumnail {
    width: 350px;
     height: 240px;
     object-fit: cover;
 }
-
 .img-box {
    position: relative;
-
 }
-
 .info-box{
    height: 240px;
    width: 350px;
    padding: 15px;
 }
-
 .hash-tag {
     position: absolute;
     top: 20px;
@@ -128,7 +117,6 @@ article {
    color: #373A3C;
    background-color: #EEEEEE;
 }
-
 .hashtag-box {
    left: 20px;
    display: inline-block;
@@ -141,7 +129,6 @@ article {
    color: white;
    font-size: 13px;
 }
-
 .how-long {
    display: inline-block;
    border: none;
@@ -153,7 +140,6 @@ article {
    color: #757575;
    font-size: 13px;
 }
-
 .cooking-level {
    display: inline-block;
    border: none;
@@ -166,7 +152,6 @@ article {
    font-size: 13px;
    margin: 0 3px;
 }
-
 .need-ingredient {
    display: inline-block;
    border: none;
@@ -179,7 +164,6 @@ article {
    font-size: 13px;
    margin: 0 3px;
 }
-
 .recipe-info {
    color: #373A3C;
    font-size: 23px;
@@ -187,17 +171,14 @@ article {
    height: 60px;
    padding: 10px;
 }
-
 .view-count, .like-count {
    margin: 10px;
    font-size: 13px;
    color: #757575;
 }
-
 .like-count {
    left: 30px;
 }
-
 .img-box {
    top: 0px;
    left: 0px;
@@ -206,17 +187,14 @@ article {
    border-radius: 10px 10px 0 0;
    overflow: hidden;
 }
-
 .simple-info{
 margin 0 20px;
 }
-
 .float-margin-left{
    float: left;
     margin-left: 30px;
     margin-right: 30px;
 }
-
 .sort-click{
    font-size: 15px;
     font-weight: 600;
@@ -224,12 +202,10 @@ margin 0 20px;
     color: #373A3C;
     margin: 32px 40px 32px 40px;
     }
-
 .sort-select{
 padding: 10px;
 width: 100px;
 }
-
 .btn{
  width: 120px;
  color: #373A3C;
@@ -237,9 +213,6 @@ width: 100px;
  font-weight: bold;
  height: 50;
 }
-
-
-
 </style>
 </head>
 <body>
@@ -306,7 +279,6 @@ width: 100px;
    
 
 <script type="text/javascript">
-
 	
 	 $(function(){
 		// 초기 페이지를 1페이지로
@@ -443,7 +415,6 @@ width: 100px;
 		        });
 		});
 	 
-
 </script>
 
 
