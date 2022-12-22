@@ -76,10 +76,31 @@ article {
     border-radius: 10px;
     margin-bottom: 60px;
 }
+/* .ingredient-box { */
+/*     height: 80px; */
+/*     overflow: auto; */
+/*   } */
+  
 .ingredient-box {
-    height: 80px;
-    overflow: auto;
-  }
+	margin-top: 3px;
+	margin-right: 10px;
+	height: 80px;
+	overflow: auto;
+}
+
+.ingredient-box::-webkit-scrollbar {
+	width: 7px;
+}
+
+.ingredient-box::-webkit-scrollbar-track {
+  border-radius: 10px;
+  border: 1px solid #EDEDED;
+}
+
+.ingredient-box::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: 1px solid #EDEDED;
+}
   
   .ingredient-name-box{
    display: inline-block;
