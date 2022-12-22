@@ -26,6 +26,7 @@ public class BoardListVO {
 	private int profileAttachmentNo;//프로필 이미지
 	private int replyCnt;//댓글 카운트
 	private int boardAttachmentNo;
+	
 
 	
 	
