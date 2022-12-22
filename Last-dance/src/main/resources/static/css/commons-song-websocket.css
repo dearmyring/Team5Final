@@ -13,7 +13,7 @@
 }
 .message-list:has( i.center-hide) {
     right:0; 
-    bottom:-258px;
+    bottom:-305px;
     transition: 0.6s;
 }
 .message-list .message-input-area{
@@ -64,7 +64,7 @@
     background-color: #EEEEEE;
 }
 .center-message-list{
-    height:200px;
+    height:250px;
     overflow:auto;
     padding: 0 0.5em 0 0.5em;
 }

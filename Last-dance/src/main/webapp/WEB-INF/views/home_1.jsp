@@ -437,6 +437,7 @@
 			});
 			$(".customer-service").click(function(){
 				if("${loginNick}".includes("관리자")) return;
+				if($(".message-list").find(".center-icon").hasClass("fa-caret-down")) return;
 				if("${loginId}" == ""){
 					alert("로그인이 필요한 서비스입니다.");
 	        		location.replace("http://localhost:8888/member/login");
