@@ -6,5 +6,4 @@ public interface SessionConstant {
 	String GRADE = "loginGrade";
 	String BADGE = "loginBadge";
 	String ADM = "adminNick";
-	String MEM = "memberId";
 }
