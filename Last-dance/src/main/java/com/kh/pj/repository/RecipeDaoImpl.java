@@ -168,6 +168,13 @@ public class RecipeDaoImpl implements RecipeDao {
 		int result = sqlSession.update("recipe.updateRecipeViewTime", recipeViewDto);
 		return result > 0;
 	}
+	
+	//조회 수 증가
+	@Override
+	public boolean recipeClickUpdate(int recipeNo) {
+		int result = sqlSession.update("recipe.recipeClickUpdate",recipeNo);
+		return result > 0;
+	}
 
 	@Override
 	public void adminUpdate(RecipeDto recipeDto) {

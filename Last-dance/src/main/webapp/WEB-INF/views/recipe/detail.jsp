@@ -85,7 +85,7 @@
 					</c:otherwise>
 				</c:choose>
 				</span>
-				<span>요리사: ${recipe.recipeDto.recipeNick}</span>
+<%-- 				<span>요리사: ${recipe.recipeDto.recipeNick}</span> --%>
 			</div>
 		</div>
 	</div>

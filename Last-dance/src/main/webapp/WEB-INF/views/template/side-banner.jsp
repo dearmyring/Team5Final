@@ -16,13 +16,6 @@
         padding: 15px;
     }
 
-    .a {
-        background-color: green;
-        width: 1200px;
-        height: 5000px;
-        margin: auto;
-    }
-
     .banner-item-image {
         width: 100px;
         height: 100px;
@@ -68,16 +61,16 @@
 <div class="side-banner">
     <div class="banner-container">
         <div class="banner-item">
-            <img class="banner-item-image" src=""/>
-            <span class="txt-label"></span>
+	            <img class="banner-item-image" src=""/>
+	            <span class="txt-label"></span>
         </div>
         <div class="banner-item">
-            <img class="banner-item-image" src=""/>
-            <span class="txt-label"></span>
+	            <img class="banner-item-image" src=""/>
+	            <span class="txt-label"></span>
         </div>
         <div class="banner-item">
-            <img class="banner-item-image" src=""/>
-            <span class="txt-label"></span>
+	            <img class="banner-item-image" src=""/>
+	            <span class="txt-label"></span>
         </div>
     </div>
 </div>
@@ -117,6 +110,7 @@
                 for(var i = 0; i < resp.length; i++) {
                 	//console.log($(".banner-item:nth-child("+(i+1)+")").find("span").text());
                 	$(".banner-item:nth-child("+(i+1)+")").find("img").attr("src","${pageContext.request.contextPath}/rest/download/"+resp[i].recipeImgList[0].recipeAttachmentNo);
+                	$(".banner-item:nth-child("+(i+1)+")").find("a").attr("href","detail?recipeNo="+resp[i].recipeDto.recipeNo) //수정
                 	$(".banner-item:nth-child("+(i+1)+")").find("span").text(resp[i].recipeDto.recipeTitle);
                 }//for end
                 
