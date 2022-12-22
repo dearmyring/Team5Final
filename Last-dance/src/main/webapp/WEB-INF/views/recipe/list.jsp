@@ -2,6 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="login" value="${loginId != null}"></c:set>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,8 +20,12 @@
    <jsp:param value="레시피 리스트" name="title" />
 </jsp:include>
 
-<!-- 사이드 배너 템플릿 -->
-<jsp:include page="/WEB-INF/views/template/side-banner.jsp"></jsp:include>
+<c:choose>
+	<c:when test="${login}">
+	<!-- 사이드 배너 템플릿 -->
+	<jsp:include page="/WEB-INF/views/template/side-banner.jsp"></jsp:include>
+	</c:when>
+</c:choose>
 
 <style>
 /*
