@@ -15,7 +15,7 @@ public class ListSearchVO1 {
 	
 	private int p=1;//다른 일 없으면 1페이지부터 보여줌
 	
-	private int size=6;//게시글은 10개씩 보여줌 (3개씩 6줄 18개 보여줌)
+	private int size=18;//게시글은 10개씩 보여줌 (3개씩 6줄 18개 보여줌)
 	
 	private int count;//총 게시글 수
 	

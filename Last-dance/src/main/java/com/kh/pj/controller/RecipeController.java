@@ -15,7 +15,6 @@ import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.repository.RecipeDao;
 import com.kh.pj.repository.SearchDao;
-import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.ListSearchVO1;
 import com.kh.pj.vo.RecipeIngredientVO;
 
@@ -90,4 +89,6 @@ public class RecipeController {
       model.addAttribute("complexSearch", searchDao.complexSearch(recipeIngredientVO));
       return "recipe/searchList";
    }
+   
+   
 }

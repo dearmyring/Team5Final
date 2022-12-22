@@ -77,6 +77,19 @@ article {
     height: 110px;
    overflow: auto;
   }
+  
+  .ingredient-name-box{
+   display: inline-block;
+   border: none;
+   background-color: #88db9d;
+   text-align: center;
+   padding: 0.5em 0.8em 0.5em 0.8em;
+   border-radius: 7px;
+   font-weight: 600;
+   color: white;
+   font-size: 13px;
+   margin: 0 3px;  
+  }
 
 .item {
    min-height: 200px;
@@ -217,6 +230,14 @@ padding: 10px;
 width: 100px;
 }
 
+.btn{
+ width: 120px;
+ color: #373A3C;
+ font-size: 18px;
+ font-weight: bold;
+ height: 50;
+}
+
 
 
 </style>
@@ -227,7 +248,7 @@ width: 100px;
          <div class="recipe-recommend">         
             <div class="recipe-recommend-text w-70">${loginNick}님이 당장 할 수 있는 요리를 추천해드릴게요.</div>
             <div class= "sort-select w-30">
-               <select class="input sort-click">
+               <select class="sort-click form-select">
                   <option value="recipe_no desc">최근 작성일 순</option>
                   <option value="recipe_click desc">조회수 높은 순</option>
                   <option value="recipe_like desc">좋아요 많은 순</option>
@@ -278,7 +299,7 @@ width: 100px;
                </c:forEach>
             </div>
             
-            <button class="btn yellow-btn more">더보기</button>
+           <div class="container-fluid row center"><button class="btn yellow-btn more">더보기</button></div>                 
          </div>
       </article>
    </div>
@@ -354,6 +375,18 @@ width: 100px;
 		        });
 		})
 	}); 
+	 
+ 	/* 레시피 리스트 정렬 */
+		$(".sort-click").on("input", function(){
+			var sort = $(this).val();
+			var data = {
+					sort: sort,
+					p: 1,
+					table: "recipe"
+			};
+			async(data);
+		});
+	 
 
 </script>
 

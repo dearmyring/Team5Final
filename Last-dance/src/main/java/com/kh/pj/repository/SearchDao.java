@@ -15,4 +15,7 @@ public interface SearchDao {
 	
 	// 식재료 유사 검색어 조회를 위한 메소드
 	List<IngredientDto> searchForIngredients(String ingredientName);
+		
+	//검색 레시피 리스트 정렬 관련
+	public int recipeSearchPostCount(RecipeIngredientVO recipeIngredientVO);
 }
