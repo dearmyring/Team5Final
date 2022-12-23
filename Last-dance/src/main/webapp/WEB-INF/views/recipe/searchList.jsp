@@ -78,10 +78,31 @@ article {
     margin-bottom: 60px;
 }
 
-.ingredient-box {
-    height: 80px;
-    overflow: auto;
-  }
+/* .ingredient-box { */
+/*     height: 80px; */
+/*     overflow: auto; */
+/*   } */
+  
+  .ingredient-box {
+	margin-top: 3px;
+	margin-right: 10px;
+	height: 80px;
+	overflow: auto;
+}
+
+.ingredient-box::-webkit-scrollbar {
+	width: 7px;
+}
+
+.ingredient-box::-webkit-scrollbar-track {
+  border-radius: 10px;
+  border: 1px solid #EDEDED;
+}
+
+.ingredient-box::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: 1px solid #EDEDED;
+}
   
     .ingredient-name-box{
    display: inline-block;
@@ -93,6 +114,7 @@ article {
    font-weight: 600;
    color: white;
    font-size: 14px; 
+   margin: 6 2 3;
   }
 
 .item {
@@ -497,16 +519,16 @@ article {
 
 			              
 			              var leng = ${leng};
-			              var recipeLeng = ${fn:length(recipeListVO.recipeIngredientList)};
-			              var recipeEnough = leng *0.6
-			              var recipeLessEnough = leng *0.5
+			              var recipeLeng = ${fn:length(recipeListVO.recipeIngredientList)} * 0.6;
+			              var recipeEnough = recipeLeng*0.6
+			              
 // 			              var recipeLess = leng *0.4
 			            
 			              
-			              if (recipeLeng <= recipeEnough) {
+			              if (${leng} >= recipeEnough) {
 			            	  var answer =   $("<div>").attr("class", "recipe-enough").text( "재료가 충분해요");
 			              }
-			              else if (recipeLeng > recipeEnough) {
+			              else {
 			            	  var answer =   $("<div>").attr("class", "recipe-lack").text( "재료가 조금 모자라요");
 			              }
 // 			              else {
