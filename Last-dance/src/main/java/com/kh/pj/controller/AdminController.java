@@ -38,7 +38,6 @@ import com.kh.pj.repository.RecipeImgDao;
 import com.kh.pj.repository.RecipeIngredientDao;
 import com.kh.pj.repository.ReplyDao;
 import com.kh.pj.vo.ListSearchVO;
-import com.kh.pj.vo.RecipeViewTopFiveVO;
 
 @Controller
 @RequestMapping("/admin")
@@ -291,7 +290,7 @@ public class AdminController {
 		return "redirect:detail/"+recipeNo;
 	}
 	
-	@GetMapping("/delete/{recipeNo}")
+	@GetMapping("/recipe/delete/{recipeNo}")
 	public String delete(@PathVariable int recipeNo) {
 		recipeDao.delete(recipeNo);
 		return "redirect:../list";
@@ -400,7 +399,7 @@ public class AdminController {
 	//관리자 게시판 컨트롤러
 	@GetMapping("/board/list")
 	public String boardList(Model model) {
-		model.addAttribute("boardList", boardDao.boardList(null));
+		model.addAttribute("boardList", boardDao.adminList(null));
 		return "admin/board-list";
 	}
 	

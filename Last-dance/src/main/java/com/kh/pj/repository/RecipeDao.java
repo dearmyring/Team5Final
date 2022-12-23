@@ -7,6 +7,7 @@ import com.kh.pj.entity.RecipeLikeDto;
 import com.kh.pj.entity.RecipeViewDto;
 import com.kh.pj.vo.RecipeCountVO;
 import com.kh.pj.vo.RecipeDetailVO;
+import com.kh.pj.vo.LatelyViewListVO;
 import com.kh.pj.vo.ListSearchVO;
 import com.kh.pj.vo.ListSearchVO1;
 import com.kh.pj.vo.RecipeListVO;
@@ -61,6 +62,9 @@ public interface RecipeDao {
 	
 	//내가 본 레시피 시간 업데이트
 	boolean updateRecipeViewTime(RecipeViewDto recipeViewDto);
+	
+	//조회 수 증가
+	boolean recipeClickUpdate(int recipeNo);
 
 	//레시피 좋아요 확인
 	RecipeLikeDto recipeLikeOne(RecipeLikeDto dto);
@@ -80,6 +84,8 @@ public interface RecipeDao {
 	//레시피 개수 출력
 	int countLike(int recipeNo);
 	
+	//최근 본 레시피 3개
+	List<LatelyViewListVO> latelyViewList(String memberId);
 	
 	//레시피 리스트 정렬 관련
 	public int recipePostCount(ListSearchVO1 vo1);

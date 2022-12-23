@@ -5,7 +5,38 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 
-	<select id="list" parameterType="BoardListSearchVO" resultType="BoardListVO">
+  <select id="list" parameterType="BoardListSearchVO" resultType="BoardListVO" >
+      select * from (select tmp.*, rownum rn from( select c.*, a.board_attachment_no from board_img a right outer join (
+      select
+             B.*,
+             M.member_nick,
+             M.member_point
+      from (
+   select 
+          board.*, 
+            NVL(reply_cnt, 0) reply_cnt
+      from (
+    SELECT
+        reply_board_no, 
+        count(reply_no) reply_cnt 
+    FROM reply
+       GROUP BY reply_board_no
+      ) reply right outer join board on reply.reply_board_no=board.board_no
+      ) b inner join member M on B.board_id = M.member_id
+   ) c on a.board_no = c.board_no 
+    order by board_writetime desc)tmp) where rn between #{startPost} and #{endPost}
+	
+	<where>
+			<if test="type != null and keyword !=''">
+				and instr(${type},#{keyword})>0
+			</if>
+		</where>
+		<if test = "sort != ''">
+				order by ${sort}
+		</if>
+   </select> 
+   
+<!-- 	 <select id="list" parameterType="BoardListSearchVO" resultType="BoardListVO">
 	select c.*, a.board_attachment_no from board_img a right outer join (
 		select
              B.*,
@@ -31,8 +62,8 @@
 		</where>
 		<if test = "sort != ''">
 				order by ${sort}
-		</if>
-	</select>
+		</if> 
+	</select>-->
 	
 
 	<insert id="insert" parameterType="BoardDto">
@@ -91,7 +122,7 @@
 		select
              B.*,
              M.member_nick,
-             M.member_badge,
+             M.member_point,
              M.member_id
       from (
    select 
@@ -115,9 +146,7 @@
 		where board_no=#{boardNo}
 	</update>
 	
-	   <select id="adminList" parameterType="ListSearchVO2" resultType="BoardDto">
-	  select * from (
-		  select tmp.*, rownum rn from(
+	   <select id="adminList" parameterType="BoardListSearchVO" resultType="BoardDto">
 		      select * from board  
 		      <!-- 검색 -->
 		      <where>
@@ -130,8 +159,6 @@
 		       <if test="sort != null">
 		          order by ${sort}
 		       </if>
-			  ) tmp
-		) where rn between ${startPost} and ${endPost}
    </select>
    
       <!-- 블라인드 처리?(지원 테스트) 제목 블라인드 처리된 게시물입니다 로 바꾸기 -->
@@ -181,5 +208,12 @@
    <select id="countLike" parameterType="int" resultType="int">
 		select board_like from board where board_no = #{boardNo}
    </select>
+   
+   
+   <!-- 게시판 토탈 카운트 -->
+   <select id="boardcount" parameterType="BoardListSearchVO" resultType="int">
+		select count(*) from board
+   </select>
+   
 	
 </mapper>

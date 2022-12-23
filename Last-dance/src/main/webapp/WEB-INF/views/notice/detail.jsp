@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<jsp:include page="/WEB-INF/views/template/adminHeader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <!-- 현재 시간 -->
 <jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
@@ -10,19 +10,8 @@
 	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>
 </c:set>
 
-<div class="mt-3">&nbsp;</div>
-<div class="mt-3">&nbsp;</div>
-
-<div class="history-link text-end">
-	<a class="main-page-link"></a> <i class="fa-solid fa-chevron-right"></i> 
-	<a href="../list">공지사항</a> <i class="fa-solid fa-chevron-right"></i> 상세보기
-</div>
-
-
-<div class="container-fluid mt-5">
-<div class="row mt-5">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<table class="table">
+<div class="container-600 mt-30">
+		<table class="table table-slit">
 			<tbody>
 				<tr>
 					<th>No.</th>
@@ -86,21 +75,17 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
+
+<div class="row center">
+	<a class="btn yellow-btn return-btn">돌아가기</a>
 </div>
 
-<div class="row mt-3">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
-		<div class="row">
-			<div class="col-6 text-end">
-				<a class="btn btn-md yellow-btn" href="../update?noticeNo=${noticeDto.noticeNo}">수정하기</a>
-			</div>
-			<div class="col-6">
-				<a class="btn btn-md yellow-btn" href="../list">돌아가기</a>
-			</div>
-		</div>
-	</div>
 </div>
-</div>
-
-<jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>
+<script>
+	$(function(){
+		$(".return-btn").click(function(){
+			history.back();
+		});
+	});
+</script>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

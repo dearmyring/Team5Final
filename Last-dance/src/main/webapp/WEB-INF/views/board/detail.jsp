@@ -8,6 +8,10 @@
 </jsp:include>
 
 <style>
+img{
+	max-width: 1000px;
+	max-height: 1000px;
+}
 .profile {
     width: 50px;
     height: 50px;
@@ -116,6 +120,27 @@ width : 3%;
 
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
+//좋아요 비동기
+$(function(){
+    $(".like-btn").click(function(){
+
+        $(this).toggleClass("fa-solid fa-regular heart-color");
+        var url = location.href;
+        var boardNo = (url.slice(url.indexOf('=') + 1, url.length));
+
+        var that = $(this);
+        $.ajax({
+            url: "http://localhost:8888/rest/board_like/"+boardNo,
+            method: "get",
+            success: function(resp) {
+             that.next().html(resp);
+            }
+        });
+        // ajax end
+    });
+});
+
+
 $(function(){
 	loadList();
 	
@@ -149,10 +174,37 @@ $(function(){
 					
 					//html의 내용을 상태에 맞게 수정 또는 제거
 					//배지 처리(레벨에 따라 다른 배지가 등장)
-					if(reply.memberBadge >= 1 && reply.memberBadge <= 10) {
+					if(reply.memberPoint >= 0 && reply.memberPoint <= 100) {
 						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
 					}
-					
+					else if(reply.memberPoint >= 100 && reply.memberPoint <= 300){
+						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+					}
+					else if(reply.memberPoint >= 300 && reply.memberPoint <= 550){
+						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+					}
+					else if(reply.memberPoint >= 550 && reply.memberPoint <= 850){
+						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+					}
+					else if(reply.memberPoint >= 850 && reply.memberPoint <= 1200){
+						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+					}
+					else if(reply.memberPoint >= 1200 && reply.memberPoint <= 1600){
+						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+					}
+					else if(reply.memberPoint >= 1600 && reply.memberPoint <= 2050){
+						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+					}
+					else if(reply.memberPoint >= 2050 && reply.memberPoint <= 2500){
+						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+					}
+					else if(reply.memberPoint >= 2500 && reply.memberPoint <= 3000){
+						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+					}
+					else if(reply.memberPoint == 3000){
+						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+					}
+						
 					//작성자 닉네임
 					$(html).find(".reply-member-nickname").text(reply.memberNick);
 					$(html).find(".reply-writetime").text(reply.replyWriteTime);
@@ -225,49 +277,30 @@ $(function(){
 				},
 				success:loadList(),
 			});
-		}
+		}	
+		//목표 : 
+		//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
+		//2. cancel-btn을 누르면 editor를 숨기고 view를 보여준다
+		//3. 처음에는 view만 보여준다
+		
+		$(".edit-btn").click(function(){
+			$(this).parents(".view").hide();
+			$(this).parents(".view").next(".editor").show();
+		});
+		
+		$(".cancel-btn").click(function(){
+			$(this).parents(".editor").hide();
+			$(this).parents(".editor").prev(".view").show();
+		});
+		
+		$(".editor").hide();
+	
+		
 		
 })
 
-$(function(){
-	//목표 : 
-	//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
-	//2. cancel-btn을 누르면 editor를 숨기고 view를 보여준다
-	//3. 처음에는 view만 보여준다
-	
-	$(".edit-btn").click(function(){
-		$(this).parents(".view").hide();
-		$(this).parents(".view").next(".editor").show();
-	});
-	
-	$(".cancel-btn").click(function(){
-		$(this).parents(".editor").hide();
-		$(this).parents(".editor").prev(".view").show();
-	});
-	
-	$(".editor").hide();
-});
 	
 	
-//좋아요 비동기
-$(function(){
-    $(".like-btn").click(function(){
-
-        $(this).toggleClass("fa-solid fa-regular heart-color");
-        var url = location.href;
-        var boardNo = (url.slice(url.indexOf('=') + 1, url.length));
-
-        var that = $(this);
-        $.ajax({
-            url: "http://localhost:8888/rest/board_like/"+boardNo,
-            method: "get",
-            success: function(resp) {
-             that.next().html(resp);
-            }
-        });
-        // ajax end
-    });
-});
 </script>
 
 <!-- 자바스크립트 템플릿 생성 -->
@@ -288,7 +321,7 @@ $(function(){
 						<ul class="reply-box">
 							<li class="reply-author left">
 								<p>
-									<img class="reply-badge" src="/images/badge-1.png">
+									<img class="reply-badge" src="/images/lev1.png">
 									<span class="reply-member-nickname"></span>
 									<span class="reply-writetime date"></span>
 								</p>													
@@ -316,7 +349,33 @@ $(function(){
 					</th>
 				</tr>	
 
+				
+
+				
+		
 </script>
+
+<script id="edit-btn" type="text/template">
+	<tr class="editor">
+					<th colspan="2">
+						<form action="reply/edit" method="post">
+							<input type="hidden" name="replyNo" 
+														value="">
+							<input type="hidden" name="replyBoardNo"
+														value="">
+							<textarea class="input" name="replyContent" rows="5" cols="50" 
+									required></textarea>
+							<button type="submit">변경</button>
+							<a class="cancel-btn">취소</a>
+						</form>
+					</th>
+				</tr>
+</script>
+
+<script type="text/javascript">
+
+</script>
+
 
 <%-- <tr class="view">
 					<td width="90%">
@@ -377,11 +436,50 @@ $(function(){
 		<div class="info">
 			<ul class="author">
 				<li>
-				 <img class="profile" src="${pageContext.request.contextPath}/rest/download/${boardDto.profileAttachmentNo}">					
+				 <img class="profile" src="${pageContext.request.contextPath}/rest/download/${boardDto.profileAttachmentNo}"/>					
 					${boardDto.memberNick}
-					<c:if test="${boardDto.memberBadge == 1 }">
-						<img class="title-badge" src="/images/badge-1.png">
-					</c:if></li>
+					<c:choose>
+                    		<c:when test="${boardDto.memberPoint<=100}">
+                    		
+                    			<img class="title-badge" src="${pageContext.request.contextPath}/images/lev1.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=300}">
+                    			
+                    			<img class="title-badge" src="${pageContext.request.contextPath}/images/lev2.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=550}">
+                    			
+                    			<img class="title-badge" src="${pageContext.request.contextPath}/images/lev3.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=850}">
+                    			
+                    			<img class="title-badge" src="${pageContext.request.contextPath}/images/lev4.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=1200}">
+                    			
+                    			<img class="title-badge" src="${pageContext.request.contextPath}/images/lev5.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=1600}">
+                    			
+                    			<img class="title-badge" src="${pageContext.request.contextPath}/images/lev6.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=2050}">
+                    			
+                    			<img class="title-badge" src="${pageContext.request.contextPath}/images/lev7.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<=2500}">
+                    			
+                    			<img class="title-badge" src="${pageContext.request.contextPath}/images/lev8.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint<3000}">
+                    			
+                    			<img class="title-badge" src="${pageContext.request.contextPath}/images/lev9.png"/>
+                    		</c:when>
+                    		<c:when test="${boardDto.memberPoint==3000}">
+                    			
+                    			<img class="title-badge" src="${pageContext.request.contextPath}/images/lev10.png"/>
+                    		</c:when>
+                    	</c:choose>
 			</ul>
 			<ul class="other-info" >
 				<li>작성일: ${boardDto.boardWriteTime}</li>
@@ -392,11 +490,11 @@ $(function(){
 			<c:choose>
 				<c:when test="${like==null}">
 					<i class="fa-regular fa-heart like-btn"></i> 
-				<span>추천: ${boardDto.boardLike}</span>
+				<span>${boardDto.boardLike}</span>
 				</c:when>
 				<c:otherwise>
 					<i class="fa-solid fa-heart like-btn heart-color"></i> 
-				<span>추천: ${boardDto.boardLike}</span>
+				<span>${boardDto.boardLike}</span>
 				</c:otherwise>
 			</c:choose>
 			
@@ -405,7 +503,7 @@ $(function(){
 		</div>
 		<hr>
 		<div class="main">
-			<p>
+			<p class="maxsize">
 				${boardDto.boardContent}
 			</p>
 			<div class="right">
@@ -416,11 +514,11 @@ $(function(){
 					<c:set var="owner" value="${loginId == boardDto.boardId}"></c:set>
 						
 					<c:if test="${owner}">
-						<a class="btn btn-positive" href="write">글쓰기</a>	
-						<a class="edit-btn btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정하기</a>	
-						<a class="board-delete btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>	
+						<a class="btn btn-positive" href="write">글작성</a>	
+						<a class="edit-btn btn btn-negative" href="edit?boardNo=${boardDto.boardNo}">수정</a>	
+						<a class="board-delete btn btn-negative" href="delete?boardNo=${boardDto.boardNo}">삭제</a>	
 					</c:if>
-						<a class="btn btn-neutral" href="list">목록으로</a>
+						<a class="btn btn-neutral" href="list">목록</a>
 			</div>
 			<hr>
 		</div>
@@ -440,7 +538,7 @@ $(function(){
 				
 				
 				
-				<c:if test="${loginId ==  replyDto.replyId}">
+				<%-- <c:if test="${loginId ==  replyDto.replyId}">
 				<!-- 수정하기 위한 화면 : 댓글 작성자 본인에게만 출력 -->
 				<tr class="editor">
 					<th colspan="2">
@@ -456,7 +554,7 @@ $(function(){
 						</form>
 					</th>
 				</tr>
-				</c:if>
+				</c:if> --%>
 				
 				
 			</tbody>

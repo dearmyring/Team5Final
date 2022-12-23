@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.pj.entity.BoardDto;
 import com.kh.pj.entity.BoardLikeDto;
 import com.kh.pj.repository.AdminDao;
-
 import com.kh.pj.repository.BoardDao;
 import com.kh.pj.vo.BoardListSearchVO;
 import com.kh.pj.vo.BoardListVO;
-import com.kh.pj.vo.ListSearchVO2;
+import com.kh.pj.vo.ListSearchVO;
 
 @CrossOrigin(origins ="http://127.0.0.1:5500")
 @RequestMapping("/rest")
@@ -36,17 +35,27 @@ public class BoardRestController {
 	@PostMapping("/board")
 	public List<BoardListVO> boardList(
 			@RequestBody BoardListSearchVO vo){
+		vo.setCount(boardDao.boardTotal(vo));		
+		vo.setStartPost(vo.startRow());
+		vo.setEndPost(vo.endRow());
 		return boardDao.boardList(vo);
+	}
+	
+	@PostMapping("/board-count")
+	public BoardListSearchVO recipeCount(@RequestBody BoardListSearchVO vo) {
+		vo.setCount(boardDao.boardTotal(vo));
+
+		return vo;
 	}
 	
 	@PostMapping("/board2")
 	public List<BoardDto> adminList(
-			@RequestBody ListSearchVO2 vo2) {
-		vo2.setTable("recipe");
-		vo2.setCount(adminDao.adminBoardCount(vo2));
-		vo2.setStartPost(vo2.startRow());
-		vo2.setEndPost(vo2.endRow());
-		return boardDao.adminList(vo2);		
+			@RequestBody BoardListSearchVO vo) {
+		vo.setTable("board");
+		vo.setCount(adminDao.adminBoardCount(vo));
+		vo.setStartPost(vo.startRow());
+		vo.setEndPost(vo.endRow());
+		return boardDao.adminList(vo);		
 	}
 
 	//레시피 좋아요
@@ -70,4 +79,3 @@ public class BoardRestController {
 		}//likeUpdate() end
 	
 }
-

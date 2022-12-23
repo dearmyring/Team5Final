@@ -1,11 +1,20 @@
 .thumbnail-image {
 	width: 600px;
 	height: 400px;
+	object-fit: cover;
+	/* 변경함 */
+}
+
+.swiper-slide {
+	overflow: hidden;
+	/* 변경함 */
 }
 
 .content-image {
 	width: 600px;
 	height: 400px;
+	object-fit: cover;
+	/* 변경함 */
 }
 
 .recipe-detail-container {
@@ -112,20 +121,37 @@
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 50px;
+	overflow: hidden; 
+	/* 변경함 */
 }
 
 .recipe-detail-content > img {
 	margin-bottom: 30px;
 }
 
-.recipe-detail-content > span {
+.recipe-detail-content > div {
 	display: flex;
 	text-align: center;
 	flex-direction: row;
 	align-items: center;
+	width: 600px;
 }
 
-.recipe-detail-content > span > div {
+.recipe-detail-content > div > span {
+	width: 560px;
+	font-size: 18px;
+	text-align: start;
+	line-height: 1.2;
+}
+
+/* .recipe-detail-content > span {
+	display: flex;
+	text-align: center;
+	flex-direction: row;
+	align-items: center;
+} */
+
+.recipe-detail-content > div > div {
 	background-color: #8BC96E;
     font-size: 16px;
     width: 30px;

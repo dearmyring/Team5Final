@@ -41,7 +41,7 @@ $(function(){
 				contentType: "application/json",
 				data: JSON.stringify(ingredinetList),
 				success: function(resp){
-					if(confirm("레시피에 바로 추가하시겠습니까?")){
+//					if(confirm("레시피에 바로 추가하시겠습니까?")){
 						var xMark = $("<i>").addClass("fa-solid fa-xmark");
 						xMark.click(function(){
 							$(this).parent().remove();
@@ -53,7 +53,7 @@ $(function(){
 							.val(ingredientName);
 						p.append(input).append(xMark);
 						$(".add-ingredient").append(p);
-					}
+//					}
 					$(".input-ingredient").val("");
 					$(".insert-ingredientCategory").val("");
                     $(".ingredient-insert-modal").modal("hide");

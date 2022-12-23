@@ -44,7 +44,7 @@
 							<td class="text-start">
 								<a class="text-decoration-none link-dark"  href="detail/${boardDto.boardNo}">${boardDto.boardTitle}</a>
 							</td>
-							<td>${boardDto.memberNick}</td>
+							<td>${boardDto.boardId}</td>
 							<td>${boardDto.boardClick}</td>
 							<td>${boardDto.boardWriteTime}</td>
 <%-- 							<td>${boardDto.}</td> --%>
@@ -63,34 +63,34 @@
 	<div class="row mt-3">
 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 		<div class="row">
-			<div class="col-2 text-end">
-				<button class="btn btn-md yellow-btn board-async-blind" type="button">블라인드 하기</button>
+			<div class="text-end">
+				<button class="btn btn-md btn-light board-async-blind" type="button">블라인드 하기</button>
 			</div>
 		</div>
 	</div>
 </div>
 </form>
 
-<div class="row mt-3">
-	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 ">
-	<ul class="pagination border-none-pagination" style="justify-content: center;">
-        <li class="page-item disabled">
-        	<a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
-       	</li>
+<!-- <div class="row mt-3"> -->
+<!-- 	<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 "> -->
+<!-- 	<ul class="pagination border-none-pagination" style="justify-content: center;"> -->
+<!--         <li class="page-item disabled"> -->
+<!--         	<a class="page-link"><i class="fa-solid fa-chevron-left"></i></a> -->
+<!--        	</li> -->
        	
-        <li class="page-item active"><a class="page-link" data-no="1">1</a></li>
-        <c:forEach var="no" begin="2" end="${voPagination.endBlock()}">
-	        <li class="page-item"><a class="page-link" data-no="${no}">${no}</a></li>
-        </c:forEach>
+<!--         <li class="page-item active"><a class="page-link" data-no="1">1</a></li> -->
+<%--         <c:forEach var="no" begin="2" end="${voPagination.endBlock()}"> --%>
+<%-- 	        <li class="page-item"><a class="page-link" data-no="${no}">${no}</a></li> --%>
+<%--         </c:forEach> --%>
         
-        <li class="page-item disabled">
-        	<a class="page-link" data-no="${voPagination.nextBlock()}">
-        		<i class="fa-solid fa-chevron-right"></i>
-       		</a>
-       	</li>
-    </ul>
-    </div>
-</div>
+<!--         <li class="page-item disabled"> -->
+<%--         	<a class="page-link" data-no="${voPagination.nextBlock()}"> --%>
+<!--         		<i class="fa-solid fa-chevron-right"></i> -->
+<!--        		</a> -->
+<!--        	</li> -->
+<!--     </ul> -->
+<!--     </div> -->
+<!-- </div> -->
 
 <div class="row mt-5">
 	<div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 text-center">
@@ -101,11 +101,14 @@
 					<option value="member_nick">작성자</option>
 				</select>
 			</div>
-			<div class="col-7">
-				<input class="input-keyword w-100 form-control" type="text">
-			</div>
-			<div class="col-2">
-				<button class="btn btn-md yellow-btn board-search-btn w-100 h-100" type="button">검색</button>
+			<div class="col-9">
+				<div class="input-group rounded">
+					<input aria-describedby="button-addon2" name="keyword" autocomplete="off" 
+					class="input-keyword form-control" type="text" value="${keyword}">
+					<button class="btn-search" type="submit" id="button-addon2">
+						<img width="25px" src="${pageContext.request.contextPath}/images/search-admin.png">
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -190,7 +193,6 @@ $(function(){
 				linkPrev.append(prev);
 				liPrev.append(linkPrev);
 				$(".pagination").append(liPrev);
-
 				for(var i=resp.firstBlock; i<=resp.lastBlock; i++){
 		    		var link = $("<a>").addClass("page-link").text(i).attr("data-no", i);
 		    		var li = $("<li>").addClass("page-item").append(link);
