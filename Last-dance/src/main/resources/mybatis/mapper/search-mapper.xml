@@ -27,7 +27,8 @@
 	<select id = "recipeNo" resultType="int">
       	select recipe_seq.nextval from dual
     </select>
-   <!--  무한스크롤 관련 rn추가 -->	
+    
+    <!--  무한스크롤 관련 rn추가 -->	
 	<!-- 계층 조회를 위한 음식재료 기본 조회 쿼리  --> 
    	<select id="recipeIngredientList" resultType="RecipeIngredientDto" parameterType="int">
 	    select 
