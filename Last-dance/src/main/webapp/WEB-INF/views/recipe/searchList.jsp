@@ -406,7 +406,7 @@ article {
            	success: function(resp){
              	
  		               for(var i = 0 ; i < resp.length ; i ++) {					          
- 			              var div_outer_container = $("<a>").attr("href", "/recipe/detail?recipeNo=" + resp[i].recipeListSearchVO.recipeNo);				              			              
+ 			              var div_outer_container = $("<a>").attr("href", "${pageContext.request.contextPath}/recipe/detail?recipeNo=" + resp[i].recipeListSearchVO.recipeNo);				              			              
 			             
  			              var div_inner_container = $("<div>").attr("class", "list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left");
 			              
@@ -419,7 +419,7 @@ article {
 			              
    			               var div_img;
  			              for(var j= 0 ; j < resp[i].recipeImgList.length ; j++) {	
-   			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
+   			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "${pageContext.request.contextPath}/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
    			              }		
 			                    
   			              var div_info_container = $("<div>").attr("class", "info-box");	
@@ -490,7 +490,7 @@ article {
           	$(".item").empty();
           	
 		               for(var i = 0 ; i < resp.length ; i ++) {					          
-			              var div_outer_container = $("<a>").attr("href", "/recipe/detail?recipeNo=" + resp[i].recipeListSearchVO.recipeNo);				              			              
+			              var div_outer_container = $("<a>").attr("href", "${pageContext.request.contextPath}/recipe/detail?recipeNo=" + resp[i].recipeListSearchVO.recipeNo);				              			              
 			             
 			              var div_inner_container = $("<div>").attr("class", "list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left");
 			              
@@ -503,7 +503,7 @@ article {
 			              
 			               var div_img;
 			              for(var j= 0 ; j < resp[i].recipeImgList.length ; j++) {	
-			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
+			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "${pageContext.request.contextPath}/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
 			              }		
 			                    
 			              var div_info_container = $("<div>").attr("class", "info-box");	

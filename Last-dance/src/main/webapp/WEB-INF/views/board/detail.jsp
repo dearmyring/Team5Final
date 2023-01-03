@@ -175,34 +175,34 @@ $(function(){
 					//html의 내용을 상태에 맞게 수정 또는 제거
 					//배지 처리(레벨에 따라 다른 배지가 등장)
 					if(reply.memberPoint >= 0 && reply.memberPoint <= 100) {
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 100 && reply.memberPoint <= 300){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 300 && reply.memberPoint <= 550){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 550 && reply.memberPoint <= 850){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 850 && reply.memberPoint <= 1200){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 1200 && reply.memberPoint <= 1600){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 1600 && reply.memberPoint <= 2050){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 2050 && reply.memberPoint <= 2500){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 2500 && reply.memberPoint <= 3000){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint == 3000){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 						
 					//작성자 닉네임
