@@ -13,7 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
 <!-- js ºÒ·¯¿È -->
-<script src="/js/recipe-detail.js"></script>
+<script src="${pageContext.request.contextPath}/js/recipe-detail.js"></script>
 
 <style>
 	.heart-color {
@@ -126,7 +126,7 @@ $(function(){
 
         var that = $(this);
         $.ajax({
-            url: "http://localhost:8888/rest/recipe_like/"+recipeNo,
+            url: "${pageContext.request.contextPath}/rest/recipe_like/"+recipeNo,
             method: "get",
             success: function(resp) {
              that.next().text(resp);

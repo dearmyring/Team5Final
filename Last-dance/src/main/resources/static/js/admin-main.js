@@ -5,7 +5,6 @@ $(function(){
 		method: "get",
 		dataType: "json",
 		success: function(resp) {
-//  			console.log(resp);
 			//비어있는 배열 2개를 만들고 resp의 데이터를 분산 저장
             var labels = [];
             var values = [];

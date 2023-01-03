@@ -3,7 +3,6 @@ $(function(){
 	// 파일업로드 비동기
             $(".file-input").change(function(){
                 if(this.files.length > 0){
-                    console.log()
                     var imgData = new FormData();
 
                     imgData.append("attach", this.files[0]);

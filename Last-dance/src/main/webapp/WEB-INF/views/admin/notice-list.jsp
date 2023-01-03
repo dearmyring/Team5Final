@@ -63,7 +63,6 @@
 	$(function(){
 		/* 체크박스 선택 삭제 시 비동기 처리 */
 		$(".notice-async-delete").click(function(){
-			console.log(this);
 			var checkboxes = $(".icon-check-item");
 			for(var i=0; i<checkboxes.length; i++){
 				if(checkboxes.eq(i).hasClass("fa-square")){
@@ -79,7 +78,7 @@
 			else{
 				if(confirm("정말 삭제하시겠습니까?")){
 					$.ajax({
-						url: "http://localhost:8888/rest/notice?"+param,
+						url: "${pageContext.request.contextPath}/rest/notice?"+param,
 						method: "delete",
 						contentType: "application/json",
 						success: function(resp){

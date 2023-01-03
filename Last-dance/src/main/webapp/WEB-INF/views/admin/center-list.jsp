@@ -222,7 +222,7 @@
 		
 		function saveMessage(db){
 			$.ajax({
-				url:"http://localhost:8888/rest/center",
+				url:"${pageContext.request.contextPath}/rest/center",
 				method:"post",
 				contentType:"application/json",
 				data:JSON.stringify(db),
@@ -233,7 +233,7 @@
 		
 		function historyMessage(centerMemberId){
         	$.ajax({
-        		url:"http://localhost:8888/rest/center/"+centerMemberId,
+        		url:"${pageContext.request.contextPath}/rest/center/"+centerMemberId,
         		method:"get",
         		success: function(data){
         			$(".center-message-list").empty();

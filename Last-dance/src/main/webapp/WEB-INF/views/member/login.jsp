@@ -14,7 +14,7 @@
 		<!-- 로고 -->
 		<div>
 			<a href="/">
-				<img src="/images/logo.png" style="width: 80%">
+				<img src="${pageContext.request.contextPath}/images/logo.png" style="width: 80%">
 			</a>
 		</div>
 		<!-- 로그인 폼 -->

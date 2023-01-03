@@ -14,9 +14,9 @@
    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
    rel="stylesheet" />
 
-<link rel="stylesheet" type="text/css" href="/css/reset.css" />
-<link rel="stylesheet" type="text/css" href="/css/commons.css" />
-<link rel="stylesheet" type="text/css" href="/css/recipeList.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/recipeList.css" />
 
 <link rel="stylesheet" type="text/css"    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 
@@ -332,7 +332,7 @@ article {
          <div class="flexbox">
             <div class="item float-container">
                <c:forEach var="recipeListVO" items="${complexSearch}">
-               <a href="/recipe/detail?recipeNo=${recipeListVO.recipeListSearchVO.recipeNo}">
+               <a href="${pageContext.request.contextPath}/recipe/detail?recipeNo=${recipeListVO.recipeListSearchVO.recipeNo}">
                   <div class="list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left">
                      <div class="img-box">
                         <div class="hash-tag">${recipeListVO.recipeListSearchVO.recipeHashtag}</div>
@@ -397,17 +397,16 @@ article {
 			p = p+1;
 			
 			$.ajax({
-		           url: "http://localhost:8888/rest/recipe2",
+		           url: "${pageContext.request.contextPath}/rest/recipe2",
 		           method: "post",
 		           contentType: "application/json",
 		           data: JSON.stringify({
 		              p : p
            	}),
            	success: function(resp){
-             	console.log(resp);
              	
  		               for(var i = 0 ; i < resp.length ; i ++) {					          
- 			              var div_outer_container = $("<a>").attr("href", "/recipe/detail?recipeNo=" + resp[i].recipeListSearchVO.recipeNo);				              			              
+ 			              var div_outer_container = $("<a>").attr("href", "${pageContext.request.contextPath}/recipe/detail?recipeNo=" + resp[i].recipeListSearchVO.recipeNo);				              			              
 			             
  			              var div_inner_container = $("<div>").attr("class", "list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left");
 			              
@@ -420,7 +419,7 @@ article {
 			              
    			               var div_img;
  			              for(var j= 0 ; j < resp[i].recipeImgList.length ; j++) {	
-   			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
+   			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "${pageContext.request.contextPath}/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
    			              }		
 			                    
   			              var div_info_container = $("<div>").attr("class", "info-box");	
@@ -477,23 +476,21 @@ article {
  	/* 레시피 리스트 정렬 */
 		$(".sort-click").on("input", function(){
 			var sort = $(this).val();
-			console.log(sort);
 			var data = {
 					sort: sort,
 					p: 1,
 					table: "recipe"
 			};
 			$.ajax({
-		           url: "http://localhost:8888/rest/recipe2",
+		           url: "${pageContext.request.contextPath}/rest/recipe2",
 		           method: "post",
 		           contentType: "application/json",
 		           data: JSON.stringify(data),
         	success: function(resp){
-          	console.log(resp);
           	$(".item").empty();
           	
 		               for(var i = 0 ; i < resp.length ; i ++) {					          
-			              var div_outer_container = $("<a>").attr("href", "/recipe/detail?recipeNo=" + resp[i].recipeListSearchVO.recipeNo);				              			              
+			              var div_outer_container = $("<a>").attr("href", "${pageContext.request.contextPath}/recipe/detail?recipeNo=" + resp[i].recipeListSearchVO.recipeNo);				              			              
 			             
 			              var div_inner_container = $("<div>").attr("class", "list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left");
 			              
@@ -506,7 +503,7 @@ article {
 			              
 			               var div_img;
 			              for(var j= 0 ; j < resp[i].recipeImgList.length ; j++) {	
-			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
+			            	  div_img = div_img_container.append($("<img>").attr("class", "img-thumnail").attr("src", "${pageContext.request.contextPath}/rest/download/" + resp[i].recipeImgList[j].recipeAttachmentNo));          	          
 			              }		
 			                    
 			              var div_info_container = $("<div>").attr("class", "info-box");	
