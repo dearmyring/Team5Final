@@ -5,7 +5,7 @@ $(function(){
 		var param = $.param(data);
 		var that = $(this);
 		$.ajax({
-			url: "${pageContext.request.contextPath}/rest/recipe_find?"+param,
+			url: root+"/rest/recipe_find?"+param,
 			method: "get",
 			success: function(resp){
 				if(resp){
@@ -36,7 +36,7 @@ $(function(){
 				ingredientCategory : ingredientCategory
 			}];
 			$.ajax({
-				url: "${pageContext.request.contextPath}/rest/ingredient",
+				url: root+"/rest/ingredient",
 				method: "post",
 				contentType: "application/json",
 				data: JSON.stringify(ingredinetList),
@@ -75,7 +75,7 @@ $(function(){
 		if(confirm("모두 삭제하시겠습니까?")){
     		var param = $(".thumb-page .img-no").serialize();
     		$.ajax({
-    			url: "${pageContext.request.contextPath}/rest/attachment/delete?"+param,
+    			url: root+"/rest/attachment/delete?"+param,
     			method: "delete",
     			success: function(resp){
     				$(".thumb-page").find(".file-input").val("");
@@ -203,7 +203,7 @@ $(function(){
 	$(".recipe-return-btn").click(function(e){
 		var param = $(".recipe-insert-form .img-no").serialize();
 		$.ajax({
-			url: "${pageContext.request.contextPath}/rest/attachment/delete?"+param,
+			url: root+"/rest/attachment/delete?"+param,
 			method: "delete",
 			success: function(resp){
 				history.back();
@@ -229,7 +229,7 @@ $(function(){
             	param.keyword = keyword;
             	var search = $.param(param);
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/rest/ingredient?"+search,
+                    url: root+"/rest/ingredient?"+search,
                     method: "get",
                     success: function(resp){
                         $(".ingredientSearch").remove();
@@ -279,7 +279,7 @@ $(function(){
     		$(".ingredientSearch").remove();
 			var keyword = $(this).val();
 			$.ajax({
-                url: "${pageContext.request.contextPath}/rest/ingredient/"+keyword,
+                url: root+"/rest/ingredient/"+keyword,
                 method: "get",
                 success: function(resp){
                 	if(!resp){
@@ -362,7 +362,7 @@ $(function(){
 			}
 		}
 		$.ajax({
-			url: "${pageContext.request.contextPath}/rest/attachment/delete?"+param,
+			url: root+"/rest/attachment/delete?"+param,
 			method: "delete",
 			success: function(resp){
 				contentText.val("");
@@ -383,7 +383,7 @@ $(function(){
             var fd = new FormData();
             fd.append("attach", this.files[0]);
             $.ajax({
-                url: "${pageContext.request.contextPath}/rest/upload",
+                url: root+"/rest/upload",
                 method: "post",
                 data: fd,
                 processData: false,

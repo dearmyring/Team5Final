@@ -8,7 +8,7 @@ $(function(){
                     imgData.append("attach", this.files[0]);
 
                     $.ajax({
-                        url: "${pageContext.request.contextPath}/rest/upload",
+                        url: root+"/rest/upload",
                         method: "post",
                         data: imgData,
                         processData:false, // 일반 폼에서 전송되는 형식(key = value)
@@ -19,7 +19,7 @@ $(function(){
                             var attachmentNo = (resp.split("download/")[1]);
                             
                             $.ajax({
-                                url: "${pageContext.request.contextPath}/rest/profileImg?attachmentNo="+attachmentNo,
+                                url: root+"/rest/profileImg?attachmentNo="+attachmentNo,
                                 method: "post",
                                 contentType: "application/json",
                                 data: JSON.stringify({attachmentNo:attachmentNo}),
@@ -75,7 +75,7 @@ $(function(){
 		e.preventDefault();
 		var inputPw = $(".login-input-password").val();
 		$.ajax({
-			url: "${pageContext.request.contextPath}/rest/pwConfirm",
+			url: root+"/rest/pwConfirm",
 			method: "post",
 			contentType: "application/json",
 			data: JSON.stringify({memberPw : inputPw}),

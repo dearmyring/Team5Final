@@ -29,6 +29,11 @@
 
     <!-- jquery 사용 위한 라이브러리 파일 불러옴 -->
     <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    
+    <!-- 상대 경로 설정을 위한 변수 선언 -->
+    <script>
+	   var root = "${pageContext.request.contextPath}";
+	</script>
 
     <!-- js 파일 -->
     <script src="${pageContext.request.contextPath}/js/header.js"></script>
