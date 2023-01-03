@@ -1,7 +1,7 @@
 $(function(){
 	//최근 일주일 가입자 수
 	$.ajax({
-		url: "http://localhost:8888/rest/member-count",
+		url: root+"/rest/member-count",
 		method: "get",
 		dataType: "json",
 		success: function(resp) {
@@ -64,7 +64,7 @@ $(function(){
 	
 	//오늘의 인기 검색어 1~10위
 	$.ajax({
-		url: "http://localhost:8888/rest/trending-searches",
+		url: root+"/rest/trending-searches",
 		method: "get",
 		dataType: "json",
 		success: function(resp) {
@@ -128,7 +128,7 @@ $(function(){
 	
 	//오늘 가장 많은 좋아요 레시피 탑5
 	$.ajax({
-		url: "http://localhost:8888/rest/recipe-today-like-top",
+		url: root+"/rest/recipe-today-like-top",
 		method: "get",
 		dataType: "json",
 		success: function(resp) {
@@ -191,7 +191,7 @@ $(function(){
 	
 	//최근 일주일 조회 수 높은 레시피 탑5
 	$.ajax({
-		url: "http://localhost:8888/rest/lately-top-view-recipe",
+		url: root+"/rest/lately-top-view-recipe",
 		method: "get",
 		dataType: "json",
 		success: function(resp) {
@@ -254,7 +254,7 @@ $(function(){
 	
 	//오늘 조회 수 높은 레시피 탑5
 	$.ajax({
-		url: "http://localhost:8888/rest/today-top-view-recipe",
+		url: root+"/rest/today-top-view-recipe",
 		method: "get",
 		dataType: "json",
 		success: function(resp) {
@@ -317,7 +317,7 @@ $(function(){
 	
 	//최근 일주일 좋아요 레시피 탑5
 	$.ajax({
-		url: "http://localhost:8888/rest/lately-top-like-recipe",
+		url: root+"/rest/lately-top-like-recipe",
 		method: "get",
 		dataType: "json",
 		success: function(resp) {
@@ -380,7 +380,7 @@ $(function(){
 	
 	//오늘 가장 많은 게시글을 쓴 사람 탑5
 	$.ajax({
-		url: "http://localhost:8888/rest/today-top-writer",
+		url: root+"/rest/today-top-writer",
 		method: "get",
 		dataType: "json",
 		success: function(resp) {
