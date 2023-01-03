@@ -22,7 +22,7 @@
 	<div class="container-400 screen-center">
 		<div>
 			<div class="center">
-				<img src="/images/only_logo.png" style="width: 60%">
+				<img src="${pageContext.request.contextPath}/images/only_logo.png" style="width: 60%">
 				<h1>가입이 완료 되었습니다!</h1>
 			</div>
 			<div class="center mt-40 size-change">

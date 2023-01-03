@@ -130,7 +130,7 @@ $(function(){
 
         var that = $(this);
         $.ajax({
-            url: "http://localhost:8888/rest/board_like/"+boardNo,
+            url: "${pageContext.request.contextPath}/rest/board_like/"+boardNo,
             method: "get",
             success: function(resp) {
              that.next().html(resp);
@@ -175,34 +175,34 @@ $(function(){
 					//html의 내용을 상태에 맞게 수정 또는 제거
 					//배지 처리(레벨에 따라 다른 배지가 등장)
 					if(reply.memberPoint >= 0 && reply.memberPoint <= 100) {
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 100 && reply.memberPoint <= 300){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 300 && reply.memberPoint <= 550){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 550 && reply.memberPoint <= 850){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 850 && reply.memberPoint <= 1200){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 1200 && reply.memberPoint <= 1600){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 1600 && reply.memberPoint <= 2050){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 2050 && reply.memberPoint <= 2500){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint >= 2500 && reply.memberPoint <= 3000){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 					else if(reply.memberPoint == 3000){
-						$(html).find(".badge").attr("src", "/images/badge-"+reply.memberBadge+".png");
+						$(html).find(".badge").attr("src", "${pageContext.request.contextPath}/images/badge-"+reply.memberBadge+".png");
 					}
 						
 					//작성자 닉네임
@@ -266,8 +266,6 @@ $(function(){
 		function deleteHandler(e){
 			e.preventDefault();
 			
-			console.log(this);
-			
 			$.ajax({
 				url:"${pageContext.request.contextPath}/rest/reply/delete",
 				method:"post",
@@ -321,7 +319,7 @@ $(function(){
 						<ul class="reply-box">
 							<li class="reply-author left">
 								<p>
-									<img class="reply-badge" src="/images/lev1.png">
+									<img class="reply-badge" src="${pageContext.request.contextPath}/images/lev1.png">
 									<span class="reply-member-nickname"></span>
 									<span class="reply-writetime date"></span>
 								</p>													
@@ -339,13 +337,13 @@ $(function(){
 						<br>			
 					</td>
 					<th>
-						<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
-						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyDto.replyBoardNo}}" data-reply-no="{{replyDto.replyNo}}"><img src="/images/delete.png" width="20" height="20"></a>
+						<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="${pageContext.request.contextPath}/images/edit.png" width="20" height="20"></a>
+						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyDto.replyBoardNo}}" data-reply-no="{{replyDto.replyNo}}"><img src="${pageContext.request.contextPath}/images/delete.png" width="20" height="20"></a>
 						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->	
 			
 						<!-- 블라인드 여부에 따라 다르게 표시 -->
-						<a style="display:block; margin:10px 0px;" class="blind-btn" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="/images/blind2.png" width="20" height="20"></a>
-						<a style="display:block; margin:10px 0px;" class="visible-btn" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="/images/blind.png" width="20" height="20"></a>
+						<a style="display:block; margin:10px 0px;" class="blind-btn" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="${pageContext.request.contextPath}/images/blind2.png" width="20" height="20"></a>
+						<a style="display:block; margin:10px 0px;" class="visible-btn" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="${pageContext.request.contextPath}/images/blind.png" width="20" height="20"></a>
 					</th>
 				</tr>	
 
@@ -383,7 +381,7 @@ $(function(){
 						<ul class="reply-box">
 							<li class="reply-author left">
 								<p><c:if test="{{boardDto.memberBadge == 1 }}">
-								<img class="badge" src="/images/badge-1.png">
+								<img class="badge" src="${pageContext.request.contextPath}/images/badge-1.png">
 									</c:if>{replyDto.memberNick}
 									
 								</p>							
@@ -407,8 +405,8 @@ $(function(){
 					</td>
 					<th>
 						<c:if test="{{loginId == replyDto.replyId}}">
-							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="/images/edit.png" width="20" height="20"></a>
-							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyDto.replyBoardNo}}" data-reply-no="{{replyDto.replyNo}}"><img src="/images/delete.png" width="20" height="20"></a>
+							<a style="display:block; margin:10px 0px;" class="edit-btn"><img src="${pageContext.request.contextPath}/images/edit.png" width="20" height="20"></a>
+							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-board-no="{{replyDto.replyBoardNo}}" data-reply-no="{{replyDto.replyNo}}"><img src="${pageContext.request.contextPath}/images/delete.png" width="20" height="20"></a>
 						</c:if>
 						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->				
 						
@@ -416,10 +414,10 @@ $(function(){
 							<!-- 블라인드 여부에 따라 다르게 표시 -->
 							<c:choose>
 								<c:when test="{{replyDto.replyBlind == 'Y'}}">
-									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="/images/blind2.png" width="20" height="20"></a>
+									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="${pageContext.request.contextPath}/images/blind2.png" width="20" height="20"></a>
 								</c:when>
 								<c:otherwise>
-									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="/images/blind.png" width="20" height="20"></a>
+									<a style="display:block; margin:10px 0px;" href="reply/blind?replyNo={{replyDto.replyNo}}&replyBoardNo={{replyDto.replyBoardNo}}"><img src="${pageContext.request.contextPath}/images/blind.png" width="20" height="20"></a>
 								</c:otherwise>
 							</c:choose>
 							

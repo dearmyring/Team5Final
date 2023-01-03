@@ -106,7 +106,7 @@
 
                 else{
                     $.ajax({
-                        url: "http://localhost:8888/rest/admin",
+                        url: "${pageContext.request.contextPath}/rest/admin",
                         method: "post",
                         contentType: 'application/json',
                         data: JSON.stringify({
@@ -114,7 +114,6 @@
                             adminPw : adminPw
                         }),
                         success: function(resp){
-                        	console.log(resp);
                             if(resp == 'fail'){
                                 $("[name=adminId]").addClass("is-invalid");
                                 $("[name=adminPw]").addClass("is-invalid");

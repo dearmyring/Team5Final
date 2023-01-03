@@ -122,13 +122,13 @@
 <div class="my-activity-list-box">
         <div class="view-recipe-list">
             <div>
-                <img class="detail-list-img" src="/images/detail-list-paper.png">
+                <img class="detail-list-img" src="${pageContext.request.contextPath}/images/detail-list-paper.png">
                 <h1>내가 읽은 레시피</h1>
             </div>
         <c:forEach var="viewList" items="${viewList}">
             <div class="recipe-item-box">
             
-                <a class="recipe-item" href="/recipe/detail?recipeNo=${viewList.recipeDto.recipeNo}">
+                <a class="recipe-item" href="${pageContext.request.contextPath}/recipe/detail?recipeNo=${viewList.recipeDto.recipeNo}">
                     <div>
                         <ul>
                             <li>
@@ -162,12 +162,12 @@
         
 <div class="like-recipe-list box-hide">
             <div>
-                <img class="detail-list-img" src="/images/detail-list-heart.png">
+                <img class="detail-list-img" src="${pageContext.request.contextPath}/images/detail-list-heart.png">
                 <h1>좋아요 한 레시피</h1>
             </div>
             <c:forEach var="likeList" items="${likeList}">
             <div class="recipe-item-box">
-                <a class="recipe-item" href="/recipe/detail?recipeNo=${likeList.recipeDto.recipeNo}">
+                <a class="recipe-item" href="${pageContext.request.contextPath}/recipe/detail?recipeNo=${likeList.recipeDto.recipeNo}">
                     <div>
                         <ul>
                             <li>
@@ -200,12 +200,12 @@
 
 <div class="write-board-list box-hide">
             <div>
-                <img class="detail-list-img" src="/images/detail-list-write.png">
+                <img class="detail-list-img" src="${pageContext.request.contextPath}/images/detail-list-write.png">
                 <h1>내가 쓴 게시글</h1>
             </div>
             <c:forEach var="writeList" items="${writeList}">
             <div class="board-item-box">
-                <a class="recipe-item" href="/board/detail?boardNo=${writeList.boardDto.boardNo}">
+                <a class="recipe-item" href="${pageContext.request.contextPath}/board/detail?boardNo=${writeList.boardDto.boardNo}">
                     <div>
                         <ul>
                             <li>

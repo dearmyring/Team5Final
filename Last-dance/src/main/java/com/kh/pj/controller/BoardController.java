@@ -161,7 +161,6 @@ public class BoardController {
 		boolean member = session.getAttribute("loginId") != null;
 		
 		if(member && !loginNick.contains("관리자")) {
-		System.out.println(boardImgDao.find(boardNo));
 		@SuppressWarnings("unchecked")
 		Set<Integer> history = (Set<Integer>)session.getAttribute("history");
 		if(history == null) {//history 가 없다면 신규 생성

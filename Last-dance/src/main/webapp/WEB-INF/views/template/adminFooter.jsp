@@ -18,7 +18,6 @@
 		
 /* 		//페이지 이전 주소를 가져와서 저장
 		var referrer = document.referrer;
-// 		console.log(referrer);
 		
 		//li 클릭해서 이동시 뒤에 있는 태그들을 모두 삭제
 		$(".before-address > li").click(function() {
@@ -31,7 +30,6 @@
 		$(document).ready(function(){
 			$(".before-address").each(function(){
 				$(this).append("<li>"+referrer+"</li>");	
-			console.log(referrer);
 			});
 			
 		});
@@ -41,7 +39,6 @@
 // 		$(window).on("beforeunload", function(){
 // 			$(".before-address").append("<li>"+"성공"+"</li>");
 // 			alert("성공"+referrer);
-// 			console.log("성공");
 // 			<a href="#"><li>여기가 거기</li></a>
 // 		}); */
 		 

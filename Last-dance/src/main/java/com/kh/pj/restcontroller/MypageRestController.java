@@ -33,20 +33,17 @@ public class MypageRestController {
 		String loginId = (String) session.getAttribute("loginId");
 		
 		AttachmentDto confirm = mypageDao.profileImg(loginId);
-//		System.err.println(confirm);
 		if(confirm == null) {
 			mypageDao.addProfileImage(ProfileImageDto.builder()
 					.profileId(loginId)
 					.ProfileAttachmentNo(Integer.parseInt(attachmentNo))
 					.build());
-//			System.err.println("등록");
 		}
 		else {
 			mypageDao.editProfileImage(ProfileImageDto.builder()
 					.profileId(loginId)
 					.ProfileAttachmentNo(Integer.parseInt(attachmentNo))
 					.build());
-//			System.err.println("수정");
 		}
 	}
 	

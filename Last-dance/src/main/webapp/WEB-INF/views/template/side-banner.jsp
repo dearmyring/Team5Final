@@ -102,13 +102,11 @@
         }).scroll();
         
         $.ajax({
-            url: "http://localhost:8888/rest/recipe-latelyViewList",
+            url: "${pageContext.request.contextPath}/rest/recipe-latelyViewList",
             method: "get",
             dataType: "json",
             success: function(resp) {
-                console.log(resp);
                 for(var i = 0; i < resp.length; i++) {
-                	//console.log($(".banner-item:nth-child("+(i+1)+")").find("span").text());
                 	$(".banner-item:nth-child("+(i+1)+")").find("img").attr("src","${pageContext.request.contextPath}/rest/download/"+resp[i].recipeImgList[0].recipeAttachmentNo);
                 	$(".banner-item:nth-child("+(i+1)+")").find("a").attr("href","detail?recipeNo="+resp[i].recipeDto.recipeNo) //수정
                 	$(".banner-item:nth-child("+(i+1)+")").find("span").text(resp[i].recipeDto.recipeTitle);

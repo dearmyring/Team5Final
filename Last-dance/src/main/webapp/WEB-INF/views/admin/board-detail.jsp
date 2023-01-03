@@ -84,7 +84,9 @@
 								(${attachmentDto.attachmentSize} bytes) 
 								- 
 								[${attachmentDto.attachmentType}]
-								<a href="/attachment/download/${attachmentDto.attachmentNo}"><img src="/images/download.png" width="15" height="15"></a>
+								<a href="${pageContext.request.contextPath}/attachment/download/${attachmentDto.attachmentNo}">
+									<img src="${pageContext.request.contextPath}/images/download.png" width="15" height="15">
+								</a>
 							</li>
 							</c:forEach>
 						</ul>

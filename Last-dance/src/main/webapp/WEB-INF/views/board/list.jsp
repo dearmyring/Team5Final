@@ -231,7 +231,7 @@ width: 20%;
                <td>
                	<div class="notice-box">
                   <p class="notice-title">공지</p>
-                  <a class="notice" href="/notice/detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}✌</a>
+                  <a class="notice" href="${pageContext.request.contextPath}/notice/detail/${noticeDto.noticeNo}">${noticeDto.noticeTitle}✌</a>
                	</div>
                </td>
    </tr>
@@ -358,7 +358,7 @@ width: 20%;
 				p = p+1;
 			
 			$.ajax({
-		           url: "http://localhost:8888/rest/board",
+		           url: "${pageContext.request.contextPath}/rest/board",
 		           method: "post",
 		           contentType: "application/json",
 		           data: JSON.stringify({
@@ -368,7 +368,6 @@ width: 20%;
 		             	 p : 1
          	}),
          	success: function(resp){
-           	console.log(resp);
            /* 	$(".board-list").empty(); */
             for (var i = 0; i < resp.length; i++) {
                 
@@ -470,7 +469,7 @@ width: 20%;
                         return;
                      }
                      $.ajax({
-                              url : "http://localhost:8888/rest/board",
+                              url : "${pageContext.request.contextPath}/rest/board",
                               method : "post",
                               contentType : "application/json",
                               data : JSON.stringify({
@@ -577,7 +576,7 @@ width: 20%;
                var type = $(".input-type").val();
                var keyword = $(".input-keyword").val();
                $.ajax({
-                  url : "http://localhost:8888/rest/board",
+                  url : "${pageContext.request.contextPath}/rest/board",
                   method : "post",
                   contentType : "application/json",
                   data : JSON.stringify({

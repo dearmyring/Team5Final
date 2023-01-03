@@ -139,7 +139,7 @@
     	
     	function async(data){
 			$.ajax({
-				url: "http://localhost:8888/rest/recipe",
+				url: "${pageContext.request.contextPath}/rest/recipe",
 				method: "post",
 				contentType: "application/json",
 				data: JSON.stringify(data),
@@ -182,7 +182,7 @@
     	
     	function page(data){
 			$.ajax({
-				url: "http://localhost:8888/rest/admin-count",
+				url: "${pageContext.request.contextPath}/rest/admin-count",
 				method: "post",
 				contentType: "application/json",
 				data: JSON.stringify(data),
@@ -280,7 +280,7 @@
 			
 				if(confirm("정말 삭제하시겠습니까?")){
 					$.ajax({
-						url: "http://localhost:8888/rest/recipe?"+param,
+						url: "${pageContext.request.contextPath}/rest/recipe?"+param,
 						method: "delete",
 						contentType: "application/json",
 						success: function(resp){
