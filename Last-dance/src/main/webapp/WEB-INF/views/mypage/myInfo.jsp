@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mypage.css">
 
 <!-- js 불러옴 -->
-<script src="/js/myInfo.js"></script>
+<script src="${pageContext.request.contextPath}/js/myInfo.js"></script>
 
 
 <form class="update-form" action="infoEdit" method="post">

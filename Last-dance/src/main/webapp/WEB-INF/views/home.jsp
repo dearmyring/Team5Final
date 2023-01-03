@@ -34,7 +34,7 @@
                 }
                 else{
                     $.ajax({
-                        url: "http://localhost:8888/rest/ingredient/"+search,
+                        url: "${pageContext.request.contextPath}/rest/ingredient/"+search,
                         method: "get",
                         success: function(resp){
                             $(".ingredientSearch").remove();

@@ -10,9 +10,9 @@
    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
    rel="stylesheet" />
 
-<link rel="stylesheet" type="text/css" href="/css/reset.css" />
-<link rel="stylesheet" type="text/css" href="/css/commons.css" />
-<link rel="stylesheet" type="text/css" href="/css/recipeList.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/recipeList.css" />
 
 <link rel="stylesheet" type="text/css"    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 
@@ -280,7 +280,7 @@ width: 100px;
          <div class="flexbox">
             <div class="item float-container">
                <c:forEach var="recipeListVO" items="${recipeList}">
-               <a href="/recipe/detail?recipeNo=${recipeListVO.recipeDto.recipeNo}">
+               <a href="${pageContext.request.contextPath}/recipe/detail?recipeNo=${recipeListVO.recipeDto.recipeNo}">
                   <div class="list add-recipe-box recipe-box-shadow main-1 container-350 float-margin-left">
                   
                      <div class="img-box">
@@ -330,7 +330,7 @@ width: 100px;
       $(".sort-click").on("input", function(){
          var sort = $(this).val();
          $.ajax({
-            url: "http://localhost:8888/rest/recipe",
+            url: "${pageContext.request.contextPath}/rest/recipe",
             method: "post",
             contentType: "application/json",
             data: JSON.stringify({
@@ -370,14 +370,13 @@ width: 100px;
 			p = p+1;
 			
 			$.ajax({
-		           url: "http://localhost:8888/rest/recipe1",
+		           url: "${pageContext.request.contextPath}/rest/recipe1",
 		           method: "post",
 		           contentType: "application/json",
 		           data: JSON.stringify({
 		              p : p
            	}),
            	success: function(resp){
-             	console.log(resp);
              	
  		               for(var i = 0 ; i < resp.length ; i ++) {					          
  			              var div_outer_container = $("<a>").attr("href", "/recipe/detail?recipeNo=" + resp[i].recipeDto.recipeNo);				              			              
@@ -432,19 +431,17 @@ width: 100px;
  	/* 레시피 리스트 정렬 */
 		$(".sort-click").on("input", function(){
 			var sort = $(this).val();
-			console.log(sort);
 			var data = {
 					sort: sort,
 					p: 1,
 					table: "recipe"
 			};
 			$.ajax({
-		           url: "http://localhost:8888/rest/recipe1",
+		           url: "${pageContext.request.contextPath}/rest/recipe1",
 		           method: "post",
 		           contentType: "application/json",
 		           data: JSON.stringify(data),
         	success: function(resp){
-          	console.log(resp);
           	$(".item").empty();
           	
 		               for(var i = 0 ; i < resp.length ; i ++) {					          

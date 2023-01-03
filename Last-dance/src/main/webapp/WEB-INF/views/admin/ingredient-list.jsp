@@ -196,7 +196,7 @@
 		$(".ingredient-update-btn").click(function(){
 			var ingredientName = $(".insert-ingredientName").val();
 			$.ajax({
-				url: "http://localhost:8888/rest/ingredient/"+ingredientName,
+				url: "${pageContext.request.contextPath}/rest/ingredient/"+ingredientName,
 				method: "get",
 				success: function(resp){
 					if(resp){
@@ -214,7 +214,7 @@
 					"originName" : originName
 				};
 			$.ajax({
-				url: "http://localhost:8888/rest/ingredient",
+				url: "${pageContext.request.contextPath}/rest/ingredient",
 				method: "put",
 				contentType: "application/json",
 				data: JSON.stringify(data),
@@ -318,7 +318,7 @@
 				return;
 			}
 			$.ajax({
-				url: "http://localhost:8888/rest/ingredient/"+ingredientName,
+				url: "${pageContext.request.contextPath}/rest/ingredient/"+ingredientName,
 				method: "get",
 				success: function(resp){
 					if(resp){
@@ -374,7 +374,7 @@
   			}
     		if(confirm("재료를 등록하시겠습니까?")){
     			$.ajax({
-    				url: "http://localhost:8888/rest/ingredient",
+    				url: "${pageContext.request.contextPath}/rest/ingredient",
     				method: "post",
     				contentType: "application/json",
     				data: JSON.stringify(ingredientList),
@@ -405,7 +405,7 @@
 			
 				var param = $(".ingredientName-form .check-item").serialize();
 					$.ajax({
-						url: "http://localhost:8888/rest/ingredient_delete?"+param,
+						url: "${pageContext.request.contextPath}/rest/ingredient_delete?"+param,
 						method: "delete",
 						contentType: "application/json",
 						success: function(resp){
@@ -435,7 +435,7 @@
 			param.keyword = keyword;
 			var search = $.param(param)
 			$.ajax({
-				url: "http://localhost:8888/rest/ingredient?"+search,
+				url: "${pageContext.request.contextPath}/rest/ingredient?"+search,
 				method: "get",
 				contentType: "application/json",
 				success: function(resp){
@@ -463,7 +463,7 @@
 			param.keyword = keyword;
 			var search = $.param(param)
 			$.ajax({
-				url: "http://localhost:8888/rest/ingredient?"+search,
+				url: "${pageContext.request.contextPath}/rest/ingredient?"+search,
 				method: "get",
 				contentType: "application/json",
 				success: function(resp){
@@ -482,7 +482,7 @@
     	
     	function page(data){
     		$.ajax({
-				url: "http://localhost:8888/rest/admin-count",
+				url: "${pageContext.request.contextPath}/rest/admin-count",
 				method: "post",
 				contentType: "application/json",
 				data: JSON.stringify(data),

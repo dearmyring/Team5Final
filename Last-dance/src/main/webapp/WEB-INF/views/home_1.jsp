@@ -303,7 +303,7 @@
 	<div class="container-1300">
 		<div class="mt-10 mb-40 main-heading">
 			<h1>
-				<img class="megaphone" src="/images/main-megaphone-2.png">
+				<img class="megaphone" src="${pageContext.request.contextPath}/images/main-megaphone-2.png">
 				<span class="main-heading-text">냉장고 속 식재료를 입력해보세요</span>
 			</h1>
 		</div>
@@ -315,7 +315,7 @@
 							<span class="view-count">조회수 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeClick}" pattern="#,###"/></span>
 							<span class="like-count">좋아요 <fmt:formatNumber value="${mainRecipe.mainRecipeListTop5VO.recipeLike}" pattern="#,###"/></span>
 							<div class="recipe-title mt-20">
-								<a href="/recipe/detail?recipeNo=${mainRecipe.mainRecipeListTop5VO.recipeNo}">
+								<a href="${pageContext.request.contextPath}/recipe/detail?recipeNo=${mainRecipe.mainRecipeListTop5VO.recipeNo}">
 									${mainRecipe.mainRecipeListTop5VO.recipeInfo}
 								</a>
 							</div>
@@ -337,10 +337,10 @@
 									<div class="hash-tag">${mainRecipe.mainRecipeListTop5VO.recipeHashtag}</div>
 									<c:choose>
 										<c:when test="${recipeImg.recipeAttachmentNo != null}">
-											<img class="main-1-img" src="/rest/download/${recipeImg.recipeAttachmentNo}">
+											<img class="main-1-img" src="${pageContext.request.contextPath}/rest/download/${recipeImg.recipeAttachmentNo}">
 										</c:when>
 										<c:otherwise>
-											<img class="main-1-img" src="/images/test.jpg">
+											<img class="main-1-img" src="${pageContext.request.contextPath}/images/test.jpg">
 										</c:otherwise>
 									</c:choose>
 								</div>
@@ -356,7 +356,7 @@
 			<div class="add-recipe-box main-box-shadow main-2 container-300 float-left">
 				<div>
 					<span class="left">
-						<img class="main-img-size" src="/images/main-customer-service.png">
+						<img class="main-img-size" src="${pageContext.request.contextPath}/images/main-customer-service.png">
 					</span>
 					<span class="sub-heading">
 						고객센터
@@ -368,7 +368,7 @@
 			<div class="add-recipe-box main-box-shadow main-3 container-300 float-left">
 				<div>
 					<span class="left">
-						<img class="main-img-size" src="/images/main-add-recipe.png">
+						<img class="main-img-size" src="${pageContext.request.contextPath}/images/main-add-recipe.png">
 					</span>
 					<span class="left sub-heading">
 						등록된 레시피
@@ -389,13 +389,13 @@
 			<div class="add-recipe-box main-box-shadow main-4 container-300 float-left">
 				<div>
 					<span class="left">
-						<img class="main-img-size" src="/images/main-thumbs-up.png">
+						<img class="main-img-size" src="${pageContext.request.contextPath}/images/main-thumbs-up.png">
 					</span>
 					<span class="left sub-heading">
 						오늘의 활동왕
 					</span>
 					<div class="center mt-30">
-						<img class="top-ranker" src="/images/main-firecracker.png">
+						<img class="top-ranker" src="${pageContext.request.contextPath}/images/main-firecracker.png">
 					</div>
 					<div class="center mt-10">
 						<span class="top-ranker-nick">
@@ -403,7 +403,7 @@
 						</span>
 						<span>
 							<c:if test="${todayMemberRanking.memberBadge == 1}">
-								<img class="badge" src="/images/badge-1.png">
+								<img class="badge" src="${pageContext.request.contextPath}/images/badge-1.png">
 							</c:if>
 						</span>	 
 					</div>
@@ -413,7 +413,7 @@
 			<div class="add-recipe-box main-box-shadow main-5 container-300 float-left mt-30 mb-30">
 				<div>
 					<span class="left">
-						<img class="main-img-size" src="/images/main-push-recipe.png">
+						<img class="main-img-size" src="${pageContext.request.contextPath}/images/main-push-recipe.png">
 					</span>
 					<span class="left sub-heading">
 						인기 레시피
@@ -440,7 +440,7 @@
 				if($(".message-list").find(".center-icon").hasClass("fa-caret-down")) return;
 				if("${loginId}" == ""){
 					alert("로그인이 필요한 서비스입니다.");
-	        		location.replace("http://localhost:8888/member/login");
+	        		location.replace("${pageContext.request.contextPath}/member/login");
 	        		return;
 				}
 				$(".fullscreen-xmark").parent().addClass("fullscreen");
@@ -456,7 +456,7 @@
 			// 총 등록 레시피 비동기 5초마다 갱신 코드
 			timer = setInterval( function() {
 				$.ajax({
-					url:"http://localhost:8888/rest/total_add",
+					url:"${pageContext.request.contextPath}/rest/total_add",
 					method:"get",
 					success:function(resp){
 						$(".total-add-num").text(resp.cnt);
@@ -467,7 +467,7 @@
 			// 오늘 등록된 레시피 비동기 5초마다 갱신 코드
 			timer = setInterval( function() {
 				$.ajax({
-					url:"http://localhost:8888/rest/today_add",
+					url:"${pageContext.request.contextPath}/rest/today_add",
 					method:"get",
 					success:function(resp){
 						$(".today-add-num").text(resp.cnt);
@@ -478,14 +478,14 @@
 			// 오른쪽 하단 인기레시피Top10 비동기 목록 조회
 			function pushList() {
 				$.ajax({
-					url: "http://localhost:8888/rest/push_recipe",
+					url: "${pageContext.request.contextPath}/rest/push_recipe",
 					method: "get",
 					success: function(resp) {
 						$(".push-recipe-top10").empty();
 						for(var i = 0; i < resp.length; i++) {
 							var pushListNum = $("<div>").addClass("w-20 mt-20 left push-list-num").html(i + 1);
 							var pushListContent = 
-								$("<div>").addClass("w-80 mt-20 left").html("<a href='/recipe/detail?recipeNo="+ resp[i].recipeNo + "'>" + resp[i].recipeTitle + "</a>").hover(
+								$("<div>").addClass("w-80 mt-20 left").html("<a href='${pageContext.request.contextPath}/recipe/detail?recipeNo="+ resp[i].recipeNo + "'>" + resp[i].recipeTitle + "</a>").hover(
 									function(){
 										$(this).css("transition", "transform .2s ease, padding .2s ease")
 										.css("transform", "translate(5px ,0)")

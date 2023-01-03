@@ -18,8 +18,8 @@
 	<body>
 		<div class="container-300 screen-center">
 			<div class="center">
-				<a href="/">
-					<img src="/images/logo.png" style="width: 80%">
+				<a href="${pageContext.request.contextPath}/">
+					<img src="${pageContext.request.contextPath}/images/logo.png" style="width: 80%">
 				</a>
 			</div>
 			<div class="mt-20">
@@ -50,7 +50,7 @@
                 	var possible = $(".send-btn");
                 	$("input[name=memberId]").next("button").next("div").text("");
 	               	$.ajax({
-                        url:"http://localhost:8888/rest/member/id",
+                        url:"${pageContext.request.contextPath}/rest/member/id",
                         method:"post",
                         data: {memberId:memberId},
                         success:function(resp) {
@@ -93,7 +93,6 @@
     									certSerial:serial
     								},
     								success:function(resp){
-    									console.log(resp);
     									validChecking.memberIdConfirm = resp;
     									$(".join-form").submit();
     									//btn.text("인증 완료");

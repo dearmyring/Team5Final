@@ -3,13 +3,12 @@ $(function(){
 	// 파일업로드 비동기
             $(".file-input").change(function(){
                 if(this.files.length > 0){
-                    console.log()
                     var imgData = new FormData();
 
                     imgData.append("attach", this.files[0]);
 
                     $.ajax({
-                        url: "http://localhost:8888/rest/upload",
+                        url: "${pageContext.request.contextPath}/rest/upload",
                         method: "post",
                         data: imgData,
                         processData:false, // 일반 폼에서 전송되는 형식(key = value)
@@ -20,7 +19,7 @@ $(function(){
                             var attachmentNo = (resp.split("download/")[1]);
                             
                             $.ajax({
-                                url: "http://localhost:8888/rest/profileImg?attachmentNo="+attachmentNo,
+                                url: "${pageContext.request.contextPath}/rest/profileImg?attachmentNo="+attachmentNo,
                                 method: "post",
                                 contentType: "application/json",
                                 data: JSON.stringify({attachmentNo:attachmentNo}),
@@ -76,7 +75,7 @@ $(function(){
 		e.preventDefault();
 		var inputPw = $(".login-input-password").val();
 		$.ajax({
-			url: "http://localhost:8888/rest/pwConfirm",
+			url: "${pageContext.request.contextPath}/rest/pwConfirm",
 			method: "post",
 			contentType: "application/json",
 			data: JSON.stringify({memberPw : inputPw}),

@@ -141,10 +141,7 @@
         //목표: 파일이 선택되면 해당하는 파일을 서버에 업로드 
         $(".file-input").change(function(){
         	var that = $(this);
-                //console.log("변화 감지!");
-                //console.log(this.filed);//선택된 파일 리스트
                 if(this.files.length>0){
-                    //console.log("파일선택")
 
                     //프론트엔드에서 미리보기만 가능하며 향후에 관리가 안됨
                    // var obj=URL.createObjectURL(this.files[0]);
@@ -158,7 +155,7 @@
 
 
                     $.ajax({
-                        url:" http://localhost:8888/rest/upload",
+                        url:"${pageContext.request.contextPath}/rest/upload",
                         method:"post",
                         data: fd,
                         processData: false,
@@ -189,7 +186,7 @@
     });
     
  /*    $.ajax({
-        url:" http://localhost:8888/rest/upload",
+        url:"${pageContext.request.contextPath}/rest/upload",
         method:"post",
         data: fd,
         processData: false,
@@ -211,7 +208,6 @@ else{
 
 $(document).on("click",".item",(function(){
 var url = $(this).prev().attr("src");
-console.log(url);
 $(".preview").attr("src",url);
 var attachmentNo = parseInt((url.split("download/"))[1]);
     		   $(".img-no").val(attachmentNo);

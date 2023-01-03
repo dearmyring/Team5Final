@@ -42,14 +42,14 @@
            <div>
               <div class="logo-box">
                    <div>
-                       <a href="/"><img src="${pageContext.request.contextPath}/images/logo.png" class="logo"/></a>
+                       <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/images/logo.png" class="logo"/></a>
                    </div>
               </div>
               <div class="menu-list-box">
                    <ul class="menu-list">
-                       <li><a href="/recipe/list">전체보기</a></li>
+                       <li><a href="${pageContext.request.contextPath}/recipe/list">전체보기</a></li>
                        <li><span class="complex">통합검색</span></li>
-                       <li><a href="/board/list">커뮤니티</a></li>
+                       <li><a href="${pageContext.request.contextPath}/board/list">커뮤니티</a></li>
                    </ul>
               </div>
               <div class="sign-tab">
@@ -60,8 +60,8 @@
                                 <li class="right-menu header-text">
                                    ${loginNick}
                                      <ul>
-                                         <li><a href="/admin/">관리페이지</a></li>
-                                         <li><a href="/member/logout">로그아웃</a></li>
+                                         <li><a href="${pageContext.request.contextPath}/admin/">관리페이지</a></li>
+                                         <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
                                       </ul>
                                 </li>
                             </c:when>
@@ -69,14 +69,14 @@
                                 <li class="right-menu">
                                    ${loginNick}
                                    <ul>
-                                        <li><a href="/mypage/list">마이페이지</a></li>
-                                       <li><a href="/member/logout">로그아웃</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/mypage/list">마이페이지</a></li>
+                                       <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
                                    </ul>
                                 </li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="/member/login">로그인</a></li>
-                                <li><a href="/member/join">회원가입</a></li>
+                                <li><a href="${pageContext.request.contextPath}/member/login">로그인</a></li>
+                                <li><a href="${pageContext.request.contextPath}/member/join">회원가입</a></li>
                            </c:otherwise>
                          </c:choose>
                       </ul>
@@ -90,7 +90,7 @@
        <div class="center container-700 search-box">
              <i class="fa-solid fa-magnifying-glass search-icon"></i>
               <input class="search-input w-100" type="text" placeholder="냉장고 속 재료를 입력해보세요." autocomplete="off">
-              <form class="search-form" action="/recipe/searchList" method="get">
+              <form class="search-form" action="${pageContext.request.contextPath}/recipe/searchList" method="get">
 	              <button class="btn-none btn-list-submit" type="submit"><i class="fa-solid fa-right-long"></i></button>
 	              <div class="search-list">
 	              	<!-- 검색 제시어가 나올 영역 -->

@@ -42,7 +42,7 @@
 	        	//로그인 안 돼 있으면 return
 	        	if(loginId == ""){
 	        		alert("로그인이 필요한 서비스입니다.");
-	        		location.replace("http://localhost:8888/member/login");
+	        		location.replace("${pageContext.request.contextPath}/member/login");
 	        		return;
 	        	}
 	        	$(".fullscreen-xmark").parent().removeClass("fullscreen");
@@ -98,7 +98,7 @@
 	        
 	        function historyMessage(centerMemberId){
 	        	$.ajax({
-	        		url:"http://localhost:8888/rest/center/"+centerMemberId,
+	        		url:"${pageContext.request.contextPath}/rest/center/"+centerMemberId,
 	        		method:"get",
 	        		success: function(data){
 	        			if(data.length==0) return;
@@ -126,7 +126,7 @@
 	        
 			function saveMessage(db){
 				$.ajax({
-					url:"http://localhost:8888/rest/center",
+					url:"${pageContext.request.contextPath}/rest/center",
 					method:"post",
 					contentType:"application/json",
 					data:JSON.stringify(db),
@@ -169,7 +169,7 @@
         <div>
             <div class="footer-info">
                 <ul class="info-list">
-                    <li><a href="/"><img src="${pageContext.request.contextPath}/images/logo.png" class="logo-footer"/></a></li>
+                    <li><a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/images/logo.png" class="logo-footer"/></a></li>
                     <li><a href="#">이용약관</a></li>
                     <li><a href="#">개인정보 처리 방침</a></li>
                     <li><a href="#">통합검색 고객센터</a></li>
@@ -204,7 +204,7 @@
             }    
             
               $.ajax({
-               url:"http://localhost:8888/rest/search/" + keyword,
+               url:"${pageContext.request.contextPath}/rest/search/" + keyword,
                method:"get",
                async:false,
                success: function(resp) {

@@ -74,7 +74,7 @@ $(function(){
                 }
                 else if(regex.test(memberPhone)) {
                     $.ajax({
-                        url:"http://localhost:8888/rest/member/phone",
+                        url:"${pageContext.request.contextPath}/rest/member/phone",
                         method:"post",
                         data: {memberPhone:memberPhone},
                         success:function(resp){

@@ -142,7 +142,7 @@ $(function(){
 	
 	function async(data){
 		$.ajax({
-			url: "http://localhost:8888/rest/board2",
+			url: "${pageContext.request.contextPath}/rest/board2",
 			method: "post",
 			contentType: "application/json",
 			data: JSON.stringify(data),
@@ -176,7 +176,7 @@ $(function(){
 	
 	function page(data){
 		$.ajax({
-			url: "http://localhost:8888/rest/admin-count2",
+			url: "${pageContext.request.contextPath}/rest/admin-count2",
 			method: "post",
 			contentType: "application/json",
 			data: JSON.stringify(data),
@@ -273,7 +273,7 @@ $(function(){
 		else{
 			if(confirm("정말 블라인드처리 하시겠습니까?")){
 				$.ajax({
-					url: "http://localhost:8888/rest/board2?"+param,
+					url: "${pageContext.request.contextPath}/rest/board2?"+param,
 					method: "blind",
 					contentType: "application/json",
 					success: function(resp){
@@ -302,7 +302,7 @@ $(function(){
 // 		$(".sort-click").on("input", function(){
 // 			var sort = $(this).val();
 // 			$.ajax({
-// 				url: "http://localhost:8888/rest/board",
+// 				url: "${pageContext.request.contextPath}/rest/board",
 // 				method: "post",
 // 				contentType: "application/json",
 // 				data: JSON.stringify({
