@@ -14,6 +14,7 @@
         box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         padding: 15px;
+        z-index: 50;
     }
 
     .banner-item-image {
@@ -30,6 +31,12 @@
         height: 121px;
         overflow-x: hidden;
         margin-bottom: 5px;
+    }
+    
+    .banner-item a {
+    	width: 100px;
+        height: 100px;
+        border-radius: 20px;
     }
 
     .banner-container {
@@ -51,6 +58,21 @@
     .txt-label::-webkit-scrollbar {
         display: none;
     }
+    
+    .top-btn-box {
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+    }
+    
+    .top-btn {
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+    	font-size: 30px;
+    	border-radius: 30px;
+    	cursor: pointer;
+    }
 
 
 </style>
@@ -61,16 +83,25 @@
 <div class="side-banner">
     <div class="banner-container">
         <div class="banner-item">
+        	<a>
 	            <img class="banner-item-image" src=""/>
+	        </a>
 	            <span class="txt-label"></span>
         </div>
         <div class="banner-item">
+        	<a>
 	            <img class="banner-item-image" src=""/>
+	        </a>
 	            <span class="txt-label"></span>
         </div>
         <div class="banner-item">
+        	<a>
 	            <img class="banner-item-image" src=""/>
+	        </a>
 	            <span class="txt-label"></span>
+        </div>
+        <div class="top-btn-box">
+        	<i class="fa-regular fa-circle-up top-btn"></i>
         </div>
     </div>
 </div>
@@ -114,6 +145,10 @@
                 
             }
         });//ajax end
+        
+        $(".top-btn").click(function(){
+        	$(window).scrollTop(0)
+        });//.top-btn click end
 
     });
 
