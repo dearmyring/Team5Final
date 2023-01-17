@@ -316,7 +316,6 @@ article {
             <div class="recipe-recommend-text w-70">다양한 레시피를 보고 손쉽게 요리를 해보세요~</div>
             </c:otherwise>
              </c:choose>
-            <div>파라미터: ${leng }</div>
             <div class= "sort-select w-30">
                <select class="input sort-click">
                   <option value="recipe_no desc">최근 작성일 순</option>
@@ -369,7 +368,6 @@ article {
 	                        <c:forEach var="ingredient" items="${recipeListVO.recipeIngredientList}">
 	                           <div class="ingredient-name-box mt-10">${ingredient.recipeIngredientName}</div>
 	                        </c:forEach>
-	                        <div class="hashtag-box mt-10">${fn:length(recipeListVO.recipeIngredientList)}</div>
                      	</div>
                      </div>                     
                   </div>

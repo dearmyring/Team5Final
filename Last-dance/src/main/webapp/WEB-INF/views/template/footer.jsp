@@ -26,16 +26,18 @@
 	    $(function(){
 	    	//로딩 하자마자 웹소켓 접속
         	var loginId = "${loginId}";
-			var uri = "${pageContext.request.contextPath}/ws/center";
-			socket = new SockJS(uri);
-					
-			socket.onopen = function(){
-				var data = {
-					type:1,
-					room:loginId
+        	if(loginId){
+				var uri = "${pageContext.request.contextPath}/ws/center";
+				socket = new SockJS(uri);
+						
+				socket.onopen = function(){
+					var data = {
+						type:1,
+						room:loginId
+					};
+					socket.send(JSON.stringify(data));
 				};
-				socket.send(JSON.stringify(data));
-			};
+        	}
 	    	
 			//1:1 문의창 관련 기능
 	        $(".center-icon").click(function(){
