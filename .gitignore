@@ -343,7 +343,7 @@ Spring 개발용 샘플
 **/*.log
 ​
 # Properties
-# **/*.properties
+**/*.properties
 ​
 # Eclipse Gradle plugin generated files
 # Eclipse Core
