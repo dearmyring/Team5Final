@@ -1,4 +1,4 @@
-# Final Project: 냉장고를 부탁해
+# Team Project: 냉장고를 부탁해
 
 ## 💁🏼‍♂️ 프로젝트 소개
 
