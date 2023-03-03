@@ -41,7 +41,7 @@
 * [Flow Chart: miro](https://miro.com/app/board/uXjVPDRst-A=/)
 
 ## 🏠프로젝트 링크
-[냉장고를 부탁해](https://sysout.co.kr/myfridge/)
+* [냉장고를 부탁해](https://sysout.co.kr/myfridge/)
 
 
 
