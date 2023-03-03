@@ -34,7 +34,7 @@
 
 ---
 
-## 🔗프로젝트 관련 첨부 링크
+## 🔗프로젝트 관련 첨부 자료
 * [UI: 피그마](https://www.figma.com/file/kfKxUZzGwnsq0dfay2Uouy/%EB%83%89%EC%9E%A5%EA%B3%A0%EB%A5%BC-%EB%B6%80%ED%83%81%ED%95%B4(%EA%B0%80%EC%A0%9C)?node-id=0%3A1&t=UnleSt7cydCULZ92-1)
 * [ERD: erdcloud](https://www.erdcloud.com/d/mFFrroxkSXtLJBg6w)
 * [기능정의: google  sheets](https://docs.google.com/spreadsheets/d/12FD_-kKiNlfGQDjTbAY-gh3jDusqNZ4tkbM9DNNuJLY/edit#gid=0)
